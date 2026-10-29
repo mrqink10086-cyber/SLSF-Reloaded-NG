@@ -1,0 +1,27 @@
+[
+  {
+    "name": "stable-key-probe",
+    "timed_out": false,
+    "exit_code": 0
+  },
+  {
+    "name": "coroutine-abort-probe",
+    "timed_out": false,
+    "exit_code": -1073740791
+  },
+  {
+    "name": "capability-pending-probe",
+    "timed_out": false,
+    "exit_code": 0
+  },
+  {
+    "name": "capability-reentry-probe",
+    "timed_out": true,
+    "exit_code": -1
+  },
+  {
+    "name": "wait-retire-probe",
+    "timed_out": false,
+    "exit_code": 0
+  }
+]

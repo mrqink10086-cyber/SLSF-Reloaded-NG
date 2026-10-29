@@ -1,0 +1,30 @@
+expiry n=100 completed=100 order_ok=1 checksum=0x7d6bcd620df29609 elapsed_us=25
+cancel n=100 cancelled=1 completed=100 order_ok=1 checksum=0xc9f171bb55b541c5 elapsed_us=12
+expiry n=1000 completed=1000 order_ok=1 checksum=0x5ba76aa473ab768d elapsed_us=456
+cancel n=1000 cancelled=1 completed=1000 order_ok=1 checksum=0xd7377f145c60eaa5 elapsed_us=293
+expiry n=5000 completed=5000 order_ok=1 checksum=0x9b964c68f95aed2d elapsed_us=7071
+cancel n=5000 cancelled=1 completed=5000 order_ok=1 checksum=0x36596c7e9749a5 elapsed_us=6525
+expiry n=100 completed=100 order_ok=1 checksum=0x7d6bcd620df29609 elapsed_us=28
+cancel n=100 cancelled=1 completed=100 order_ok=1 checksum=0xc9f171bb55b541c5 elapsed_us=11
+expiry n=1000 completed=1000 order_ok=1 checksum=0x5ba76aa473ab768d elapsed_us=392
+cancel n=1000 cancelled=1 completed=1000 order_ok=1 checksum=0xd7377f145c60eaa5 elapsed_us=284
+expiry n=5000 completed=5000 order_ok=1 checksum=0x9b964c68f95aed2d elapsed_us=7044
+cancel n=5000 cancelled=1 completed=5000 order_ok=1 checksum=0x36596c7e9749a5 elapsed_us=6750
+expiry n=100 completed=100 order_ok=1 checksum=0x7d6bcd620df29609 elapsed_us=28
+cancel n=100 cancelled=1 completed=100 order_ok=1 checksum=0xc9f171bb55b541c5 elapsed_us=12
+expiry n=1000 completed=1000 order_ok=1 checksum=0x5ba76aa473ab768d elapsed_us=415
+cancel n=1000 cancelled=1 completed=1000 order_ok=1 checksum=0xd7377f145c60eaa5 elapsed_us=286
+expiry n=5000 completed=5000 order_ok=1 checksum=0x9b964c68f95aed2d elapsed_us=6918
+cancel n=5000 cancelled=1 completed=5000 order_ok=1 checksum=0x36596c7e9749a5 elapsed_us=6699
+expiry n=100 completed=100 order_ok=1 checksum=0x7d6bcd620df29609 elapsed_us=27
+cancel n=100 cancelled=1 completed=100 order_ok=1 checksum=0xc9f171bb55b541c5 elapsed_us=12
+expiry n=1000 completed=1000 order_ok=1 checksum=0x5ba76aa473ab768d elapsed_us=408
+cancel n=1000 cancelled=1 completed=1000 order_ok=1 checksum=0xd7377f145c60eaa5 elapsed_us=292
+expiry n=5000 completed=5000 order_ok=1 checksum=0x9b964c68f95aed2d elapsed_us=6818
+cancel n=5000 cancelled=1 completed=5000 order_ok=1 checksum=0x36596c7e9749a5 elapsed_us=6573
+expiry n=100 completed=100 order_ok=1 checksum=0x7d6bcd620df29609 elapsed_us=62
+cancel n=100 cancelled=1 completed=100 order_ok=1 checksum=0xc9f171bb55b541c5 elapsed_us=12
+expiry n=1000 completed=1000 order_ok=1 checksum=0x5ba76aa473ab768d elapsed_us=434
+cancel n=1000 cancelled=1 completed=1000 order_ok=1 checksum=0xd7377f145c60eaa5 elapsed_us=300
+expiry n=5000 completed=5000 order_ok=1 checksum=0x9b964c68f95aed2d elapsed_us=6770
+cancel n=5000 cancelled=1 completed=5000 order_ok=1 checksum=0x36596c7e9749a5 elapsed_us=6541
