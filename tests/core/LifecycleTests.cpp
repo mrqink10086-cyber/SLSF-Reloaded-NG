@@ -533,8 +533,13 @@ TEST_CASE("light key migration preserves full and unknown plugins and rejects co
     save.locations.push_back(SaveWith({"absent.esl", 0x037ABC}, 10).locations.front());
     save.customRegions.push_back({"custom", Key(0x012001)});
     save.graphEdits.push_back({Key(0x012001), {"full.esm", 0x123ABC}, 0.6, true});
-    const auto isLight = [](std::string_view plugin) { return plugin == "lifecycle.esp"; };
+    int metadataQueries = 0;
+    const auto isLight = [&](std::string_view plugin) {
+        ++metadataQueries;
+        return plugin == "lifecycle.esp";
+    };
     slsf::persistence::NormalizeLightPluginKeys(save, isLight);
+    CHECK(metadataQueries == 3);
     CHECK(save.locations[0].key == Key(1));
     CHECK(save.locations[1].key.localFormId == 0x123ABC);
     CHECK(save.locations[2].key.localFormId == 0x037ABC);
@@ -544,6 +549,7 @@ TEST_CASE("light key migration preserves full and unknown plugins and rejects co
     const auto once = save;
     slsf::persistence::NormalizeLightPluginKeys(save, isLight);
     CHECK(save == once);
+    CHECK(metadataQueries == 5);
 
     Fixture fixture;
     auto collision = SaveWith(Key(0x012001), 37.5);
@@ -552,4 +558,28 @@ TEST_CASE("light key migration preserves full and unknown plugins and rejects co
     CHECK_FALSE(fixture.lifecycle->PrepareLoad(collision, SessionContext{}));
     CHECK_FALSE(fixture.lifecycle->BusinessOpen());
     CHECK_FALSE(fixture.lifecycle->Executor().Attached());
+}
+
+TEST_CASE("light key migration rejects custom region collisions before activation", "[fix05-06]") {
+    std::uint32_t otherId = 0x037001;
+    SECTION("another historical indexed key") {}
+    SECTION("an already canonical key") { otherId = 1; }
+    auto save = SaveWith(Key(1), 37.5);
+    save.customRegions = {{"first", Key(0x012001)}, {"second", Key(otherId)}};
+    auto encoded = slsf::EncodeState(save);
+    REQUIRE(encoded);
+    auto decoded = slsf::DecodeState(*encoded);
+    REQUIRE(decoded);
+    slsf::persistence::NormalizeLightPluginKeys(*decoded, [](std::string_view plugin) {
+        return plugin == "lifecycle.esp";
+    });
+    REQUIRE(decoded->customRegions[0].key == decoded->customRegions[1].key);
+
+    Fixture fixture;
+    CHECK_FALSE(fixture.lifecycle->PrepareLoad(*decoded, SessionContext{}));
+    CHECK(fixture.lifecycle->Status().phase == slsf::LifecyclePhase::Failed);
+    CHECK(fixture.lifecycle->Status().message == "duplicate custom region key");
+    CHECK_FALSE(fixture.lifecycle->BusinessOpen());
+    CHECK_FALSE(fixture.lifecycle->Executor().Attached());
+    CHECK_FALSE(fixture.lifecycle->Capture());
 }

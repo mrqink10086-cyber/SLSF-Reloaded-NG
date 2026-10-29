@@ -9,6 +9,7 @@ namespace slsf::persistence {
 
 // Repairs historical low-24-bit keys only for plugins identified as light by
 // current engine metadata. Unknown plugins retain their unresolved identities.
+// Each distinct plugin is queried at most once per call.
 void NormalizeLightPluginKeys(PersistentState& state,
                               const std::function<bool(std::string_view)>& isLightPlugin);
 

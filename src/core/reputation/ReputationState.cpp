@@ -420,6 +420,13 @@ Result<RestoreReport> RestoreState(State& state, const PersistentState& persiste
         }
     }
 
+    std::set<StableRegionKey> customRegionKeys;
+    for (const auto& region : persistent.customRegions) {
+        if (!customRegionKeys.emplace(region.key).second) {
+            return Fail(Error::Code::InvalidArgument, "duplicate custom region key");
+        }
+    }
+
     State restored;
     restored.accounts.resize(regions.regions.size());
     restored.accountKeys = regions.regions;
