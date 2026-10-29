@@ -871,3 +871,92 @@ TEST_CASE("published query supports dense and reordered region rows", "[fix05]")
     REQUIRE(result.has_value());
     CHECK(result->fame.front() == 22);
 }
+
+TEST_CASE("uncaught flow exceptions remain observable without stopping the executor", "[fix05-06]") {
+    Dispatcher dispatcher;
+    const DiffusionGraph graph{};
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    REQUIRE(dispatcher.Attach(Epoch{40, 0, 0}, MakeBindings(graph, parameters, configuration), MakeState()));
+    auto eager = dispatcher.SpawnFlow([]() -> Dispatcher::Flow {
+        throw std::runtime_error("eager failure");
+        co_return;
+    });
+    REQUIRE(eager.Done());
+    REQUIRE(eager.Failure());
+    CHECK_THROWS_AS(std::rethrow_exception(eager.Failure()), std::runtime_error);
+
+    int ran = 0;
+    auto delayed = dispatcher.SpawnFlow([&]() -> Dispatcher::Flow {
+        if (co_await Dispatcher::Delay{dispatcher, 0, ClockDomain::Active}) {
+            throw std::runtime_error("delayed failure");
+        }
+    });
+    dispatcher.Schedule(0, ClockDomain::Active, [&] { ++ran; });
+    CHECK_NOTHROW(dispatcher.Step());
+    REQUIRE(delayed.Done());
+    REQUIRE(delayed.Failure());
+    CHECK_THROWS_AS(std::rethrow_exception(delayed.Failure()), std::runtime_error);
+    CHECK(ran == 1);
+    CHECK(dispatcher.Timers().PendingCount() == 0);
+    Dispatcher::Flow empty;
+    CHECK_FALSE(empty.Failure());
+}
+
+TEST_CASE("flow exceptions during abort finish only the failing frame", "[fix05-06]") {
+    Dispatcher dispatcher;
+    const DiffusionGraph graph{};
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    REQUIRE(dispatcher.Attach(Epoch{41, 0, 0}, MakeBindings(graph, parameters, configuration), MakeState()));
+    auto failing = dispatcher.SpawnFlow([&]() -> Dispatcher::Flow {
+        if (!(co_await Dispatcher::Delay{dispatcher, 100, ClockDomain::Real})) {
+            throw std::runtime_error("abort failure");
+        }
+    });
+    SECTION("explicit cancellation") { CHECK(failing.CancelWait()); }
+    SECTION("session detach") { CHECK_NOTHROW(dispatcher.Detach()); }
+    REQUIRE(failing.Done());
+    REQUIRE(failing.Failure());
+    CHECK_THROWS_AS(std::rethrow_exception(failing.Failure()), std::runtime_error);
+    CHECK(dispatcher.Timers().PendingCount() == 0);
+}
+
+TEST_CASE("mixed wait retirement preserves expiry and detach order", "[fix05-06]") {
+    Dispatcher dispatcher;
+    const DiffusionGraph graph{};
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    REQUIRE(dispatcher.Attach(Epoch{42, 0, 0}, MakeBindings(graph, parameters, configuration), MakeState()));
+    double wall = 0;
+    dispatcher.Clocks().SetWallSource([&] { return wall; });
+    std::vector<int> cancelled, elapsed, detached, expectedCancelled, expectedElapsed;
+    std::vector<Dispatcher::Flow> flows;
+    for (int id = 0; id < 512; ++id) {
+        flows.push_back(dispatcher.SpawnFlow([&, id]() -> Dispatcher::Flow {
+            if (!(co_await Dispatcher::Delay{dispatcher, 1, ClockDomain::Real})) {
+                cancelled.push_back(id);
+                co_return;
+            }
+            elapsed.push_back(id);
+            if (!(co_await Dispatcher::Delay{dispatcher, 100, ClockDomain::Active})) {
+                detached.push_back(id);
+            }
+        }));
+        if (id % 3 == 0) { expectedCancelled.push_back(id); }
+        else { expectedElapsed.push_back(id); }
+    }
+    for (const auto id : expectedCancelled) { REQUIRE(flows[id].CancelWait()); }
+    wall = 1;
+    dispatcher.Step();
+    CHECK(cancelled == expectedCancelled);
+    CHECK(elapsed == expectedElapsed);
+    dispatcher.Detach();
+    CHECK(detached == expectedElapsed);
+    CHECK(dispatcher.Timers().PendingCount() == 0);
+    for (auto& flow : flows) {
+        CHECK(flow.Done());
+        CHECK_FALSE(flow.Failure());
+        CHECK_FALSE(flow.CancelWait());
+    }
+}

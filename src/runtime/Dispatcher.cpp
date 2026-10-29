@@ -64,6 +64,10 @@ bool Dispatcher::Flow::Done() const noexcept {
     return handle_ && handle_.done();
 }
 
+std::exception_ptr Dispatcher::Flow::Failure() const noexcept {
+    return handle_ ? handle_.promise().failure : std::exception_ptr{};
+}
+
 bool Dispatcher::Flow::CancelWait() {
     if (!handle_ || handle_.done()) {
         return false;
@@ -138,7 +142,7 @@ bool Dispatcher::RegisterWait(Delay& awaiter, std::coroutine_handle<Flow::promis
         return false;
     }
     entry->continuation = frame;
-    waits_.push_back(entry);
+    entry->position = waits_.insert(waits_.end(), entry);
     promise.entry = std::move(entry);
     return true;
 }
@@ -167,9 +171,7 @@ Dispatcher::RetireWait(const std::shared_ptr<WaitEntry>& entry, bool aborted, bo
     // The timer must die with the wait: the entry leaves the table now, and
     // the scheduler token is the only thing that could still call back.
     std::ignore = scheduler_.Cancel(entry->token);
-    std::erase_if(waits_, [&entry](const std::shared_ptr<WaitEntry>& candidate) {
-        return candidate == entry;
-    });
+    waits_.erase(entry->position);
     return frame;
 }
 

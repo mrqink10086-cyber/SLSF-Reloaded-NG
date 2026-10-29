@@ -6,6 +6,7 @@
 #include "slsf/engine/EventBridge.h"
 #include "slsf/integrations/CapabilityRegistry.h"
 #include "slsf/persistence/Serialization.h"
+#include "slsf/persistence/StableKeys.h"
 #include "slsf/runtime/Lifecycle.h"
 
 #include <Windows.h>
@@ -192,7 +193,7 @@ bool BuildStaticWorld() {
         }
         slsf::StableRegionKey key{
             .plugin = std::string(filename),
-            .localFormId = location->GetFormID() & 0x00FFFFFFu,
+            .localFormId = location->GetLocalFormID(),
         };
         keysByForm.emplace(location, key);
         slsf::LocationRecord record;
@@ -291,12 +292,12 @@ void EnsureLifecycle() {
     }
 }
 
-bool Activate(const char* reason) {
+bool Activate(const char* reason, bool hostSucceeded = true) {
     if (!g_lifecycle) {
         logs::error("lifecycle: {} requested before composition root exists", reason);
         return false;
     }
-    if (!g_lifecycle->ActivatePrepared()) {
+    if (!g_lifecycle->ActivatePrepared(hostSucceeded)) {
         const auto status = g_lifecycle->Status();
         logs::error("lifecycle: {} activation failed: {}", reason, status.message);
         return false;
@@ -391,6 +392,11 @@ void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
     logs::info("lifecycle: save record decoded bytes={} codec={} locations={}",
                bytes.size(), inspected ? inspected->codecVersion : 0,
                decoded->locations.size());
+    slsf::persistence::NormalizeLightPluginKeys(*decoded, [](std::string_view plugin) {
+        auto* data = RE::TESDataHandler::GetSingleton();
+        const auto* file = data ? data->LookupModByName(plugin) : nullptr;
+        return file && file->IsLight();
+    });
     if (!g_lifecycle->PrepareLoad(*decoded, NewContext())) {
         logs::error("lifecycle: load bind failed: {}; business stays closed",
                     g_lifecycle->Status().message);
@@ -435,7 +441,8 @@ void OnMessage(SKSE::MessagingInterface::Message* message) {
         }
         break;
     case SKSE::MessagingInterface::kPostLoadGame:
-        Activate("post-load");
+        // SKSE encodes this bool in the pointer value, not in pointed-to data.
+        Activate("post-load", message->data != nullptr);
         break;
     case SKSE::MessagingInterface::kNewGame:
         if (g_lifecycle) {

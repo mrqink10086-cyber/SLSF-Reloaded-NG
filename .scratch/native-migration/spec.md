@@ -94,12 +94,12 @@ Status: ready-for-agent
 | A08 | 原生存档编码 | A02、A03、A04 | 已修复：v2 保存完整地区记录和零类别注册，恢复时重建类别汇总并应用当前传入配置 |
 | B01 | 三钟源、唤醒和调度器 | A02；结算联调 A06 | 已实现：三钟、取消回收和离线主线程 EXE 验证；游戏入口由 B03 接入 |
 | B02 | 同步事务与发布 | A03；时间业务 A06 | 已实现：当前时刻先结算再命令、同刻 FIFO、会话隔离及返回前发布 |
-| B03 | 生命周期和统一装配 | B01、B02、B04、B05、C01 | 已实现核心与入口：组合根、消息/保存注册、会话开关；目标运行时 12:34 历史加载通过，当前 1.7.104 被 SKSE 2.2.6 拒绝；见[06 组报告](../../docs/evidence/task-groups/06-lifecycle-save-and-capabilities.md) |
+| B03 | 生命周期和统一装配 | B01、B02、B04、B05、C01 | 核心与消息/保存入口已实现；已修复宿主读档失败及重复激活时的关闭路径，见[05/06 修复](../../docs/evidence/2026-10-29-05-06-fixes.md)；生产执行泵和目标游戏交互仍待接入/验收 |
 | B04 | 游戏记录和 Actor 事实查询 | A02、A04 | 已实现插件/Actor 快照查询、dirty 刷新缓存和静态 ABI/契约 probe；1.6.1170 实机查询待运行；见 04 组报告 |
-| B05 | SKSE 保存与分阶段加载 | A08、B02、B04 | 已实现：`SLSF` 记录、锁外编码、解码后稳定身份绑定、缺失记录失败关闭与一次激活；真实交互存/读档待目标运行时；见[06 组报告](../../docs/evidence/task-groups/06-lifecycle-save-and-capabilities.md) |
+| B05 | SKSE 保存与分阶段加载 | A08、B02、B04 | 已实现：owner `SLSF` / record `SLSV`、锁外编码及分阶段恢复；已修复 light plugin 稳定键并兼容旧错误键，见[05/06 修复](../../docs/evidence/2026-10-29-05-06-fixes.md)；真实游戏存/读档与 JSON 接入待完成 |
 | B06 | 公开 API、typed 事件、兼容数据输出 | A06、A07、B02、B04、C02 | 待实现；先固定完整输出 schema |
 | B07 | 跨档配置 JSON、更新通知、连接编辑及公开 JSON | A03、A04、A05、B02 | 待实现；读取/提交流程已确定 |
-| C01 | 提供方能力和版本锁定 | A02 | 已实现：串行 Ensure、延迟完成、异常隔离与 DDNG v2 历史目标 probe；见[06 组报告](../../docs/evidence/task-groups/06-lifecycle-save-and-capabilities.md) |
+| C01 | 提供方能力和版本锁定 | A02 | 已实现：并发查询合并、pending 重试、异常隔离及同线程/跨线程依赖环检测；见[05/06 修复](../../docs/evidence/2026-10-29-05-06-fixes.md)；DDNG v2 实机结果见历史 06 报告 |
 | C02 | 异步 VM 传输 | A02、B01；运行联调 B03 | 待实现 |
 | C03 | P+ 场景适配 | C01、C02、A07、B03 | 待实现 |
 | C04 | DDNG 设备适配 | C01、B03、B04 | 待实现 |
@@ -111,6 +111,8 @@ Status: ready-for-agent
 | C10 | 1.6.1170 游戏验收 | C09 | 待执行 |
 
 01 组共享类型与 02 组数据基础已完成。02 审核提出的六项问题已修复，原反例、修复方法和检查结果见[审核与修复报告](../../docs/evidence/2026-10-28-01-02-supplement-review.md)。03 组已实现传播与时间结算，当前接口及结果见[03 组报告](../../docs/evidence/task-groups/03-diffusion-and-settlement.md)。04 组已实现玩法规则和引擎查询接缝，静态 probe 通过、实机查询待运行，见[04 组报告](../../docs/evidence/task-groups/04-gameplay-and-engine-facts.md)。05 组调度与同步事务已完成，[离线 EXE](../../docs/evidence/2026-10-29-05-fixes-and-offline-probe.md)验证主线程心跳与长等待。06 组已完成生命周期、SKSE 保存与能力缓存，[报告](../../docs/evidence/task-groups/06-lifecycle-save-and-capabilities.md)记录核心/边界/ASan/模糊结果、12:34 目标运行时历史加载与 DDNG v2 probe，并记录当前 1.7.104 被 SKSE 2.2.6 拒绝的环境阻断。接下来 B07 接跨档配置更新，业务组接入统一执行器。各组按[优化实施方案](optimization-plan.md)接入，适配器先用可控测试数据开发，再接游戏生命周期。文档用语见[术语表](../../GLOSSARY.md)。
+
+2026-10-29 审核补修关闭 L1/L2、S1–S3：宿主失败关闭、light plugin 稳定键及旧键迁移、协程异常隔离、pending 能力重试与查询依赖环检测。等待项改为保序链表并保存迭代器，单项退休为 O(1)，5,000 项同时到期的本地中位数从 6.918 ms 降至 1.194 ms；结果与校验值保持相同。验证与成本取舍见[修复报告](../../docs/evidence/2026-10-29-05-06-fixes.md)。
 
 ## 测试决定与完成标准
 
@@ -129,7 +131,7 @@ Status: ready-for-agent
 
 真实下游 MOD 联测可补充问题线索；当前发布验收以完整公开协议、冻结客户端和输出检查为准。测试量随修改风险确定，既有随机/模糊测试保留；新的模块以能暴露具体错误的用例和必要对照为主。
 
-命令和测试工具见[测试说明](../../docs/superpowers/plans/2026-10-27-task-books/00-native-testing.md)。进度依据[01 组审查](../../docs/evidence/task-groups/01-contracts-and-build-review.md)、[02 组报告](../../docs/evidence/task-groups/02-state-location-and-codec.md)和[本轮修复记录](../../docs/evidence/2026-10-27-provider-readiness-fix.md)。当前已有纯核心实现；SKSE 入口仍是最小初始化，游戏接入待完成。
+命令和测试工具见[测试说明](../../docs/superpowers/plans/2026-10-27-task-books/00-native-testing.md)。进度依据各组报告及[05/06 审核修复](../../docs/evidence/2026-10-29-05-06-fixes.md)。当前已接生命周期消息和 SKSE 序列化回调；生产执行泵、JSON 文件读取及目标游戏完整交互仍待接入/验收。
 
 自动核心/边界测试按逻辑 CPU 多进程分片，固定 seed 分散重用例并单次输出控制台/JUnit；`-Jobs` 控制并发。owner 长链及完整 ASan 的当前成本见[性能修复记录](../../docs/evidence/2026-10-28-region-owner-and-parallel-tests.md)。游戏运行时沿用统一业务执行器。
 

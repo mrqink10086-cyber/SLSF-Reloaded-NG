@@ -1,0 +1,298 @@
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\CapabilityRegistryTests.cpp[0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFCoreTests>[0m [36;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.922s[0m
+RUN SLSFCoreTests cases=248 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9044 assertions in 31 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2097 assertions in 31 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2605 assertions in 31 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (59954 assertions in 31 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (42976 assertions in 31 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2264 assertions in 31 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (14591 assertions in 31 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (608 assertions in 31 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.365s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.062s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.097s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.109s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+error: execv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason
+
+=================================================================
+==50692==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x11474bea0030 at pc 0x7ff613131189 bp 0x00188cd3fdb0 sp 0x00188cd3fdf8
+WRITE of size 4 at 0x11474bea0030 thread T0
+    #0 0x7ff613131188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff613131d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff613131d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.094s[0m
+RUN SLSFCoreTestsAsan cases=248 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9044 assertions in 31 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2097 assertions in 31 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2605 assertions in 31 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (59954 assertions in 31 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (42976 assertions in 31 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2264 assertions in 31 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (14591 assertions in 31 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (608 assertions in 31 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.330s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.097s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.031s[0m
+RUN StateCodecFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF71F626108, 00007FF71F6267E3),
+INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF71F5E39D0,00007FF71F5EA780),
+INFO:      321 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\StateCodecFuzz-corpus
+INFO: seed corpus: files: 321 min: 1b max: 1673b total: 187447b rss: 38Mb
+#322	INITED cov: 798 ft: 1705 corp: 175/94Kb exec/s: 0 rss: 43Mb
+#1225	REDUCE cov: 798 ft: 1705 corp: 175/94Kb lim: 1580 exec/s: 0 rss: 45Mb L: 194/1570 MS: 3 ChangeByte-ChangeBit-EraseBytes-
+#1426	REDUCE cov: 798 ft: 1705 corp: 175/94Kb lim: 1580 exec/s: 0 rss: 46Mb L: 125/1570 MS: 1 EraseBytes-
+#3187	REDUCE cov: 798 ft: 1705 corp: 175/94Kb lim: 1590 exec/s: 0 rss: 50Mb L: 327/1570 MS: 1 EraseBytes-
+#4090	REDUCE cov: 798 ft: 1705 corp: 175/94Kb lim: 1590 exec/s: 0 rss: 52Mb L: 765/1570 MS: 3 ChangeBinInt-ChangeBinInt-EraseBytes-
+#6987	NEW    cov: 798 ft: 1706 corp: 176/94Kb lim: 1610 exec/s: 0 rss: 58Mb L: 255/1570 MS: 2 ChangeBinInt-CrossOver-
+#8014	NEW    cov: 798 ft: 1708 corp: 177/95Kb lim: 1620 exec/s: 0 rss: 60Mb L: 279/1570 MS: 2 ChangeByte-ChangeByte-
+#10616	REDUCE cov: 798 ft: 1708 corp: 177/95Kb lim: 1640 exec/s: 0 rss: 65Mb L: 946/1570 MS: 2 CrossOver-EraseBytes-
+#10823	NEW    cov: 798 ft: 1714 corp: 178/95Kb lim: 1640 exec/s: 0 rss: 66Mb L: 279/1570 MS: 2 ChangeByte-CopyPart-
+#12469	REDUCE cov: 798 ft: 1714 corp: 178/95Kb lim: 1650 exec/s: 0 rss: 69Mb L: 252/1570 MS: 1 EraseBytes-
+#15360	REDUCE cov: 798 ft: 1714 corp: 178/95Kb lim: 1670 exec/s: 0 rss: 75Mb L: 918/1570 MS: 1 EraseBytes-
+#16285	REDUCE cov: 798 ft: 1714 corp: 178/95Kb lim: 1670 exec/s: 0 rss: 76Mb L: 365/1570 MS: 5 InsertRepeatedBytes-ChangeBit-ChangeByte-ChangeByte-EraseBytes-
+#17378	REDUCE cov: 798 ft: 1714 corp: 178/95Kb lim: 1680 exec/s: 0 rss: 78Mb L: 311/1570 MS: 3 InsertRepeatedBytes-ChangeBit-EraseBytes-
+#18149	NEW    cov: 798 ft: 1716 corp: 179/95Kb lim: 1680 exec/s: 0 rss: 80Mb L: 203/1570 MS: 1 EraseBytes-
+#18336	REDUCE cov: 798 ft: 1716 corp: 179/95Kb lim: 1680 exec/s: 0 rss: 80Mb L: 706/1570 MS: 2 ChangeBinInt-EraseBytes-
+#18820	REDUCE cov: 798 ft: 1716 corp: 179/95Kb lim: 1680 exec/s: 0 rss: 81Mb L: 759/1570 MS: 4 ChangeBit-ChangeBinInt-ChangeByte-EraseBytes-
+#19246	REDUCE cov: 798 ft: 1716 corp: 179/95Kb lim: 1680 exec/s: 0 rss: 82Mb L: 83/1570 MS: 1 EraseBytes-
+#19502	REDUCE cov: 798 ft: 1716 corp: 179/95Kb lim: 1680 exec/s: 0 rss: 83Mb L: 348/1570 MS: 1 EraseBytes-
+#19657	NEW    cov: 798 ft: 1717 corp: 180/96Kb lim: 1680 exec/s: 0 rss: 83Mb L: 963/1570 MS: 5 ChangeBinInt-ShuffleBytes-ChangeBit-ShuffleBytes-CMP- DE: "fame."-
+#20437	NEW    cov: 798 ft: 1718 corp: 181/96Kb lim: 1680 exec/s: 0 rss: 85Mb L: 255/1570 MS: 5 PersAutoDict-CrossOver-InsertByte-ChangeBit-CMP- DE: "fame."-"\000\000\000\000"-
+#20518	REDUCE cov: 798 ft: 1719 corp: 182/96Kb lim: 1680 exec/s: 0 rss: 85Mb L: 327/1570 MS: 1 ChangeBinInt-
+#20802	NEW    cov: 798 ft: 1721 corp: 183/98Kb lim: 1680 exec/s: 0 rss: 85Mb L: 1251/1570 MS: 4 ChangeByte-ChangeBit-ChangeASCIIInt-PersAutoDict- DE: "\000\000\000\000"-
+#21318	REDUCE cov: 798 ft: 1721 corp: 183/98Kb lim: 1680 exec/s: 0 rss: 86Mb L: 42/1570 MS: 1 EraseBytes-
+#23159	REDUCE cov: 798 ft: 1721 corp: 183/98Kb lim: 1690 exec/s: 0 rss: 90Mb L: 1235/1570 MS: 1 EraseBytes-
+#23852	REDUCE cov: 798 ft: 1721 corp: 183/98Kb lim: 1690 exec/s: 0 rss: 91Mb L: 875/1570 MS: 3 EraseBytes-InsertByte-PersAutoDict- DE: "\000\000\000\000"-
+#25185	REDUCE cov: 798 ft: 1721 corp: 183/98Kb lim: 1700 exec/s: 0 rss: 94Mb L: 954/1570 MS: 3 ChangeBit-CrossOver-EraseBytes-
+#27465	REDUCE cov: 798 ft: 1721 corp: 183/98Kb lim: 1720 exec/s: 0 rss: 98Mb L: 941/1570 MS: 5 EraseBytes-CMP-InsertRepeatedBytes-ShuffleBytes-CMP- DE: "\004\000\000\000\000\000\000\000"-"z*"-
+#27923	NEW    cov: 798 ft: 1722 corp: 184/98Kb lim: 1720 exec/s: 0 rss: 99Mb L: 335/1570 MS: 3 ChangeByte-ChangeASCIIInt-ChangeBinInt-
+#28185	REDUCE cov: 798 ft: 1722 corp: 184/98Kb lim: 1720 exec/s: 0 rss: 100Mb L: 710/1570 MS: 2 PersAutoDict-EraseBytes- DE: "\004\000\000\000\000\000\000\000"-
+#28227	REDUCE cov: 798 ft: 1723 corp: 185/99Kb lim: 1720 exec/s: 0 rss: 100Mb L: 585/1570 MS: 2 CrossOver-InsertRepeatedBytes-
+#28625	REDUCE cov: 798 ft: 1723 corp: 185/99Kb lim: 1720 exec/s: 0 rss: 101Mb L: 1075/1570 MS: 3 EraseBytes-CMP-CMP- DE: "\000\000\000\002\000\000\000\000@\000\000\000\000\000\000\000"-"\000\000\000\000\"\000\000\000\000\000\000\000\373\000\000\000\000\000\243\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\004\000\000.\000\000\000\000\232\000\000\000\000\000\000\000\000\000\000\000\347\000\000\000\000"-
+#33424	NEW    cov: 798 ft: 1724 corp: 186/99Kb lim: 1760 exec/s: 0 rss: 110Mb L: 203/1570 MS: 4 ChangeByte-CMP-ChangeBinInt-PersAutoDict- DE: "\377\377\377\377\377\377\377\304"-"\000\000\000\002\000\000\000\000@\000\000\000\000\000\000\000"-
+#36028	REDUCE cov: 798 ft: 1724 corp: 186/99Kb lim: 1780 exec/s: 0 rss: 115Mb L: 1245/1570 MS: 4 ChangeASCIIInt-ChangeBit-ChangeASCIIInt-EraseBytes-
+#36039	REDUCE cov: 798 ft: 1724 corp: 186/99Kb lim: 1780 exec/s: 0 rss: 115Mb L: 201/1570 MS: 1 EraseBytes-
+#38396	REDUCE cov: 798 ft: 1724 corp: 186/99Kb lim: 1800 exec/s: 0 rss: 120Mb L: 1188/1570 MS: 2 InsertRepeatedBytes-EraseBytes-
+#40548	REDUCE cov: 798 ft: 1724 corp: 186/99Kb lim: 1820 exec/s: 0 rss: 124Mb L: 296/1570 MS: 2 ChangeBinInt-EraseBytes-
+#40679	REDUCE cov: 798 ft: 1724 corp: 186/99Kb lim: 1820 exec/s: 0 rss: 125Mb L: 199/1570 MS: 1 EraseBytes-
+#40715	NEW    cov: 799 ft: 1730 corp: 187/99Kb lim: 1820 exec/s: 0 rss: 125Mb L: 255/1570 MS: 1 ChangeBinInt-
+#41041	NEW    cov: 800 ft: 1732 corp: 188/99Kb lim: 1820 exec/s: 0 rss: 125Mb L: 234/1570 MS: 1 PersAutoDict- DE: "\000\000\000\000\"\000\000\000\000\000\000\000\373\000\000\000\000\000\243\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\004\000\000.\000\000\000\000\232\000\000\000\000\000\000\000\000\000\000\000\347\000\000\000\000"-
+#44148	REDUCE cov: 800 ft: 1732 corp: 188/99Kb lim: 1850 exec/s: 0 rss: 132Mb L: 279/1570 MS: 2 EraseBytes-CopyPart-
+#45246	NEW    cov: 800 ft: 1733 corp: 189/99Kb lim: 1860 exec/s: 0 rss: 134Mb L: 335/1570 MS: 3 ShuffleBytes-ChangeBit-ChangeBit-
+#45452	REDUCE cov: 800 ft: 1733 corp: 189/99Kb lim: 1860 exec/s: 0 rss: 134Mb L: 260/1570 MS: 1 EraseBytes-
+#45630	REDUCE cov: 800 ft: 1733 corp: 189/99Kb lim: 1860 exec/s: 0 rss: 135Mb L: 162/1570 MS: 3 CMP-ChangeBit-EraseBytes- DE: "\002\2168\343\2168\343\216"-
+#46167	REDUCE cov: 800 ft: 1733 corp: 189/99Kb lim: 1860 exec/s: 0 rss: 136Mb L: 136/1570 MS: 2 PersAutoDict-EraseBytes- DE: "\000\000\000\000"-
+#46403	REDUCE cov: 800 ft: 1733 corp: 189/99Kb lim: 1860 exec/s: 0 rss: 136Mb L: 87/1570 MS: 1 EraseBytes-
+#46487	NEW    cov: 800 ft: 1734 corp: 190/100Kb lim: 1860 exec/s: 0 rss: 136Mb L: 335/1570 MS: 4 ShuffleBytes-ChangeByte-ChangeByte-PersAutoDict- DE: "\002\2168\343\2168\343\216"-
+#47143	REDUCE cov: 800 ft: 1734 corp: 190/100Kb lim: 1860 exec/s: 0 rss: 138Mb L: 1099/1570 MS: 1 EraseBytes-
+#47606	NEW    cov: 800 ft: 1735 corp: 191/100Kb lim: 1860 exec/s: 0 rss: 139Mb L: 280/1570 MS: 3 InsertByte-ChangeBit-ChangeBit-
+#50197	NEW    cov: 800 ft: 1738 corp: 192/101Kb lim: 1880 exec/s: 0 rss: 144Mb L: 963/1570 MS: 1 CopyPart-
+#50633	NEW    cov: 800 ft: 1740 corp: 193/101Kb lim: 1880 exec/s: 0 rss: 145Mb L: 280/1570 MS: 1 ChangeBit-
+#53464	NEW    cov: 800 ft: 1741 corp: 194/101Kb lim: 1900 exec/s: 0 rss: 151Mb L: 234/1570 MS: 1 ChangeBit-
+#53526	REDUCE cov: 800 ft: 1741 corp: 194/101Kb lim: 1900 exec/s: 0 rss: 151Mb L: 89/1570 MS: 2 EraseBytes-CMP- DE: "\001\000\000\000\000\000\000\000"-
+#54743	NEW    cov: 800 ft: 1742 corp: 195/102Kb lim: 1910 exec/s: 0 rss: 154Mb L: 242/1570 MS: 2 ChangeASCIIInt-PersAutoDict- DE: "\004\000\000\000\000\000\000\000"-
+#55767	REDUCE cov: 800 ft: 1742 corp: 195/102Kb lim: 1920 exec/s: 0 rss: 155Mb L: 899/1570 MS: 4 ChangeASCIIInt-PersAutoDict-EraseBytes-CrossOver- DE: "\001\000\000\000\000\000\000\000"-
+#56388	REDUCE cov: 800 ft: 1742 corp: 195/102Kb lim: 1920 exec/s: 0 rss: 157Mb L: 188/1570 MS: 1 EraseBytes-
+#57416	REDUCE cov: 800 ft: 1742 corp: 195/101Kb lim: 1930 exec/s: 0 rss: 159Mb L: 301/1570 MS: 3 ChangeByte-EraseBytes-CrossOver-
+#58712	REDUCE cov: 800 ft: 1742 corp: 195/101Kb lim: 1940 exec/s: 0 rss: 161Mb L: 860/1570 MS: 1 EraseBytes-
+#59138	NEW    cov: 800 ft: 1743 corp: 196/102Kb lim: 1940 exec/s: 0 rss: 162Mb L: 335/1570 MS: 1 ChangeByte-
+#61250	REDUCE cov: 800 ft: 1743 corp: 196/102Kb lim: 1960 exec/s: 0 rss: 167Mb L: 931/1570 MS: 2 ChangeBit-EraseBytes-
+#61954	REDUCE cov: 800 ft: 1743 corp: 196/102Kb lim: 1960 exec/s: 0 rss: 168Mb L: 307/1570 MS: 4 CopyPart-ChangeBinInt-InsertRepeatedBytes-EraseBytes-
+#62273	REDUCE cov: 800 ft: 1743 corp: 196/101Kb lim: 1960 exec/s: 0 rss: 169Mb L: 1040/1570 MS: 4 ChangeBit-InsertByte-InsertByte-EraseBytes-
+#62649	REDUCE cov: 800 ft: 1743 corp: 196/101Kb lim: 1960 exec/s: 0 rss: 169Mb L: 1565/1565 MS: 1 EraseBytes-
+#66763	NEW    cov: 800 ft: 1744 corp: 197/102Kb lim: 2000 exec/s: 0 rss: 177Mb L: 293/1565 MS: 4 InsertByte-InsertByte-CMP-PersAutoDict- DE: "\000$\000\002\000\000"-"fame."-
+#70123	NEW    cov: 800 ft: 1746 corp: 198/102Kb lim: 2030 exec/s: 0 rss: 184Mb L: 340/1565 MS: 5 PersAutoDict-EraseBytes-ChangeBit-CopyPart-CopyPart- DE: "\000\000\000\000"-
+#71934	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2040 exec/s: 0 rss: 187Mb L: 287/1565 MS: 1 EraseBytes-
+#72047	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2040 exec/s: 0 rss: 187Mb L: 343/1565 MS: 3 ChangeBinInt-InsertRepeatedBytes-EraseBytes-
+#72444	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2040 exec/s: 0 rss: 188Mb L: 309/1565 MS: 2 ShuffleBytes-EraseBytes-
+#73197	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2040 exec/s: 73197 rss: 190Mb L: 282/1565 MS: 3 InsertByte-InsertByte-EraseBytes-
+#74783	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2050 exec/s: 74783 rss: 192Mb L: 102/1565 MS: 1 EraseBytes-
+#75201	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2050 exec/s: 75201 rss: 194Mb L: 157/1565 MS: 3 ChangeByte-CopyPart-EraseBytes-
+#76173	REDUCE cov: 800 ft: 1746 corp: 198/102Kb lim: 2050 exec/s: 76173 rss: 195Mb L: 191/1565 MS: 2 ChangeBinInt-EraseBytes-
+#76241	NEW    cov: 800 ft: 1747 corp: 199/102Kb lim: 2050 exec/s: 76241 rss: 195Mb L: 280/1565 MS: 3 ChangeBit-ChangeBit-ShuffleBytes-
+#77372	REDUCE cov: 800 ft: 1747 corp: 199/102Kb lim: 2061 exec/s: 77372 rss: 197Mb L: 38/1565 MS: 1 EraseBytes-
+#78537	REDUCE cov: 800 ft: 1747 corp: 199/102Kb lim: 2072 exec/s: 78537 rss: 200Mb L: 239/1565 MS: 5 ChangeBinInt-PersAutoDict-ChangeByte-ShuffleBytes-EraseBytes- DE: "\002\2168\343\2168\343\216"-
+#78966	REDUCE cov: 800 ft: 1747 corp: 199/102Kb lim: 2072 exec/s: 78966 rss: 201Mb L: 923/1565 MS: 4 ChangeASCIIInt-ChangeBit-CMP-EraseBytes- DE: "\000\000\000\000\000\000\000\000\000\000\000\000\000\000x*"-
+#80633	NEW    cov: 800 ft: 1748 corp: 200/102Kb lim: 2083 exec/s: 80633 rss: 204Mb L: 255/1565 MS: 2 ChangeByte-ChangeBit-
+#82694	REDUCE cov: 800 ft: 1748 corp: 200/102Kb lim: 2094 exec/s: 82694 rss: 209Mb L: 285/1565 MS: 2 ChangeByte-EraseBytes-
+#86200	REDUCE cov: 800 ft: 1748 corp: 200/102Kb lim: 2127 exec/s: 86200 rss: 216Mb L: 197/1565 MS: 1 EraseBytes-
+#87652	NEW    cov: 800 ft: 1751 corp: 201/102Kb lim: 2138 exec/s: 87652 rss: 219Mb L: 104/1565 MS: 2 ChangeBinInt-CMP- DE: "\000\000\000\000\"\0006LS\002\000\000\373\000\000\000\000\000\243\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\020\004\000\000\003\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"-
+#87716	NEW    cov: 800 ft: 1754 corp: 202/103Kb lim: 2138 exec/s: 87716 rss: 219Mb L: 332/1565 MS: 4 ChangeByte-InsertByte-InsertRepeatedBytes-InsertByte-
+#87842	REDUCE cov: 800 ft: 1754 corp: 202/103Kb lim: 2138 exec/s: 87842 rss: 220Mb L: 83/1565 MS: 1 EraseBytes-
+#88353	REDUCE cov: 803 ft: 1773 corp: 203/103Kb lim: 2138 exec/s: 88353 rss: 221Mb L: 36/1565 MS: 1 EraseBytes-
+#88837	REDUCE cov: 803 ft: 1773 corp: 203/103Kb lim: 2138 exec/s: 88837 rss: 221Mb L: 145/1565 MS: 4 CrossOver-EraseBytes-InsertRepeatedBytes-EraseBytes-
+#88909	REDUCE cov: 803 ft: 1773 corp: 203/103Kb lim: 2138 exec/s: 88909 rss: 222Mb L: 235/1565 MS: 2 ChangeByte-EraseBytes-
+#89187	REDUCE cov: 803 ft: 1773 corp: 203/103Kb lim: 2138 exec/s: 89187 rss: 222Mb L: 122/1565 MS: 3 InsertByte-PersAutoDict-EraseBytes- DE: "\001\000\000\000\000\000\000\000"-
+#92978	NEW    cov: 808 ft: 1802 corp: 204/103Kb lim: 2171 exec/s: 92978 rss: 229Mb L: 68/1565 MS: 1 EraseBytes-
+#93074	REDUCE cov: 808 ft: 1802 corp: 204/103Kb lim: 2171 exec/s: 93074 rss: 230Mb L: 276/1565 MS: 1 EraseBytes-
+#94885	REDUCE cov: 808 ft: 1802 corp: 204/103Kb lim: 2182 exec/s: 94885 rss: 233Mb L: 46/1565 MS: 1 EraseBytes-
+#96432	REDUCE cov: 808 ft: 1802 corp: 204/103Kb lim: 2193 exec/s: 96432 rss: 236Mb L: 123/1565 MS: 2 ShuffleBytes-EraseBytes-
+#96684	NEW    cov: 808 ft: 1805 corp: 205/103Kb lim: 2193 exec/s: 96684 rss: 237Mb L: 104/1565 MS: 2 ChangeBit-ChangeBinInt-
+#99382	REDUCE cov: 808 ft: 1805 corp: 205/103Kb lim: 2215 exec/s: 99382 rss: 242Mb L: 879/1565 MS: 3 InsertByte-CMP-EraseBytes- DE: "\001\000\000\000\000\000\000\001"-
+#99684	NEW    cov: 808 ft: 1806 corp: 206/103Kb lim: 2215 exec/s: 99684 rss: 242Mb L: 532/1565 MS: 2 InsertByte-CopyPart-
+#100000	DONE   cov: 808 ft: 1806 corp: 206/103Kb lim: 2215 exec/s: 100000 rss: 243Mb
+###### Recommended dictionary. ######
+"fame." # Uses: 1174
+"\000\000\000\000" # Uses: 1054
+"\004\000\000\000\000\000\000\000" # Uses: 729
+"z*" # Uses: 690
+"\000\000\000\002\000\000\000\000@\000\000\000\000\000\000\000" # Uses: 715
+"\000\000\000\000\"\000\000\000\000\000\000\000\373\000\000\000\000\000\243\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\004\000\000.\000\000\000\000\232\000\000\000\000\000\000\000\000\000\000\000\347\000\000\000\000" # Uses: 659
+"\377\377\377\377\377\377\377\304" # Uses: 649
+"\002\2168\343\2168\343\216" # Uses: 487
+"\001\000\000\000\000\000\000\000" # Uses: 400
+"\000$\000\002\000\000" # Uses: 262
+"\000\000\000\000\000\000\000\000\000\000\000\000\000\000x*" # Uses: 160
+"\000\000\000\000\"\0006LS\002\000\000\373\000\000\000\000\000\243\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\020\004\000\000\003\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000" # Uses: 83
+"\001\000\000\000\000\000\000\001" # Uses: 2
+###### End of recommended dictionary. ######
+Done 100000 runs in 1 second(s)
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.094s[0m
+RUN SLSFCoreTests cases=8 jobs=8 seed=1170
+SHARD 1/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (600 assertions in 1 test case)
+SHARD 2/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (800 assertions in 1 test case)
+SHARD 3/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1600 assertions in 1 test case)
+SHARD 4/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (400 assertions in 1 test case)
+SHARD 5/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+SHARD 6/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+SHARD 7/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 8/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.173s
+[0m[32;1m[  6%]:[0m [36;1m<SLSFBench>[0m compiling.releasedbg tests\bench\SLSFBench.cpp[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFBench>[0m [36;1mlinking.releasedbg SLSFBench.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.734s[0m
+RUN SLSFBench -> E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=27.29ms (65.0ns/row) avx2=6.59ms (15.7ns/row, 4.14x) relax_scalar=3.23ms (7.7ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=16.23ms (63.4ns/row) avx2=3.97ms (15.5ns/row, 4.09x) relax_scalar=1.81ms (7.1ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=12.87ms (67.0ns/row) avx2=3.36ms (17.5ns/row, 3.83x) relax_scalar=1.40ms (7.3ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=2.9µs/batch total=0.006s
+BENCH settlement accounts=64 batches=800 advance+publish=9.2µs/batch total=0.007s
+BENCH report: E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.062s[0m
+RUN SLSFDispatcherOfflineProbe
+heartbeat=3600 frames=3600 simulated_seconds=60 max_pump_us=2.9 long_wait_seconds=1000000 completions=3 stale_callbacks=0
+OFFLINE_WAKE_PROBE=PASS
+PASS native tests: mode=all seed=1170

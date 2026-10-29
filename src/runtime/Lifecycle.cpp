@@ -268,10 +268,13 @@ bool Lifecycle::PrepareRevert(const PersistentState& candidate, const SessionCon
     return Begin(SessionKind::Revert, context, &candidate);
 }
 
-bool Lifecycle::ActivatePrepared() {
+bool Lifecycle::ActivatePrepared(bool hostSucceeded) {
+    if (!hostSucceeded) {
+        RejectPreparation("host load failed; prepared session discarded");
+        return false;
+    }
     if (!pending_) {
-        phase_ = LifecyclePhase::Failed;
-        message_ = "no prepared session to activate";
+        RejectPreparation("no prepared session to activate");
         return false;
     }
     auto pending = std::move(pending_);
@@ -283,8 +286,7 @@ bool Lifecycle::ActivatePrepared() {
         .rng = &pending->assets->random,
     };
     if (!dispatcher_.Attach(pending->epoch, bindings, std::move(pending->state))) {
-        phase_ = LifecyclePhase::Failed;
-        message_ = "dispatcher refused activation; business stays closed";
+        RejectPreparation("dispatcher refused activation; business stays closed");
         return false;
     }
     active_ = std::move(pending->assets);

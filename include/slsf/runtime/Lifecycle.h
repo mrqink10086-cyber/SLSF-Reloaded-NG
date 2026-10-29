@@ -87,9 +87,9 @@ public:
     bool PrepareLoad(const PersistentState& candidate, const SessionContext& context);
     bool PrepareRevert(const PersistentState& candidate, const SessionContext& context);
 
-    // Attaches exactly once.  A failed attach leaves the business switch
-    // closed and the candidate diagnostics available in Status().
-    bool ActivatePrepared();
+    // Attaches exactly once after host success. Failure discards the candidate
+    // and closes the dispatcher; diagnostics remain available in Status().
+    bool ActivatePrepared(bool hostSucceeded = true);
 
     // Drops the pending candidate (failed/cancelled load) without touching
     // the detached dispatcher's last publication.

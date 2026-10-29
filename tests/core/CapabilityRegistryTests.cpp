@@ -3,6 +3,7 @@
 #include "slsf/integrations/CapabilityRegistry.h"
 
 #include <atomic>
+#include <barrier>
 #include <chrono>
 #include <cstddef>
 #include <memory>
@@ -170,4 +171,91 @@ TEST_CASE("provider exceptions become incompatible without escaping Ensure") {
     REQUIRE(registry.Require(Requirement()));
     CHECK(registry.Ensure("ddng") == CapabilityState::Incompatible);
     CHECK(registry.Find("ddng")->reason == "capability query threw");
+}
+
+TEST_CASE("loaded pending capabilities retry until the API is published", "[fix05-06]") {
+    int calls = 0;
+    CapabilityRegistry registry([&](const CapabilityRequirement&) {
+        if (++calls == 1) {
+            CapabilityProbeResult pending;
+            pending.loaded = true;
+            pending.pending = true;
+            return pending;
+        }
+        return GoodProbe();
+    });
+    REQUIRE(registry.Require(Requirement()));
+    CHECK(registry.Ensure("ddng") == CapabilityState::Waiting);
+    CHECK(registry.Find("ddng")->reason == "module API not ready yet");
+    CHECK(registry.Ensure("ddng") == CapabilityState::Available);
+    CHECK(calls == 2);
+    CHECK(registry.Find("ddng")->queryCount == 2);
+
+    auto probe = GoodProbe();
+    probe.pending = true;
+    CHECK(slsf::integrations::EvaluateCapability(Requirement(), probe).state ==
+          CapabilityState::Waiting);
+}
+
+TEST_CASE("capability providers can query siblings and reject recursive cycles", "[fix05-06]") {
+    CapabilityRegistry* active = nullptr;
+    CapabilityState nested = CapabilityState::Unqueried;
+    CapabilityState cycleResult = CapabilityState::Unqueried;
+    bool cycle = false;
+    bool direct = false;
+    SECTION("acyclic sibling") {}
+    SECTION("same id") { direct = true; }
+    SECTION("sibling cycle") { cycle = true; }
+    CapabilityRegistry registry([&](const CapabilityRequirement& requirement) {
+        if (requirement.id == "ddng") {
+            nested = active->Ensure(direct ? "ddng" : "sibling");
+        } else if (cycle) {
+            cycleResult = active->Ensure("ddng");
+            return CapabilityProbeResult{};
+        }
+        return GoodProbe();
+    });
+    active = &registry;
+    REQUIRE(registry.Require(Requirement()));
+    auto sibling = Requirement();
+    sibling.id = "sibling";
+    REQUIRE(registry.Require(sibling));
+    CHECK(registry.Ensure("ddng") == CapabilityState::Available);
+    CHECK(nested == (direct ? CapabilityState::Incompatible :
+                     cycle ? CapabilityState::Missing : CapabilityState::Available));
+    CHECK(registry.Find("ddng")->queryCount == 1);
+    CHECK(registry.Find("sibling")->queryCount == (direct ? 0u : 1u));
+    if (cycle) { CHECK(cycleResult == CapabilityState::Incompatible); }
+}
+
+TEST_CASE("cross-thread capability dependency cycles finish without duplicate queries", "[fix05-06]") {
+    CapabilityRegistry* active = nullptr;
+    std::barrier providers{2};
+    std::atomic<int> rejected{0};
+    std::atomic<int> completed{0};
+    CapabilityRegistry registry([&](const CapabilityRequirement& requirement) {
+        providers.arrive_and_wait();
+        const auto dependency = active->Ensure(requirement.id == "ddng" ? "sibling" : "ddng");
+        if (dependency == CapabilityState::Incompatible) {
+            ++rejected;
+        }
+        return GoodProbe();
+    });
+    active = &registry;
+    REQUIRE(registry.Require(Requirement()));
+    auto sibling = Requirement();
+    sibling.id = "sibling";
+    REQUIRE(registry.Require(sibling));
+    std::thread first([&] {
+        if (registry.Ensure("ddng") == CapabilityState::Available) { ++completed; }
+    });
+    std::thread second([&] {
+        if (registry.Ensure("sibling") == CapabilityState::Available) { ++completed; }
+    });
+    first.join();
+    second.join();
+    CHECK(rejected == 1);
+    CHECK(completed == 2);
+    CHECK(registry.Find("ddng")->queryCount == 1);
+    CHECK(registry.Find("sibling")->queryCount == 1);
 }

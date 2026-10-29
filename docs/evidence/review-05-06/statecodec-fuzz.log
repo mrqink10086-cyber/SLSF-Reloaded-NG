@@ -2,8 +2,8 @@
 RUN StateCodecFuzz -runs=100000 -seed=1170
 INFO: Running with entropic power schedule (0xFF, 100).
 INFO: Seed: 1170
-INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF71F626108, 00007FF71F6267E3), 
-INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF71F5E39D0,00007FF71F5EA780), 
+INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF71F626108, 00007FF71F6267E3),
+INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF71F5E39D0,00007FF71F5EA780),
 INFO:      246 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\StateCodecFuzz-corpus
 INFO: seed corpus: files: 246 min: 1b max: 1673b total: 155767b rss: 37Mb
 #247	INITED cov: 762 ft: 1520 corp: 157/96Kb exec/s: 0 rss: 41Mb

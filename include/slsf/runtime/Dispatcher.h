@@ -26,9 +26,10 @@
 #include <atomic>
 #include <coroutine>
 #include <cstdint>
-#include <cstdlib>
 #include <deque>
+#include <exception>
 #include <functional>
+#include <list>
 #include <map>
 #include <memory>
 #include <mutex>
@@ -57,6 +58,7 @@ private:
     // keeps elaborated look-ups inside promise_type from creating a phantom
     // namespace-scope type, and the private placement keeps C4240 quiet.
     struct WaitEntry;
+    using WaitList = std::list<std::shared_ptr<WaitEntry>>;
 
 public:
     using DirtySink = std::function<void(RegionId)>;
@@ -104,6 +106,7 @@ public:
             // coroutine frame; that pointer must outlive the call site, so
             // the capture container lives here until the frame is destroyed.
             std::function<Flow()>* keepBody{nullptr};
+            std::exception_ptr failure;
 
             ~promise_type() { delete keepBody; }
 
@@ -111,7 +114,7 @@ public:
             std::suspend_always initial_suspend() noexcept { return {}; }
             std::suspend_always final_suspend() noexcept { return {}; }
             void return_void() noexcept {}
-            void unhandled_exception() noexcept { std::abort(); }
+            void unhandled_exception() noexcept { failure = std::current_exception(); }
         };
 
         Flow() noexcept = default;
@@ -125,6 +128,9 @@ public:
         // Starts the parked body; a no-op once started or completed.
         void Start();
         bool Done() const noexcept;
+        // An uncaught body exception completes only this flow; the owner can
+        // inspect or rethrow it without interrupting other executor work.
+        std::exception_ptr Failure() const noexcept;
         // Cancels the pending wait without destroying the flow; Delay
         // reports false when the frame resumes.  No-op without a wait.
         bool CancelWait();
@@ -252,6 +258,7 @@ private:
         TimerToken token{};
         Delay* awaiter{nullptr}; // abort flag target; null after detach
         bool live{false};
+        WaitList::iterator position;
     };
 
     struct DirtyRequest {
@@ -303,7 +310,7 @@ private:
 
     time::Scheduler scheduler_{};
     ClockService clocks_{};
-    std::vector<std::shared_ptr<WaitEntry>> waits_{};
+    WaitList waits_{};
 
     Stats stats_{};
 };

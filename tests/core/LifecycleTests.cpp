@@ -9,6 +9,7 @@
 #include "slsf/core/reputation/ReputationState.h"
 #include "slsf/core/reputation/Settlement.h"
 #include "slsf/engine/EventBridge.h"
+#include "slsf/persistence/StableKeys.h"
 #include "slsf/runtime/Lifecycle.h"
 
 #include <algorithm>
@@ -17,6 +18,7 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -468,4 +470,86 @@ TEST_CASE("typed configuration projects onto legacy settlement keys") {
     std::string categoryKey{slsf::kGainConfigKeyCategoryMultiplierPrefix};
     categoryKey += std::to_string(static_cast<unsigned>(FameCategory::Whore));
     CHECK(rules.Get(categoryKey, 0.0) == 2.5);
+}
+
+TEST_CASE("host load failure discards a successfully prepared save", "[fix05-06]") {
+    Fixture fixture;
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareLoad(SaveWith(Key(1), 37.5), SessionContext{}));
+    REQUIRE(lifecycle.Status().phase == slsf::LifecyclePhase::Preparing);
+    CHECK_FALSE(lifecycle.ActivatePrepared(false));
+    CHECK(lifecycle.Status().phase == slsf::LifecyclePhase::Failed);
+    CHECK(lifecycle.Status().message == "host load failed; prepared session discarded");
+    CHECK_FALSE(lifecycle.BusinessOpen());
+    CHECK_FALSE(lifecycle.Executor().Attached());
+    CHECK_FALSE(lifecycle.Capture());
+    CHECK_FALSE(lifecycle.ActivatePrepared());
+    REQUIRE(lifecycle.PrepareLoad(SaveWith(Key(1), 12), SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared(true));
+    CHECK(Fame(lifecycle, 0) == 12);
+}
+
+TEST_CASE("repeated activation closes an already attached session", "[fix05-06]") {
+    Fixture fixture;
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared());
+    bool aborted = false;
+    auto flow = lifecycle.Executor().SpawnFlow([&]() -> slsf::Dispatcher::Flow {
+        aborted = !(co_await slsf::Dispatcher::Delay{
+            lifecycle.Executor(), 100, slsf::time::ClockDomain::Real});
+    });
+    CHECK_FALSE(lifecycle.ActivatePrepared());
+    CHECK_FALSE(lifecycle.BusinessOpen());
+    CHECK_FALSE(lifecycle.Executor().Attached());
+    CHECK(lifecycle.Executor().Timers().PendingCount() == 0);
+    CHECK(aborted);
+    CHECK(flow.Done());
+}
+
+TEST_CASE("historical light keys restore and recapture canonical local IDs", "[fix05-06]") {
+    Fixture fixture;
+    auto save = SaveWith(Key(0x012001), 37.5);
+    SECTION("v1 payload") { save.codecVersion = slsf::kLegacyPersistentStateCodecVersion; }
+    SECTION("v2 payload") {}
+    slsf::persistence::NormalizeLightPluginKeys(save, [](std::string_view plugin) {
+        return plugin == "lifecycle.esp";
+    });
+    REQUIRE(save.locations.front().key == Key(1));
+    REQUIRE(fixture.lifecycle->PrepareLoad(save, SessionContext{}));
+    REQUIRE(fixture.lifecycle->ActivatePrepared());
+    CHECK(fixture.lifecycle->Status().restoredAccounts == 1);
+    CHECK(fixture.lifecycle->Status().unresolvedAccounts == 0);
+    CHECK(Fame(*fixture.lifecycle, 0) == 37.5);
+    auto captured = fixture.lifecycle->Capture();
+    REQUIRE(captured);
+    CHECK(captured->locations.front().key == Key(1));
+    CHECK(captured->locations.front().local == save.locations.front().local);
+}
+
+TEST_CASE("light key migration preserves full and unknown plugins and rejects collisions", "[fix05-06]") {
+    auto save = SaveWith(Key(0x012001), 37.5);
+    save.locations.push_back(SaveWith({"full.esm", 0x123ABC}, 20).locations.front());
+    save.locations.push_back(SaveWith({"absent.esl", 0x037ABC}, 10).locations.front());
+    save.customRegions.push_back({"custom", Key(0x012001)});
+    save.graphEdits.push_back({Key(0x012001), {"full.esm", 0x123ABC}, 0.6, true});
+    const auto isLight = [](std::string_view plugin) { return plugin == "lifecycle.esp"; };
+    slsf::persistence::NormalizeLightPluginKeys(save, isLight);
+    CHECK(save.locations[0].key == Key(1));
+    CHECK(save.locations[1].key.localFormId == 0x123ABC);
+    CHECK(save.locations[2].key.localFormId == 0x037ABC);
+    CHECK(save.customRegions.front().key == Key(1));
+    CHECK(save.graphEdits.front().from == Key(1));
+    CHECK(save.graphEdits.front().to.localFormId == 0x123ABC);
+    const auto once = save;
+    slsf::persistence::NormalizeLightPluginKeys(save, isLight);
+    CHECK(save == once);
+
+    Fixture fixture;
+    auto collision = SaveWith(Key(0x012001), 37.5);
+    collision.locations.push_back(SaveWith(Key(1), 20).locations.front());
+    slsf::persistence::NormalizeLightPluginKeys(collision, isLight);
+    CHECK_FALSE(fixture.lifecycle->PrepareLoad(collision, SessionContext{}));
+    CHECK_FALSE(fixture.lifecycle->BusinessOpen());
+    CHECK_FALSE(fixture.lifecycle->Executor().Attached());
 }

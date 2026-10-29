@@ -73,10 +73,13 @@ CapabilityRecord EvaluateCapability(const CapabilityRequirement& requirement,
     record.apiVersion = probe.apiVersion;
     record.structSize = probe.structSize;
     record.functionCount = probe.functions.size();
-    if (ValidateProbe(requirement, probe, record.reason)) {
+    if (probe.pending) {
+        record.state = CapabilityState::Waiting;
+        record.reason = probe.loaded ? "module API not ready yet" : "module not loaded yet";
+    } else if (ValidateProbe(requirement, probe, record.reason)) {
         record.state = CapabilityState::Available;
     } else if (!probe.loaded) {
-        record.state = probe.pending ? CapabilityState::Waiting : CapabilityState::Missing;
+        record.state = CapabilityState::Missing;
     } else {
         record.state = CapabilityState::Incompatible;
     }
@@ -126,15 +129,35 @@ CapabilityState CapabilityRegistry::Ensure(std::string_view id) {
         return entry.record.state;
     }
     if (entry.querying) {
-        entry.completed.wait(lock, [&entry] { return !entry.querying; });
+        const auto caller = std::this_thread::get_id();
+        const Entry* dependency = &entry;
+        while (dependency->querying) {
+            if (dependency->queryThread == caller) {
+                return CapabilityState::Incompatible;
+            }
+            const auto waiting = waitingOn_.find(dependency->queryThread);
+            if (waiting == waitingOn_.end()) {
+                break;
+            }
+            dependency = waiting->second;
+        }
+        waitingOn_.emplace(caller, &entry);
+        try {
+            entry.completed.wait(lock, [&entry] { return !entry.querying; });
+        } catch (...) {
+            waitingOn_.erase(caller);
+            throw;
+        }
+        waitingOn_.erase(caller);
         return entry.record.state;
     }
 
+    const CapabilityRequirement requirement = entry.requirement;
     entry.querying = true;
+    entry.queryThread = std::this_thread::get_id();
     entry.record.state = CapabilityState::Waiting;
     ++entry.record.queryCount;
     const std::uint32_t queryCount = entry.record.queryCount;
-    const CapabilityRequirement requirement = entry.requirement;
     // Provider code often queries the registry for sibling capabilities.  Do
     // not hold the registry mutex across that call: duplicate callers wait on
     // this entry and then consume the single result.
@@ -155,6 +178,7 @@ CapabilityState CapabilityRegistry::Ensure(std::string_view id) {
     lock.lock();
     entry.record = std::move(evaluated);
     entry.querying = false;
+    entry.queryThread = {};
     entry.completed.notify_all();
     return entry.record.state;
 }

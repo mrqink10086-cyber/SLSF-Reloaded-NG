@@ -5,11 +5,13 @@
 #include <cstdint>
 #include <deque>
 #include <functional>
+#include <map>
 #include <mutex>
 #include <optional>
 #include <span>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <vector>
 
 namespace slsf::integrations {
@@ -79,7 +81,9 @@ public:
     bool Require(CapabilityRequirement requirement);
 
     // Queries (or shares an in-flight query for) one capability.  Unknown ids
-    // are reported as Incompatible rather than auto-registered.
+    // are reported as Incompatible rather than auto-registered. A synchronous
+    // dependency cycle returns Incompatible to the nested caller; the active
+    // provider still owns its query result.
     CapabilityState Ensure(std::string_view id);
 
     void EnsureAll();
@@ -94,6 +98,7 @@ private:
         CapabilityRequirement requirement;
         CapabilityRecord record;
         bool querying{false};
+        std::thread::id queryThread;
         std::condition_variable completed;
     };
 
@@ -101,6 +106,7 @@ private:
     CapabilityQuery query_;
     // Deque keeps Entry references stable while callers wait on completed.
     std::deque<Entry> entries_;
+    std::map<std::thread::id, Entry*> waitingOn_;
 };
 
 [[nodiscard]] CapabilityRecord EvaluateCapability(const CapabilityRequirement& requirement,

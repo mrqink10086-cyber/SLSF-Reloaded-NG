@@ -1,0 +1,12 @@
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SerializationFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (1991 inline 8-bit counters): 1991 [00007FF7A05AE388, 00007FF7A05AEB4F),
+INFO: Loaded 1 PC tables (1991 PCs): 1991 [00007FF7A05699E8,00007FF7A0571658),
+INFO:       14 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\SerializationFuzz-corpus
+INFO: seed corpus: files: 14 min: 1b max: 983b total: 3254b rss: 37Mb
+#15	INITED cov: 565 ft: 625 corp: 13/2271b exec/s: 0 rss: 39Mb
+#100000	DONE   cov: 565 ft: 625 corp: 13/2271b lim: 1968 exec/s: 0 rss: 93Mb
+Done 100000 runs in 0 second(s)
+PASS native tests: mode=fuzz seed=1170
