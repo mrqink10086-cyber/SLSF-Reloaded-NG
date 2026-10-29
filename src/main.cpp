@@ -1,8 +1,529 @@
+#include "pch.h"
+
+#include "slsf/core/Snapshots.h"
+#include "slsf/core/reputation/DiffusionKernel.h"
+#include "slsf/core/reputation/Settlement.h"
+#include "slsf/engine/EventBridge.h"
+#include "slsf/integrations/CapabilityRegistry.h"
+#include "slsf/persistence/Serialization.h"
+#include "slsf/runtime/Lifecycle.h"
+
+#include <Windows.h>
+
+#include <algorithm>
+#include <cstddef>
+#include <cstdint>
+#include <limits>
+#include <map>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
+namespace {
+
+using slsf::ConfigurationRevision;
+using slsf::ConfigurationSnapshot;
+using slsf::ConfigurationUpdateResult;
+using slsf::ConfigurationUpdateStatus;
+
+class BootstrapConfigurationSource final : public slsf::IConfigurationSource {
+public:
+    BootstrapConfigurationSource() {
+        auto data = std::make_shared<slsf::ConfigurationData>();
+        data->parameters = slsf::LegacyDefaultParameters();
+        const ConfigurationRevision revision{1};
+        snapshot_.revision = revision;
+        snapshot_.data = std::move(data);
+        snapshot_.lastUpdate = ConfigurationUpdateResult{
+            .status = ConfigurationUpdateStatus::Unchanged,
+            .revision = revision,
+            .message = "bootstrap defaults; JSON adapter pending group 10",
+        };
+    }
+
+    ConfigurationSnapshot Current() const override { return snapshot_; }
+
+    ConfigurationUpdateResult Reload() override {
+        ++reloads_;
+        auto update = ConfigurationUpdateResult{
+            .status = ConfigurationUpdateStatus::Unchanged,
+            .revision = snapshot_.revision,
+            .message = "bootstrap source reloaded; JSON adapter pending group 10",
+        };
+        snapshot_.lastUpdate = update;
+        return update;
+    }
+
+    std::uint64_t Reloads() const { return reloads_; }
+
+private:
+    ConfigurationSnapshot snapshot_;
+    std::uint64_t reloads_{};
+};
+
+// Minimal ABI surface: DDNG publishes a C++ object through
+// DeviousDevices.dll!GetAPI; GetVersion() is the first virtual.
+class DDNG_API_Probe {
+public:
+    virtual std::size_t GetVersion() const = 0;
+};
+
+using DDNG_GetAPI = DDNG_API_Probe* (*)();
+
+std::string VersionText(const REL::Version& version) {
+    return std::to_string(version[0]) + "." + std::to_string(version[1]) + "." +
+           std::to_string(version[2]) + "." + std::to_string(version[3]);
+}
+
+REL::Version DecodePackedVersion(std::uint32_t packed) {
+    // SKSE's packed form is major.minor.revision.build in 8/8/12/4 bits.
+    return REL::Version{
+        static_cast<std::uint16_t>((packed >> 24u) & 0xFFu),
+        static_cast<std::uint16_t>((packed >> 16u) & 0xFFu),
+        static_cast<std::uint16_t>((packed >> 4u) & 0xFFFu),
+        static_cast<std::uint16_t>(packed & 0xFu),
+    };
+}
+
+bool LogHostVersions(const SKSE::LoadInterface* a_skse) {
+    if (a_skse == nullptr) {
+        logs::error("host: SKSE load interface is null");
+        return false;
+    }
+    const REL::Version runtime = a_skse->RuntimeVersion();
+    const REL::Version skse = DecodePackedVersion(a_skse->SKSEVersion());
+    logs::info("host: runtime={} skse={} commonlib={}", VersionText(runtime),
+               VersionText(skse),
+#ifdef COMMONLIB_VERSION
+               COMMONLIB_VERSION
+#else
+               "unknown"
+#endif
+    );
+    return true;
+}
+
+std::unique_ptr<BootstrapConfigurationSource> g_configuration;
+std::unique_ptr<slsf::Lifecycle> g_lifecycle;
+std::unique_ptr<slsf::engine::EventBridge> g_events;
+std::unique_ptr<slsf::integrations::CapabilityRegistry> g_capabilities;
+slsf::RegionSnapshot g_regions;
+bool g_worldBuilt{false};
+bool g_dataLoaded{false};
+
+slsf::SessionContext NewContext() {
+    slsf::SessionContext context;
+    context.scene.status = slsf::Status::NotReady;
+    return context;
+}
+
+slsf::integrations::CapabilityProbeResult ProbeDDNG(
+    const slsf::integrations::CapabilityRequirement&) {
+    slsf::integrations::CapabilityProbeResult probe;
+    const HMODULE module = ::GetModuleHandleW(L"DeviousDevices.dll");
+    if (module == nullptr) {
+        // Before kDataLoaded the plugin may still be initializing; after it,
+        // absence is final for this process.
+        probe.pending = !g_dataLoaded;
+        return probe;
+    }
+    probe.loaded = true;
+    const auto getApi = reinterpret_cast<DDNG_GetAPI>(
+        reinterpret_cast<void*>(::GetProcAddress(module, "GetAPI")));
+    if (getApi == nullptr) {
+        probe.version = 0;
+        return probe;
+    }
+    const DDNG_API_Probe* api = getApi();
+    if (api == nullptr) {
+        // DDNG publishes its API object from kDataLoaded, after its services
+        // are initialized.  Before that point a loaded DLL with a null API is
+        // still pending, not permanently incompatible.
+        probe.loaded = g_dataLoaded;
+        probe.pending = !g_dataLoaded;
+        probe.apiVersion = 0;
+        probe.version = 0;
+        return probe;
+    }
+    probe.version = static_cast<std::uint32_t>(api->GetVersion());
+    // DDNG publishes its interface generation through GetVersion(); the
+    // locked DD_APIVERSION is 2 and there is no separate API selector.
+    probe.apiVersion = probe.version;
+    probe.structSize = sizeof(void*);
+    return probe;
+}
+
+void LogCapabilities(const char* when) {
+    if (!g_capabilities) {
+        return;
+    }
+    for (const auto& record : g_capabilities->Snapshot()) {
+        logs::info("[capability:{}] {} state={} version={} api={} reason={} business={}",
+                   when, record.requirement.id,
+                   slsf::integrations::CapabilityStateName(record.state), record.version,
+                   record.apiVersion, record.reason, record.requirement.business);
+    }
+}
+
+bool BuildStaticWorld() {
+    auto* dataHandler = RE::TESDataHandler::GetSingleton();
+    if (dataHandler == nullptr) {
+        logs::error("lifecycle: TESDataHandler unavailable at DataLoaded");
+        return false;
+    }
+
+    std::vector<slsf::LocationRecord> records;
+    std::map<const RE::BGSLocation*, slsf::StableRegionKey> keysByForm;
+    std::map<const RE::BGSLocation*, std::size_t> recordIndices;
+    const auto& locations = dataHandler->GetFormArray<RE::BGSLocation>();
+    records.reserve(locations.size());
+    for (RE::BGSLocation* location : locations) {
+        if (location == nullptr) {
+            continue;
+        }
+        const RE::TESFile* file = location->GetFile(0);
+        if (file == nullptr) {
+            continue;
+        }
+        const std::string_view filename = file->GetFilename();
+        if (filename.empty()) {
+            continue;
+        }
+        slsf::StableRegionKey key{
+            .plugin = std::string(filename),
+            .localFormId = location->GetFormID() & 0x00FFFFFFu,
+        };
+        keysByForm.emplace(location, key);
+        slsf::LocationRecord record;
+        record.formId = slsf::StableFormKey{.plugin = key.plugin, .localFormId = key.localFormId};
+        record.stableKey = key;
+        record.displayName =
+            location->GetFullName() != nullptr ? std::string(location->GetFullName()) : std::string{};
+        recordIndices.emplace(location, records.size());
+        records.push_back(std::move(record));
+    }
+
+    // BuildLocationIndex only derives the parent forest from parentFormId.
+    // The engine exposes parentLoc separately, so project it onto the stable
+    // form key before binding; otherwise every location becomes a root and
+    // child locations cannot inherit their owner region.
+    for (const auto& [location, key] : keysByForm) {
+        (void)key;
+        if (location == nullptr || location->parentLoc == nullptr) {
+            continue;
+        }
+        const auto self = recordIndices.find(location);
+        const auto parent = keysByForm.find(location->parentLoc);
+        if (self != recordIndices.end() && parent != keysByForm.end()) {
+            records[self->second].parentFormId =
+                slsf::StableFormKey{parent->second.plugin, parent->second.localFormId};
+        }
+    }
+
+    std::map<slsf::StableRegionKey, std::vector<slsf::StableRegionKey>> childrenByOwner;
+    for (const RE::BGSLocation* location : locations) {
+        if (location == nullptr || location->parentLoc == nullptr) {
+            continue;
+        }
+        const auto self = keysByForm.find(location);
+        const auto parent = keysByForm.find(location->parentLoc);
+        if (self == keysByForm.end() || parent == keysByForm.end() ||
+            self->second == parent->second) {
+            continue;
+        }
+        childrenByOwner[parent->second].push_back(self->second);
+    }
+    for (auto& [owner, children] : childrenByOwner) {
+        (void)owner;
+        std::sort(children.begin(), children.end());
+        children.erase(std::unique(children.begin(), children.end()), children.end());
+    }
+
+    slsf::RegionDefinitions definitions;
+    definitions.keys.reserve(keysByForm.size());
+    for (const auto& [form, key] : keysByForm) {
+        (void)form;
+        definitions.keys.push_back(key);
+    }
+    std::sort(definitions.keys.begin(), definitions.keys.end());
+    for (const auto& [owner, children] : childrenByOwner) {
+        definitions.ownerRules.push_back(slsf::OwnerRule{owner, children});
+    }
+    std::sort(definitions.ownerRules.begin(), definitions.ownerRules.end(),
+              [](const slsf::OwnerRule& left, const slsf::OwnerRule& right) {
+                  return left.owner < right.owner;
+              });
+    definitions.customOrder = definitions.keys;
+
+    auto index = slsf::BuildLocationIndex(records);
+    if (!index) {
+        logs::error("lifecycle: location index failed: {}", index.error().message);
+        return false;
+    }
+    auto regions = slsf::BindRegions(*index, definitions);
+    if (!regions) {
+        logs::error("lifecycle: region binding failed: {}", regions.error().message);
+        return false;
+    }
+    g_regions = std::move(*regions);
+    logs::info("lifecycle: static table built locations={} regions={} ownershipRules={}",
+               g_regions.locationOwners.size(), g_regions.regions.size(),
+               g_regions.ownership.size());
+    return true;
+}
+
+void EnsureLifecycle() {
+    if (!g_worldBuilt || !g_configuration) {
+        return;
+    }
+    if (!g_lifecycle) {
+        g_lifecycle = std::make_unique<slsf::Lifecycle>(
+            slsf::StaticWorld{.regions = &g_regions}, *g_configuration);
+        g_events = std::make_unique<slsf::engine::EventBridge>(
+            *g_lifecycle, [](const slsf::engine::AsyncMessage& message) {
+                logs::info("event: {} payload={} epoch={}.{}.{}", message.topic, message.payload,
+                           message.epoch.session, message.epoch.index, message.epoch.scene);
+                // Dispatcher revalidates the epoch when the round consumes the
+                // event, so a menu transition between Flush and Step still wins.
+                g_lifecycle->Executor().Post(message.epoch, [] {});
+            });
+    }
+}
+
+bool Activate(const char* reason) {
+    if (!g_lifecycle) {
+        logs::error("lifecycle: {} requested before composition root exists", reason);
+        return false;
+    }
+    if (!g_lifecycle->ActivatePrepared()) {
+        const auto status = g_lifecycle->Status();
+        logs::error("lifecycle: {} activation failed: {}", reason, status.message);
+        return false;
+    }
+    const auto status = g_lifecycle->Status();
+    logs::info("lifecycle: {} active epoch={}.{}.{} configRevision={} restored={} unresolved={} "
+               "droppedEdges={} business={}",
+               reason, status.epoch.session, status.epoch.index, status.epoch.scene,
+               status.configurationRevision.value, status.restoredAccounts,
+               status.unresolvedAccounts, status.droppedConnectionEdges, status.businessOpen);
+    return true;
+}
+
+void OnSerializationSave(SKSE::SerializationInterface* serialization) {
+    if (serialization == nullptr || !g_lifecycle) {
+        return;
+    }
+    auto captured = g_lifecycle->Capture();
+    if (!captured) {
+        logs::warn("lifecycle: save skipped: {}", captured.error().message);
+        return;
+    }
+    auto encoded = slsf::persistence::EncodeSaveRecord(*captured);
+    if (!encoded) {
+        logs::error("lifecycle: save encode failed: {}", encoded.error().message);
+        return;
+    }
+    if (encoded->size() > (std::numeric_limits<std::uint32_t>::max)()) {
+        logs::error("lifecycle: save record too large");
+        return;
+    }
+    const bool written = serialization->WriteRecord(
+        slsf::persistence::kSaveRecordType, slsf::persistence::kSaveRecordVersion,
+        encoded->data(), static_cast<std::uint32_t>(encoded->size()));
+    logs::info("lifecycle: native save record bytes={} written={}", encoded->size(), written);
+}
+
+void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
+    if (serialization == nullptr || !g_lifecycle) {
+        return;
+    }
+    g_lifecycle->ReturnToMenu();
+    std::vector<std::byte> bytes;
+    bool found = false;
+    bool malformed = false;
+    std::uint32_t type = 0;
+    std::uint32_t version = 0;
+    std::uint32_t length = 0;
+    while (serialization->GetNextRecordInfo(type, version, length)) {
+        if (type != slsf::persistence::kSaveRecordType) {
+            continue;
+        }
+        if (found) {
+            malformed = true;
+            break;
+        }
+        found = true;
+        if (length == 0 || length > slsf::persistence::kSaveRecordMaxBytes ||
+            version != slsf::persistence::kSaveRecordVersion) {
+            malformed = true;
+            break;
+        }
+        bytes.resize(length);
+        if (serialization->ReadRecordData(bytes.data(), length) != length) {
+            malformed = true;
+            break;
+        }
+    }
+
+    if (malformed) {
+        g_lifecycle->RejectPreparation("save record is malformed or unsupported");
+        logs::error("lifecycle: load rejected before binding; business stays closed");
+        return;
+    }
+    if (!found) {
+        // A save authored without our co-save record cannot be distinguished
+        // from a truncated/foreign save.  Do not synthesize state and open
+        // business on top of it; report the failure and stay closed.
+        g_lifecycle->RejectPreparation("save has no SLSF native record");
+        logs::error("lifecycle: save has no SLSF native record; business stays closed");
+        return;
+    }
+
+    auto decoded = slsf::persistence::DecodeSaveRecord(bytes);
+    if (!decoded) {
+        g_lifecycle->RejectPreparation("save record decode failed: " + decoded.error().message);
+        logs::error("lifecycle: load decode failed: {}; business stays closed",
+                    decoded.error().message);
+        return;
+    }
+    const auto inspected = slsf::persistence::InspectSaveRecord(bytes);
+    logs::info("lifecycle: save record decoded bytes={} codec={} locations={}",
+               bytes.size(), inspected ? inspected->codecVersion : 0,
+               decoded->locations.size());
+    if (!g_lifecycle->PrepareLoad(*decoded, NewContext())) {
+        logs::error("lifecycle: load bind failed: {}; business stays closed",
+                    g_lifecycle->Status().message);
+        return;
+    }
+    // Activation is deferred to kPostLoadGame so business handling cannot
+    // start before the load has completely bound its location ownership.
+    const auto status = g_lifecycle->Status();
+    logs::info("lifecycle: load prepared epoch={} restored={} unresolved={} business={}",
+               status.epoch.session, status.restoredAccounts, status.unresolvedAccounts,
+               status.businessOpen);
+}
+
+void OnSerializationRevert(SKSE::SerializationInterface*) {
+    if (g_lifecycle) {
+        g_lifecycle->ReturnToMenu();
+        logs::info("lifecycle: revert closed the business switch");
+    }
+}
+
+void OnMessage(SKSE::MessagingInterface::Message* message) {
+    if (message == nullptr) {
+        return;
+    }
+    switch (message->type) {
+    case SKSE::MessagingInterface::kPostLoad:
+        if (g_capabilities) {
+            g_capabilities->EnsureAll();
+            LogCapabilities("postload");
+        }
+        break;
+    case SKSE::MessagingInterface::kPostPostLoad:
+        if (g_capabilities) {
+            g_capabilities->EnsureAll();
+            LogCapabilities("postpostload");
+        }
+        break;
+    case SKSE::MessagingInterface::kPreLoadGame:
+        if (g_lifecycle) {
+            g_lifecycle->ReturnToMenu();
+            logs::info("lifecycle: pre-load closed the business switch");
+        }
+        break;
+    case SKSE::MessagingInterface::kPostLoadGame:
+        Activate("post-load");
+        break;
+    case SKSE::MessagingInterface::kNewGame:
+        if (g_lifecycle) {
+            if (!g_lifecycle->PrepareNewGame(NewContext())) {
+                logs::error("lifecycle: new game preparation failed: {}",
+                            g_lifecycle->Status().message);
+                break;
+            }
+            Activate("new-game");
+        }
+        break;
+    case SKSE::MessagingInterface::kDataLoaded:
+        g_dataLoaded = true;
+        if (!g_worldBuilt) {
+            g_worldBuilt = BuildStaticWorld();
+            EnsureLifecycle();
+        }
+        if (g_lifecycle) {
+            const auto update = g_lifecycle->ReloadConfiguration();
+            logs::info("lifecycle: startup configuration status={} message={}",
+                       static_cast<int>(update.status), update.message);
+        }
+        if (g_capabilities) {
+            g_capabilities->EnsureAll();
+            LogCapabilities("dataloaded");
+        }
+        break;
+    case SKSE::MessagingInterface::kSaveGame:
+        break;
+    default:
+        break;
+    }
+}
+
+} // namespace
+
 SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
 {
-	SKSE::Init(a_skse);
+    SKSE::Init(a_skse);
+    logs::info("SLSF Reloaded NG lifecycle bootstrap");
+    if (!LogHostVersions(a_skse)) {
+        return false;
+    }
+    // Baseline-TU CPUID/OSXSAVE/XGETBV gate; the result selects the AVX2 leaf
+    // for the first diffusion round and stays stable for this process.
+    logs::info("lifecycle: baseline ISA check avx2={}", slsf::KernelSupportsAvx2());
 
-	logs::info("Hello World!");
+    g_configuration = std::make_unique<BootstrapConfigurationSource>();
 
-	return true;
+    auto capabilities = std::make_unique<slsf::integrations::CapabilityRegistry>(ProbeDDNG);
+    const bool ddngRequired = capabilities->Require(slsf::integrations::CapabilityRequirement{
+        .id = "ddng",
+        .displayName = "Devious Devices NG",
+        .business = "equipment visibility and device facts",
+        .minimumVersion = 2,
+        .maximumVersion = 2,
+        .requiredApiVersion = 2,
+        .minimumStructSize = 0,
+        .requiredFunctionCount = 0,
+    });
+    if (!ddngRequired) {
+        logs::error("capability: failed to register DDNG requirement");
+        return false;
+    }
+    g_capabilities = std::move(capabilities);
+
+    auto* serialization = SKSE::GetSerializationInterface();
+    if (serialization == nullptr) {
+        logs::error("lifecycle: serialization interface unavailable");
+        return false;
+    }
+    serialization->SetUniqueID('SLSF');
+    serialization->SetSaveCallback(OnSerializationSave);
+    serialization->SetLoadCallback(OnSerializationLoad);
+    serialization->SetRevertCallback(OnSerializationRevert);
+
+    // Register before any kPostLoad broadcast so one-shot provider messages
+    // cannot be missed; capability queries happen in OnMessage.
+    auto* messaging = SKSE::GetMessagingInterface();
+    if (messaging == nullptr) {
+        logs::error("lifecycle: messaging interface unavailable");
+        return false;
+    }
+    if (!messaging->RegisterListener(OnMessage)) {
+        logs::error("lifecycle: messaging listener registration failed");
+        return false;
+    }
+
+    logs::info("lifecycle: serialization and messaging listeners registered");
+    return true;
 }

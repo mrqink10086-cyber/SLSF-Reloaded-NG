@@ -1,0 +1,43 @@
+=== [contracts] ===
+Filters: [contracts]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (49 assertions in 8 test cases)
+
+exit=0
+=== [category] ===
+Filters: [category]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (158 assertions in 4 test cases)
+
+exit=0
+=== [numeric] ===
+Filters: [numeric]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (214 assertions in 3 test cases)
+
+exit=0
+=== [configuration] ===
+Filters: [configuration]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (59 assertions in 4 test cases)
+
+exit=0
+=== [shared] ===
+Filters: [shared]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (14 assertions in 3 test cases)
+
+exit=0
+=== [ports] ===
+Filters: [ports]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (22 assertions in 4 test cases)
+
+exit=0
+summary=0,0,0,0,0,0

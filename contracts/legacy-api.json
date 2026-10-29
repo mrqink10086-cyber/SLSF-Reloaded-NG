@@ -1,0 +1,3462 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/NymphoElf/SLSF-Reloaded",
+    "scriptsDirectory": "Scripts/Source",
+    "esp": "SLSF Reloaded.esp",
+    "espSha256": "8ebd5ab79740e85a2a8d553e47391bdfdecd82d278e30bcfcd239c28fb544812",
+    "espSize": 23775,
+    "note": "Facts were extracted from the 17 legacy PSC files and the ESP VMAD; no FormID or default value was invented."
+  },
+  "functionCount": 124,
+  "publicFunctionCount": 86,
+  "internalFunctionCount": 38,
+  "classificationCounts": {
+    "public": 86,
+    "internal": 38
+  },
+  "functions": [
+    {
+      "id": "SLSF_Reloaded_CommentManager.NakedCommentPublicWhoreCheck",
+      "script": "SLSF_Reloaded_CommentManager",
+      "scriptType": "Quest",
+      "name": "NakedCommentPublicWhoreCheck",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_CommentManager.psc:41"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.FameCheck",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "FameCheck",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:144"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.SetDefaults",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "SetDefaults",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:149"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CheckSpreadableFame",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "CheckSpreadableFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:206"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.GetFameValue",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "GetFameValue",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FameCategory",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:446",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.SetFameValue",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "SetFameValue",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FameCategory",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "FameValue",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:550",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.DecayDynamicAnonymityCheck",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "DecayDynamicAnonymityCheck",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationIndex",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "IsDefaultLocation",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1024"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.GetExternalFlags",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "GetExternalFlags",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1413",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.RegisterExternalMod",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "RegisterExternalMod",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1470",
+      "invalidInputResult": "no-op (invalid plugin, duplicate, or full list)"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CountExternalMods",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "CountExternalMods",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1497",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CleanExternalModList",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "CleanExternalModList",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1511",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.UnregisterExternalMod",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "UnregisterExternalMod",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1529",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.GetModFlagState",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "GetModFlagState",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1574",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.DoesFlagExist",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "DoesFlagExist",
+      "returnType": "String",
+      "returnTypeKind": "String",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1640",
+      "invalidInputResult": "\"No\""
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.IsModRegistered",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "IsModRegistered",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1696",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.SetExternalFlags",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "SetExternalFlags",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "FlagValue",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1706",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CheckSexWorker",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "CheckSexWorker",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1783",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CheckFlags",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "CheckFlags",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:1793"
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.FameOverviewCheck",
+      "script": "SLSF_Reloaded_DataManager",
+      "scriptType": "Quest",
+      "name": "FameOverviewCheck",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DataManager.psc:2001"
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Exporter.RunExport",
+      "script": "SLSF_Reloaded_Data_Exporter",
+      "scriptType": "Quest",
+      "name": "RunExport",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_Data_Exporter.psc:16",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Exporter.ExportData",
+      "script": "SLSF_Reloaded_Data_Exporter",
+      "scriptType": "Quest",
+      "name": "ExportData",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_Data_Exporter.psc:32",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Importer.RunImport",
+      "script": "SLSF_Reloaded_Data_Importer",
+      "scriptType": "Quest",
+      "name": "RunImport",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_Data_Importer.psc:15",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Importer.ImportData",
+      "script": "SLSF_Reloaded_Data_Importer",
+      "scriptType": "Quest",
+      "name": "ImportData",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_Data_Importer.psc:36",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CompareLocations",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "CompareLocations",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "OldLocation",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "NewLocation",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:66",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.SetLastExitTime",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "SetLastExitTime",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "GameTime",
+          "type": "Float",
+          "kind": "Float",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:84",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.SetLastEnterTime",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "SetLastEnterTime",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "GameTime",
+          "type": "Float",
+          "kind": "Float",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:107",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CheckRecognitionTimeIncrease",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "CheckRecognitionTimeIncrease",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:131",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CheckRecognitionTimeDecay",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "CheckRecognitionTimeDecay",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:200",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.UpdateCurrentLocationAnonymity",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "UpdateCurrentLocationAnonymity",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationIndex",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "GameTime",
+          "type": "Float",
+          "kind": "Float",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "IsDefaultLocation",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:260"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.GetAnonymity",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "GetAnonymity",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:274",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CheckAnonymityStatus",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "CheckAnonymityStatus",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationIndex",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "IsDefaultLocation",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:292"
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.ThaneStatus",
+      "script": "SLSF_Reloaded_DynamicAnonymity",
+      "scriptType": "Quest",
+      "name": "ThaneStatus",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_DynamicAnonymity.psc:312",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.Startup",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "Startup",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:101"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.UpdateFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "UpdateFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "UpdateMultiplier",
+          "type": "Int",
+          "kind": "Int",
+          "default": "1",
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:125",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeCuckFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "WipeCuckFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:229",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeUnfaithfulFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "WipeUnfaithfulFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:244",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeAirheadFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "WipeAirheadFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:259",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeCumDumpFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "WipeCumDumpFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:274",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CheckExternalFlags",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CheckExternalFlags",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:289",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainWhoreFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainWhoreFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:441"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainSlutFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainSlutFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:446"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainExhibitionistFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainExhibitionistFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:484"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainOralFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainOralFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:518"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainAnalFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainAnalFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:537"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainNastyFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainNastyFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:566"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainPregnantFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainPregnantFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:584"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainBoundFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainBoundFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:609"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainTattooFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainTattooFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:679"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainCumDumpFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CanGainCumDumpFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:706"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CheckTattooExtraFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CheckTattooExtraFame",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "ExtraFame",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:714"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameGainRoll",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "FameGainRoll",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "CalledExternally",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": "False",
+          "order": 1
+        },
+        {
+          "name": "FameFromFriend",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": "False",
+          "order": 2
+        },
+        {
+          "name": "FameFromLover",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": "False",
+          "order": 3
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:749",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.GainFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "GainFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "LocationName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "IsForeplay",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:1284",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.DecayFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "DecayFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "DecayMultiplier",
+          "type": "Int",
+          "kind": "Int",
+          "default": "1",
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:1374",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.SpreadFameRoll",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "SpreadFameRoll",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:1530",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.SpreadFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "SpreadFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:1603",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameGainNotification",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "FameGainNotification",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2623"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameDecayNotification",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "FameDecayNotification",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2630"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CalculateFameSpread",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "CalculateFameSpread",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [
+        {
+          "name": "FromFame",
+          "type": "Float",
+          "kind": "Float",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "TargetFame",
+          "type": "Float",
+          "kind": "Float",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2634",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameSpreadNotification",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "FameSpreadNotification",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2655"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.ClearFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "ClearFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationToClear",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2659",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.ClearAllFame",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "ClearAllFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2668",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.UpdateGlobals",
+      "script": "SLSF_Reloaded_FameManager",
+      "scriptType": "Quest",
+      "name": "UpdateGlobals",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_FameManager.psc:2726",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LegacyOverwrite.OverwriteLegacyFame",
+      "script": "SLSF_Reloaded_LegacyOverwrite",
+      "scriptType": "Quest",
+      "name": "OverwriteLegacyFame",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LegacyOverwrite.psc:9"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.IsLocationValid",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "IsLocationValid",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "CheckedLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:37",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.LocationCanBeRegistered",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "LocationCanBeRegistered",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "LocationToRegister",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "ExternalRegister",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": "False",
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:79",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.UpdateCustomLocationCount",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "UpdateCustomLocationCount",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:122",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.FetchLocationName",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "FetchLocationName",
+      "returnType": "String",
+      "returnTypeKind": "String",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:142",
+      "invalidInputResult": "$NoneText"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.CurrentLocationName",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "CurrentLocationName",
+      "returnType": "String",
+      "returnTypeKind": "String",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:149",
+      "invalidInputResult": "$NoneText"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.GetLocalizedFameLocation",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "GetLocalizedFameLocation",
+      "returnType": "String",
+      "returnTypeKind": "String",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:163",
+      "invalidInputResult": "$NoneText"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.GetFameLocation",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "GetFameLocation",
+      "returnType": "String",
+      "returnTypeKind": "String",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:200",
+      "invalidInputResult": "Null"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.IsLocationExcluded",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "IsLocationExcluded",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:238",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.RegisterCustomLocation",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "RegisterCustomLocation",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:268",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.AddToLocationList",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "AddToLocationList",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:306",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.RemoveFromLocationList",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "RemoveFromLocationList",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:401",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.UnregisterCustomLocation",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "UnregisterCustomLocation",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationIndexToUnregister",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:468",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.RegisterCustomLocationExternal",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "RegisterCustomLocationExternal",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationToRegister",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "LocationRefToRegister",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:575",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.UnregisterCustomLocationExternal",
+      "script": "SLSF_Reloaded_LocationManager",
+      "scriptType": "Quest",
+      "name": "UnregisterCustomLocationExternal",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LocationToUnregister",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_LocationManager.psc:605",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Logger.Log",
+      "script": "SLSF_Reloaded_Logger",
+      "scriptType": "Quest",
+      "name": "Log",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LogString",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Severity",
+          "type": "Int",
+          "kind": "Int",
+          "default": "0",
+          "order": 1
+        }
+      ],
+      "isGlobal": true,
+      "isNative": true,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "global-native",
+        "attachment": "PSC global"
+      },
+      "source": "SLSF_Reloaded_Logger.psc:20",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Logger.EnableLogging",
+      "script": "SLSF_Reloaded_Logger",
+      "scriptType": "Quest",
+      "name": "EnableLogging",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "EnableLogging",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": true,
+      "isNative": true,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "global-native",
+        "attachment": "PSC global"
+      },
+      "source": "SLSF_Reloaded_Logger.psc:22",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Logger.SetLogLevel",
+      "script": "SLSF_Reloaded_Logger",
+      "scriptType": "Quest",
+      "name": "SetLogLevel",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "LogLevel",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": true,
+      "isNative": true,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "global-native",
+        "attachment": "PSC global"
+      },
+      "source": "SLSF_Reloaded_Logger.psc:24",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.Startup",
+      "script": "SLSF_Reloaded_MasterClock",
+      "scriptType": "Quest",
+      "name": "Startup",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000839",
+        "editorId": "SLSF_Reloaded_MasterClock",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_MasterClock.psc:27"
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.HalfHourChecks",
+      "script": "SLSF_Reloaded_MasterClock",
+      "scriptType": "Quest",
+      "name": "HalfHourChecks",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000839",
+        "editorId": "SLSF_Reloaded_MasterClock",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_MasterClock.psc:74"
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.DecayHandler",
+      "script": "SLSF_Reloaded_MasterClock",
+      "scriptType": "Quest",
+      "name": "DecayHandler",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000839",
+        "editorId": "SLSF_Reloaded_MasterClock",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_MasterClock.psc:82"
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.SpreadHandler",
+      "script": "SLSF_Reloaded_MasterClock",
+      "scriptType": "Quest",
+      "name": "SpreadHandler",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000839",
+        "editorId": "SLSF_Reloaded_MasterClock",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_MasterClock.psc:97"
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.PeriodicFameUpdate",
+      "script": "SLSF_Reloaded_MasterClock",
+      "scriptType": "Quest",
+      "name": "PeriodicFameUpdate",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000839",
+        "editorId": "SLSF_Reloaded_MasterClock",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_MasterClock.psc:107"
+    },
+    {
+      "id": "SLSF_Reloaded_ModEventListener.RegisterExternalEvents",
+      "script": "SLSF_Reloaded_ModEventListener",
+      "scriptType": "Quest",
+      "name": "RegisterExternalEvents",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModEventListener.psc:17"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.CheckInstalledMods",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "CheckInstalledMods",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:93"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetFHUData",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "GetFHUData",
+      "returnType": "sr_InflateQuest",
+      "returnTypeKind": "Quest",
+      "parameters": [],
+      "isGlobal": true,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "global",
+        "attachment": "PSC global"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:330",
+      "invalidInputResult": "None"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetPWData",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "GetPWData",
+      "returnType": "PW_MainLoopScript",
+      "returnTypeKind": "Script",
+      "parameters": [],
+      "isGlobal": true,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "global",
+        "attachment": "PSC global"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:334",
+      "invalidInputResult": "None"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetLegacyConfig",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "GetLegacyConfig",
+      "returnType": "SLSF_Configuration",
+      "returnTypeKind": "Script",
+      "parameters": [],
+      "isGlobal": true,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "global",
+        "attachment": "PSC global"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:338",
+      "invalidInputResult": "None"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.OverwriteLegacyConfig",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "OverwriteLegacyConfig",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:342"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsFMPregnant",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "IsFMPregnant",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "kind": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:354",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsECPregnant",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "IsECPregnant",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "kind": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:361",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsESPregnant",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "IsESPregnant",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "kind": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:368",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsHentaiPregnant",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "IsHentaiPregnant",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "kind": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:375",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsPublicWhore",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "IsPublicWhore",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:382",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetFHUInflation",
+      "script": "SLSF_Reloaded_ModIntegration",
+      "scriptType": "Quest",
+      "name": "GetFHUInflation",
+      "returnType": "Float",
+      "returnTypeKind": "Float",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "kind": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x06000808",
+        "editorId": "SLSF_Reloaded_Main",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_ModIntegration.psc:391",
+      "invalidInputResult": "0.0"
+    },
+    {
+      "id": "SLSF_Reloaded_PlayerScript.Startup",
+      "script": "SLSF_Reloaded_PlayerScript",
+      "scriptType": "ReferenceAlias",
+      "name": "Startup",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "reference-alias",
+        "questFormId": "0x06000808",
+        "questEditorId": "SLSF_Reloaded_Main",
+        "aliasIndex": 0,
+        "aliasName": "PlayerAlias",
+        "attachment": "VMAD alias 0 (Main quest)"
+      },
+      "source": "SLSF_Reloaded_PlayerScript.psc:30"
+    },
+    {
+      "id": "SLSF_Reloaded_PlayerScript.RunNPCDetect",
+      "script": "SLSF_Reloaded_PlayerScript",
+      "scriptType": "ReferenceAlias",
+      "name": "RunNPCDetect",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "reference-alias",
+        "questFormId": "0x06000808",
+        "questEditorId": "SLSF_Reloaded_Main",
+        "aliasIndex": 0,
+        "aliasName": "PlayerAlias",
+        "attachment": "VMAD alias 0 (Main quest)"
+      },
+      "source": "SLSF_Reloaded_PlayerScript.psc:156",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_SexAnimationAnalyzer.AnimationAnalyze",
+      "script": "SLSF_Reloaded_SexAnimationAnalyzer",
+      "scriptType": "ReferenceAlias",
+      "name": "AnimationAnalyze",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "threadID",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "reference-alias",
+        "questFormId": "0x06000808",
+        "questEditorId": "SLSF_Reloaded_Main",
+        "aliasIndex": 0,
+        "aliasName": "PlayerAlias",
+        "attachment": "VMAD alias 0 (Main quest)"
+      },
+      "source": "SLSF_Reloaded_SexAnimationAnalyzer.psc:25",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_SexAnimationAnalyzer.AnimationSubAnalyze",
+      "script": "SLSF_Reloaded_SexAnimationAnalyzer",
+      "scriptType": "ReferenceAlias",
+      "name": "AnimationSubAnalyze",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [
+        {
+          "name": "Actors",
+          "type": "Actor[]",
+          "kind": "ActorArray",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "PlayerController",
+          "type": "sslThreadController",
+          "kind": "Script",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "PlayerThread",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        },
+        {
+          "name": "Foreplay",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 3
+        },
+        {
+          "name": "PlayerLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 4
+        },
+        {
+          "name": "Friend",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": "False",
+          "order": 5
+        },
+        {
+          "name": "Lover",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": "False",
+          "order": 6
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "reference-alias",
+        "questFormId": "0x06000808",
+        "questEditorId": "SLSF_Reloaded_Main",
+        "aliasIndex": 0,
+        "aliasName": "PlayerAlias",
+        "attachment": "VMAD alias 0 (Main quest)"
+      },
+      "source": "SLSF_Reloaded_SexAnimationAnalyzer.psc:123",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_Uninstall.RunUninstall",
+      "script": "SLSF_Reloaded_Uninstall",
+      "scriptType": "Quest",
+      "name": "RunUninstall",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_Uninstall.psc:11",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.Startup",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "Startup",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:71"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.UpdateTattooSlots",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "UpdateTattooSlots",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:105"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.FullUpdate",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "FullUpdate",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:163"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsPlayerAnonymous",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsPlayerAnonymous",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:205",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CheckAppliedTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CheckAppliedTattoos",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "internal",
+      "isPublic": false,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:234"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountAppliedTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountAppliedTattoos",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [
+        {
+          "name": "TattooArea",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:280",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountVisibleTattoos",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:320",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountBodyTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountBodyTattoos",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:329",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountHandTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountHandTattoos",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:350",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountFaceTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountFaceTattoos",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:367",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountFootTattoos",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountFootTattoos",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:384",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsBodyTattooVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsBodyTattooVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:402",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsFaceTattooVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsFaceTattooVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:523",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsHandTattooVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsHandTattooVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:558",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsFootTattooVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsFootTattooVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:571",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsAssCumVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsAssCumVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:584",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleAssCum",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountVisibleAssCum",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:618",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsVaginalCumVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsVaginalCumVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:648",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleVaginalCum",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountVisibleVaginalCum",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:678",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsOralCumVisible",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "IsOralCumVisible",
+      "returnType": "Bool",
+      "returnTypeKind": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:704",
+      "invalidInputResult": "False"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleOralCum",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CountVisibleOralCum",
+      "returnType": "Int",
+      "returnTypeKind": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:742",
+      "invalidInputResult": "0"
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CheckBondage",
+      "script": "SLSF_Reloaded_VisibilityManager",
+      "scriptType": "Quest",
+      "name": "CheckBondage",
+      "returnType": "None",
+      "returnTypeKind": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false,
+      "isLatent": false,
+      "classification": "public",
+      "isPublic": true,
+      "instance": {
+        "kind": "quest-script",
+        "formId": "0x0600080A",
+        "editorId": "SLSF_Reloaded_Managers",
+        "attachment": "VMAD"
+      },
+      "source": "SLSF_Reloaded_VisibilityManager.psc:776",
+      "invalidInputResult": "no-op"
+    }
+  ],
+  "excludedScripts": [
+    "SLSF_Reloaded_MCM"
+  ],
+  "notes": [
+    "MCM is excluded because the source tree has only MCM.pex; it is not part of the public API.",
+    "Internal arrays such as WhiterunFame and the 125 DataManager properties are not compatibility contracts.",
+    "All 124 function declarations are listed; public entries carry the legacy invalid-input result."
+  ]
+}

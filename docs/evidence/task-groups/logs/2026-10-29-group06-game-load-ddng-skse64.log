@@ -1,0 +1,32 @@
+SKSE64 runtime: initialize (version = 2.2.6 01064920 01DD675ECA58D3AA, os = 6.2 (9200))
+imagebase = 00007FF70C990000
+reloc mgr imagebase = 00007FF70C990000
+config path = E:\st\steamapps\common\Skyrim Special Edition\Data\SKSE\skse.ini
+plugin directory = E:\st\steamapps\common\Skyrim Special Edition\Data\SKSE\Plugins\
+scanning plugin directory E:\st\steamapps\common\Skyrim Special Edition\Data\SKSE\Plugins\
+checking plugin DeviousDevices.dll
+checking plugin SLSFReloadedNG.dll
+loading plugin "DeviousDevices"
+registering plugin listener for SKSE at 1 of 4
+plugin DeviousDevices.dll (00000001 DeviousDevices 03000001) loaded correctly (handle 1)
+loading plugin "SLSF Reloaded NG"
+registering plugin listener for SKSE at 2 of 4
+plugin SLSFReloadedNG.dll (00000001 SLSF Reloaded NG 00010000) loaded correctly (handle 2)
+dispatch message (0) to plugin listeners
+sending message type 0 to plugin 1
+sending message type 0 to plugin 2
+dispatched message.
+dispatch message (1) to plugin listeners
+sending message type 1 to plugin 1
+sending message type 1 to plugin 2
+dispatched message.
+init complete
+hooked dinput
+dispatch message (6) to plugin listeners
+sending message type 6 to plugin 1
+sending message type 6 to plugin 2
+dispatched message.
+dispatch message (8) to plugin listeners
+sending message type 8 to plugin 1
+sending message type 8 to plugin 2
+dispatched message.

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "case": "api-default",
+  "target": "contracts/legacy-api.json",
+  "operation": "changeFunctionField",
+  "selector": "SLSF_Reloaded_Logger.Log",
+  "field": "parameterDefault",
+  "index": 1,
+  "replacement": "1",
+  "expected": "rejected",
+  "reason": "Catch incompatible API metadata independently of the manifest itself.",
+  "expectedFailure": "api parameter default"
+}

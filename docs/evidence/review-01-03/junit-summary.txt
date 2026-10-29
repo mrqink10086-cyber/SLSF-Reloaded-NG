@@ -1,0 +1,5 @@
+core: xml_instances=146, assertions=119295, failures=0, errors=0, unique=yes
+boundary: xml_instances=4, assertions=22, failures=0, errors=0, unique=yes
+core-asan: xml_instances=146, assertions=119295, failures=0, errors=0, unique=yes
+boundary-asan: xml_instances=4, assertions=22, failures=0, errors=0, unique=yes
+differential: xml_instances=6, assertions=17148, failures=0, errors=0, unique=yes

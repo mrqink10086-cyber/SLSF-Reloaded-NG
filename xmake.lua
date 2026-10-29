@@ -1,31 +1,142 @@
--- include subprojects
 includes("lib/commonlibsse-ng")
 
--- Resolve library dependencies through Xmake instead of probing vcpkg/conan.
 add_requireconfs("directxmath", { system = false })
 add_requireconfs("directxtk", { system = false })
 add_requireconfs("spdlog", { system = false })
+add_requires("catch2 3.8.1")
 
--- set project constants
 set_project("SLSF Reloaded NG")
 set_version("0.1.0")
 set_license("GPL-3.0")
 set_languages("c++23")
 set_warnings("allextra")
 
--- add common rules
 add_rules("mode.debug", "mode.releasedbg")
 add_rules("plugin.vsxmake.autoupdate")
 
--- define targets
+-- AVX2 is limited to the numeric and diffusion-kernel translation units;
+-- bootstrap/boundary stay on the baseline ISA.
+local numeric_cxflags = { "/arch:AVX2", "/fp:precise" }
+
+-- Core must not see CommonLibSSE, SKSE, or the plugin PCH.
+target("SLSFCore")
+    set_kind("static")
+    add_cxflags("/fp:precise", "/utf-8")
+    add_files("src/core/**.cpp")
+    add_files("src/core/numeric/**.cpp", { cxflags = numeric_cxflags })
+    add_files("src/core/reputation/DiffusionKernelAvx2.cpp", { cxflags = numeric_cxflags })
+    add_files("src/runtime/**.cpp")
+    add_files("src/persistence/**.cpp")
+    add_files("src/integrations/**.cpp")
+    add_headerfiles("include/**.h")
+    add_includedirs("include", { public = true })
+
+target("SLSFEngine")
+    set_kind("static")
+    add_cxflags("/fp:precise")
+    add_files("src/engine/**.cpp")
+    add_headerfiles("include/**.h")
+    add_includedirs("include", { public = true })
+    add_deps("SLSFCore")
+
+target("SLSFEngineProbe")
+    set_kind("binary")
+    add_files("tests/probe/TargetProbe.cpp")
+    add_includedirs("include")
+    set_pcxxheader("lib/commonlibsse-ng/include/SKSE/Impl/PCH.h")
+    add_deps("SLSFCore", "SLSFEngine", "commonlibsse-ng")
+
+target("SLSFDispatcherOfflineProbe")
+    set_kind("binary")
+    add_cxflags("/utf-8")
+    add_files("tests/probe/DispatcherOfflineProbe.cpp")
+    add_includedirs("include")
+    add_deps("SLSFCore")
+
 target("SLSFReloadedNG")
     add_rules("commonlibsse-ng.plugin", {
         name = "SLSF Reloaded NG",
         description = "SLSF Reloaded NG SKSE plugin for Skyrim 1.6.1170"
     })
 
-    -- add src files
-    add_files("src/**.cpp")
+    add_files("src/main.cpp")
+    if #os.files("src/boundary/**.cpp") > 0 then
+        add_files("src/boundary/**.cpp")
+    end
     add_headerfiles("src/**.h")
     add_includedirs("src")
+    add_cxflags("/fp:precise")
     set_pcxxheader("src/pch.h")
+    add_deps("SLSFCore", "SLSFEngine")
+
+includes("tests/core")
+includes("tests/boundary")
+includes("tests/fuzz")
+includes("tests/bench")
+
+-- AddressSanitizer targets use the LLVM 20 clang-cl toolchain so the runtime
+-- DLL from C:/Program Files/LLVM/lib/clang/20/lib/windows is usable.
+target("SLSFCoreAsan")
+    set_kind("static")
+    set_targetdir("$(projectdir)/build/asan")
+    set_toolchains("clang-cl")
+    add_cxflags("/fp:precise", "/utf-8")
+    add_files("src/core/**.cpp")
+    add_files("src/core/numeric/**.cpp", { cxflags = numeric_cxflags })
+    add_files("src/core/reputation/DiffusionKernelAvx2.cpp", { cxflags = numeric_cxflags })
+    add_files("src/runtime/**.cpp")
+    add_files("src/persistence/**.cpp")
+    add_files("src/integrations/**.cpp")
+    add_headerfiles("include/**.h")
+    add_includedirs("include", { public = true })
+    add_cxflags("/fsanitize=address", "/Od", "/Zi", "/D_DISABLE_STRING_ANNOTATION", "/D_DISABLE_VECTOR_ANNOTATION", { force = true })
+    add_linkdirs("C:/Program Files/LLVM/lib/clang/20/lib/windows")
+    add_links("clang_rt.asan_dynamic-x86_64", "clang_rt.asan_dynamic_runtime_thunk-x86_64")
+
+target("SLSFEngineAsan")
+    set_kind("static")
+    set_targetdir("$(projectdir)/build/asan")
+    set_toolchains("clang-cl")
+    add_cxflags("/fp:precise")
+    add_files("src/engine/**.cpp")
+    add_headerfiles("include/**.h")
+    add_includedirs("include", { public = true })
+    add_deps("SLSFCoreAsan")
+    add_cxflags("/fsanitize=address", "/Od", "/Zi", "/D_DISABLE_STRING_ANNOTATION", "/D_DISABLE_VECTOR_ANNOTATION", { force = true })
+    add_linkdirs("C:/Program Files/LLVM/lib/clang/20/lib/windows")
+    add_links("clang_rt.asan_dynamic-x86_64", "clang_rt.asan_dynamic_runtime_thunk-x86_64")
+
+target("SLSFCoreTestsAsan")
+    set_kind("binary")
+    set_targetdir("$(projectdir)/build/asan")
+    set_toolchains("clang-cl")
+    add_files("tests/core/**.cpp")
+    add_files("tests/reference/*.cpp")
+    add_includedirs("tests/reference")
+    add_defines('SLSF_FIXTURE_DIR="' .. os.projectdir():gsub("\\", "/") .. '/tests/fixtures"')
+    add_deps("SLSFCoreAsan", "SLSFEngineAsan")
+    add_packages("catch2", { components = { "main", "lib" } })
+    add_cxflags("/fsanitize=address", "/Od", "/Zi", "/D_DISABLE_STRING_ANNOTATION", "/D_DISABLE_VECTOR_ANNOTATION", { force = true })
+    add_cxflags("/utf-8")
+    add_linkdirs("C:/Program Files/LLVM/lib/clang/20/lib/windows")
+    add_links("clang_rt.asan_dynamic-x86_64", "clang_rt.asan_dynamic_runtime_thunk-x86_64")
+
+target("SLSFBoundaryTestsAsan")
+    set_kind("binary")
+    set_targetdir("$(projectdir)/build/asan")
+    set_toolchains("clang-cl")
+    add_files("tests/boundary/**.cpp")
+    add_includedirs("include")
+    add_packages("catch2", { components = { "main", "lib" } })
+    add_cxflags("/fsanitize=address", "/Od", "/Zi", "/D_DISABLE_STRING_ANNOTATION", "/D_DISABLE_VECTOR_ANNOTATION", { force = true })
+    add_linkdirs("C:/Program Files/LLVM/lib/clang/20/lib/windows")
+    add_links("clang_rt.asan_dynamic-x86_64", "clang_rt.asan_dynamic_runtime_thunk-x86_64")
+
+target("SLSFAsanProbe")
+    set_kind("binary")
+    set_targetdir("$(projectdir)/build/asan")
+    set_toolchains("clang-cl")
+    add_files("tests/asan/AsanProbe.cpp")
+    add_cxflags("/fsanitize=address", "/Od", "/Zi", "/D_DISABLE_STRING_ANNOTATION", "/D_DISABLE_VECTOR_ANNOTATION", { force = true })
+    add_linkdirs("C:/Program Files/LLVM/lib/clang/20/lib/windows")
+    add_links("clang_rt.asan_dynamic-x86_64", "clang_rt.asan_dynamic_runtime_thunk-x86_64")

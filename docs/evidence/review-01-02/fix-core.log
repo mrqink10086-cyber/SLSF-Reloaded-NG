@@ -1,0 +1,84 @@
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.062s[0m
+RUN SLSFCoreTests cases=75 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (32 assertions in 4 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (54 assertions in 4 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (49 assertions in 4 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (268 assertions in 4 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (37 assertions in 4 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (20 assertions in 4 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (32 assertions in 4 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (74 assertions in 4 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (57162 assertions in 4 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (37 assertions in 4 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1517 assertions in 4 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (39960 assertions in 4 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (29 assertions in 4 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (385 assertions in 4 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (69 assertions in 4 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (36 assertions in 3 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (984 assertions in 3 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (73 assertions in 3 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (151 assertions in 3 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (18 assertions in 3 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.471s
+PASS native tests: mode=core seed=1170

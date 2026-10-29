@@ -1,0 +1,158 @@
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.078s[0m
+RUN SLSFCoreTests cases=106 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (641 assertions in 6 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (873 assertions in 6 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (77 assertions in 6 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1873 assertions in 6 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (49 assertions in 6 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (49 assertions in 6 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (38 assertions in 5 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (481 assertions in 5 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (57168 assertions in 5 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (35 assertions in 5 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1536 assertions in 5 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (39967 assertions in 5 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (36 assertions in 5 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (419 assertions in 5 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (53 assertions in 5 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1009 assertions in 5 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (137 assertions in 5 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+DIAG case=0 accounts=2 edges=(1->2:0.6) now=21.2407 decayPerDay=0.130865 relaxationPerDay=3.05052 spreadThreshold=15 scheduled=1 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=0/15.2829278978 remoteClock=0/21.2406906856
+DIAG case=0 accounts=2 edges=(1->2:0.6) now=21.2407 decayPerDay=0.130865 relaxationPerDay=3.05052 spreadThreshold=15 scheduled=1 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=0/15.2829278978 remoteClock=0/21.2406906856
+DIAG case=1 accounts=3 edges=(2->3:1) (1->2:1) (1->3:1) now=22.0512 decayPerDay=2.8843 relaxationPerDay=0.994176 spreadThreshold=51 scheduled=0 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=7.05115889543/21.9594559771 remoteClock=7.05115889543/22.0511588954
+DIAG case=1 accounts=3 edges=(2->3:1) (1->2:1) (1->3:1) now=22.0512 decayPerDay=2.8843 relaxationPerDay=0.994176 spreadThreshold=51 scheduled=0 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=21.0511588954/21.744568062 remoteClock=0/22.0511588954
+DIAG case=1 accounts=3 edges=(2->3:1) (1->2:1) (1->3:1) now=22.0512 decayPerDay=2.8843 relaxationPerDay=0.994176 spreadThreshold=51 scheduled=0 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=0/21.8423887476 remoteClock=0/22.0511588954
+DIAG case=2 accounts=4 edges=(3->4:0.6) (2->4:0.5) (1->2:0.25) (1->4:0.5) (2->3:0.25) (1->3:0.75) now=44.1147 decayPerDay=3.63661 relaxationPerDay=0.995281 spreadThreshold=13 scheduled=1 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=27.1146533489/43.8884942684 remoteClock=27.1146533489/44.1146533489
+DIAG case=2 accounts=4 edges=(3->4:0.6) (2->4:0.5) (1->2:0.25) (1->4:0.5) (2->3:0.25) (1->3:0.75) now=44.1147 decayPerDay=3.63661 relaxationPerDay=0.995281 spreadThreshold=13 scheduled=1 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=34.1146533489/44.0139693014 remoteClock=34.1146533489/44.1146533489
+DIAG case=2 accounts=4 edges=(3->4:0.6) (2->4:0.5) (1->2:0.25) (1->4:0.5) (2->3:0.25) (1->3:0.75) now=44.1147 decayPerDay=3.63661 relaxationPerDay=0.995281 spreadThreshold=13 scheduled=1 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=7.11465334893/43.962107172 remoteClock=0/44.1146533489
+DIAG case=2 accounts=4 edges=(3->4:0.6) (2->4:0.5) (1->2:0.25) (1->4:0.5) (2->3:0.25) (1->3:0.75) now=44.1147 decayPerDay=3.63661 relaxationPerDay=0.995281 spreadThreshold=13 scheduled=1 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=46.5296869242/44.1146533489 remoteClock=46.5296869242/44.1146533489
+DIAG case=3 accounts=2 edges=(1->2:0.75) now=31.1538 decayPerDay=3.51232 relaxationPerDay=3.52648 spreadThreshold=54 scheduled=2 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=33.2625134734/31.1538455149 remoteClock=7.15384551489/31.1538455149
+DIAG case=3 accounts=2 edges=(1->2:0.75) now=31.1538 decayPerDay=3.51232 relaxationPerDay=3.52648 spreadThreshold=54 scheduled=2 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=16.1538455149/30.958884664 remoteClock=0/31.1538455149
+DIAG case=4 accounts=3 edges=(2->3:0.75) (1->2:0.5) now=56.4308 decayPerDay=3.35917 relaxationPerDay=1.02382 spreadThreshold=1 scheduled=0 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=34.4308133894/56.1623984845 remoteClock=0/56.4308133894 | T0=[] | T1=[0:0.5,] | T2=[1:0.75,] | P0 L=57,37,68,0,150,95.951541749,142,56,10,45,0,0,29,35,17,14,18,12,71,20,29.5418295635,0,8,150,0, R=0,59,0,82,0,85,40,0,51,124,0,0,97,0,0,0,0,58,0,0,0,0,0,61,87, | P1 L=33,0,57,150,29,19,0,7,0,0,144.464799448,17,40,150,72,150,150,31,21.7584608561,120,77.5400496621,150,2,20,52.2364729869, R=132,0,22,0,0,0,0,0,0,34,0,21,0,0,0,0,134,0,0,65,0,48,45,54,122, | P2 L=150,16.0693747369,111,60.3043102512,0,54,8,0,42,150,150,44.8423620032,88,78,0,96.8430614585,4,0,81.2854757691,118,142,18,33,0,3, R=0,0,0,0,139,150,127,0,44,54,0,3,0,80,55,0,115,0,0,0,57,0,122,0,0,
+DIAG case=4 accounts=3 edges=(2->3:0.75) (1->2:0.5) now=56.4308 decayPerDay=3.35917 relaxationPerDay=1.02382 spreadThreshold=1 scheduled=0 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=56.7002030334/56.4308133894 remoteClock=35.4308133894/56.4308133894 | T0=[] | T1=[0:0.5,] | T2=[1:0.75,] | P0 L=57,37,68,0,150,95.951541749,142,56,10,45,0,0,29,35,17,14,18,12,71,20,29.5418295635,0,8,150,0, R=0,59,0,82,0,85,40,0,51,124,0,0,97,0,0,0,0,58,0,0,0,0,0,61,87, | P1 L=33,0,57,150,29,19,0,7,0,0,144.464799448,17,40,150,72,150,150,31,21.7584608561,120,77.5400496621,150,2,20,52.2364729869, R=132,0,22,0,0,0,0,0,0,34,0,21,0,0,0,0,134,0,0,65,0,48,45,54,122, | P2 L=150,16.0693747369,111,60.3043102512,0,54,8,0,42,150,150,44.8423620032,88,78,0,96.8430614585,4,0,81.2854757691,118,142,18,33,0,3, R=0,0,0,0,139,150,127,0,44,54,0,3,0,80,55,0,115,0,0,0,57,0,122,0,0,
+DIAG case=4 accounts=3 edges=(2->3:0.75) (1->2:0.5) now=56.4308 decayPerDay=3.35917 relaxationPerDay=1.02382 spreadThreshold=1 scheduled=0 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=56.5877157111/56.4308133894 remoteClock=56.5877157111/56.4308133894 | T0=[] | T1=[0:0.5,] | T2=[1:0.75,] | P0 L=57,37,68,0,150,95.951541749,142,56,10,45,0,0,29,35,17,14,18,12,71,20,29.5418295635,0,8,150,0, R=0,59,0,82,0,85,40,0,51,124,0,0,97,0,0,0,0,58,0,0,0,0,0,61,87, | P1 L=33,0,57,150,29,19,0,7,0,0,144.464799448,17,40,150,72,150,150,31,21.7584608561,120,77.5400496621,150,2,20,52.2364729869, R=132,0,22,0,0,0,0,0,0,34,0,21,0,0,0,0,134,0,0,65,0,48,45,54,122, | P2 L=150,16.0693747369,111,60.3043102512,0,54,8,0,42,150,150,44.8423620032,88,78,0,96.8430614585,4,0,81.2854757691,118,142,18,33,0,3, R=0,0,0,0,139,150,127,0,44,54,0,3,0,80,55,0,115,0,0,0,57,0,122,0,0,
+DIAG case=5 accounts=4 edges=(1->2:0.6) (3->4:0.75) (2->4:1) (1->4:0.5) (2->3:0.6) (1->3:1) now=77.4472 decayPerDay=2.64195 relaxationPerDay=3.95937 spreadThreshold=16 scheduled=2 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=79.439941158/77.4471791732 remoteClock=79.439941158/77.4471791732
+DIAG case=5 accounts=4 edges=(1->2:0.6) (3->4:0.75) (2->4:1) (1->4:0.5) (2->3:0.6) (1->3:1) now=77.4472 decayPerDay=2.64195 relaxationPerDay=3.95937 spreadThreshold=16 scheduled=2 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=50.4471791732/77.3212597884 remoteClock=50.4471791732/77.4471791732
+DIAG case=5 accounts=4 edges=(1->2:0.6) (3->4:0.75) (2->4:1) (1->4:0.5) (2->3:0.6) (1->3:1) now=77.4472 decayPerDay=2.64195 relaxationPerDay=3.95937 spreadThreshold=16 scheduled=2 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=51.4471791732/77.1857352554 remoteClock=51.4471791732/77.4471791732
+DIAG case=5 accounts=4 edges=(1->2:0.6) (3->4:0.75) (2->4:1) (1->4:0.5) (2->3:0.6) (1->3:1) now=77.4472 decayPerDay=2.64195 relaxationPerDay=3.95937 spreadThreshold=16 scheduled=2 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=57.4471791732/77.1296044125 remoteClock=57.4471791732/77.4471791732
+DIAG case=6 accounts=2 edges=(1->2:0) now=76.3211 decayPerDay=0.299431 relaxationPerDay=1.38698 spreadThreshold=9 scheduled=2 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=38.3210896399/75.0574065369 remoteClock=38.3210896399/76.3210896399
+DIAG case=6 accounts=2 edges=(1->2:0) now=76.3211 decayPerDay=0.299431 relaxationPerDay=1.38698 spreadThreshold=9 scheduled=2 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=74.3210896399/74.3210896399 remoteClock=74.3210896399/76.3210896399
+DIAG case=7 accounts=3 edges=(1->3:0.6) (1->2:0.25) now=36.2631 decayPerDay=3.72881 relaxationPerDay=0.142073 spreadThreshold=24 scheduled=4 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=7.26305423719/36.2267220038 remoteClock=0/36.2630542372
+DIAG case=7 accounts=3 edges=(1->3:0.6) (1->2:0.25) now=36.2631 decayPerDay=3.72881 relaxationPerDay=0.142073 spreadThreshold=24 scheduled=4 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=0/36.2045847083 remoteClock=0/36.2630542372
+DIAG case=7 accounts=3 edges=(1->3:0.6) (1->2:0.25) now=36.2631 decayPerDay=3.72881 relaxationPerDay=0.142073 spreadThreshold=24 scheduled=4 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=40.2320341661/36.2630542372 remoteClock=0/36.2630542372
+DIAG case=8 accounts=4 edges=(1->4:0) (2->4:1) (1->3:1) (1->2:0.25) (2->3:0.25) (3->4:1) now=42.3023 decayPerDay=0.498242 relaxationPerDay=1.75384 spreadThreshold=50 scheduled=0 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=39.3023055274/41.3093608175 remoteClock=0/42.3023055274 | T0=[] | T1=[0:0.25,] | T2=[0:1,1:0.25,] | T3=[1:1,2:1,] | P0 L=4,56,3,30,150,128,146,11,53,0,53,106.129461572,0,13,150,78.4177331199,0,40,150,7,6.52832681051,41,100,96,36, R=101,82,61,0,8,0,0,110,16,0,0,150,0,0,0,41,142,0,26,0,0,0,53,0,90, | P1 L=60,72,16.4941728336,128.536917086,88.1900123737,62,0,150,25,87,7.24191304484,133.058505249,31,33.4254413127,45,0,76.0228855183,0,28,150,150,128,150,0,46.6594986273, R=0,0,30,54,34,0,0,0,0,0,0,71,72,43,138,118,0,22,0,16,0,0,0,36,22, | P2 L=0,0,150,3.87774252612,0,150,2,30,52.2506325879,20,10,121,150,76,0,11,6,12,134,142.089027593,150,28,150,84.1631470629,150, R=0,140,0,0,54,0,0,38,0,0,0,0,29,118,0,0,0,0,0,0,0,0,0,0,86, | P3 L=0,9,48,79.7934994667,150,98,0,25,150,102,69,150,0,143,36,150,23,11,150,104.110251503,9,31,107,0,127.784176177, R=0,11,120,140,0,147,0,0,0,23,0,0,0,0,132,0,0,0,0,114,0,0,29,104,107,
+DIAG case=8 accounts=4 edges=(1->4:0) (2->4:1) (1->3:1) (1->2:0.25) (2->3:0.25) (3->4:1) now=42.3023 decayPerDay=0.498242 relaxationPerDay=1.75384 spreadThreshold=50 scheduled=0 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=2.30230552736/40.4363560406 remoteClock=2.30230552736/42.3023055274 | T0=[] | T1=[0:0.25,] | T2=[0:1,1:0.25,] | T3=[1:1,2:1,] | P0 L=4,56,3,30,150,128,146,11,53,0,53,106.129461572,0,13,150,78.4177331199,0,40,150,7,6.52832681051,41,100,96,36, R=101,82,61,0,8,0,0,110,16,0,0,150,0,0,0,41,142,0,26,0,0,0,53,0,90, | P1 L=60,72,16.4941728336,128.536917086,88.1900123737,62,0,150,25,87,7.24191304484,133.058505249,31,33.4254413127,45,0,76.0228855183,0,28,150,150,128,150,0,46.6594986273, R=0,0,30,54,34,0,0,0,0,0,0,71,72,43,138,118,0,22,0,16,0,0,0,36,22, | P2 L=0,0,150,3.87774252612,0,150,2,30,52.2506325879,20,10,121,150,76,0,11,6,12,134,142.089027593,150,28,150,84.1631470629,150, R=0,140,0,0,54,0,0,38,0,0,0,0,29,118,0,0,0,0,0,0,0,0,0,0,86, | P3 L=0,9,48,79.7934994667,150,98,0,25,150,102,69,150,0,143,36,150,23,11,150,104.110251503,9,31,107,0,127.784176177, R=0,11,120,140,0,147,0,0,0,23,0,0,0,0,132,0,0,0,0,114,0,0,29,104,107,
+DIAG case=8 accounts=4 edges=(1->4:0) (2->4:1) (1->3:1) (1->2:0.25) (2->3:0.25) (3->4:1) now=42.3023 decayPerDay=0.498242 relaxationPerDay=1.75384 spreadThreshold=50 scheduled=0 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=38.3023055274/40.3093608175 remoteClock=0/42.3023055274 | T0=[] | T1=[0:0.25,] | T2=[0:1,1:0.25,] | T3=[1:1,2:1,] | P0 L=4,56,3,30,150,128,146,11,53,0,53,106.129461572,0,13,150,78.4177331199,0,40,150,7,6.52832681051,41,100,96,36, R=101,82,61,0,8,0,0,110,16,0,0,150,0,0,0,41,142,0,26,0,0,0,53,0,90, | P1 L=60,72,16.4941728336,128.536917086,88.1900123737,62,0,150,25,87,7.24191304484,133.058505249,31,33.4254413127,45,0,76.0228855183,0,28,150,150,128,150,0,46.6594986273, R=0,0,30,54,34,0,0,0,0,0,0,71,72,43,138,118,0,22,0,16,0,0,0,36,22, | P2 L=0,0,150,3.87774252612,0,150,2,30,52.2506325879,20,10,121,150,76,0,11,6,12,134,142.089027593,150,28,150,84.1631470629,150, R=0,140,0,0,54,0,0,38,0,0,0,0,29,118,0,0,0,0,0,0,0,0,0,0,86, | P3 L=0,9,48,79.7934994667,150,98,0,25,150,102,69,150,0,143,36,150,23,11,150,104.110251503,9,31,107,0,127.784176177, R=0,11,120,140,0,147,0,0,0,23,0,0,0,0,132,0,0,0,0,114,0,0,29,104,107,
+DIAG case=8 accounts=4 edges=(1->4:0) (2->4:1) (1->3:1) (1->2:0.25) (2->3:0.25) (3->4:1) now=42.3023 decayPerDay=0.498242 relaxationPerDay=1.75384 spreadThreshold=50 scheduled=0 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=16.3023055274/40.3869690094 remoteClock=16.3023055274/42.3023055274 | T0=[] | T1=[0:0.25,] | T2=[0:1,1:0.25,] | T3=[1:1,2:1,] | P0 L=4,56,3,30,150,128,146,11,53,0,53,106.129461572,0,13,150,78.4177331199,0,40,150,7,6.52832681051,41,100,96,36, R=101,82,61,0,8,0,0,110,16,0,0,150,0,0,0,41,142,0,26,0,0,0,53,0,90, | P1 L=60,72,16.4941728336,128.536917086,88.1900123737,62,0,150,25,87,7.24191304484,133.058505249,31,33.4254413127,45,0,76.0228855183,0,28,150,150,128,150,0,46.6594986273, R=0,0,30,54,34,0,0,0,0,0,0,71,72,43,138,118,0,22,0,16,0,0,0,36,22, | P2 L=0,0,150,3.87774252612,0,150,2,30,52.2506325879,20,10,121,150,76,0,11,6,12,134,142.089027593,150,28,150,84.1631470629,150, R=0,140,0,0,54,0,0,38,0,0,0,0,29,118,0,0,0,0,0,0,0,0,0,0,86, | P3 L=0,9,48,79.7934994667,150,98,0,25,150,102,69,150,0,143,36,150,23,11,150,104.110251503,9,31,107,0,127.784176177, R=0,11,120,140,0,147,0,0,0,23,0,0,0,0,132,0,0,0,0,114,0,0,29,104,107,
+DIAG case=9 accounts=2 edges=(1->2:0.75) now=66.1 decayPerDay=3.17766 relaxationPerDay=1.76597 spreadThreshold=54 scheduled=0 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=32.0999505192/66.0872237605 remoteClock=0/66.0999505192
+DIAG case=9 accounts=2 edges=(1->2:0.75) now=66.1 decayPerDay=3.17766 relaxationPerDay=1.76597 spreadThreshold=54 scheduled=0 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=42.0999505192/66.0169205779 remoteClock=42.0999505192/66.0999505192
+DIAG case=10 accounts=3 edges=(2->3:0.75) (1->2:1) (1->3:1) now=57.3482 decayPerDay=1.96761 relaxationPerDay=2.31773 spreadThreshold=21 scheduled=2 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=19.3482294988/56.9573787269 remoteClock=0/57.3482294988
+DIAG case=10 accounts=3 edges=(2->3:0.75) (1->2:1) (1->3:1) now=57.3482 decayPerDay=1.96761 relaxationPerDay=2.31773 spreadThreshold=21 scheduled=2 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=27.3482294988/57.333902532 remoteClock=27.3482294988/57.3482294988
+DIAG case=10 accounts=3 edges=(2->3:0.75) (1->2:1) (1->3:1) now=57.3482 decayPerDay=1.96761 relaxationPerDay=2.31773 spreadThreshold=21 scheduled=2 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=31.3482294988/57.2680485614 remoteClock=31.3482294988/57.3482294988
+DIAG case=11 accounts=4 edges=(2->4:0) (1->3:0.75) (3->4:0.25) (2->3:1) (1->4:0.25) (1->2:0.25) now=27.1743 decayPerDay=3.86624 relaxationPerDay=1.87528 spreadThreshold=39 scheduled=4 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=0/27.1581872545 remoteClock=0/27.1743449012
+DIAG case=11 accounts=4 edges=(2->4:0) (1->3:0.75) (3->4:0.25) (2->3:1) (1->4:0.25) (1->2:0.25) now=27.1743 decayPerDay=3.86624 relaxationPerDay=1.87528 spreadThreshold=39 scheduled=4 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=0/27.1581872545 remoteClock=0/27.1743449012
+DIAG case=11 accounts=4 edges=(2->4:0) (1->3:0.75) (3->4:0.25) (2->3:1) (1->4:0.25) (1->2:0.25) now=27.1743 decayPerDay=3.86624 relaxationPerDay=1.87528 spreadThreshold=39 scheduled=4 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=27.1743449012/27.1743449012 remoteClock=27.1743449012/27.1743449012
+DIAG case=11 accounts=4 edges=(2->4:0) (1->3:0.75) (3->4:0.25) (2->3:1) (1->4:0.25) (1->2:0.25) now=27.1743 decayPerDay=3.86624 relaxationPerDay=1.87528 spreadThreshold=39 scheduled=4 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=0/27.1581872545 remoteClock=0/27.1743449012
+DIAG case=12 accounts=2 edges=(1->2:0) now=32.4553 decayPerDay=2.27139 relaxationPerDay=2.01428 spreadThreshold=33 scheduled=3 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=14.4552782047/32.0656557379 remoteClock=14.4552782047/32.4552782047
+DIAG case=12 accounts=2 edges=(1->2:0) now=32.4553 decayPerDay=2.27139 relaxationPerDay=2.01428 spreadThreshold=33 scheduled=3 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=4.45527820471/32.1916228195 remoteClock=4.45527820471/32.4552782047
+DIAG case=13 accounts=3 edges=(1->2:0.6) (1->3:1) now=40.1939 decayPerDay=0.278131 relaxationPerDay=0.00855593 spreadThreshold=4 scheduled=1 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=43.1437646291/40.1939394057 remoteClock=43.1437646291/40.1939394057
+DIAG case=13 accounts=3 edges=(1->2:0.6) (1->3:1) now=40.1939 decayPerDay=0.278131 relaxationPerDay=0.00855593 spreadThreshold=4 scheduled=1 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=16.1939394057/37.7665056923 remoteClock=16.1939394057/40.1939394057
+DIAG case=13 accounts=3 edges=(1->2:0.6) (1->3:1) now=40.1939 decayPerDay=0.278131 relaxationPerDay=0.00855593 spreadThreshold=4 scheduled=1 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=21.1939394057/39.1710779779 remoteClock=21.1939394057/40.1939394057
+DIAG case=14 accounts=4 edges=(1->4:0.6) (2->3:0) (2->4:0.75) (1->3:0.25) (3->4:0.25) (1->2:0) now=65.2895 decayPerDay=1.14908 relaxationPerDay=0.407402 spreadThreshold=52 scheduled=3 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=37.2895410416/65.1378974805 remoteClock=0/65.2895410416
+DIAG case=14 accounts=4 edges=(1->4:0.6) (2->3:0) (2->4:0.75) (1->3:0.25) (3->4:0.25) (1->2:0) now=65.2895 decayPerDay=1.14908 relaxationPerDay=0.407402 spreadThreshold=52 scheduled=3 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=51.2895410416/65.213719261 remoteClock=0/65.2895410416
+DIAG case=14 accounts=4 edges=(1->4:0.6) (2->3:0) (2->4:0.75) (1->3:0.25) (3->4:0.25) (1->2:0) now=65.2895 decayPerDay=1.14908 relaxationPerDay=0.407402 spreadThreshold=52 scheduled=3 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=43.2895410416/65.0460695095 remoteClock=43.2895410416/65.2895410416
+DIAG case=14 accounts=4 edges=(1->4:0.6) (2->3:0) (2->4:0.75) (1->3:0.25) (3->4:0.25) (1->2:0) now=65.2895 decayPerDay=1.14908 relaxationPerDay=0.407402 spreadThreshold=52 scheduled=3 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=49.2895410416/64.9542415385 remoteClock=0/65.2895410416
+DIAG case=15 accounts=2 edges=(1->2:0) now=41.2759 decayPerDay=0.921973 relaxationPerDay=1.24998 spreadThreshold=5 scheduled=3 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=11.2758691826/40.5608790324 remoteClock=11.2758691826/41.2758691826
+DIAG case=15 accounts=2 edges=(1->2:0) now=41.2759 decayPerDay=0.921973 relaxationPerDay=1.24998 spreadThreshold=5 scheduled=3 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=27.2758691826/40.2914291158 remoteClock=27.2758691826/41.2758691826
+DIAG case=16 accounts=3 edges=(1->2:0.25) (1->3:0.75) (2->3:1) now=58.0127 decayPerDay=0.362896 relaxationPerDay=1.18546 spreadThreshold=4 scheduled=0 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=53.0127475633/55.768357965 remoteClock=53.0127475633/58.0127475633
+DIAG case=16 accounts=3 edges=(1->2:0.25) (1->3:0.75) (2->3:1) now=58.0127 decayPerDay=0.362896 relaxationPerDay=1.18546 spreadThreshold=4 scheduled=0 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=60.6560455022/58.0127475633 remoteClock=60.6560455022/58.0127475633
+DIAG case=16 accounts=3 edges=(1->2:0.25) (1->3:0.75) (2->3:1) now=58.0127 decayPerDay=0.362896 relaxationPerDay=1.18546 spreadThreshold=4 scheduled=0 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=61.3750079589/58.0127475633 remoteClock=38.0127475633/58.0127475633
+DIAG case=17 accounts=4 edges=(2->4:0.5) (1->2:0) (1->4:0) (2->3:1) (3->4:0.75) (1->3:0) now=77.4177 decayPerDay=0.330892 relaxationPerDay=1.56966 spreadThreshold=51 scheduled=3 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=81.412358148/77.4176739564 remoteClock=72.4176739564/77.4176739564
+DIAG case=17 accounts=4 edges=(2->4:0.5) (1->2:0) (1->4:0) (2->3:1) (3->4:0.75) (1->3:0) now=77.4177 decayPerDay=0.330892 relaxationPerDay=1.56966 spreadThreshold=51 scheduled=3 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=46.4176739564/76.638975584 remoteClock=0/77.4176739564
+DIAG case=17 accounts=4 edges=(2->4:0.5) (1->2:0) (1->4:0) (2->3:1) (3->4:0.75) (1->3:0) now=77.4177 decayPerDay=0.330892 relaxationPerDay=1.56966 spreadThreshold=51 scheduled=3 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=80.0904974489/77.4176739564 remoteClock=0/77.4176739564
+DIAG case=17 accounts=4 edges=(2->4:0.5) (1->2:0) (1->4:0) (2->3:1) (3->4:0.75) (1->3:0) now=77.4177 decayPerDay=0.330892 relaxationPerDay=1.56966 spreadThreshold=51 scheduled=3 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=70.4176739564/76.4619342819 remoteClock=70.4176739564/77.4176739564
+DIAG case=18 accounts=2 edges=(1->2:0.5) now=74.4694 decayPerDay=1.26544 relaxationPerDay=1.49437 spreadThreshold=56 scheduled=3 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=70.4694482357/74.4206322516 remoteClock=70.4694482357/74.4694482357
+DIAG case=18 accounts=2 edges=(1->2:0.5) now=74.4694 decayPerDay=1.26544 relaxationPerDay=1.49437 spreadThreshold=56 scheduled=3 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=78.2878495414/74.4694482357 remoteClock=78.2878495414/74.4694482357
+DIAG case=19 accounts=3 edges=(1->2:0) (1->3:0.5) (2->3:0.75) now=67.3585 decayPerDay=1.98014 relaxationPerDay=3.06802 spreadThreshold=58 scheduled=1 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=31.3585121984/67.2144886919 remoteClock=31.3585121984/67.3585121984
+DIAG case=19 accounts=3 edges=(1->2:0) (1->3:0.5) (2->3:0.75) now=67.3585 decayPerDay=1.98014 relaxationPerDay=3.06802 spreadThreshold=58 scheduled=1 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=46.3585121984/67.064076089 remoteClock=46.3585121984/67.3585121984
+DIAG case=19 accounts=3 edges=(1->2:0) (1->3:0.5) (2->3:0.75) now=67.3585 decayPerDay=1.98014 relaxationPerDay=3.06802 spreadThreshold=58 scheduled=1 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=48.3585121984/67.0440210753 remoteClock=48.3585121984/67.3585121984
+DIAG case=20 accounts=4 edges=(2->4:0.6) (1->3:1) (3->4:0.75) (2->3:1) (1->4:0) (1->2:0.6) now=29.248 decayPerDay=1.79361 relaxationPerDay=2.28458 spreadThreshold=15 scheduled=1 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=0/28.9918293914 remoteClock=0/29.2479587009
+DIAG case=20 accounts=4 edges=(2->4:0.6) (1->3:1) (3->4:0.75) (2->3:1) (1->4:0) (1->2:0.6) now=29.248 decayPerDay=1.79361 relaxationPerDay=2.28458 spreadThreshold=15 scheduled=1 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=13.2479587009/28.8589437578 remoteClock=13.2479587009/29.2479587009
+DIAG case=20 accounts=4 edges=(2->4:0.6) (1->3:1) (3->4:0.75) (2->3:1) (1->4:0) (1->2:0.6) now=29.248 decayPerDay=1.79361 relaxationPerDay=2.28458 spreadThreshold=15 scheduled=1 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=23.2479587009/28.823310507 remoteClock=23.2479587009/29.2479587009
+DIAG case=20 accounts=4 edges=(2->4:0.6) (1->3:1) (3->4:0.75) (2->3:1) (1->4:0) (1->2:0.6) now=29.248 decayPerDay=1.79361 relaxationPerDay=2.28458 spreadThreshold=15 scheduled=1 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=0/28.9918293914 remoteClock=0/29.2479587009
+DIAG case=21 accounts=2 edges=(1->2:0.75) now=75.0883 decayPerDay=2.18006 relaxationPerDay=0.0942892 spreadThreshold=36 scheduled=0 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=59.088286893/74.6841534225 remoteClock=0/75.088286893
+DIAG case=21 accounts=2 edges=(1->2:0.75) now=75.0883 decayPerDay=2.18006 relaxationPerDay=0.0942892 spreadThreshold=36 scheduled=0 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=48.088286893/74.6930003845 remoteClock=0/75.088286893
+DIAG case=22 accounts=3 edges=(1->2:1) (2->3:0) (1->3:1) now=48.3333 decayPerDay=0.235501 relaxationPerDay=1.0093 spreadThreshold=24 scheduled=4 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=51.1877376959/48.3332615245 remoteClock=0/48.3332615245
+DIAG case=22 accounts=3 edges=(1->2:1) (2->3:0) (1->3:1) now=48.3333 decayPerDay=0.235501 relaxationPerDay=1.0093 spreadThreshold=24 scheduled=4 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=30.3332615245/47.3183187346 remoteClock=30.3332615245/48.3332615245
+DIAG case=22 accounts=3 edges=(1->2:1) (2->3:0) (1->3:1) now=48.3333 decayPerDay=0.235501 relaxationPerDay=1.0093 spreadThreshold=24 scheduled=4 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=25.3332615245/46.5645830372 remoteClock=0/48.3332615245
+DIAG case=23 accounts=4 edges=(1->4:0.6) (1->3:0.6) (2->4:0) now=73.3366 decayPerDay=0.139627 relaxationPerDay=2.87401 spreadThreshold=25 scheduled=1 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=47.3365649482/68.8223728994 remoteClock=47.3365649482/73.3365649482
+DIAG case=23 accounts=4 edges=(1->4:0.6) (1->3:0.6) (2->4:0) now=73.3366 decayPerDay=0.139627 relaxationPerDay=2.87401 spreadThreshold=25 scheduled=1 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=71.3365649482/71.3365649482 remoteClock=71.3365649482/73.3365649482
+DIAG case=23 accounts=4 edges=(1->4:0.6) (1->3:0.6) (2->4:0) now=73.3366 decayPerDay=0.139627 relaxationPerDay=2.87401 spreadThreshold=25 scheduled=1 local2=[=same] remote2=[=same] fame2=[=same] snapRemote2=[=same] settled=34.3365649482/70.1462448668 remoteClock=0/73.3365649482
+DIAG case=23 accounts=4 edges=(1->4:0.6) (1->3:0.6) (2->4:0) now=73.3366 decayPerDay=0.139627 relaxationPerDay=2.87401 spreadThreshold=25 scheduled=1 local3=[=same] remote3=[=same] fame3=[=same] snapRemote3=[=same] settled=47.3365649482/68.8223728994 remoteClock=47.3365649482/73.3365649482
+DIAG case=24 accounts=2 edges=(1->2:0.75) now=67.0015 decayPerDay=2.77579 relaxationPerDay=2.20655 spreadThreshold=37 scheduled=3 local0=[=same] remote0=[=same] fame0=[=same] snapRemote0=[=same] settled=68.4152452644/67.0015052596 remoteClock=68.4152452644/67.0015052596
+DIAG case=24 accounts=2 edges=(1->2:0.75) now=67.0015 decayPerDay=2.77579 relaxationPerDay=2.20655 spreadThreshold=37 scheduled=3 local1=[=same] remote1=[=same] fame1=[=same] snapRemote1=[=same] settled=66.0015052596/66.7220199138 remoteClock=66.0015052596/67.0015052596
+===============================================================================
+All tests passed (14139 assertions in 5 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (209 assertions in 5 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (38 assertions in 5 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.468s
+PASS native tests: mode=core seed=1170

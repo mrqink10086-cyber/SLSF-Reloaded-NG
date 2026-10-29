@@ -1,0 +1,12 @@
+probe_target_runtime=1.6.1170.0
+probe_relationship_sizeof=64
+probe_relationship_static_levels=0..8
+probe_relationship_runtime_mapping=assumed:4-level;unverified
+probe_dto_relationship=rank4->Lover;distance=10
+probe_relationship_unknown_dto=unknown-preserved
+probe_context_contract=unit-tested:legal:(mainThread&&inGame);else-InvalidState-no-backend-call
+probe_detection_signature=RequestDetectionLevel(Actor*,DETECTION_PRIORITY)->int32
+probe_los_signature=HasLineOfSight(TESObjectREFR*,bool&)->bool
+probe_runtime_behaviour=unverified:relationship-record,detection-level,line-of-sight
+probe_runtime_game_queries=pending:no-running-game-backend
+probe_result=STATIC_PASS

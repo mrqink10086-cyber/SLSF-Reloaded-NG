@@ -1,0 +1,36 @@
+clang version 20.1.0
+=== algorithm-probe: exit=0 ===
+PROBE equal_time_changes status=ok set10_then_set20_final=10 fifo_expected=20
+PROBE execute_clock_order path=execute-before-settle pre_settle=skipped execute_status=0 followup_advance=ok final=18
+PROBE execute_clock_order path=settle-before-execute pre_settle=ok execute_status=0 followup_advance=ok final=20
+PROBE detach_during_due_batch attached=0 first=1 second_old_timer=1
+PROBE cancelled_far_future count=1000 live=0 heap_after_cancel=1000 discarded_after_cancel=0 heap_after_new_session=1000 discarded_after_new_session=0 heap_at_999=1000 heap_at_1000=0 discarded_at_1000=1000
+BENCH event_drain n=100 erase_begin_median_ns=11800 vector_head_median_ns=600 deque_median_ns=600 checksum_erase=1169043493954920809 checksum_head=1169043493954920809 checksum_deque=1169043493954920809
+BENCH event_drain n=1000 erase_begin_median_ns=1046400 vector_head_median_ns=5400 deque_median_ns=4800 checksum_erase=17845786339273512148 checksum_head=17845786339273512148 checksum_deque=17845786339273512148
+BENCH event_drain n=5000 erase_begin_median_ns=25868600 vector_head_median_ns=25300 deque_median_ns=25800 checksum_erase=9927661155201209343 checksum_head=9927661155201209343 checksum_deque=9927661155201209343
+BENCH due_count n=128 calls=500 actual_scan_median_total_ns=26500 root_key_model_median_total_ns=5600 actual_scan_median_ns_per_call=53 root_key_model_median_ns_per_call=11.199999999999999 checksum=0
+BENCH due_count n=1024 calls=500 actual_scan_median_total_ns=150400 root_key_model_median_total_ns=5700 actual_scan_median_ns_per_call=300.80000000000001 root_key_model_median_ns_per_call=11.4 checksum=0
+BENCH due_count n=8192 calls=500 actual_scan_median_total_ns=1176100 root_key_model_median_total_ns=5700 actual_scan_median_ns_per_call=2352.1999999999998 root_key_model_median_ns_per_call=11.4 checksum=0
+=== adversarial-probe: exit=0 ===
+execute_order settle_before=0 status=0 final=8 expected=20
+execute_order settle_before=1 status=0 final=20 expected=20
+execute_after_idle_wake status=0 current_clock=1 final=18 expected_if_settled_first=20
+equal_time_change_order set10_then_set20_final=10 expected_fifo=20
+detach_batch first=1 stale_callback_in_new_session=1 attached=1
+mid_round_suspend first=1 second=1 event=1 suspended=1 pending_events=0
+suspended_round timer=0 event=0 pending_events=1
+stale_dirty_callback sink_calls=1 pending_dirty=0 active_timers=1
+event_exception caught=17 later_event_first_round=0 pending=1
+event_exception_next_round later_event=1 pending=0
+cancel_far_future count=1000 live=0 heap=1000 discarded=0
+cancel_before_deadline heap=1000 discarded=0
+cancel_at_deadline heap=0 discarded=1000
+session_far_future count=1000 live=0 heap=1000 discarded=0
+reordered_published_state status=ok value=22 expected_region_2=22
+=== memory-session-batch: exit=0 ===
+first_ran=1 stale_callback_ran_in_new_session=1
+=== adversarial-scheduler-reentry: exit=3221226505 ===
+capture_destructor=enter
+=== adversarial-clock-reentry: exit=3221226505 ===
+wall_supplier=enter
+ARCHIVE_REPLAY=PASS

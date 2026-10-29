@@ -1,0 +1,68 @@
+clang version 20.1.0
+Target: x86_64-pc-windows-msvc
+Thread model: posix
+InstalledDir: C:\Program Files\LLVM\bin
+
+PROBE=memory-layout
+COMMAND: clang++ -std=c++23 -I /e/source/repos/SLSF\ Reloaded\ NG/include /e/source/repos/SLSF\ Reloaded\ NG/docs/evidence/review-04/memory-layout.cpp -o /e/source/repos/SLSF\ Reloaded\ NG/build/diagnostics/review-04/archive-replay/memory-layout.exe
+BUILD_EXIT_CODE=0
+ActorSnapshot=2144
+EquipmentSnapshot=1952
+EquippedItemSnapshot=32
+GameDataService=64
+VisibilityFacts=808
+AnimationFacts=152
+NpcScanTargetFacts=72
+NpcScanEntry=88
+NpcScanner=128
+FameGainRollFacts=288
+CommentFacts=24
+EXIT_CODE=0
+
+PROBE=algorithm-gameplay-probe
+COMMAND: clang++ -std=c++23 -I /e/source/repos/SLSF\ Reloaded\ NG/include /e/source/repos/SLSF\ Reloaded\ NG/docs/evidence/review-04/algorithm-gameplay-probe.cpp -O0 -g /e/source/repos/SLSF\ Reloaded\ NG/src/core/gameplay/Visibility.cpp -o /e/source/repos/SLSF\ Reloaded\ NG/build/diagnostics/review-04/archive-replay/algorithm-gameplay-probe.exe
+BUILD_EXIT_CODE=0
+heavy_harness_wearingUnhideable=Ready:0
+heavy_harness_visiblyBound=Ready:1
+legacy_expected_heavy_harness_wearingUnhideable=Ready:0
+heavy_harness_matches_legacy=true
+chest_tattoo_unknown_AND=NotReady:0
+branch_A_AND_true=Ready:1
+branch_C_AND_false=Ready:1
+probe_result=REPRODUCED
+EXIT_CODE=0
+
+PROBE=algorithm-performance-probe
+COMMAND: clang++ -std=c++23 -I /e/source/repos/SLSF\ Reloaded\ NG/include /e/source/repos/SLSF\ Reloaded\ NG/docs/evidence/review-04/algorithm-performance-probe.cpp -O2 -DNDEBUG /e/source/repos/SLSF\ Reloaded\ NG/src/core/gameplay/Witness.cpp -o /e/source/repos/SLSF\ Reloaded\ NG/build/diagnostics/review-04/archive-replay/algorithm-performance-probe.exe
+BUILD_EXIT_CODE=0
+workload=10000 FameGainRoller calls, 25 eligible categories, wanted=count
+selected_total=250000
+allocation_total=180000
+allocations_per_call=18
+elapsed_us=4667
+events_per_second=2.1427e+06
+category_mask_low25=0x1ffffff
+hot_lookup_workload=1000000 full-mask scans x 25 sequential categories
+hot_lookup_hits=25000000
+hot_lookup_elapsed_ns=21146100
+hot_category_tests_per_second=1.18225e+09
+EXIT_CODE=0
+
+PROBE=adversarial-heavy-bondage
+COMMAND: clang++ -std=c++23 -I /e/source/repos/SLSF\ Reloaded\ NG/include /e/source/repos/SLSF\ Reloaded\ NG/docs/evidence/review-04/adversarial-heavy-bondage.cpp -Wall -Wextra -Werror /e/source/repos/SLSF\ Reloaded\ NG/src/core/gameplay/Visibility.cpp -o /e/source/repos/SLSF\ Reloaded\ NG/build/diagnostics/review-04/archive-replay/adversarial-heavy-bondage.exe
+BUILD_EXIT_CODE=0
+case=Ready,DD=true,Heavy=true,Lockable=false,Hood=true,Anonymous=false
+native_status=0 native_wearingUnhideable=0
+native_status=0 native_visiblyBound=1
+legacy_wearingUnhideable=0 legacy_visiblyBound=1
+EXIT_CODE=0
+
+PROBE=adversarial-body-tattoo-unknown
+COMMAND: clang++ -std=c++23 -I /e/source/repos/SLSF\ Reloaded\ NG/include /e/source/repos/SLSF\ Reloaded\ NG/docs/evidence/review-04/adversarial-body-tattoo-unknown.cpp -Wall -Wextra -Werror /e/source/repos/SLSF\ Reloaded\ NG/src/core/gameplay/Visibility.cpp -o /e/source/repos/SLSF\ Reloaded\ NG/build/diagnostics/review-04/archive-replay/adversarial-body-tattoo-unknown.exe
+BUILD_EXIT_CODE=0
+and_installed=true chest_rank=true decision_status=0 visible=1 reason=branch A chest
+and_installed=false chest_rank=true decision_status=0 visible=1 reason=branch C
+and_installed=unknown chest_rank=true decision_status=1 visible=0 reason=tattoo mod branch unknown
+EXIT_CODE=0
+
+ARCHIVE_REPLAY=PASS

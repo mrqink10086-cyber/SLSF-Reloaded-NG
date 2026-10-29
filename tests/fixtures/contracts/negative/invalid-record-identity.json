@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "case": "invalid-record-identity",
+  "target": "contracts/legacy-records.json",
+  "operation": "invalidateRecordIdentity",
+  "selector": "SLSF_Reloaded_Main",
+  "formId": "0x60008ZZ",
+  "plugin": "",
+  "expected": "rejected",
+  "expectedFailure": "record FormID",
+  "reason": "A public record identity must have a valid eight-hex-digit FormID; the malformed FormID is rejected first."
+}

@@ -1,0 +1,3 @@
+PASS: 11 groups; 25 tasks exactly once; 37 CPP owners unique
+PASS: 2-3 tasks per group; dependencies follow the listed order
+PASS: 11 books and 11 flat-text prompts; 101 local links valid

@@ -1,0 +1,3 @@
+and_installed=true chest_rank=true decision_status=0 visible=1 reason=branch A chest
+and_installed=false chest_rank=true decision_status=0 visible=1 reason=branch C
+and_installed=unknown chest_rank=true decision_status=1 visible=0 reason=tattoo mod branch unknown

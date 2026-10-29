@@ -1,0 +1,9 @@
+[12:34:31.072] [51548] [I] SLSF Reloaded NG v0-1-0-0
+[12:34:31.072] [51548] [I] SLSF Reloaded NG lifecycle bootstrap
+[12:34:31.072] [51548] [I] lifecycle: baseline ISA check avx2=true
+[12:34:31.072] [51548] [I] lifecycle: serialization and messaging listeners registered
+[12:34:31.072] [51548] [I] [capability:postload] ddng state=Waiting version=0 api=0 reason=module not loaded yet business=equipment visibility and device facts
+[12:34:31.073] [51548] [I] [capability:postpostload] ddng state=Waiting version=0 api=0 reason=module not loaded yet business=equipment visibility and device facts
+[12:34:34.906] [40780] [I] lifecycle: static table built locations=766 regions=766 ownershipRules=81
+[12:34:34.906] [40780] [I] lifecycle: startup configuration status=1 message=configuration unchanged
+[12:34:34.906] [40780] [I] [capability:dataloaded] ddng state=Available version=2 api=2 reason= business=equipment visibility and device facts

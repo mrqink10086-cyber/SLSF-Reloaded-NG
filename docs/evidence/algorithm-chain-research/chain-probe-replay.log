@@ -1,0 +1,25 @@
+cpu=13th Gen Intel(R) Core(TM) i5-13600KF avx2=1 compiler=20.1.0  rounds=7 summary=median flags=-std=c++23,-O2,-DNDEBUG,AVX2-only-kernel-TU
+csr nodes=21 edges=78 indegree_min=1 indegree_max=8 iterations=5000 compile_compute_ns=4240.24 cached_compute_ns=295.02 validation_ns=36.20 ratio=14.37 bitwise_equal=yes
+csr nodes=128 edges=384 indegree_min=3 indegree_max=3 iterations=5000 compile_compute_ns=39329.26 cached_compute_ns=2183.50 validation_ns=142.62 ratio=18.01 bitwise_equal=yes
+csr nodes=512 edges=1536 indegree_min=3 indegree_max=3 iterations=1500 compile_compute_ns=230365.60 cached_compute_ns=15318.67 validation_ns=539.67 ratio=15.04 bitwise_equal=yes
+membership nodes=21 custom=0 iterations=1000 scan_batch_ns=9.20 dense_batch_ns=26.20 ratio=0.35 same_answers=yes
+membership nodes=21 custom=1 iterations=1000 scan_batch_ns=106.90 dense_batch_ns=25.80 ratio=4.14 same_answers=yes
+membership nodes=21 custom=5 iterations=1000 scan_batch_ns=303.60 dense_batch_ns=25.80 ratio=11.77 same_answers=yes
+membership nodes=21 custom=21 iterations=1000 scan_batch_ns=778.90 dense_batch_ns=26.20 ratio=29.73 same_answers=yes
+membership nodes=128 custom=0 iterations=1000 scan_batch_ns=64.10 dense_batch_ns=142.70 ratio=0.45 same_answers=yes
+membership nodes=128 custom=1 iterations=1000 scan_batch_ns=532.80 dense_batch_ns=145.40 ratio=3.66 same_answers=yes
+membership nodes=128 custom=32 iterations=1000 scan_batch_ns=10709.60 dense_batch_ns=142.80 ratio=75.00 same_answers=yes
+membership nodes=128 custom=128 iterations=1000 scan_batch_ns=22506.90 dense_batch_ns=142.70 ratio=157.72 same_answers=yes
+membership nodes=512 custom=0 iterations=200 scan_batch_ns=274.00 dense_batch_ns=562.50 ratio=0.49 same_answers=yes
+membership nodes=512 custom=1 iterations=200 scan_batch_ns=1688.50 dense_batch_ns=562.50 ratio=3.00 same_answers=yes
+membership nodes=512 custom=128 iterations=200 scan_batch_ns=153251.50 dense_batch_ns=562.50 ratio=272.45 same_answers=yes
+membership nodes=512 custom=512 iterations=200 scan_batch_ns=355264.50 dense_batch_ns=574.50 ratio=618.39 same_answers=yes
+layout NumericRow_size=256 NumericRow_align=32 AccountState_size=1120 AccountState_align=32 Operand_size=16 Operand_align=8 local_offset=0 remote_offset=256 fame_offset=512 flags_offset=768 protection_offset=800 Operand_source_offset=0 Operand_coefficient_offset=8
+copy nodes=21 account_bytes=23520 LR_bytes=10752 iterations=5000 State_construct_destroy_ns=1207.24 State_reused_assignment_ns=410.62 reused_LR_snapshot_ns=89.04 snapshot_equal=yes
+copy nodes=128 account_bytes=143360 LR_bytes=65536 iterations=5000 State_construct_destroy_ns=7770.38 State_reused_assignment_ns=2602.48 reused_LR_snapshot_ns=1231.36 snapshot_equal=yes
+copy nodes=512 account_bytes=573440 LR_bytes=262144 iterations=2000 State_construct_destroy_ns=29873.15 State_reused_assignment_ns=10137.90 reused_LR_snapshot_ns=4617.80 snapshot_equal=yes
+mask batch=512 active=0 iterations=1000 scan25_ns=2446.20 setbit_ns=100.80 ratio=24.27 same_ascending_answers=yes
+mask batch=512 active=1 iterations=1000 scan25_ns=3018.10 setbit_ns=292.60 ratio=10.31 same_ascending_answers=yes
+mask batch=512 active=6 iterations=1000 scan25_ns=3997.10 setbit_ns=1773.30 ratio=2.25 same_ascending_answers=yes
+mask batch=512 active=25 iterations=1000 scan25_ns=7523.30 setbit_ns=7382.70 ratio=1.02 same_ascending_answers=yes
+checksum=2242174067907451490 chain-probe=PASS

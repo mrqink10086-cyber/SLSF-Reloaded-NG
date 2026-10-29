@@ -1,0 +1,32 @@
+Filters: [boundary]
+Randomness seeded to: 1170
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SLSFCoreTests.exe is a Catch2 v3.8.1 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+a scheduled set starts decay at its business time
+-------------------------------------------------------------------------------
+tests\core\SettlementTests.cpp(277)
+...............................................................................
+
+tests\core\SettlementTests.cpp(287): FAILED:
+  REQUIRE( LocalAt(state, RegionId(0), kCat0) == 10.0 )
+with expansion:
+  9.0 == 10.0
+
+-------------------------------------------------------------------------------
+one advance settles each scheduled boundary before replacing fame
+-------------------------------------------------------------------------------
+tests\core\SettlementTests.cpp(295)
+...............................................................................
+
+tests\core\SettlementTests.cpp(304): FAILED:
+  REQUIRE( LocalAt(state, RegionId(0), kCat0) == 9.0 )
+with expansion:
+  8.0 == 9.0
+
+===============================================================================
+test cases: 2 | 2 failed
+assertions: 4 | 2 passed | 2 failed

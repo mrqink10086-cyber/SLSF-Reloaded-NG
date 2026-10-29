@@ -1,0 +1,1467 @@
+{
+  "schemaVersion": 1,
+  "inputEventCount": 52,
+  "replyEventCount": 7,
+  "categoryCount": 25,
+  "requiredCategories": [
+    "Slut",
+    "Whore",
+    "Exhibitionist",
+    "Oral",
+    "Anal",
+    "Nasty",
+    "Pregnant",
+    "Group",
+    "Dominant",
+    "Submissive",
+    "Sadist",
+    "Masochist",
+    "Gentle",
+    "Likes Men",
+    "Likes Women",
+    "Likes Orc",
+    "Likes Khajiit",
+    "Likes Argonian",
+    "Bestiality",
+    "Bound",
+    "Tattoo",
+    "Cum Dump",
+    "Unfaithful",
+    "Cuck",
+    "Airhead"
+  ],
+  "requiredEspOrder": [
+    "Whore",
+    "Slut",
+    "Exhibitionist",
+    "Oral",
+    "Anal",
+    "Nasty",
+    "Pregnant",
+    "Dominant",
+    "Submissive",
+    "Sadist",
+    "Masochist",
+    "Gentle",
+    "Likes Men",
+    "Likes Women",
+    "Likes Orc",
+    "Likes Khajiit",
+    "Likes Argonian",
+    "Bestiality",
+    "Group",
+    "Bound",
+    "tattoo",
+    "cum dump",
+    "Unfaithful",
+    "Cuck",
+    "Airhead"
+  ],
+  "defaultLocations": [
+    "Whiterun",
+    "Winterhold",
+    "Windhelm",
+    "Solitude",
+    "Riften",
+    "Markarth",
+    "Morthal",
+    "Dawnstar",
+    "Falkreath",
+    "Raven Rock",
+    "Riverwood",
+    "Rorikstead",
+    "Ivarstead",
+    "Shor's Stone",
+    "Dragon Bridge",
+    "Karthwasten",
+    "Skaal Village",
+    "Largashbur",
+    "Dushnikh Yal",
+    "Mor Khazgur",
+    "Narzulbur"
+  ],
+  "locationAliases": [
+    {
+      "alias": "Eastmarch",
+      "canonical": "Windhelm"
+    },
+    {
+      "alias": "Haafingar",
+      "canonical": "Solitude"
+    },
+    {
+      "alias": "Hjaalmarch",
+      "canonical": "Morthal"
+    },
+    {
+      "alias": "the Reach",
+      "canonical": "Markarth"
+    },
+    {
+      "alias": "the Pale",
+      "canonical": "Dawnstar"
+    },
+    {
+      "alias": "the Rift",
+      "canonical": "Riften"
+    }
+  ],
+  "inputEvents": [
+    {
+      "event": "SLSF_Reloaded_SendFameGainRoll",
+      "handler": "OnExternalFameGainRoll",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendFameGain",
+      "handler": "OnExternalFameGain",
+      "parameters": [
+        {
+          "name": "Category",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "MinFame",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxFame",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameGain",
+      "handler": "OnExternalManualFameGain",
+      "parameters": [
+        {
+          "name": "Category",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "MinIncrease",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxIncrease",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameGainAllInLocation",
+      "handler": "OnExternalManualFameGainAllInLocation",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "MinIncrease",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxIncrease",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameGainAll",
+      "handler": "OnExternalManualFameGainAll",
+      "parameters": [
+        {
+          "name": "MinIncrease",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxIncrease",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendFameDecay",
+      "handler": "OnExternalFameDecay",
+      "parameters": []
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameDecay",
+      "handler": "OnExternalManualFameDecay",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "MinDecay",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxDecay",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameDecayAllInLocation",
+      "handler": "OnExternalManualFameDecayAllInLocation",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "MinDecay",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxDecay",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameDecayAll",
+      "handler": "OnExternalManualFameDecayAll",
+      "parameters": [
+        {
+          "name": "MinDecay",
+          "type": "Int",
+          "default": null
+        },
+        {
+          "name": "MaxDecay",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendFameSpreadRoll",
+      "handler": "OnExternalFameSpreadRoll",
+      "parameters": []
+    },
+    {
+      "event": "SLSF_Reloaded_SendFameSpread",
+      "handler": "OnExternalFameSpread",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "Location",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendFameSpreadByName",
+      "handler": "OnExternalFameSpreadByName",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendManualFameSpread",
+      "handler": "OnExternalManualFameSpread",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "SpreadToLocation",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "PercentToSpread",
+          "type": "Int",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendLocationRegister",
+      "handler": "OnExternalLocationRegister",
+      "parameters": [
+        {
+          "name": "LocationToRegister",
+          "type": "Location",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SendLocationUnregister",
+      "handler": "OnExternalLocationUnregister",
+      "parameters": [
+        {
+          "name": "LocationToUnregister",
+          "type": "Location",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RegisterMod",
+      "handler": "OnExternalModRegister",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": "-EMPTY-"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_UnregisterMod",
+      "handler": "OnExternalModUnregister",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": "-EMPTY-"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetSlutFlag",
+      "handler": "OnExternalSlutFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetWhoreFlag",
+      "handler": "OnExternalWhoreFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetExhibitionistFlag",
+      "handler": "OnExternalExhibitionistFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetOralFlag",
+      "handler": "OnExternalOralFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetAnalFlag",
+      "handler": "OnExternalAnalFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetNastyFlag",
+      "handler": "OnExternalNastyFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetPregnantFlag",
+      "handler": "OnExternalPregnantFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetDominantFlag",
+      "handler": "OnExternalDominantFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetSubmissiveFlag",
+      "handler": "OnExternalSubmissiveFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetSadistFlag",
+      "handler": "OnExternalSadistFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetMasochistFlag",
+      "handler": "OnExternalMasochistFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetGentleFlag",
+      "handler": "OnExternalGentleFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetLikesMenFlag",
+      "handler": "OnExternalLikesMenFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetLikesWomenFlag",
+      "handler": "OnExternalLikesWomenFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetLikesOrcFlag",
+      "handler": "OnExternalLikesOrcFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetLikesKhajiitFlag",
+      "handler": "OnExternalLikesKhajiitFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetLikesArgonianFlag",
+      "handler": "OnExternalLikesArgonianFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetBestialityFlag",
+      "handler": "OnExternalBestialityFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetGroupFlag",
+      "handler": "OnExternalGroupFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetBoundFlag",
+      "handler": "OnExternalBoundFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetTattooFlag",
+      "handler": "OnExternalTattooFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetCumDumpFlag",
+      "handler": "OnExternalCumDumpFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetUnfaithfulFlag",
+      "handler": "OnExternalUnfaithfulFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetCuckFlag",
+      "handler": "OnExternalCuckFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetAirheadFlag",
+      "handler": "OnExternalAirheadFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetWhoreEventFlag",
+      "handler": "OnExternalWhoreEventFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_SetSexWorkerFlag",
+      "handler": "OnExternalSexWorkerFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_EnableFameType",
+      "handler": "OnEnableFameType",
+      "parameters": [
+        {
+          "name": "FameType",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestLocation",
+      "handler": "OnRequestLocation",
+      "parameters": [
+        {
+          "name": "Strict",
+          "type": "Bool",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestRecognitionTime",
+      "handler": "OnRequestRecognitionTime",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestFame",
+      "handler": "OnRequestFame",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestCumVisibility",
+      "handler": "OnRequestCumVisibility",
+      "parameters": [
+        {
+          "name": "CumLocation",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestFlagState",
+      "handler": "OnRequestFlagState",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestModFlagState",
+      "handler": "OnRequestModFlagState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "default": null
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_RequestModRegisterState",
+      "handler": "OnRequestModRegisterState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null
+        }
+      ]
+    }
+  ],
+  "replyEvents": [
+    {
+      "event": "SLSF_Reloaded_ReturnRequestedLocation",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_ReturnRecognitionTime",
+      "parameters": [
+        {
+          "name": "RecognitionTime",
+          "type": "Float"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_ReturnRequestedFame",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String"
+        },
+        {
+          "name": "Category",
+          "type": "String"
+        },
+        {
+          "name": "RequestedFame",
+          "type": "Int"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_ReturnRequestedCum",
+      "parameters": [
+        {
+          "name": "Visible",
+          "type": "Bool"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_ReturnFlagState",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String"
+        },
+        {
+          "name": "FlagExists",
+          "type": "String"
+        },
+        {
+          "name": "RequestedFlagState",
+          "type": "Bool"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_ReturnModFlagState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String"
+        },
+        {
+          "name": "IsModRegistered",
+          "type": "Bool"
+        },
+        {
+          "name": "FlagName",
+          "type": "String"
+        },
+        {
+          "name": "FlagExists",
+          "type": "String"
+        },
+        {
+          "name": "RequestedModFlagState",
+          "type": "Bool"
+        }
+      ]
+    },
+    {
+      "event": "SLSF_Reloaded_ReturnModRegisteredState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String"
+        },
+        {
+          "name": "IsModRegistered",
+          "type": "Bool"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "signature": "KYWD",
+      "formId": "0x06000802",
+      "editorId": "SLSF_Reloaded_CoversFeet",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000828",
+      "editorId": "SLSF_Reloaded_CoversBack",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000833",
+      "editorId": "SLSF_Reloaded_DoesNotCoverFeet",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000803",
+      "editorId": "SLSF_Reloaded_NipplePiercing",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000804",
+      "editorId": "SLSF_Reloaded_VaginalPiercing",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000801",
+      "editorId": "SLSF_Reloaded_CoversHands",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000827",
+      "editorId": "SLSF_Reloaded_DoesNotHideIdentity",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000834",
+      "editorId": "SLSF_Reloaded_DoesNotCoverHands",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000800",
+      "editorId": "SLSF_Reloaded_HidesIdentity",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000832",
+      "editorId": "SLSF_Reloaded_DoesNotCoverBack",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000811",
+      "editorId": "SLSF_Reloaded_CurrentNastyFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082A",
+      "editorId": "SLSF_Reloaded_CommentFrequency",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000829",
+      "editorId": "SLSF_AllowComment",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082B",
+      "editorId": "SLSF_Reloaded_VisiblyBound",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000835",
+      "editorId": "SLSF_Reloaded_OralCumCount",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000836",
+      "editorId": "SLSF_Reloaded_AnalCumCount",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000837",
+      "editorId": "SLSF_Reloaded_VaginalCumCount",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000820",
+      "editorId": "SLSF_Reloaded_CurrentTattooFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081C",
+      "editorId": "SLSF_Reloaded_CurrentArgonianFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000812",
+      "editorId": "SLSF_Reloaded_CurrentPregnantFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000805",
+      "editorId": "SLSF_Reloaded_CustomLocationCount",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080B",
+      "editorId": "SLSF_Reloaded_NPCScanSucess",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000821",
+      "editorId": "SLSF_Reloaded_CurrentCumDumpFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000822",
+      "editorId": "SLSF_Reloaded_CurrentCheatFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000823",
+      "editorId": "SLSF_Reloaded_CurrentCuckFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000824",
+      "editorId": "SLSF_Reloaded_OralCumVisible",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000825",
+      "editorId": "SLSF_Reloaded_AnalCumVisible",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080C",
+      "editorId": "SLSF_Reloaded_CurrentSlutFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080D",
+      "editorId": "SLSF_Reloaded_CurrentWhoreFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000810",
+      "editorId": "SLSF_Reloaded_CurrentAnalFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000826",
+      "editorId": "SLSF_Reloaded_VaginalCumVisible",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000814",
+      "editorId": "SLSF_Reloaded_CurrentSubmissiveFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000815",
+      "editorId": "SLSF_Reloaded_CurrentSadistFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080E",
+      "editorId": "SLSF_Reloaded_CurrentExhibitionistFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000813",
+      "editorId": "SLSF_Reloaded_CurrentDominantFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080F",
+      "editorId": "SLSF_Reloaded_CurrentOralFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082C",
+      "editorId": "SLSF_Reloaded_LightlyBound",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000816",
+      "editorId": "SLSF_Reloaded_CurrentMasochistFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000817",
+      "editorId": "SLSF_Reloaded_CurrentGentleFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000818",
+      "editorId": "SLSF_Reloaded_CurrentMenFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000831",
+      "editorId": "SLSF_Reloaded_IsCollared",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000830",
+      "editorId": "SLSF_Reloaded_IsBelted",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000819",
+      "editorId": "SLSF_Reloaded_CurrentWomenFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081A",
+      "editorId": "SLSF_Reloaded_CurrentOrcFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081B",
+      "editorId": "SLSF_Reloaded_CurrentKhajiitFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081D",
+      "editorId": "SLSF_Reloaded_CurrentBestialityFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081E",
+      "editorId": "SLSF_Reloaded_CurrentGroupFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081F",
+      "editorId": "SLSF_Reloaded_CurrentBoundFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082F",
+      "editorId": "SLSF_Reloaded_CurrentAirheadFame",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082D",
+      "editorId": "SLSF_Reloaded_HeavilyBound",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082E",
+      "editorId": "SLSF_Reloaded_Skooma",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000838",
+      "editorId": "SLSF_Reloaded_TotalCumCount",
+      "vmadScripts": [],
+      "isPublic": true
+    },
+    {
+      "signature": "MGEF",
+      "formId": "0x06000806",
+      "editorId": "SLSF_Reloaded_NPCScanEffect",
+      "vmadScripts": [
+        "SLSF_Reloaded_NPCScan"
+      ],
+      "isPublic": true
+    },
+    {
+      "signature": "SPEL",
+      "formId": "0x06000807",
+      "editorId": "SLSF_Reloaded_NPCScanSpell",
+      "vmadScripts": [],
+      "isPublic": false
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x06000808",
+      "editorId": "SLSF_Reloaded_Main",
+      "questFlags": "0x00000111",
+      "vmadScripts": [
+        "SLSF_Reloaded_ModEventListener",
+        "SLSF_Reloaded_FameManager",
+        "SLSF_Reloaded_ModIntegration",
+        "SLSF_Reloaded_Logger"
+      ],
+      "aliases": [
+        {
+          "aliasIndex": 0,
+          "aliasName": "PlayerAlias",
+          "questFormId": "0x06000808",
+          "scripts": [
+            {
+              "name": "SLSF_Reloaded_SexAnimationAnalyzer",
+              "propertyCount": 14
+            },
+            {
+              "name": "SLSF_Reloaded_PlayerScript",
+              "propertyCount": 17
+            }
+          ]
+        }
+      ],
+      "isPublic": true
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x06000809",
+      "editorId": "SLSF_Reloaded_MCM",
+      "questFlags": "0x00000111",
+      "vmadScripts": [
+        "SLSF_Reloaded_MCM"
+      ],
+      "isPublic": true
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x0600080A",
+      "editorId": "SLSF_Reloaded_Managers",
+      "questFlags": "0x00000111",
+      "vmadScripts": [
+        "SLSF_Reloaded_CommentManager",
+        "SLSF_Reloaded_VisibilityManager",
+        "SLSF_Reloaded_DataManager",
+        "SLSF_Reloaded_LegacyOverwrite",
+        "SLSF_Reloaded_Data_Exporter",
+        "SLSF_Reloaded_Data_Importer",
+        "SLSF_Reloaded_LocationManager",
+        "SLSF_Reloaded_Uninstall",
+        "SLSF_Reloaded_DynamicAnonymity"
+      ],
+      "isPublic": true
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x06000839",
+      "editorId": "SLSF_Reloaded_MasterClock",
+      "questFlags": "0x00000111",
+      "vmadScripts": [
+        "SLSF_Reloaded_MasterClock"
+      ],
+      "isPublic": true
+    }
+  ]
+}

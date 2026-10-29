@@ -1,0 +1,25 @@
+[0m[38;5;2;1m[  6%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\CategoryMaskTests.cpp[0m
+[0m[38;5;2;1m[  6%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ConfigurationTests.cpp[0m
+[0m[38;5;2;1m[  6%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ContractsTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\LocationIndexTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\LocationRandomTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\NumericRowTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ProviderRegistryTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\RegionRegistryTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ReputationStateTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\SharedTypesTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\StateCodecTests.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\reference\LocationReference.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\BuildInfo.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\location\LocationIndex.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\location\RegionRegistry.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\persistence\StateCodec.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\ProviderRegistry.cpp[0m
+[0m[38;5;2;1m[ 22%]:[0m [38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\ReputationState.cpp[0m
+[0m[38;5;2;1m[ 58%]:[0m [38;5;5;1m<SLSFCore>[0m [38;5;5;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[38;5;2;1m[ 88%]:[0m [38;5;5;1m<SLSFCoreTests>[0m [38;5;5;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[1;38;5;1;1merror: [0mNumericRowTests.cpp.obj : error LNK2019: 无法解析的外部符号 "void __cdecl slsf::numeric::ClearRow(struct slsf::NumericRow &)" (?ClearRow@numeric@slsf@@YAXAEAUNumericRow@2@@Z)，函数 "void __cdecl CATCH2_INTERNAL_TEST_4(void)" (?CATCH2_INTERNAL_TEST_4@@YAXXZ) 中引用了该符号
+NumericRowTests.cpp.obj : error LNK2019: 无法解析的外部符号 "void __cdecl slsf::numeric::CopyRow(struct slsf::NumericRow &,struct slsf::NumericRow const &)" (?CopyRow@numeric@slsf@@YAXAEAUNumericRow@2@AEBU32@@Z)，函数 "void __cdecl CATCH2_INTERNAL_TEST_4(void)" (?CATCH2_INTERNAL_TEST_4@@YAXXZ) 中引用了该符号
+NumericRowTests.cpp.obj : error LNK2019: 无法解析的外部符号 "double __cdecl slsf::numeric::MaxSlot(struct slsf::NumericRow const &)" (?MaxSlot@numeric@slsf@@YANAEBUNumericRow@2@@Z)，函数 "void __cdecl CATCH2_INTERNAL_TEST_4(void)" (?CATCH2_INTERNAL_TEST_4@@YAXXZ) 中引用了该符号
+build\windows\x64\releasedbg\SLSFCoreTests.exe : fatal error LNK1120: 3 个无法解析的外部命令
+[0m

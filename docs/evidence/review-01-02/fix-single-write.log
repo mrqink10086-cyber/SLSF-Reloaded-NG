@@ -1,0 +1,4 @@
+128 accounts, 300 Set writes: 9 us, 0.03 us/write
+4096 accounts, 300 Set writes: 5 us, 0.0166667 us/write
+16384 accounts, 300 Set writes: 7 us, 0.0233333 us/write
+65535 accounts, 100 Set writes: 2 us, 0.02 us/write

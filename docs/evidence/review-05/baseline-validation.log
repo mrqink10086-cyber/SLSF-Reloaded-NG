@@ -1,0 +1,22 @@
+PASS: 11 groups; 25 tasks exactly once; 37 CPP owners unique
+PASS: 2-3 tasks per group; dependencies follow the listed order
+PASS: 11 books and 11 flat-text prompts; 101 local links valid
+PASS contracts: 124 functions (86 public), 52 inputs, 7 replies, 25 categories, 58 records, 23 rules
+REJECT  api-default: CONTRACT-REJECT: api parameter default for SLSF_Reloaded_Logger.Log[1] (expected '0', got '1')
+REJECT  api-global-flag: CONTRACT-REJECT: api source global flag for SLSF_Reloaded_Logger.Log (expected 'True', got 'False')
+REJECT  api-instance-binding: CONTRACT-REJECT: api instance VMAD script for SLSF_Reloaded_DataManager.GetFameValue
+REJECT  api-parameter-type: CONTRACT-REJECT: api parameter type for SLSF_Reloaded_DataManager.GetFameValue[0] (expected 'String', got 'Int')
+REJECT  api-return-type: CONTRACT-REJECT: api source return type for SLSF_Reloaded_DataManager.GetFameValue (expected 'Int', got 'Bool')
+REJECT  delete-one-input-event: CONTRACT-REJECT: events inputEvents length (expected '52', got '51')
+REJECT  duplicate-category: CONTRACT-REJECT: unique category names (expected '25', got '24')
+REJECT  invalid-api-result: CONTRACT-REJECT: GetFameLocation invalidInputResult (expected 'Null', got '$NoneText')
+REJECT  invalid-record-identity: CONTRACT-REJECT: record FormID SLSF_Reloaded_Main
+REJECT  managers-vmad-reversal: CONTRACT-REJECT: record VMAD scripts SLSF_Reloaded_Managers[0] (expected 'SLSF_Reloaded_CommentManager', got 'SLSF_Reloaded_DynamicAnonymity')
+REJECT  swap-event-parameters: CONTRACT-REJECT: input signature for SLSF_Reloaded_SendFameGain (expected 'Category|String|;EventLocation|String|;MinFame|Int|;MaxFame|Int|', got 'Category|String|;MinFame|Int|;EventLocation|String|;MaxFame|Int|')
+PASS negative fixtures: 11/11 rejected
+core catch_cases= 210 xml_instances= 300 assertions= 128222 failures=0 errors=0
+core-asan catch_cases= 210 xml_instances= 300 assertions= 128222 failures=0 errors=0
+boundary catch_cases= 4 xml_instances= 4 assertions= 22 failures=0 errors=0
+boundary-asan catch_cases= 4 xml_instances= 4 assertions= 22 failures=0 errors=0
+differential catch_cases= 8 xml_instances= 8 assertions= 17161 failures=0 errors=0
+BASELINE_VALIDATION=PASS

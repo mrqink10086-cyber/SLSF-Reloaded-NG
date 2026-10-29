@@ -1,0 +1,389 @@
+{
+  "schemaVersion": 1,
+  "projectRoot": "E:/source/repos/SLSF Reloaded NG",
+  "promptRoot": "C:/Users/15219/Desktop/新建文件夹 (13)",
+  "modules": [
+    {
+      "id": "M01",
+      "path": "src/main.cpp"
+    },
+    {
+      "id": "M02",
+      "path": "src/runtime/Lifecycle.cpp"
+    },
+    {
+      "id": "M03",
+      "path": "src/runtime/Dispatcher.cpp"
+    },
+    {
+      "id": "M04",
+      "path": "src/runtime/ClockService.cpp"
+    },
+    {
+      "id": "M05",
+      "path": "src/core/time/Scheduler.cpp"
+    },
+    {
+      "id": "M06",
+      "path": "src/engine/GameData.cpp"
+    },
+    {
+      "id": "M07",
+      "path": "src/engine/ActorQueries.cpp"
+    },
+    {
+      "id": "M08",
+      "path": "src/engine/EventBridge.cpp"
+    },
+    {
+      "id": "M09",
+      "path": "src/core/location/LocationIndex.cpp"
+    },
+    {
+      "id": "M10",
+      "path": "src/core/location/RegionRegistry.cpp"
+    },
+    {
+      "id": "M11",
+      "path": "src/core/reputation/DiffusionGraph.cpp"
+    },
+    {
+      "id": "M12",
+      "path": "src/core/reputation/ReputationState.cpp"
+    },
+    {
+      "id": "M13",
+      "path": "src/core/reputation/ProviderRegistry.cpp"
+    },
+    {
+      "id": "M14",
+      "path": "src/core/reputation/GainRules.cpp"
+    },
+    {
+      "id": "M15",
+      "path": "src/core/reputation/DiffusionKernel.cpp"
+    },
+    {
+      "id": "M16",
+      "path": "src/core/reputation/Settlement.cpp"
+    },
+    {
+      "id": "M17",
+      "path": "src/core/gameplay/Anonymity.cpp"
+    },
+    {
+      "id": "M18",
+      "path": "src/core/gameplay/Visibility.cpp"
+    },
+    {
+      "id": "M19",
+      "path": "src/core/gameplay/Witness.cpp"
+    },
+    {
+      "id": "M20",
+      "path": "src/core/gameplay/AnimationClassifier.cpp"
+    },
+    {
+      "id": "M21",
+      "path": "src/core/gameplay/Comments.cpp"
+    },
+    {
+      "id": "M22",
+      "path": "src/core/persistence/StateCodec.cpp"
+    },
+    {
+      "id": "M23",
+      "path": "src/persistence/Serialization.cpp"
+    },
+    {
+      "id": "M24",
+      "path": "src/integrations/CapabilityRegistry.cpp"
+    },
+    {
+      "id": "M25",
+      "path": "src/integrations/PapyrusCalls.cpp"
+    },
+    {
+      "id": "M26",
+      "path": "src/integrations/SexLabPPlus.cpp"
+    },
+    {
+      "id": "M27",
+      "path": "src/integrations/DeviousDevices.cpp"
+    },
+    {
+      "id": "M28",
+      "path": "src/integrations/RaceMenu.cpp"
+    },
+    {
+      "id": "M29",
+      "path": "src/integrations/SlaveTats.cpp"
+    },
+    {
+      "id": "M30",
+      "path": "src/integrations/ExternalMods.cpp"
+    },
+    {
+      "id": "M31",
+      "path": "src/api/PublicApi.cpp"
+    },
+    {
+      "id": "M32",
+      "path": "src/compat/PapyrusBindings.cpp"
+    },
+    {
+      "id": "M33",
+      "path": "src/compat/ModEventBridge.cpp"
+    },
+    {
+      "id": "M34",
+      "path": "src/compat/LegacyOutputs.cpp"
+    },
+    {
+      "id": "M35",
+      "path": "src/config/Configuration.cpp"
+    },
+    {
+      "id": "M36",
+      "path": "src/io/JsonTransfer.cpp"
+    },
+    {
+      "id": "M37",
+      "path": "src/ui/Menu.cpp"
+    }
+  ],
+  "groups": [
+    {
+      "id": "01",
+      "title": "公开接口清单与测试工程",
+      "tasks": [
+        "A01",
+        "A02"
+      ],
+      "requires": [],
+      "modules": [],
+      "book": "01-contracts-and-build.md",
+      "prompt": "01-contracts-and-build.txt",
+      "report": "docs/evidence/task-groups/01-contracts-and-build.md"
+    },
+    {
+      "id": "02",
+      "title": "原生状态、地点索引与存档编码",
+      "tasks": [
+        "A03",
+        "A04",
+        "A08"
+      ],
+      "requires": [
+        "01"
+      ],
+      "modules": [
+        "M09",
+        "M10",
+        "M12",
+        "M13",
+        "M22"
+      ],
+      "book": "02-state-location-and-codec.md",
+      "prompt": "02-state-location-and-codec.txt",
+      "report": "docs/evidence/task-groups/02-state-location-and-codec.md"
+    },
+    {
+      "id": "03",
+      "title": "AVX2传播、增减公式与时间结算",
+      "tasks": [
+        "A05",
+        "A06"
+      ],
+      "requires": [
+        "02"
+      ],
+      "modules": [
+        "M11",
+        "M14",
+        "M15",
+        "M16"
+      ],
+      "book": "03-diffusion-and-settlement.md",
+      "prompt": "03-diffusion-and-settlement.txt",
+      "report": "docs/evidence/task-groups/03-diffusion-and-settlement.md"
+    },
+    {
+      "id": "04",
+      "title": "玩法规则与引擎事实查询",
+      "tasks": [
+        "A07",
+        "B04"
+      ],
+      "requires": [
+        "02"
+      ],
+      "modules": [
+        "M06",
+        "M07",
+        "M17",
+        "M18",
+        "M19",
+        "M20",
+        "M21"
+      ],
+      "book": "04-gameplay-and-engine-facts.md",
+      "prompt": "04-gameplay-and-engine-facts.txt",
+      "report": "docs/evidence/task-groups/04-gameplay-and-engine-facts.md"
+    },
+    {
+      "id": "05",
+      "title": "时钟、定时协程与同步事务",
+      "tasks": [
+        "B01",
+        "B02"
+      ],
+      "requires": [
+        "03"
+      ],
+      "modules": [
+        "M03",
+        "M04",
+        "M05"
+      ],
+      "book": "05-scheduler-and-dispatcher.md",
+      "prompt": "05-scheduler-and-dispatcher.txt",
+      "report": "docs/evidence/task-groups/05-scheduler-and-dispatcher.md"
+    },
+    {
+      "id": "06",
+      "title": "生命周期、SKSE保存与依赖缓存",
+      "tasks": [
+        "B03",
+        "B05",
+        "C01"
+      ],
+      "requires": [
+        "02",
+        "04",
+        "05"
+      ],
+      "modules": [
+        "M01",
+        "M02",
+        "M08",
+        "M23",
+        "M24"
+      ],
+      "book": "06-lifecycle-save-and-capabilities.md",
+      "prompt": "06-lifecycle-save-and-capabilities.txt",
+      "report": "docs/evidence/task-groups/06-lifecycle-save-and-capabilities.md"
+    },
+    {
+      "id": "07",
+      "title": "异步VM与旧版对外API",
+      "tasks": [
+        "C02",
+        "B06"
+      ],
+      "requires": [
+        "03",
+        "04",
+        "06"
+      ],
+      "modules": [
+        "M25",
+        "M31",
+        "M32",
+        "M33",
+        "M34"
+      ],
+      "book": "07-vm-and-public-api.md",
+      "prompt": "07-vm-and-public-api.txt",
+      "report": "docs/evidence/task-groups/07-vm-and-public-api.md"
+    },
+    {
+      "id": "08",
+      "title": "P+、DDNG和其他模组状态",
+      "tasks": [
+        "C03",
+        "C04",
+        "C07"
+      ],
+      "requires": [
+        "04",
+        "05",
+        "06",
+        "07"
+      ],
+      "modules": [
+        "M26",
+        "M27",
+        "M30"
+      ],
+      "book": "08-pplus-ddng-and-external-state.md",
+      "prompt": "08-pplus-ddng-and-external-state.txt",
+      "report": "docs/evidence/task-groups/08-pplus-ddng-and-external-state.md"
+    },
+    {
+      "id": "09",
+      "title": "RaceMenu与SlaveTats原生读取",
+      "tasks": [
+        "C05",
+        "C06"
+      ],
+      "requires": [
+        "04",
+        "06"
+      ],
+      "modules": [
+        "M28",
+        "M29"
+      ],
+      "book": "09-racemenu-and-slavetats.md",
+      "prompt": "09-racemenu-and-slavetats.txt",
+      "report": "docs/evidence/task-groups/09-racemenu-and-slavetats.md"
+    },
+    {
+      "id": "10",
+      "title": "配置、JSON读写与SKSE菜单",
+      "tasks": [
+        "B07",
+        "C08"
+      ],
+      "requires": [
+        "02",
+        "03",
+        "06",
+        "07"
+      ],
+      "modules": [
+        "M35",
+        "M36",
+        "M37"
+      ],
+      "book": "10-configuration-json-and-menu.md",
+      "prompt": "10-configuration-json-and-menu.txt",
+      "report": "docs/evidence/task-groups/10-configuration-json-and-menu.md"
+    },
+    {
+      "id": "11",
+      "title": "发布资产与游戏验收",
+      "tasks": [
+        "C09",
+        "C10"
+      ],
+      "requires": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10"
+      ],
+      "modules": [],
+      "book": "11-packaging-and-acceptance.md",
+      "prompt": "11-packaging-and-acceptance.txt",
+      "report": "docs/evidence/task-groups/11-packaging-and-acceptance.md"
+    }
+  ]
+}

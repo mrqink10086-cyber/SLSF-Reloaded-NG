@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-10-27",
+  "project": "SLSF Reloaded NG",
+  "toolchain": {
+    "xmake": "3.0.9+master.0a2255cc2",
+    "msvc": "19.44.35229",
+    "msvcToolsetDirectory": "E:/BuildTools/VC/Tools/MSVC/14.44.35207",
+    "clangCl": "20.1.0",
+    "clangTarget": "x86_64-pc-windows-msvc",
+    "windowsSdk": "10.0.26100.0"
+  },
+  "packages": {
+    "catch2": {
+      "version": "3.8.1",
+      "scope": "tests-only",
+      "targets": ["SLSFCoreTests", "SLSFBoundaryTests", "SLSFCoreTestsAsan", "SLSFBoundaryTestsAsan"]
+    },
+    "commonlibsse-ng": {
+      "version": "v6.0.0",
+      "commit": "15ad90b31b2ca09cf477c7e1a43ff5ff05af120f",
+      "scope": "plugin-only"
+    },
+    "nlohmann_json": {
+      "version": "not-used-in-A02",
+      "note": "Contract JSON is read by the PowerShell validator; no runtime JSON dependency is linked into SLSFCore."
+    }
+  },
+  "asan": {
+    "compiler": "clang-cl 20.1.0",
+    "targetDirectory": "build/asan",
+    "runtimeDirectory": "C:/Program Files/LLVM/lib/clang/20/lib/windows",
+    "runtimeDll": "clang_rt.asan_dynamic-x86_64.dll",
+    "libraries": [
+      "clang_rt.asan_dynamic-x86_64.lib",
+      "clang_rt.asan_dynamic_runtime_thunk-x86_64.lib"
+    ],
+    "containerAnnotation": "disabled with _DISABLE_STRING_ANNOTATION/_DISABLE_VECTOR_ANNOTATION to match the MSVC-built Catch2 static libraries"
+  },
+  "targets": {
+    "SLSFCore": {
+      "kind": "static-library",
+      "sources": "src/core/**.cpp",
+      "includes": ["include"],
+      "gamePch": false,
+      "commonLibSseDependency": false,
+      "testPackages": false
+    },
+    "SLSFReloadedNG": {
+      "kind": "skse-plugin-via-commonlibsse-ng.plugin",
+      "sources": ["src/main.cpp", "src/boundary/**.cpp"],
+      "depends": ["SLSFCore"],
+      "coreSourcesCompiledAgain": false,
+      "testSourcesLinked": false
+    },
+    "SLSFCoreTests": {
+      "kind": "console-test",
+      "buildFile": "tests/core/xmake.lua",
+      "tag": "[contracts]",
+      "seed": 1170,
+      "assertions": 48,
+      "testCases": 8
+    },
+    "SLSFBoundaryTests": {
+      "kind": "console-test",
+      "buildFile": "tests/boundary/xmake.lua",
+      "tag": "[ports]",
+      "seed": 1170,
+      "assertions": 22,
+      "testCases": 4
+    }
+  }
+}

@@ -1,0 +1,4 @@
+[0m[38;5;2;1m[  5%]:[0m [38;5;5;1m<SLSFReloadedNG>[0m compiling.releasedbg src\main.cpp[0m
+[0m[38;5;3;1mE:\source\repos\SLSF Reloaded NG\include\slsf/core/time/Scheduler.h(1): warning C4819: ¸ÃÎÄ¼ş°üº¬²»ÄÜÔÚµ±Ç°´úÂëÒ³(936)ÖĞ±íÊ¾µÄ×Ö·û¡£Çë½«¸ÃÎÄ¼ş±£´æÎª Unicode ¸ñÊ½ÒÔ·ÀÖ¹Êı¾İ¶ªÊ§[0m
+[0m[38;5;2;1m[ 94%]:[0m [38;5;5;1m<SLSFReloadedNG>[0m [38;5;5;1mlinking.releasedbg SLSFReloadedNG.dll[0m
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 2.453s[0m

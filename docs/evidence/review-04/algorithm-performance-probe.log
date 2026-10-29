@@ -1,0 +1,15 @@
+COMMAND: clang++ -std=c++23 -O2 -DNDEBUG -I include build/diagnostics/review-04/algorithm-performance-probe.cpp src/core/gameplay/Witness.cpp -o build/diagnostics/review-04/algorithm-performance-probe.exe
+BUILD_EXIT_CODE=0
+COMMAND: build/diagnostics/review-04/algorithm-performance-probe.exe
+workload=10000 FameGainRoller calls, 25 eligible categories, wanted=count
+selected_total=250000
+allocation_total=180000
+allocations_per_call=18
+elapsed_us=5557
+events_per_second=1.79953e+06
+category_mask_low25=0x1ffffff
+hot_lookup_workload=1000000 full-mask scans x 25 sequential categories
+hot_lookup_hits=25000000
+hot_lookup_elapsed_ns=21746000
+hot_category_tests_per_second=1.14964e+09
+EXIT_CODE=0

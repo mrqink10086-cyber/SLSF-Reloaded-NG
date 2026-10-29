@@ -12,3 +12,16 @@ vs*/
 # files
 *.zip
 compile_commands.json
+
+# root compiler artifacts
+/*.obj
+/*.pdb
+/*.ilk
+/*.exp
+/*.lib
+/*.exe
+
+# local review binaries and accidental shell-expansion paths
+/.scratch/05-review/
+/%SystemDrive%/
+/nul

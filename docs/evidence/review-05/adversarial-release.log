@@ -1,0 +1,25 @@
+=== E:/source/repos/SLSF Reloaded NG/build/diagnostics/review-05/adversarial-build/adversarial-probe.exe ===
+exit_code=0
+execute_order settle_before=0 status=0 final=8 expected=20
+execute_order settle_before=1 status=0 final=20 expected=20
+execute_after_idle_wake status=0 current_clock=1 final=18 expected_if_settled_first=20
+equal_time_change_order set10_then_set20_final=10 expected_fifo=20
+detach_batch first=1 stale_callback_in_new_session=1 attached=1
+mid_round_suspend first=1 second=1 event=1 suspended=1 pending_events=0
+suspended_round timer=0 event=0 pending_events=1
+stale_dirty_callback sink_calls=1 pending_dirty=0 active_timers=1
+event_exception caught=17 later_event_first_round=0 pending=1
+event_exception_next_round later_event=1 pending=0
+cancel_far_future count=1000 live=0 heap=1000 discarded=0
+cancel_before_deadline heap=1000 discarded=0
+cancel_at_deadline heap=0 discarded=1000
+session_far_future count=1000 live=0 heap=1000 discarded=0
+reordered_published_state status=ok value=22 expected_region_2=22
+=== E:/source/repos/SLSF Reloaded NG/build/diagnostics/review-05/adversarial-build/adversarial-scheduler-reentry.exe ===
+exit_code=3221226505
+stderr:
+capture_destructor=enter
+=== E:/source/repos/SLSF Reloaded NG/build/diagnostics/review-05/adversarial-build/adversarial-clock-reentry.exe ===
+exit_code=3221226505
+stderr:
+wall_supplier=enter

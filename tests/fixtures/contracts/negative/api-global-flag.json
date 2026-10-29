@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "case": "api-global-flag",
+  "target": "contracts/legacy-api.json",
+  "operation": "changeFunctionField",
+  "selector": "SLSF_Reloaded_Logger.Log",
+  "field": "isGlobal",
+  "replacement": false,
+  "expected": "rejected",
+  "reason": "Catch incompatible API metadata independently of the manifest itself.",
+  "expectedFailure": "api source global flag"
+}

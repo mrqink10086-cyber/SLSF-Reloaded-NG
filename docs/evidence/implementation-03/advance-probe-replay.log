@@ -1,0 +1,45 @@
+Benchmark source: /e/source/repos/SLSF Reloaded NG/docs/evidence/implementation-03/advance-probe.cpp
+Baseline source tree: /tmp/advance-probe.ANuyzw/before-src (archived from 7a43e4e4b3a67b3ac5fa2f4d33990ac4e0101e70)
+Current source tree: /e/source/repos/SLSF Reloaded NG
+Compiler flags: Clang -std=c++23 -O2 -DNDEBUG; AVX2 TU uses -mavx2
+clang version 20.1.0
+Target: x86_64-pc-windows-msvc
+Thread model: posix
+InstalledDir: C:\Program Files\LLVM\bin
+clang version 20.1.0
+Target: x86_64-pc-windows-msvc
+Thread model: posix
+InstalledDir: C:\Program Files\LLVM\bin
+
+=== baseline raw ===
+RESULT build=before case=default21x78 work=noop mode=raw rounds=7 iterations=4000 edges=78 median_ns=3762 prepare_ns=0 warm_ns=4000 checksum=d750c52cb153695b rng_calls=0
+RESULT build=before case=default21x78 work=active mode=raw rounds=7 iterations=1000 edges=78 median_ns=7229 prepare_ns=0 warm_ns=8000 checksum=a3f8a63f723e844c rng_calls=0
+RESULT build=before case=uniform128x384 work=noop mode=raw rounds=7 iterations=1000 edges=384 median_ns=32565 prepare_ns=0 warm_ns=33300 checksum=0746ecec7f99d560 rng_calls=0
+RESULT build=before case=uniform128x384 work=active mode=raw rounds=7 iterations=250 edges=384 median_ns=111720 prepare_ns=0 warm_ns=88600 checksum=1e53eb108770bb21 rng_calls=0
+RESULT build=before case=uniform512x1536 work=noop mode=raw rounds=7 iterations=200 edges=1536 median_ns=165700 prepare_ns=0 warm_ns=167000 checksum=76261de2a7a66fbe rng_calls=0
+RESULT build=before case=uniform512x1536 work=active mode=raw rounds=7 iterations=50 edges=1536 median_ns=252902 prepare_ns=0 warm_ns=269300 checksum=a7f5e301821926cc rng_calls=0
+RESULT build=before case=uniform512x1536-custom work=noop mode=raw rounds=7 iterations=100 edges=1536 median_ns=166155 prepare_ns=0 warm_ns=168600 checksum=7c3f35bec13fca72 rng_calls=0
+RESULT build=before case=uniform512x1536-custom work=active mode=raw rounds=7 iterations=20 edges=1536 median_ns=550090 prepare_ns=0 warm_ns=677400 checksum=d2ccdf034b79d773 rng_calls=0
+
+=== current raw cache ===
+RESULT build=current case=default21x78 work=noop mode=raw rounds=7 iterations=4000 edges=78 median_ns=470 prepare_ns=0 warm_ns=10700 checksum=d750c52cb153695b rng_calls=0
+RESULT build=current case=default21x78 work=active mode=raw rounds=7 iterations=1000 edges=78 median_ns=2244 prepare_ns=0 warm_ns=27700 checksum=a3f8a63f723e844c rng_calls=0
+RESULT build=current case=uniform128x384 work=noop mode=raw rounds=7 iterations=1000 edges=384 median_ns=2262 prepare_ns=0 warm_ns=71800 checksum=0746ecec7f99d560 rng_calls=0
+RESULT build=current case=uniform128x384 work=active mode=raw rounds=7 iterations=250 edges=384 median_ns=13214 prepare_ns=0 warm_ns=105200 checksum=1e53eb108770bb21 rng_calls=0
+RESULT build=current case=uniform512x1536 work=noop mode=raw rounds=7 iterations=200 edges=1536 median_ns=9397 prepare_ns=0 warm_ns=313700 checksum=76261de2a7a66fbe rng_calls=0
+RESULT build=current case=uniform512x1536 work=active mode=raw rounds=7 iterations=50 edges=1536 median_ns=59322 prepare_ns=0 warm_ns=457000 checksum=a7f5e301821926cc rng_calls=0
+RESULT build=current case=uniform512x1536-custom work=noop mode=raw rounds=7 iterations=100 edges=1536 median_ns=10245 prepare_ns=0 warm_ns=355300 checksum=7c3f35bec13fca72 rng_calls=0
+RESULT build=current case=uniform512x1536-custom work=active mode=raw rounds=7 iterations=20 edges=1536 median_ns=62445 prepare_ns=0 warm_ns=504400 checksum=d2ccdf034b79d773 rng_calls=0
+
+=== current explicit prepared ===
+RESULT build=current case=default21x78 work=noop mode=prepared rounds=7 iterations=4000 edges=78 median_ns=85 prepare_ns=9500 warm_ns=200 checksum=d750c52cb153695b rng_calls=0
+RESULT build=current case=default21x78 work=active mode=prepared rounds=7 iterations=1000 edges=78 median_ns=1839 prepare_ns=14200 warm_ns=11400 checksum=a3f8a63f723e844c rng_calls=0
+RESULT build=current case=uniform128x384 work=noop mode=prepared rounds=7 iterations=1000 edges=384 median_ns=453 prepare_ns=72900 warm_ns=800 checksum=0746ecec7f99d560 rng_calls=0
+RESULT build=current case=uniform128x384 work=active mode=prepared rounds=7 iterations=250 edges=384 median_ns=11716 prepare_ns=68800 warm_ns=36700 checksum=1e53eb108770bb21 rng_calls=0
+RESULT build=current case=uniform512x1536 work=noop mode=prepared rounds=7 iterations=200 edges=1536 median_ns=1724 prepare_ns=295000 warm_ns=3500 checksum=76261de2a7a66fbe rng_calls=0
+RESULT build=current case=uniform512x1536 work=active mode=prepared rounds=7 iterations=50 edges=1536 median_ns=44938 prepare_ns=306300 warm_ns=129300 checksum=a7f5e301821926cc rng_calls=0
+RESULT build=current case=uniform512x1536-custom work=noop mode=prepared rounds=7 iterations=100 edges=1536 median_ns=1700 prepare_ns=326500 warm_ns=2200 checksum=7c3f35bec13fca72 rng_calls=0
+RESULT build=current case=uniform512x1536-custom work=active mode=prepared rounds=7 iterations=20 edges=1536 median_ns=44840 prepare_ns=344700 warm_ns=143800 checksum=d2ccdf034b79d773 rng_calls=0
+
+CHECKSUM_COMPARE=PASS (before == current raw == current prepared)
+Probe binaries and intermediate objects are outside the repository at /tmp/advance-probe.ANuyzw

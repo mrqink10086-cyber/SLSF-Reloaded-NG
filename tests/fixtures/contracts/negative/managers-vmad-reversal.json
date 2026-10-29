@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "case": "managers-vmad-reversal",
+  "target": "contracts/legacy-records.json",
+  "operation": "reverseVmadScripts",
+  "selector": "SLSF_Reloaded_Managers",
+  "expected": "rejected",
+  "expectedFailure": "record VMAD scripts SLSF_Reloaded_Managers",
+  "reason": "The nine script attachments are bound in VMAD order; reversing them must fail the ordered oracle."
+}

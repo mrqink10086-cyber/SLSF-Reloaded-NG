@@ -1,0 +1,14 @@
+PASS contracts: 124 functions (86 public), 52 inputs, 7 replies, 25 categories, 58 records, 23 rules
+REJECT  api-default: CONTRACT-REJECT: api parameter default for SLSF_Reloaded_Logger.Log[1] (expected '0', got '1')
+REJECT  api-global-flag: CONTRACT-REJECT: api source global flag for SLSF_Reloaded_Logger.Log (expected 'True', got 'False')
+REJECT  api-instance-binding: CONTRACT-REJECT: api instance VMAD script for SLSF_Reloaded_DataManager.GetFameValue
+REJECT  api-parameter-type: CONTRACT-REJECT: api parameter type for SLSF_Reloaded_DataManager.GetFameValue[0] (expected 'String', got 'Int')
+REJECT  api-return-type: CONTRACT-REJECT: api source return type for SLSF_Reloaded_DataManager.GetFameValue (expected 'Int', got 'Bool')
+REJECT  delete-one-input-event: CONTRACT-REJECT: events inputEvents length (expected '52', got '51')
+REJECT  duplicate-category: CONTRACT-REJECT: unique category names (expected '25', got '24')
+REJECT  invalid-api-result: CONTRACT-REJECT: GetFameLocation invalidInputResult (expected 'Null', got '$NoneText')
+REJECT  invalid-record-identity: CONTRACT-REJECT: record FormID SLSF_Reloaded_Main
+REJECT  managers-vmad-reversal: CONTRACT-REJECT: record VMAD scripts SLSF_Reloaded_Managers[0] (expected 'SLSF_Reloaded_CommentManager', got 'SLSF_Reloaded_DynamicAnonymity')
+REJECT  swap-event-parameters: CONTRACT-REJECT: input signature for SLSF_Reloaded_SendFameGain (expected 'Category|String|;EventLocation|String|;MinFame|Int|;MaxFame|Int|', got 'Category|String|;MinFame|Int|;EventLocation|String|;MaxFame|Int|')
+PASS negative fixtures: 11/11 rejected
+exit=0

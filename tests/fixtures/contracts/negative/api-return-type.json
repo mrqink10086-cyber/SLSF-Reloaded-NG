@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "case": "api-return-type",
+  "target": "contracts/legacy-api.json",
+  "operation": "changeFunctionField",
+  "selector": "SLSF_Reloaded_DataManager.GetFameValue",
+  "field": "returnType",
+  "replacement": "Bool",
+  "expected": "rejected",
+  "reason": "Catch incompatible API metadata independently of the manifest itself.",
+  "expectedFailure": "api source return type"
+}

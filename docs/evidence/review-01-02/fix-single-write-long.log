@@ -1,0 +1,4 @@
+128 accounts, 1000000 Set writes: 17778 us, 0.017778 us/write
+4096 accounts, 1000000 Set writes: 17867 us, 0.017867 us/write
+16384 accounts, 1000000 Set writes: 17586 us, 0.017586 us/write
+65535 accounts, 1000000 Set writes: 17464 us, 0.017464 us/write

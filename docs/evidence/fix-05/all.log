@@ -1,0 +1,308 @@
+[0m[32;1m[ 77%]:[0m [35;1m<SLSFCore>[0m compiling.releasedbg src\core\time\Scheduler.cpp[0m
+[0m[32;1m[ 85%]:[0m [35;1m<SLSFCore>[0m [35;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[32;1m[ 86%]:[0m [35;1m<SLSFEngine>[0m [35;1marchiving.releasedbg SLSFEngine.lib[0m
+[0m[32;1m[ 90%]:[0m [35;1m<SLSFCoreTests>[0m [35;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.391s[0m
+RUN SLSFCoreTests cases=219 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (848 assertions in 11 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (934 assertions in 11 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8694 assertions in 11 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (333 assertions in 11 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (104 assertions in 11 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (100 assertions in 11 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (257 assertions in 11 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (535 assertions in 11 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (57263 assertions in 11 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2580 assertions in 11 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (40073 assertions in 11 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (191 assertions in 11 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1058 assertions in 11 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (128 assertions in 11 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1067 assertions in 11 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (133 assertions in 11 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (202 assertions in 11 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (14314 assertions in 11 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (392 assertions in 11 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (65 assertions in 10 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.502s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.087s
+[0m[32;1m[ 66%]:[0m [35;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\time\Scheduler.cpp[0m
+[0m[32;1m[ 86%]:[0m [35;1m<SLSFCoreAsan>[0m [35;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[ 88%]:[0m [35;1m<SLSFEngineAsan>[0m [35;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[32;1m[ 90%]:[0m [35;1m<SLSFCoreTestsAsan>[0m [35;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.125s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+[0m[1;31;1merror: [0mexecv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason[0m
+
+=================================================================
+==11504==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x115c946a0030 at pc 0x7ff613131189 bp 0x000204d7fd00 sp 0x000204d7fd48
+WRITE of size 4 at 0x115c946a0030 thread T0
+    #0 0x7ff613131188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff613131d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff613131d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.062s[0m
+RUN SLSFCoreTestsAsan cases=219 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (848 assertions in 11 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (934 assertions in 11 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8694 assertions in 11 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (333 assertions in 11 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (104 assertions in 11 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (100 assertions in 11 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (257 assertions in 11 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (535 assertions in 11 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (57263 assertions in 11 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2580 assertions in 11 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (40073 assertions in 11 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (191 assertions in 11 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1058 assertions in 11 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (128 assertions in 11 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1067 assertions in 11 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (133 assertions in 11 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (202 assertions in 11 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (14314 assertions in 11 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (392 assertions in 11 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (65 assertions in 10 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.408s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.032s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.086s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.031s[0m
+RUN StateCodecFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF6DD0D6108, 00007FF6DD0D67E3), 
+INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF6DD0939D0,00007FF6DD09A780), 
+INFO:     1316 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\corpus
+INFO: seed corpus: files: 1316 min: 1b max: 2022b total: 563472b rss: 38Mb
+#1317	INITED cov: 889 ft: 2180 corp: 236/99Kb exec/s: 0 rss: 53Mb
+#3428	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 1617 exec/s: 0 rss: 58Mb L: 108/1587 MS: 1 EraseBytes-
+#4934	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 1627 exec/s: 0 rss: 61Mb L: 121/1587 MS: 1 EraseBytes-
+#8682	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 1657 exec/s: 0 rss: 69Mb L: 104/1587 MS: 3 ShuffleBytes-CMP-EraseBytes- DE: "\377\377\377\377\377\377\377\036"-
+#17223	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 1737 exec/s: 0 rss: 85Mb L: 114/1587 MS: 1 EraseBytes-
+#22705	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 1787 exec/s: 0 rss: 96Mb L: 204/1587 MS: 2 ShuffleBytes-EraseBytes-
+#37337	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 1927 exec/s: 0 rss: 124Mb L: 171/1587 MS: 2 PersAutoDict-EraseBytes- DE: "\377\377\377\377\377\377\377\036"-
+#47488	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 2027 exec/s: 0 rss: 143Mb L: 47/1587 MS: 1 EraseBytes-
+#68574	REDUCE cov: 889 ft: 2180 corp: 236/99Kb lim: 2233 exec/s: 0 rss: 184Mb L: 655/1587 MS: 1 EraseBytes-
+#78740	REDUCE cov: 889 ft: 2180 corp: 236/98Kb lim: 2332 exec/s: 78740 rss: 203Mb L: 994/1587 MS: 1 EraseBytes-
+#83176	REDUCE cov: 889 ft: 2180 corp: 236/98Kb lim: 2376 exec/s: 83176 rss: 211Mb L: 838/1587 MS: 1 EraseBytes-
+#91899	REDUCE cov: 889 ft: 2180 corp: 236/98Kb lim: 2453 exec/s: 91899 rss: 229Mb L: 509/1587 MS: 1 EraseBytes-
+#100000	DONE   cov: 889 ft: 2180 corp: 236/98Kb lim: 2530 exec/s: 100000 rss: 244Mb
+###### Recommended dictionary. ######
+"\377\377\377\377\377\377\377\036" # Uses: 8040
+###### End of recommended dictionary. ######
+Done 100000 runs in 1 second(s)
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.078s[0m
+RUN SLSFCoreTests cases=8 jobs=8 seed=1170
+SHARD 1/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (600 assertions in 1 test case)
+SHARD 2/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (800 assertions in 1 test case)
+SHARD 3/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1600 assertions in 1 test case)
+SHARD 4/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (400 assertions in 1 test case)
+SHARD 5/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+SHARD 6/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+SHARD 7/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 8/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.170s
+[0m[32;1m[ 87%]:[0m [35;1m<SLSFBench>[0m [35;1mlinking.releasedbg SLSFBench.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.172s[0m
+RUN SLSFBench -> E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=27.15ms (64.6ns/row) avx2=6.68ms (15.9ns/row, 4.06x) relax_scalar=2.88ms (6.9ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=16.65ms (65.1ns/row) avx2=4.05ms (15.8ns/row, 4.11x) relax_scalar=1.77ms (6.9ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=12.63ms (65.8ns/row) avx2=3.56ms (18.6ns/row, 3.54x) relax_scalar=1.48ms (7.7ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=2.9µs/batch total=0.006s
+BENCH settlement accounts=64 batches=800 advance+publish=8.7µs/batch total=0.007s
+BENCH report: E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+[0m[32;1m[ 87%]:[0m [35;1m<SLSFDispatcherOfflineProbe>[0m [35;1mlinking.releasedbg SLSFDispatcherOfflineProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.171s[0m
+RUN SLSFDispatcherOfflineProbe
+heartbeat=3600 frames=3600 simulated_seconds=60 max_pump_us=5.5 long_wait_seconds=1000000 completions=3 stale_callbacks=0
+OFFLINE_WAKE_PROBE=PASS
+PASS native tests: mode=all seed=1170

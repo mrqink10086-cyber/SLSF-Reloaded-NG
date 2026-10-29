@@ -1,0 +1,29 @@
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.062s[0m
+RUN SLSFCoreTests cases=5 jobs=5 seed=1170
+SHARD 1/5
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (600 assertions in 1 test case)
+SHARD 2/5
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (800 assertions in 1 test case)
+SHARD 3/5
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1600 assertions in 1 test case)
+SHARD 4/5
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (400 assertions in 1 test case)
+SHARD 5/5
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.155s
+PASS native tests: mode=differential seed=1170

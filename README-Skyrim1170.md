@@ -29,9 +29,9 @@ pwsh -NoProfile -File .\build-skyrim1170.ps1
 xmake f -y -p windows -a x64 -m releasedbg --toolchain=msvc --skyrim_se=n --skyrim_ae=y --skyrim_vr=n
 ```
 
-1.6.1170 属于 CommonLib 的 AE（1.6.x）目标，即使游戏程序名仍是 SkyrimSE.exe。此配置启用 AE，关闭 1.5.x SE 和 VR；它不表示已验证其他 AE 版本兼容，也不会自动把插件限制为仅可在 1.6.1170 加载。
+1.6.1170 对应 CommonLib 的 AE（1.6.x）目标，程序名为 SkyrimSE.exe。构建启用 AE，关闭 1.5.x SE 和 VR；发布和加载验收以 Steam 1.6.1170 为目标。
 
-构建脚本临时把模板的自动安装路径指向本项目 `build/staging`，结束后恢复原环境变量。无需游戏路径即可编译，生成文件不会直接写入游戏目录。
+构建脚本将产物暂存到本项目 `build/staging`，结束后恢复原环境变量。编译只需本地源码和工具链，部署按下方步骤执行。
 
 `xmake.lua` 将三个库依赖设为 `system = false`，避免本机 Xmake 在缓存未命中时探测缺失的 vcpkg。由于 GitHub 常规下载连接失败，DirectXTK 24.2.0 和 spdlog v1.16.0 的官方源码包已放在 `build/downloads`，并与 Xmake 包定义的 SHA256 核对一致；脚本会自动使用该目录，不修改全局 Xmake 设置。
 
@@ -47,9 +47,9 @@ xmake f -y -p windows -a x64 -m releasedbg --toolchain=msvc --skyrim_se=n --skyr
 
 以 **Steam SkyrimSE.exe 1.6.1170** 为本次目标：
 
-1. 使用匹配此运行时的 **SKSE64 2.2.6**，不要仅依据官网“最新版”选择。本地参考源码已固定至对应标签。
+1. 使用匹配此运行时的 **SKSE64 2.2.6**，本地参考源码固定至对应标签。
 2. 安装 Address Library for SKSE Plugins 的 AE / 1.6.x 数据，确认游戏 `Data/SKSE/Plugins/versionlib-1-6-1170-0.bin` 存在。
-3. 核实实际 SkyrimSE.exe 的文件版本和商店来源，再通过 `skse64_loader.exe` 启动。此处尚未确认本机游戏安装位置，也没有进行游戏内加载验证。
+3. 核实 SkyrimSE.exe 的文件版本和商店来源，通过 `skse64_loader.exe` 启动。
 4. 通过 Mod 管理器部署暂存目录中的 Mod，或在确认目标路径后复制 DLL/PDB 到游戏 `Data/SKSE/Plugins`。
 
 参考：

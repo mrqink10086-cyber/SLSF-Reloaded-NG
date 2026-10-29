@@ -1,0 +1,4 @@
+case=Ready,DD=true,Heavy=true,Lockable=false,Hood=true,Anonymous=false
+native_status=0 native_wearingUnhideable=0
+native_status=0 native_visiblyBound=1
+legacy_wearingUnhideable=0 legacy_visiblyBound=1

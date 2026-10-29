@@ -1,0 +1,224 @@
+[0mchecking for cl.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe[0m
+[0mchecking for Microsoft C/C++ Compiler (x64) ... [38;5;2;1mok[0m
+[0mchecking for Microsoft Visual Studio (x64) version ... [38;5;2;1m2022[0m
+[0mchecking for git ... [38;5;2;1mC:\Program Files\Git\cmd\git.exe[0m
+[0mchecking for gzip ... [38;5;1;1mno[0m
+[0mchecking for 7z ... [38;5;2;1mC:\Program Files\xmake\winenv\bin\7z[0m
+C:\Program Files\Git\cmd\git.exe rev-parse HEAD
+[0mchecking for zig ... [38;5;1;1mno[0m
+[0mchecking for nim ... [38;5;1;1mno[0m
+[0mchecking for dotnet ... [38;5;2;1mC:\Program Files\dotnet\dotnet.exe[0m
+[0mchecking for .NET SDK version ... [38;5;2;1m9.0.202[0m
+[0mchecking for .NET SDK directory ... [38;5;2;1mC:\Program Files\dotnet\sdk\9.0.202[0m
+[0mchecking for ninja ... [38;5;1;1mno[0m
+[0mchecking for ninja ... [38;5;1;1mno[0m
+[0mchecking for ninja ... [38;5;2;1mC:\Users\15219\AppData\Local\Programs\Python\Python310\Scripts\ninja.exe[0m
+[0mchecking for cmake ... [38;5;1;1mno[0m
+[0mchecking for cmake ... [38;5;1;1mno[0m
+[0mchecking for cmake ... [38;5;2;1mC:\Program Files\CMake\bin\cmake[0m
+[0mchecking for xmake::directxmath ... [38;5;2;1mdirectxmath 2024.02[0m
+[0mchecking for xmake::directxtk ... [38;5;2;1mdirectxtk 24.2.0[0m
+[0mchecking for xmake::spdlog ... [38;5;2;1mspdlog v1.16.0[0m
+[0mchecking for xmake::catch2 ... [38;5;2;1mcatch2 v3.8.1[0m
+[0mchecking for clang-cl.exe ... [38;5;2;1mC:\Program Files\LLVM\bin\clang-cl.exe[0m
+[0mchecking for LLVM Clang C/C++ Compiler (x64) ... [38;5;2;1mok[0m
+[0mchecking for Microsoft Visual Studio (x64) version ... [38;5;2;1m2022[0m
+[0mchecking for clang ... [38;5;2;1mC:\Program Files\LLVM\bin\clang[0m
+[0mchecking for LLVM Clang C/C++ Compiler (x64) ... [38;5;2;1mok[0m
+[0mchecking for Microsoft Visual Studio (x64) version ... [38;5;2;1m2022[0m
+[0mchecking for clang-cl ... [38;5;2;1mC:\Program Files\LLVM\bin\clang-cl[0m
+[0m[2mchecking for the c++ compiler (cxx) ... [38;5;2;1mclang-cl[0m
+[0mchecking for link.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe[0m
+[0m[2mchecking for the linker (ld) ... [38;5;2;1mlink.exe[0m
+[0mchecking for cl.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe[0m
+[0m[2mchecking for the c++ compiler (cxx) ... [38;5;2;1mcl.exe[0m
+[0mchecking for link.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe[0m
+[0m[2mchecking for the linker (ld) ... [38;5;2;1mlink.exe[0m
+[0mchecking for clang++ ... [38;5;2;1mC:\Program Files\LLVM\bin\clang++[0m
+[0m[2mchecking for the linker (ld) ... [38;5;2;1mclang++[0m
+[0mchecking for clang++ ... [38;5;2;1mC:\Program Files\LLVM\bin\clang++[0m
+[0m[2mchecking for the shared library linker (sh) ... [38;5;2;1mclang++[0m
+[0m[2mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlibsse-ng-plugin.cpp.in to build\.gens\SLSFReloadedNG\windows\x64\releasedbg\commonlibsse-ng-plugin.cpp ..[0m
+[0mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlibsse-ng-plugin.cpp.in ... [38;5;2;1mok[0m
+[0m[2mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlib-plugin.rc.in to build\.gens\SLSFReloadedNG\windows\x64\releasedbg\commonlib-plugin.rc ..[0m
+[0mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlib-plugin.rc.in ... [38;5;2;1mok[0m
+[0mchecking for E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe ... [38;5;2;1me:\buildtools\vc\tools\msvc\14.44.35207\bin\hostx64\x64\cl.exe[0m
+[0m[2mchecking for flags (-FS -Fd) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (-O2) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (-std:c++23) ... [38;5;1;1mno[0m
+[0m[2mchecking for flags (-std:c++23preview) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (cl_external_includedir) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (-DNDEBUG) ... [38;5;2;1mok[0m
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\CategoryMaskTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\CategoryMaskTests.cpp.obj tests\core\CategoryMaskTests.cpp
+[0m[2mchecking for flags (cl_sourceDependencies) ... [38;5;2;1mok[0m
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ConfigurationTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ConfigurationTests.cpp.obj tests\core\ConfigurationTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ContractsTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ContractsTests.cpp.obj tests\core\ContractsTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\headers\ContractsHeader.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\ContractsHeader.cpp.obj tests\core\headers\ContractsHeader.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\LocationIndexTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\LocationIndexTests.cpp.obj tests\core\LocationIndexTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\LocationRandomTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\LocationRandomTests.cpp.obj tests\core\LocationRandomTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\headers\PersistentStateHeader.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\PersistentStateHeader.cpp.obj tests\core\headers\PersistentStateHeader.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\NumericRowTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\NumericRowTests.cpp.obj tests\core\NumericRowTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ProviderRegistryTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ProviderRegistryTests.cpp.obj tests\core\ProviderRegistryTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\headers\CommandsHeader.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\CommandsHeader.cpp.obj tests\core\headers\CommandsHeader.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ReputationStateTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ReputationStateTests.cpp.obj tests\core\ReputationStateTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\headers\SnapshotsHeader.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\SnapshotsHeader.cpp.obj tests\core\headers\SnapshotsHeader.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\RegionRegistryTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\RegionRegistryTests.cpp.obj tests\core\RegionRegistryTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\headers\TypesHeader.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\TypesHeader.cpp.obj tests\core\headers\TypesHeader.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\StateCodecTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\StateCodecTests.cpp.obj tests\core\StateCodecTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\SharedTypesTests.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\SharedTypesTests.cpp.obj tests\core\SharedTypesTests.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m compiling.releasedbg tests\reference\LocationReference.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\compile.SLSFCoreTests.pdb -W4 -O2 -std:c++23preview -Itests\reference -Iinclude "-DSLSF_FIXTURE_DIR=\"E:/source/repos/SLSF Reloaded NG/tests/fixtures\"" /EHsc -external:W0 -external:IC:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\include -DNDEBUG -Fobuild\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\reference\LocationReference.cpp.obj tests\reference\LocationReference.cpp
+[0m[2mchecking for flags (/fp:precise) ... [38;5;2;1mok[0m
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\persistence\StateCodec.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc /fp:precise -DNDEBUG -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\persistence\StateCodec.cpp.obj src\core\persistence\StateCodec.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\ProviderRegistry.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc /fp:precise -DNDEBUG -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\reputation\ProviderRegistry.cpp.obj src\core\reputation\ProviderRegistry.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\BuildInfo.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc /fp:precise -DNDEBUG -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\BuildInfo.cpp.obj src\core\BuildInfo.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\location\RegionRegistry.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc /fp:precise -DNDEBUG -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\location\RegionRegistry.cpp.obj src\core\location\RegionRegistry.cpp
+[0m[38;5;2;1m[  6%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\location\LocationIndex.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc /fp:precise -DNDEBUG -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\location\LocationIndex.cpp.obj src\core\location\LocationIndex.cpp
+[0m[38;5;2;1m[  9%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\ReputationState.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc /fp:precise -DNDEBUG -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\reputation\ReputationState.cpp.obj src\core\reputation\ReputationState.cpp
+[0m[1;38;5;1;1merror: [0mCategoryMaskTests.cpp
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(38): error C2365: “slsf::CategoryMask::Bits”: 重定义；以前的定义是“typedef”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(19): note: 参见“slsf::CategoryMask::Bits”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(38): error C2059: 语法错误:“return”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(38): error C2238: 意外的标记位于“;”之前
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(31): error C2065: “Validated”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(35): error C2065: “Validated”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(34): error C3615: constexpr 函数“slsf::CategoryMask::FromCategory”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(34): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(39): error C2628: “slsf::CategoryMask”后面接“bool”是非法的(是否忘记了“;”?)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(39): error C2270: “Empty”: 非成员函数上不允许修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(39): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(39): error C3615: constexpr 函数“slsf::Empty”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(39): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(40): error C2270: “Any”: 非成员函数上不允许修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(40): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(40): error C3615: constexpr 函数“slsf::Any”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(40): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(42): error C2270: “Test”: 非成员函数上不允许修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(44): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(42): error C3615: constexpr 函数“slsf::Test”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(42): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(52): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(60): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(64): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(66): error C2270: “Count”: 非成员函数上不允许修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(69): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(69): error C2065: “Bits”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(66): error C3615: constexpr 函数“slsf::Count”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(66): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(78): error C2270: “ForEach”: 非成员函数上不允许修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2065: “Bits”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2760: 语法错误: 此处出现意外的“{”；应为“)”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C3878: 语法错误:“expression”后出现意外标记“常数”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C3878: 语法错误:“condition”后出现意外标记“}”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): note: 缺少以下项之一:  ')' ';' ?
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2760: 语法错误: 此处出现意外的“}”；应为“)”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2760: 语法错误: 此处出现意外的“}”；应为“statement”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C3878: 语法错误:“compound-statement”后出现意外标记“<<”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2065: “i”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2760: 语法错误: 此处出现意外的“)”；应为“;”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C3878: 语法错误:“expression-statement”后出现意外标记“)”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C2760: 语法错误: 此处出现意外的“)”；应为“;”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(80): error C3878: 语法错误:“expression-statement”后出现意外标记“)”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(81): error C2065: “i”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(86): error C2255: “friend”: 不允许位于类定义之外
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(86): error C2610: “bool slsf::operator ==(slsf::CategoryMask,slsf::CategoryMask) noexcept”: 不是可默认为的特殊成员函数或比较运算符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(86): error C3615: constexpr 函数“slsf::operator ==”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(86): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(88): error C2255: “friend”: 不允许位于类定义之外
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(89): error C2039: "bits_": 不是 "slsf::CategoryMask" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(17): note: 参见“slsf::CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(89): error C2039: "bits_": 不是 "slsf::CategoryMask" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(17): note: 参见“slsf::CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(89): error C2065: “Validated”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(92): error C2255: “friend”: 不允许位于类定义之外
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(93): error C2039: "bits_": 不是 "slsf::CategoryMask" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(17): note: 参见“slsf::CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(93): error C2039: "bits_": 不是 "slsf::CategoryMask" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(17): note: 参见“slsf::CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(93): error C2065: “Validated”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(96): error C2805: 二进制运算符“|=”的参数太少
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(97): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(97): error C2039: "bits_": 不是 "slsf::CategoryMask" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(17): note: 参见“slsf::CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(98): error C2355: “this”: 只能在非静态成员函数或非静态数据成员初始值设定项的内部引用
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(96): error C3615: constexpr 函数“slsf::operator |=”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(96): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(101): error C2805: 二进制运算符“&=”的参数太少
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(102): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(102): error C2039: "bits_": 不是 "slsf::CategoryMask" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(17): note: 参见“slsf::CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(103): error C2355: “this”: 只能在非静态成员函数或非静态数据成员初始值设定项的内部引用
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(101): error C3615: constexpr 函数“slsf::operator &=”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(101): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(107): error C2270: “~”: 非成员函数上不允许修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(107): error C2809: 运算符“~”没有参数
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(108): error C2065: “kValidBits”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(108): error C2065: “bits_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(108): error C2065: “Validated”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(107): error C3615: constexpr 函数“slsf::operator ~”不能生成常量表达式
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(107): note: 由于控制到达 constexpr 函数的末尾，导致失败
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(111): error C2059: 语法错误:“private”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2146: 语法错误: 缺少“)”(在标识符“bits”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2146: 语法错误: 缺少“;”(在标识符“bits”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2059: 语法错误:“)”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2143: 语法错误: 缺少“;”(在“noexcept”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2059: 语法错误:“{”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(116): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(116): error C2373: “slsf::Bits”: 重定义；不同的类型修饰符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(114): note: 参见“slsf::Bits”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(116): error C2146: 语法错误: 缺少“;”(在标识符“bits_”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(116): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(116): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(119): error C2653: “CategoryMask”: 不是类或命名空间名称
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(119): error C2065: “kValidBits”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(120): error C2065: “CategoryMask”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(120): error C2923: "std::is_trivially_copyable_v": "CategoryMask" 不是参数 "_Ty" 的有效 模板 类型参数
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(120): note: 参见“CategoryMask”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(120): error C2062: 意外的类型“<error type>” 
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(122): error C2059: 语法错误:“}”
+E:\source\repos\SLSF Reloaded NG\include\slsf/core/CategoryMask.h(122): error C2143: 语法错误: 缺少“;”(在“}”的前面)
+tests\core\CategoryMaskTests.cpp(9): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+tests\core\CategoryMaskTests.cpp(9): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+tests\core\CategoryMaskTests.cpp(16): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(16): error C2065: “Whore”: 未声明的标识符
+tests\core\CategoryMaskTests.cpp(17): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(17): error C2065: “Airhead”: 未声明的标识符
+tests\core\CategoryMaskTests.cpp(18): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(18): error C2065: “Count”: 未声明的标识符
+tests\core\CategoryMaskTests.cpp(19): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(19): error C2065: “Whore”: 未声明的标识符
+tests\core\CategoryMaskTests.cpp(20): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(20): error C2065: “Slut”: 未声明的标识符
+tests\core\CategoryMaskTests.cpp(21): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(21): error C2065: “Group”: 未声明的标识符
+tests\core\CategoryMaskTests.cpp(22): error C2653: “FameCategory”: 不是类或命名空间名称
+tests\core\CategoryMaskTests.cpp(22): fatal error C1003: 错误计数超过 100；正在停止编译
+[0m

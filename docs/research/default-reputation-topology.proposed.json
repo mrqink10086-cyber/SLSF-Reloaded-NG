@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "status": "design-reference-not-runtime-configuration",
+  "source": "Fixed default-to-default links in SLSF_Reloaded_FameManager.psc:1654-2173",
+  "notes": [
+    "Legacy-derived reputation links, not a verified road or distance map.",
+    "Each listed edge expands to two directed edges at graph construction.",
+    "Retention is intentionally null until calibrated; this draft is not loadable runtime configuration.",
+    "Active inter-region retention must be greater than zero and less than one; zero disables transmission. Speed is a separate time parameter.",
+    "Stable node keys are independent of per-process dense IDs."
+  ],
+  "nodes": [
+    {
+      "key": "whiterun",
+      "apiName": "Whiterun"
+    },
+    {
+      "key": "winterhold",
+      "apiName": "Winterhold"
+    },
+    {
+      "key": "windhelm",
+      "apiName": "Windhelm"
+    },
+    {
+      "key": "solitude",
+      "apiName": "Solitude"
+    },
+    {
+      "key": "riften",
+      "apiName": "Riften"
+    },
+    {
+      "key": "markarth",
+      "apiName": "Markarth"
+    },
+    {
+      "key": "morthal",
+      "apiName": "Morthal"
+    },
+    {
+      "key": "dawnstar",
+      "apiName": "Dawnstar"
+    },
+    {
+      "key": "falkreath",
+      "apiName": "Falkreath"
+    },
+    {
+      "key": "raven_rock",
+      "apiName": "Raven Rock"
+    },
+    {
+      "key": "riverwood",
+      "apiName": "Riverwood"
+    },
+    {
+      "key": "rorikstead",
+      "apiName": "Rorikstead"
+    },
+    {
+      "key": "ivarstead",
+      "apiName": "Ivarstead"
+    },
+    {
+      "key": "shors_stone",
+      "apiName": "Shor's Stone"
+    },
+    {
+      "key": "dragon_bridge",
+      "apiName": "Dragon Bridge"
+    },
+    {
+      "key": "karthwasten",
+      "apiName": "Karthwasten"
+    },
+    {
+      "key": "skaal_village",
+      "apiName": "Skaal Village"
+    },
+    {
+      "key": "largashbur",
+      "apiName": "Largashbur"
+    },
+    {
+      "key": "dushnikh_yal",
+      "apiName": "Dushnikh Yal"
+    },
+    {
+      "key": "mor_khazgur",
+      "apiName": "Mor Khazgur"
+    },
+    {
+      "key": "narzulbur",
+      "apiName": "Narzulbur"
+    }
+  ],
+  "edges": [
+    {
+      "a": "dawnstar",
+      "b": "whiterun",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "whiterun",
+      "b": "windhelm",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "riverwood",
+      "b": "whiterun",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "rorikstead",
+      "b": "whiterun",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "ivarstead",
+      "b": "whiterun",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "falkreath",
+      "b": "whiterun",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dawnstar",
+      "b": "winterhold",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "windhelm",
+      "b": "winterhold",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "shors_stone",
+      "b": "windhelm",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "narzulbur",
+      "b": "windhelm",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "raven_rock",
+      "b": "windhelm",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "cross_worldspace_link"
+    },
+    {
+      "a": "dragon_bridge",
+      "b": "solitude",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "morthal",
+      "b": "solitude",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dawnstar",
+      "b": "solitude",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "riften",
+      "b": "shors_stone",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "ivarstead",
+      "b": "riften",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "largashbur",
+      "b": "riften",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "karthwasten",
+      "b": "markarth",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "markarth",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dushnikh_yal",
+      "b": "markarth",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "falkreath",
+      "b": "markarth",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dawnstar",
+      "b": "morthal",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dragon_bridge",
+      "b": "morthal",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "morthal",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "falkreath",
+      "b": "riverwood",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "falkreath",
+      "b": "ivarstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "falkreath",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "raven_rock",
+      "b": "skaal_village",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "riverwood",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "ivarstead",
+      "b": "riverwood",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dushnikh_yal",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "karthwasten",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dragon_bridge",
+      "b": "rorikstead",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "ivarstead",
+      "b": "shors_stone",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "ivarstead",
+      "b": "largashbur",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "narzulbur",
+      "b": "shors_stone",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dragon_bridge",
+      "b": "karthwasten",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "dragon_bridge",
+      "b": "mor_khazgur",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    },
+    {
+      "a": "karthwasten",
+      "b": "mor_khazgur",
+      "bidirectional": true,
+      "retention": null,
+      "kind": "region_link"
+    }
+  ]
+}

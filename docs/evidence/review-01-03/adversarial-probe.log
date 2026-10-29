@@ -1,0 +1,8 @@
+source=docs/evidence/review-01-02/algorithm-single-write-probe.cpp
+cd3d8e4a4710cd156c0613ba339b1fecdbfb6c338c9e223ff521a991fb54b83d *docs/evidence/review-01-02/algorithm-single-write-probe.cpp
+compile_exit=0
+128 accounts, 1000000 Set writes: 17276 us, 0.017276 us/write
+4096 accounts, 1000000 Set writes: 17368 us, 0.017368 us/write
+16384 accounts, 1000000 Set writes: 17086 us, 0.017086 us/write
+65535 accounts, 1000000 Set writes: 17130 us, 0.01713 us/write
+run_exit=0

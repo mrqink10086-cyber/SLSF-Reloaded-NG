@@ -1,0 +1,93 @@
++ cd '/e/source/repos/SLSF Reloaded NG'
++ out=build/diagnostics/review-01-03
++ obj=build/diagnostics/review-01-03/algorithm-obj
++ mkdir -p build/diagnostics/review-01-03/algorithm-obj
++ clang='/c/Program Files/LLVM/bin/clang++.exe'
++ common=(-std=c++23 -O2 -DNDEBUG -Iinclude -I.)
++ compile build/diagnostics/review-01-03/algorithm-public-probes.cpp
++ local source=build/diagnostics/review-01-03/algorithm-public-probes.cpp
++ local name=algorithm-public-probes.cpp
++ name=algorithm-public-probes
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c build/diagnostics/review-01-03/algorithm-public-probes.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-algorithm-public-probes.obj
++ compile build/diagnostics/review-01-03/algorithm-cost-probes.cpp
++ local source=build/diagnostics/review-01-03/algorithm-cost-probes.cpp
++ local name=algorithm-cost-probes.cpp
++ name=algorithm-cost-probes
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c build/diagnostics/review-01-03/algorithm-cost-probes.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-algorithm-cost-probes.obj
++ compile src/core/location/RegionRegistry.cpp
++ local source=src/core/location/RegionRegistry.cpp
++ local name=RegionRegistry.cpp
++ name=RegionRegistry
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/location/RegionRegistry.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-RegionRegistry.obj
++ compile src/core/reputation/ProviderRegistry.cpp
++ local source=src/core/reputation/ProviderRegistry.cpp
++ local name=ProviderRegistry.cpp
++ name=ProviderRegistry
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/reputation/ProviderRegistry.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-ProviderRegistry.obj
++ compile src/core/reputation/ReputationState.cpp
++ local source=src/core/reputation/ReputationState.cpp
++ local name=ReputationState.cpp
++ name=ReputationState
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/reputation/ReputationState.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-ReputationState.obj
++ compile src/core/reputation/DiffusionGraph.cpp
++ local source=src/core/reputation/DiffusionGraph.cpp
++ local name=DiffusionGraph.cpp
++ name=DiffusionGraph
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/reputation/DiffusionGraph.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionGraph.obj
++ compile src/core/reputation/DiffusionKernel.cpp
++ local source=src/core/reputation/DiffusionKernel.cpp
++ local name=DiffusionKernel.cpp
++ name=DiffusionKernel
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/reputation/DiffusionKernel.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionKernel.obj
++ compile src/core/reputation/GainRules.cpp
++ local source=src/core/reputation/GainRules.cpp
++ local name=GainRules.cpp
++ name=GainRules
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/reputation/GainRules.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-GainRules.obj
++ compile src/core/reputation/Settlement.cpp
++ local source=src/core/reputation/Settlement.cpp
++ local name=Settlement.cpp
++ name=Settlement
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -c src/core/reputation/Settlement.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-Settlement.obj
++ compile src/core/reputation/DiffusionKernelAvx2.cpp -mavx2
++ local source=src/core/reputation/DiffusionKernelAvx2.cpp
++ local name=DiffusionKernelAvx2.cpp
++ name=DiffusionKernelAvx2
++ shift
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG -Iinclude -I. -mavx2 -c src/core/reputation/DiffusionKernelAvx2.cpp -o build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionKernelAvx2.obj
++ core_objects=("$obj/algorithm-RegionRegistry.obj" "$obj/algorithm-ProviderRegistry.obj" "$obj/algorithm-ReputationState.obj" "$obj/algorithm-DiffusionGraph.obj" "$obj/algorithm-DiffusionKernel.obj" "$obj/algorithm-GainRules.obj" "$obj/algorithm-Settlement.obj" "$obj/algorithm-DiffusionKernelAvx2.obj")
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG build/diagnostics/review-01-03/algorithm-obj/algorithm-algorithm-public-probes.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-RegionRegistry.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-ProviderRegistry.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-ReputationState.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionGraph.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionKernel.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-GainRules.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-Settlement.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionKernelAvx2.obj -o build/diagnostics/review-01-03/algorithm-public-probes.exe
++ build/diagnostics/review-01-03/algorithm-public-probes.exe
+negative.after_set local=-42 remote=-42 fame=-42
+negative.same_time_noop local=-42 remote=-42 fame=-42
+negative.after_advance local=-42 remote=0 fame=0
+manual.before_default_cap local=0 remote=150 fame=150
+manual.cap=150 return=150 manual.after local=150 remote=150 fame=150
+manual.before_extended_cap local=0 remote=200 fame=200
+manual.cap=200 return=150 manual.after local=150 remote=200 fame=200
+rebind.key_at_2=4 fame_at_2=77 key_at_1=2 fame_at_1=0
+rebind.edge_source=2 edge_target=1
+scheduled.at=0.5 now=0.5 queued_fame=9 settle_then_apply_fame=10
+scheduled.at=0.5 now=1 queued_fame=8 settle_then_apply_fame=9
+gain.time=nan accepted fame=1 protection=0
+gain.time=inf accepted fame=1 protection=inf
+kernel.avx2=available special-values=nan,inf,signed-zero dirty-padding=passed
+algorithm-public-probes=PASS
++ '/c/Program Files/LLVM/bin/clang++.exe' -std=c++23 -O2 -DNDEBUG build/diagnostics/review-01-03/algorithm-obj/algorithm-algorithm-cost-probes.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-RegionRegistry.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-ProviderRegistry.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-ReputationState.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionGraph.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionKernel.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-GainRules.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-Settlement.obj build/diagnostics/review-01-03/algorithm-obj/algorithm-DiffusionKernelAvx2.obj -o build/diagnostics/review-01-03/algorithm-cost-probes.exe
++ build/diagnostics/review-01-03/algorithm-cost-probes.exe
+graph.nodes=21 graph.edges=78 iterations=10000 compile_ns=3961.99 no_op_Advance_ns=3955.91 validate_compiled_ns=35.50
+graph.nodes=128 graph.edges=384 iterations=5000 compile_ns=33894.46 no_op_Advance_ns=33948.06 validate_compiled_ns=143.86
+graph.nodes=512 graph.edges=1536 iterations=1000 compile_ns=163706.00 no_op_Advance_ns=164815.10 validate_compiled_ns=528.20
+graph.checksum=4268000
+custom.accounts=512 iterations=40 custom.none_Advance_ns=306387.50 custom.all_Advance_ns=648792.50 ratio=2.12
+algorithm-cost-probes=PASS
+EXIT: 0

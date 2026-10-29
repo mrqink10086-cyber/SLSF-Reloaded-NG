@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "case": "duplicate-category",
+  "target": "contracts/legacy-events.json",
+  "operation": "replaceCategoryName",
+  "selector": "Airhead",
+  "replacement": "Cuck",
+  "expected": "rejected",
+  "expectedFailure": "unique category names",
+  "reason": "There are exactly 25 distinct category names; replacing Airhead with a duplicate Cuck must fail the unique-name check."
+}

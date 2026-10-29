@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "case": "swap-event-parameters",
+  "target": "contracts/legacy-events.json",
+  "operation": "swapInputEventParameters",
+  "selector": "SLSF_Reloaded_SendFameGain",
+  "indices": [1, 2],
+  "expected": "rejected",
+  "expectedFailure": "input signature",
+  "reason": "OnExternalFameGain pushes EventLocation before MinFame; swapping the parameter objects must fail the signature oracle."
+}

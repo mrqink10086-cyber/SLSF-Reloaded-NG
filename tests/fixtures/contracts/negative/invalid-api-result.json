@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "case": "invalid-api-result",
+  "target": "contracts/legacy-api.json",
+  "operation": "replaceInvalidInputResult",
+  "selector": "SLSF_Reloaded_LocationManager.GetFameLocation",
+  "replacement": "$NoneText",
+  "expected": "rejected",
+  "expectedFailure": "GetFameLocation invalidInputResult",
+  "reason": "The legacy function returns the literal string Null for None/excluded/unknown locations."
+}

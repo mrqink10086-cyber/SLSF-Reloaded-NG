@@ -1,0 +1,12 @@
+COMMAND: clang++ -std=c++23 -O0 -g -I include build/diagnostics/review-04/algorithm-gameplay-probe.cpp src/core/gameplay/Visibility.cpp -o build/diagnostics/review-04/algorithm-gameplay-probe.exe
+BUILD_EXIT_CODE=0
+COMMAND: build/diagnostics/review-04/algorithm-gameplay-probe.exe
+heavy_harness_wearingUnhideable=Ready:0
+heavy_harness_visiblyBound=Ready:1
+legacy_expected_heavy_harness_wearingUnhideable=Ready:0
+heavy_harness_matches_legacy=true
+chest_tattoo_unknown_AND=NotReady:0
+branch_A_AND_true=Ready:1
+branch_C_AND_false=Ready:1
+probe_result=REPRODUCED
+EXIT_CODE=0

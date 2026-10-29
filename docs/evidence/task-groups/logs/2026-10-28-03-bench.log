@@ -1,0 +1,8 @@
+﻿[0m[38;5;2;1m[ 84%]:[0m [38;5;5;1m<SLSFBench>[0m [38;5;5;1mlinking.releasedbg SLSFBench.exe[0m
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.328s[0m
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=38.78ms (92.3ns/row) avx2=5.04ms (12.0ns/row, 7.69x) relax_scalar=1.70ms (4.1ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=20.74ms (81.0ns/row) avx2=3.12ms (12.2ns/row, 6.65x) relax_scalar=1.07ms (4.2ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=15.45ms (80.5ns/row) avx2=2.84ms (14.8ns/row, 5.43x) relax_scalar=0.92ms (4.8ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=10.4碌s/batch total=0.021s
+BENCH settlement accounts=64 batches=800 advance+publish=34.9碌s/batch total=0.028s

@@ -1,0 +1,67 @@
+[0mchecking for cl.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe[0m
+[0mchecking for Microsoft C/C++ Compiler (x64) ... [38;5;2;1mok[0m
+[0mchecking for Microsoft Visual Studio (x64) version ... [38;5;2;1m2022[0m
+[0mchecking for git ... [38;5;2;1mC:\Program Files\Git\cmd\git.exe[0m
+[0mchecking for gzip ... [38;5;1;1mno[0m
+[0mchecking for 7z ... [38;5;2;1mC:\Program Files\xmake\winenv\bin\7z[0m
+C:\Program Files\Git\cmd\git.exe rev-parse HEAD
+[0mchecking for zig ... [38;5;1;1mno[0m
+[0mchecking for nim ... [38;5;1;1mno[0m
+[0mchecking for dotnet ... [38;5;2;1mC:\Program Files\dotnet\dotnet.exe[0m
+[0mchecking for .NET SDK version ... [38;5;2;1m9.0.202[0m
+[0mchecking for .NET SDK directory ... [38;5;2;1mC:\Program Files\dotnet\sdk\9.0.202[0m
+[0mchecking for ninja ... [38;5;1;1mno[0m
+[0mchecking for ninja ... [38;5;1;1mno[0m
+[0mchecking for ninja ... [38;5;2;1mC:\Users\15219\AppData\Local\Programs\Python\Python310\Scripts\ninja.exe[0m
+[0mchecking for cmake ... [38;5;1;1mno[0m
+[0mchecking for cmake ... [38;5;1;1mno[0m
+[0mchecking for cmake ... [38;5;2;1mC:\Program Files\CMake\bin\cmake[0m
+[0mchecking for xmake::directxmath ... [38;5;2;1mdirectxmath 2024.02[0m
+[0mchecking for xmake::directxtk ... [38;5;2;1mdirectxtk 24.2.0[0m
+[0mchecking for xmake::spdlog ... [38;5;2;1mspdlog v1.16.0[0m
+[0mchecking for xmake::catch2 ... [38;5;2;1mcatch2 v3.8.1[0m
+[0mchecking for clang-cl.exe ... [38;5;2;1mC:\Program Files\LLVM\bin\clang-cl.exe[0m
+[0mchecking for LLVM Clang C/C++ Compiler (x64) ... [38;5;2;1mok[0m
+[0mchecking for Microsoft Visual Studio (x64) version ... [38;5;2;1m2022[0m
+[0mchecking for clang ... [38;5;2;1mC:\Program Files\LLVM\bin\clang[0m
+[0mchecking for LLVM Clang C/C++ Compiler (x64) ... [38;5;2;1mok[0m
+[0mchecking for Microsoft Visual Studio (x64) version ... [38;5;2;1m2022[0m
+[0mchecking for clang-cl ... [38;5;2;1mC:\Program Files\LLVM\bin\clang-cl[0m
+[0m[2mchecking for the c++ compiler (cxx) ... [38;5;2;1mclang-cl[0m
+[0mchecking for link.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe[0m
+[0m[2mchecking for the linker (ld) ... [38;5;2;1mlink.exe[0m
+[0mchecking for cl.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe[0m
+[0m[2mchecking for the c++ compiler (cxx) ... [38;5;2;1mcl.exe[0m
+[0mchecking for link.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe[0m
+[0m[2mchecking for the linker (ld) ... [38;5;2;1mlink.exe[0m
+[0mchecking for clang++ ... [38;5;2;1mC:\Program Files\LLVM\bin\clang++[0m
+[0m[2mchecking for the linker (ld) ... [38;5;2;1mclang++[0m
+[0mchecking for clang++ ... [38;5;2;1mC:\Program Files\LLVM\bin\clang++[0m
+[0m[2mchecking for the shared library linker (sh) ... [38;5;2;1mclang++[0m
+[0m[2mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlibsse-ng-plugin.cpp.in to build\.gens\SLSFReloadedNG\windows\x64\releasedbg\commonlibsse-ng-plugin.cpp ..[0m
+[0mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlibsse-ng-plugin.cpp.in ... [38;5;2;1mok[0m
+[0m[2mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlib-plugin.rc.in to build\.gens\SLSFReloadedNG\windows\x64\releasedbg\commonlib-plugin.rc ..[0m
+[0mgenerating E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\res\commonlib-plugin.rc.in ... [38;5;2;1mok[0m
+[0mchecking for E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe ... [38;5;2;1me:\buildtools\vc\tools\msvc\14.44.35207\bin\hostx64\x64\cl.exe[0m
+[0m[2mchecking for flags (-FS -Fd) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (-O2) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (-std:c++23) ... [38;5;1;1mno[0m
+[0m[2mchecking for flags (-std:c++23preview) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (cl_external_includedir) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (-DNDEBUG) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (/fp:precise) ... [38;5;2;1mok[0m
+[0m[2mchecking for flags (/arch:AVX2) ... [38;5;2;1mok[0m
+[0m[38;5;2;1m[ 79%]:[0m [2m[38;5;5;1m<SLSFCore>[0m compiling.releasedbg src\core\numeric\NumericRowOps.cpp[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe -c -nologo -MD -Zi -FS -Fdbuild\windows\x64\releasedbg\SLSFCore.pdb -W4 -O2 -std:c++23preview -Iinclude /EHsc -DNDEBUG /arch:AVX2 /fp:precise -Fobuild\.objs\SLSFCore\windows\x64\releasedbg\src\core\numeric\NumericRowOps.cpp.obj src\core\numeric\NumericRowOps.cpp
+[0m[2mchecking for flags (cl_sourceDependencies) ... [38;5;2;1mok[0m
+[0mchecking for link.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe[0m
+[0m[2mchecking for the static library archiver (ar) ... [38;5;2;1mlink.exe[0m
+[0m[38;5;2;1m[ 82%]:[0m [2m[38;5;5;1m<SLSFCore>[0m [38;5;5;1marchiving.releasedbg SLSFCore.lib[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe -lib -nologo -machine:x64 /opt:ref /opt:icf -out:build\windows\x64\releasedbg\SLSFCore.lib build\.objs\SLSFCore\windows\x64\releasedbg\src\core\BuildInfo.cpp.obj build\.objs\SLSFCore\windows\x64\releasedbg\src\core\location\LocationIndex.cpp.obj build\.objs\SLSFCore\windows\x64\releasedbg\src\core\location\RegionRegistry.cpp.obj build\.objs\SLSFCore\windows\x64\releasedbg\src\core\numeric\NumericRowOps.cpp.obj build\.objs\SLSFCore\windows\x64\releasedbg\src\core\persistence\StateCodec.cpp.obj build\.objs\SLSFCore\windows\x64\releasedbg\src\core\reputation\ProviderRegistry.cpp.obj build\.objs\SLSFCore\windows\x64\releasedbg\src\core\reputation\ReputationState.cpp.obj
+[0mchecking for E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe ... [38;5;2;1me:\buildtools\vc\tools\msvc\14.44.35207\bin\hostx64\x64\link.exe[0m
+[0m[2mchecking for flags (-subsystem:console) ... [38;5;2;1mok[0m
+[0m[38;5;2;1m[ 88%]:[0m [2m[38;5;5;1m<SLSFCoreTests>[0m [38;5;5;1mlinking.releasedbg SLSFCoreTests.exe[0m
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\link.exe -nologo -dynamicbase -nxcompat -machine:x64 -libpath:C:\Users\15219\AppData\Local\.xmake\packages\c\catch2\v3.8.1\268885870034485ab37d602b7c8012a5\lib -libpath:build\windows\x64\releasedbg /opt:ref /opt:icf -debug -pdb:build\windows\x64\releasedbg\SLSFCoreTests.pdb Catch2Main.lib Catch2.lib SLSFCore.lib -subsystem:console -out:build\windows\x64\releasedbg\SLSFCoreTests.exe build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\CategoryMaskTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ConfigurationTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ContractsTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\CommandsHeader.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\ContractsHeader.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\PersistentStateHeader.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\SnapshotsHeader.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\headers\TypesHeader.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\LocationIndexTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\LocationRandomTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\NumericRowTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ProviderRegistryTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\RegionRegistryTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\ReputationStateTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\SharedTypesTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\core\StateCodecTests.cpp.obj build\.objs\SLSFCoreTests\windows\x64\releasedbg\tests\reference\LocationReference.cpp.obj /implib:build\windows\x64\releasedbg\SLSFCoreTests.lib
+[0mchecking for cl.exe ... [38;5;2;1mE:\BuildTools\VC\Tools\MSVC\14.44.35207\bin\HostX64\x64\cl.exe[0m
+[0m[2mchecking for the c compiler (cc) ... [38;5;2;1mcl.exe[0m
+[0m[38;5;2;1m[100%]:[0m [2m[38;5;2;1mbuild ok, spent 1.719s[0m

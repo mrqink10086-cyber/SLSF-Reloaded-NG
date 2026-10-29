@@ -1,0 +1,1551 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/NymphoElf/SLSF-Reloaded",
+    "scriptsDirectory": "Scripts/Source",
+    "esp": "SLSF Reloaded.esp",
+    "espSha256": "8ebd5ab79740e85a2a8d553e47391bdfdecd82d278e30bcfcd239c28fb544812",
+    "espSize": 23775,
+    "note": "Facts were extracted from the 17 legacy PSC files and the ESP VMAD; no FormID or default value was invented."
+  },
+  "inputEventCount": 52,
+  "replyEventCount": 7,
+  "categoryCount": 25,
+  "categories": [
+    {
+      "name": "Slut",
+      "documentedIndex": 0,
+      "espIndex": 1,
+      "espName": "Slut"
+    },
+    {
+      "name": "Whore",
+      "documentedIndex": 1,
+      "espIndex": 0,
+      "espName": "Whore"
+    },
+    {
+      "name": "Exhibitionist",
+      "documentedIndex": 2,
+      "espIndex": 2,
+      "espName": "Exhibitionist"
+    },
+    {
+      "name": "Oral",
+      "documentedIndex": 3,
+      "espIndex": 3,
+      "espName": "Oral"
+    },
+    {
+      "name": "Anal",
+      "documentedIndex": 4,
+      "espIndex": 4,
+      "espName": "Anal"
+    },
+    {
+      "name": "Nasty",
+      "documentedIndex": 5,
+      "espIndex": 5,
+      "espName": "Nasty"
+    },
+    {
+      "name": "Pregnant",
+      "documentedIndex": 6,
+      "espIndex": 6,
+      "espName": "Pregnant"
+    },
+    {
+      "name": "Group",
+      "documentedIndex": 7,
+      "espIndex": 18,
+      "espName": "Group"
+    },
+    {
+      "name": "Dominant",
+      "documentedIndex": 8,
+      "espIndex": 7,
+      "espName": "Dominant"
+    },
+    {
+      "name": "Submissive",
+      "documentedIndex": 9,
+      "espIndex": 8,
+      "espName": "Submissive"
+    },
+    {
+      "name": "Sadist",
+      "documentedIndex": 10,
+      "espIndex": 9,
+      "espName": "Sadist"
+    },
+    {
+      "name": "Masochist",
+      "documentedIndex": 11,
+      "espIndex": 10,
+      "espName": "Masochist"
+    },
+    {
+      "name": "Gentle",
+      "documentedIndex": 12,
+      "espIndex": 11,
+      "espName": "Gentle"
+    },
+    {
+      "name": "Likes Men",
+      "documentedIndex": 13,
+      "espIndex": 12,
+      "espName": "Likes Men"
+    },
+    {
+      "name": "Likes Women",
+      "documentedIndex": 14,
+      "espIndex": 13,
+      "espName": "Likes Women"
+    },
+    {
+      "name": "Likes Orc",
+      "documentedIndex": 15,
+      "espIndex": 14,
+      "espName": "Likes Orc"
+    },
+    {
+      "name": "Likes Khajiit",
+      "documentedIndex": 16,
+      "espIndex": 15,
+      "espName": "Likes Khajiit"
+    },
+    {
+      "name": "Likes Argonian",
+      "documentedIndex": 17,
+      "espIndex": 16,
+      "espName": "Likes Argonian"
+    },
+    {
+      "name": "Bestiality",
+      "documentedIndex": 18,
+      "espIndex": 17,
+      "espName": "Bestiality"
+    },
+    {
+      "name": "Bound",
+      "documentedIndex": 19,
+      "espIndex": 19,
+      "espName": "Bound"
+    },
+    {
+      "name": "Tattoo",
+      "documentedIndex": 20,
+      "espIndex": 20,
+      "espName": "tattoo"
+    },
+    {
+      "name": "Cum Dump",
+      "documentedIndex": 21,
+      "espIndex": 21,
+      "espName": "cum dump"
+    },
+    {
+      "name": "Unfaithful",
+      "documentedIndex": 22,
+      "espIndex": 22,
+      "espName": "Unfaithful"
+    },
+    {
+      "name": "Cuck",
+      "documentedIndex": 23,
+      "espIndex": 23,
+      "espName": "Cuck"
+    },
+    {
+      "name": "Airhead",
+      "documentedIndex": 24,
+      "espIndex": 24,
+      "espName": "Airhead"
+    }
+  ],
+  "nonCategoryFlags": [
+    "Whore Event",
+    "Sex Worker"
+  ],
+  "inputEvents": [
+    {
+      "index": 1,
+      "event": "SLSF_Reloaded_SendFameGainRoll",
+      "handler": "OnExternalFameGainRoll",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:192",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 2,
+      "event": "SLSF_Reloaded_SendFameGain",
+      "handler": "OnExternalFameGain",
+      "parameters": [
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "MinFame",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        },
+        {
+          "name": "MaxFame",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 3
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:208",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 3,
+      "event": "SLSF_Reloaded_SendManualFameGain",
+      "handler": "OnExternalManualFameGain",
+      "parameters": [
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "MinIncrease",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        },
+        {
+          "name": "MaxIncrease",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 3
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:255",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 4,
+      "event": "SLSF_Reloaded_SendManualFameGainAllInLocation",
+      "handler": "OnExternalManualFameGainAllInLocation",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "MinIncrease",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "MaxIncrease",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:313",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 5,
+      "event": "SLSF_Reloaded_SendManualFameGainAll",
+      "handler": "OnExternalManualFameGainAll",
+      "parameters": [
+        {
+          "name": "MinIncrease",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "MaxIncrease",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:373",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 6,
+      "event": "SLSF_Reloaded_SendFameDecay",
+      "handler": "OnExternalFameDecay",
+      "parameters": [],
+      "source": "SLSF_Reloaded_ModEventListener.psc:464",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 7,
+      "event": "SLSF_Reloaded_SendManualFameDecay",
+      "handler": "OnExternalManualFameDecay",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "MinDecay",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        },
+        {
+          "name": "MaxDecay",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 3
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:478",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 8,
+      "event": "SLSF_Reloaded_SendManualFameDecayAllInLocation",
+      "handler": "OnExternalManualFameDecayAllInLocation",
+      "parameters": [
+        {
+          "name": "EventLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "MinDecay",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "MaxDecay",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:537",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 9,
+      "event": "SLSF_Reloaded_SendManualFameDecayAll",
+      "handler": "OnExternalManualFameDecayAll",
+      "parameters": [
+        {
+          "name": "MinDecay",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "MaxDecay",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:597",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 10,
+      "event": "SLSF_Reloaded_SendFameSpreadRoll",
+      "handler": "OnExternalFameSpreadRoll",
+      "parameters": [],
+      "source": "SLSF_Reloaded_ModEventListener.psc:682",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 11,
+      "event": "SLSF_Reloaded_SendFameSpread",
+      "handler": "OnExternalFameSpread",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:687",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 12,
+      "event": "SLSF_Reloaded_SendFameSpreadByName",
+      "handler": "OnExternalFameSpreadByName",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:701",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 13,
+      "event": "SLSF_Reloaded_SendManualFameSpread",
+      "handler": "OnExternalManualFameSpread",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "SpreadToLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 2
+        },
+        {
+          "name": "PercentToSpread",
+          "type": "Int",
+          "kind": "Int",
+          "default": null,
+          "order": 3
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:719",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 14,
+      "event": "SLSF_Reloaded_SendLocationRegister",
+      "handler": "OnExternalLocationRegister",
+      "parameters": [
+        {
+          "name": "LocationToRegister",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:776",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 15,
+      "event": "SLSF_Reloaded_SendLocationUnregister",
+      "handler": "OnExternalLocationUnregister",
+      "parameters": [
+        {
+          "name": "LocationToUnregister",
+          "type": "Location",
+          "kind": "Form",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:789",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 16,
+      "event": "SLSF_Reloaded_RegisterMod",
+      "handler": "OnExternalModRegister",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": "-EMPTY-",
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:826",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 17,
+      "event": "SLSF_Reloaded_UnregisterMod",
+      "handler": "OnExternalModUnregister",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": "-EMPTY-",
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:834",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 18,
+      "event": "SLSF_Reloaded_SetSlutFlag",
+      "handler": "OnExternalSlutFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:885",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 19,
+      "event": "SLSF_Reloaded_SetWhoreFlag",
+      "handler": "OnExternalWhoreFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:890",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 20,
+      "event": "SLSF_Reloaded_SetExhibitionistFlag",
+      "handler": "OnExternalExhibitionistFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:894",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 21,
+      "event": "SLSF_Reloaded_SetOralFlag",
+      "handler": "OnExternalOralFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:898",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 22,
+      "event": "SLSF_Reloaded_SetAnalFlag",
+      "handler": "OnExternalAnalFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:902",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 23,
+      "event": "SLSF_Reloaded_SetNastyFlag",
+      "handler": "OnExternalNastyFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:906",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 24,
+      "event": "SLSF_Reloaded_SetPregnantFlag",
+      "handler": "OnExternalPregnantFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:910",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 25,
+      "event": "SLSF_Reloaded_SetDominantFlag",
+      "handler": "OnExternalDominantFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:914",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 26,
+      "event": "SLSF_Reloaded_SetSubmissiveFlag",
+      "handler": "OnExternalSubmissiveFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:918",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 27,
+      "event": "SLSF_Reloaded_SetSadistFlag",
+      "handler": "OnExternalSadistFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:922",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 28,
+      "event": "SLSF_Reloaded_SetMasochistFlag",
+      "handler": "OnExternalMasochistFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:926",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 29,
+      "event": "SLSF_Reloaded_SetGentleFlag",
+      "handler": "OnExternalGentleFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:930",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 30,
+      "event": "SLSF_Reloaded_SetLikesMenFlag",
+      "handler": "OnExternalLikesMenFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:934",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 31,
+      "event": "SLSF_Reloaded_SetLikesWomenFlag",
+      "handler": "OnExternalLikesWomenFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:938",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 32,
+      "event": "SLSF_Reloaded_SetLikesOrcFlag",
+      "handler": "OnExternalLikesOrcFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:942",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 33,
+      "event": "SLSF_Reloaded_SetLikesKhajiitFlag",
+      "handler": "OnExternalLikesKhajiitFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:946",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 34,
+      "event": "SLSF_Reloaded_SetLikesArgonianFlag",
+      "handler": "OnExternalLikesArgonianFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:950",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 35,
+      "event": "SLSF_Reloaded_SetBestialityFlag",
+      "handler": "OnExternalBestialityFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:954",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 36,
+      "event": "SLSF_Reloaded_SetGroupFlag",
+      "handler": "OnExternalGroupFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:958",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 37,
+      "event": "SLSF_Reloaded_SetBoundFlag",
+      "handler": "OnExternalBoundFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:962",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 38,
+      "event": "SLSF_Reloaded_SetTattooFlag",
+      "handler": "OnExternalTattooFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:966",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 39,
+      "event": "SLSF_Reloaded_SetCumDumpFlag",
+      "handler": "OnExternalCumDumpFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:970",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 40,
+      "event": "SLSF_Reloaded_SetUnfaithfulFlag",
+      "handler": "OnExternalUnfaithfulFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:974",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 41,
+      "event": "SLSF_Reloaded_SetCuckFlag",
+      "handler": "OnExternalCuckFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:978",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 42,
+      "event": "SLSF_Reloaded_SetAirheadFlag",
+      "handler": "OnExternalAirheadFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:982",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 43,
+      "event": "SLSF_Reloaded_SetWhoreEventFlag",
+      "handler": "OnExternalWhoreEventFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:987",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 44,
+      "event": "SLSF_Reloaded_SetSexWorkerFlag",
+      "handler": "OnExternalSexWorkerFlag",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:992",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 45,
+      "event": "SLSF_Reloaded_EnableFameType",
+      "handler": "OnEnableFameType",
+      "parameters": [
+        {
+          "name": "FameType",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "Flag",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:996",
+      "invalidInputResult": "no-op"
+    },
+    {
+      "index": 46,
+      "event": "SLSF_Reloaded_RequestLocation",
+      "handler": "OnRequestLocation",
+      "parameters": [
+        {
+          "name": "Strict",
+          "type": "Bool",
+          "kind": "Bool",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018",
+      "invalidInputResult": "no-op / no reply"
+    },
+    {
+      "index": 47,
+      "event": "SLSF_Reloaded_RequestRecognitionTime",
+      "handler": "OnRequestRecognitionTime",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1034",
+      "invalidInputResult": "no-op / no reply"
+    },
+    {
+      "index": 48,
+      "event": "SLSF_Reloaded_RequestFame",
+      "handler": "OnRequestFame",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1060",
+      "invalidInputResult": "no-op / no reply"
+    },
+    {
+      "index": 49,
+      "event": "SLSF_Reloaded_RequestCumVisibility",
+      "handler": "OnRequestCumVisibility",
+      "parameters": [
+        {
+          "name": "CumLocation",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1084",
+      "invalidInputResult": "no-op / no reply"
+    },
+    {
+      "index": 50,
+      "event": "SLSF_Reloaded_RequestFlagState",
+      "handler": "OnRequestFlagState",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1109",
+      "invalidInputResult": "no-op / no reply"
+    },
+    {
+      "index": 51,
+      "event": "SLSF_Reloaded_RequestModFlagState",
+      "handler": "OnRequestModFlagState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1121",
+      "invalidInputResult": "no-op / no reply"
+    },
+    {
+      "index": 52,
+      "event": "SLSF_Reloaded_RequestModRegisterState",
+      "handler": "OnRequestModRegisterState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1136",
+      "invalidInputResult": "no-op / no reply"
+    }
+  ],
+  "replyEvents": [
+    {
+      "index": 1,
+      "event": "SLSF_Reloaded_ReturnRequestedLocation",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "kind": "String",
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    },
+    {
+      "index": 2,
+      "event": "SLSF_Reloaded_ReturnRecognitionTime",
+      "parameters": [
+        {
+          "name": "RecognitionTime",
+          "type": "Float",
+          "kind": "Float",
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    },
+    {
+      "index": 3,
+      "event": "SLSF_Reloaded_ReturnRequestedFame",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "kind": "String",
+          "order": 0
+        },
+        {
+          "name": "Category",
+          "type": "String",
+          "kind": "String",
+          "order": 1
+        },
+        {
+          "name": "RequestedFame",
+          "type": "Int",
+          "kind": "Int",
+          "order": 2
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    },
+    {
+      "index": 4,
+      "event": "SLSF_Reloaded_ReturnRequestedCum",
+      "parameters": [
+        {
+          "name": "Visible",
+          "type": "Bool",
+          "kind": "Bool",
+          "order": 0
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    },
+    {
+      "index": 5,
+      "event": "SLSF_Reloaded_ReturnFlagState",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "order": 0
+        },
+        {
+          "name": "FlagExists",
+          "type": "String",
+          "kind": "String",
+          "order": 1
+        },
+        {
+          "name": "RequestedFlagState",
+          "type": "Bool",
+          "kind": "Bool",
+          "order": 2
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    },
+    {
+      "index": 6,
+      "event": "SLSF_Reloaded_ReturnModFlagState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "order": 0
+        },
+        {
+          "name": "IsModRegistered",
+          "type": "Bool",
+          "kind": "Bool",
+          "order": 1
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "kind": "String",
+          "order": 2
+        },
+        {
+          "name": "FlagExists",
+          "type": "String",
+          "kind": "String",
+          "order": 3
+        },
+        {
+          "name": "RequestedModFlagState",
+          "type": "Bool",
+          "kind": "Bool",
+          "order": 4
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    },
+    {
+      "index": 7,
+      "event": "SLSF_Reloaded_ReturnModRegisteredState",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "kind": "String",
+          "order": 0
+        },
+        {
+          "name": "IsModRegistered",
+          "type": "Bool",
+          "kind": "Bool",
+          "order": 1
+        }
+      ],
+      "source": "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+    }
+  ],
+  "defaultLocations": [
+    "Whiterun",
+    "Winterhold",
+    "Windhelm",
+    "Solitude",
+    "Riften",
+    "Markarth",
+    "Morthal",
+    "Dawnstar",
+    "Falkreath",
+    "Raven Rock",
+    "Riverwood",
+    "Rorikstead",
+    "Ivarstead",
+    "Shor's Stone",
+    "Dragon Bridge",
+    "Karthwasten",
+    "Skaal Village",
+    "Largashbur",
+    "Dushnikh Yal",
+    "Mor Khazgur",
+    "Narzulbur"
+  ],
+  "locationAliases": [
+    {
+      "alias": "Eastmarch",
+      "canonical": "Windhelm"
+    },
+    {
+      "alias": "Haafingar",
+      "canonical": "Solitude"
+    },
+    {
+      "alias": "Hjaalmarch",
+      "canonical": "Morthal"
+    },
+    {
+      "alias": "the Reach",
+      "canonical": "Markarth"
+    },
+    {
+      "alias": "the Pale",
+      "canonical": "Dawnstar"
+    },
+    {
+      "alias": "the Rift",
+      "canonical": "Riften"
+    }
+  ],
+  "queryReplies": {
+    "SLSF_Reloaded_RequestLocation": [
+      "SLSF_Reloaded_ReturnRequestedLocation"
+    ],
+    "SLSF_Reloaded_RequestRecognitionTime": [
+      "SLSF_Reloaded_ReturnRecognitionTime"
+    ],
+    "SLSF_Reloaded_RequestFame": [
+      "SLSF_Reloaded_ReturnRequestedFame"
+    ],
+    "SLSF_Reloaded_RequestCumVisibility": [
+      "SLSF_Reloaded_ReturnRequestedCum"
+    ],
+    "SLSF_Reloaded_RequestFlagState": [
+      "SLSF_Reloaded_ReturnFlagState"
+    ],
+    "SLSF_Reloaded_RequestModFlagState": [
+      "SLSF_Reloaded_ReturnModFlagState"
+    ],
+    "SLSF_Reloaded_RequestModRegisterState": [
+      "SLSF_Reloaded_ReturnModRegisteredState"
+    ]
+  },
+  "invalidInputBehavior": "Query handlers that cannot resolve a location/category return without sending a reply. Unknown flag/mod queries send the normal reply with 'No'/False."
+}

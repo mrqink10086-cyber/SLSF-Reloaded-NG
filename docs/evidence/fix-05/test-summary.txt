@@ -1,0 +1,5 @@
+core {'tests': 129271, 'failures': 0, 'errors': 0, 'skipped': 0} catch_cases= 219 xml_instances= 311
+core-asan {'tests': 129271, 'failures': 0, 'errors': 0, 'skipped': 0} catch_cases= 219 xml_instances= 311
+boundary {'tests': 22, 'failures': 0, 'errors': 0, 'skipped': 0} catch_cases= 4 xml_instances= 4
+boundary-asan {'tests': 22, 'failures': 0, 'errors': 0, 'skipped': 0} catch_cases= 4 xml_instances= 4
+differential {'tests': 17161, 'failures': 0, 'errors': 0, 'skipped': 0} catch_cases= 8 xml_instances= 8

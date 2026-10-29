@@ -1,0 +1,26 @@
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\headers\EnginePortHeader.cpp[0m
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\headers\ProviderPortHeader.cpp[0m
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\headers\VmPortHeader.cpp[0m
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\headers\WakeSourceHeader.cpp[0m
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\PortTests.cpp[0m
+[0m[32;1m[ 71%]:[0m [36;1m<SLSFBoundaryTests>[0m [36;1mlinking.releasedbg SLSFBoundaryTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.672s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.101s
+PASS native tests: mode=boundary seed=1170

@@ -1,0 +1,10 @@
+step events=100 median_ns=3600
+step events=1000 median_ns=34200
+step events=5000 median_ns=170900
+due live=128 median_ns=12.22
+due live=1024 median_ns=12.2
+due live=8192 median_ns=13.42
+query rows=128 median_ns=34
+query rows=8192 median_ns=42.8
+query rows=65535 median_ns=33
+checksum=9110483571492202422

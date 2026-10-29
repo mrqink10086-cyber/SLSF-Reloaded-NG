@@ -1,0 +1,599 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/NymphoElf/SLSF-Reloaded",
+    "scriptsDirectory": "Scripts/Source",
+    "esp": "SLSF Reloaded.esp",
+    "espSha256": "8ebd5ab79740e85a2a8d553e47391bdfdecd82d278e30bcfcd239c28fb544812",
+    "espSize": 23775,
+    "note": "Facts were extracted from the 17 legacy PSC files and the ESP VMAD; no FormID or default value was invented."
+  },
+  "counts": {
+    "categories": 25,
+    "defaultLocations": 21,
+    "inputEvents": 52,
+    "replyEvents": 7,
+    "functions": 124,
+    "records": 58,
+    "rules": 23,
+    "preserveRules": 14,
+    "approvedChangeRules": 6,
+    "internalOnlyRules": 3
+  },
+  "categories": [
+    {
+      "name": "Slut",
+      "espName": "Slut",
+      "documentedIndex": 0,
+      "espIndex": 1,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Whore",
+      "espName": "Whore",
+      "documentedIndex": 1,
+      "espIndex": 0,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Exhibitionist",
+      "espName": "Exhibitionist",
+      "documentedIndex": 2,
+      "espIndex": 2,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Oral",
+      "espName": "Oral",
+      "documentedIndex": 3,
+      "espIndex": 3,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Anal",
+      "espName": "Anal",
+      "documentedIndex": 4,
+      "espIndex": 4,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Nasty",
+      "espName": "Nasty",
+      "documentedIndex": 5,
+      "espIndex": 5,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Pregnant",
+      "espName": "Pregnant",
+      "documentedIndex": 6,
+      "espIndex": 6,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Group",
+      "espName": "Group",
+      "documentedIndex": 7,
+      "espIndex": 18,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Dominant",
+      "espName": "Dominant",
+      "documentedIndex": 8,
+      "espIndex": 7,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Submissive",
+      "espName": "Submissive",
+      "documentedIndex": 9,
+      "espIndex": 8,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Sadist",
+      "espName": "Sadist",
+      "documentedIndex": 10,
+      "espIndex": 9,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Masochist",
+      "espName": "Masochist",
+      "documentedIndex": 11,
+      "espIndex": 10,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Gentle",
+      "espName": "Gentle",
+      "documentedIndex": 12,
+      "espIndex": 11,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Likes Men",
+      "espName": "Likes Men",
+      "documentedIndex": 13,
+      "espIndex": 12,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Likes Women",
+      "espName": "Likes Women",
+      "documentedIndex": 14,
+      "espIndex": 13,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Likes Orc",
+      "espName": "Likes Orc",
+      "documentedIndex": 15,
+      "espIndex": 14,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Likes Khajiit",
+      "espName": "Likes Khajiit",
+      "documentedIndex": 16,
+      "espIndex": 15,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Likes Argonian",
+      "espName": "Likes Argonian",
+      "documentedIndex": 17,
+      "espIndex": 16,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Bestiality",
+      "espName": "Bestiality",
+      "documentedIndex": 18,
+      "espIndex": 17,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Bound",
+      "espName": "Bound",
+      "documentedIndex": 19,
+      "espIndex": 19,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Tattoo",
+      "espName": "tattoo",
+      "documentedIndex": 20,
+      "espIndex": 20,
+      "optionalCleanup": false
+    },
+    {
+      "name": "Cum Dump",
+      "espName": "cum dump",
+      "documentedIndex": 21,
+      "espIndex": 21,
+      "optionalCleanup": true
+    },
+    {
+      "name": "Unfaithful",
+      "espName": "Unfaithful",
+      "documentedIndex": 22,
+      "espIndex": 22,
+      "optionalCleanup": true
+    },
+    {
+      "name": "Cuck",
+      "espName": "Cuck",
+      "documentedIndex": 23,
+      "espIndex": 23,
+      "optionalCleanup": true
+    },
+    {
+      "name": "Airhead",
+      "espName": "Airhead",
+      "documentedIndex": 24,
+      "espIndex": 24,
+      "optionalCleanup": true
+    }
+  ],
+  "categoryAliases": [
+    {
+      "alias": "tattoo",
+      "canonical": "Tattoo",
+      "status": "preserve",
+      "reason": "ESP VMAD spelling; lookup is case-insensitive."
+    },
+    {
+      "alias": "cum dump",
+      "canonical": "Cum Dump",
+      "status": "preserve",
+      "reason": "ESP VMAD spelling; lookup is case-insensitive."
+    }
+  ],
+  "nonCategoryFlags": [
+    {
+      "event": "SLSF_Reloaded_SetWhoreEventFlag",
+      "flagName": "Whore Event",
+      "backingArray": "SexWorkerFlags",
+      "status": "deprecated",
+      "reason": "Deprecated query alias for the same SexWorkerFlags slot; it does not add a Fame category."
+    },
+    {
+      "event": "SLSF_Reloaded_SetSexWorkerFlag",
+      "flagName": "Sex Worker",
+      "backingArray": "SexWorkerFlags",
+      "status": "preserve",
+      "reason": "Separate non-category flag. GetModFlagState accepts it as well as the deprecated Whore Event alias; GetExternalFlags and DoesFlagExist do not expose it."
+    }
+  ],
+  "locations": {
+    "defaultCount": 21,
+    "defaultOrder": [
+      "Whiterun",
+      "Winterhold",
+      "Windhelm",
+      "Solitude",
+      "Riften",
+      "Markarth",
+      "Morthal",
+      "Dawnstar",
+      "Falkreath",
+      "Raven Rock",
+      "Riverwood",
+      "Rorikstead",
+      "Ivarstead",
+      "Shor's Stone",
+      "Dragon Bridge",
+      "Karthwasten",
+      "Skaal Village",
+      "Largashbur",
+      "Dushnikh Yal",
+      "Mor Khazgur",
+      "Narzulbur"
+    ],
+    "majorIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "minorIndices": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "externalCustomSlots": 21,
+    "displayNull": "Null",
+    "noneText": "$NoneText",
+    "resolutionPriority": [
+      "excluded",
+      "custom-registration-order",
+      "minor",
+      "major"
+    ],
+    "excludedBehavior": "Return Null for location queries and $NoneText for localized display; no fame lookup.",
+    "unknownBehavior": "Return Null for location queries and $NoneText for localized display; no fame lookup.",
+    "registrationOrder": "Custom locations are matched in registration order before default minor/major lists.",
+    "aliases": [
+      {
+        "alias": "Eastmarch",
+        "canonical": "Windhelm"
+      },
+      {
+        "alias": "Haafingar",
+        "canonical": "Solitude"
+      },
+      {
+        "alias": "Hjaalmarch",
+        "canonical": "Morthal"
+      },
+      {
+        "alias": "the Reach",
+        "canonical": "Markarth"
+      },
+      {
+        "alias": "the Pale",
+        "canonical": "Dawnstar"
+      },
+      {
+        "alias": "the Rift",
+        "canonical": "Riften"
+      }
+    ],
+    "validation": "Normalize aliases first, then accept a DefaultLocation or CustomLocation name; reject $NoneText."
+  },
+  "numeric": {
+    "maxFameValue": 150,
+    "manualSpreadMinSource": 10,
+    "manualSpreadMinPercent": 10,
+    "manualSpreadMaxPercent": 100,
+    "setCommandClamp": false,
+    "slotCount": 32,
+    "avx2Lanes": 4,
+    "avx2VectorsPerRow": 8,
+    "paddingSlots": 7,
+    "autoSpreadBatchCategories": 7,
+    "publishedValue": "max(L,R)"
+  },
+  "externalFlags": {
+    "aggregation": "OR",
+    "unknownFlagResult": false,
+    "registerRequiresGameMod": true,
+    "duplicateRegistration": "ignore",
+    "emptySlotSentinel": "-EMPTY-",
+    "countExcludesEmpty": true,
+    "unregisterClearsFlags": true,
+    "sexWorkerAliases": [
+      "Whore Event",
+      "Sex Worker"
+    ],
+    "sexWorkerDeprecatedEvent": "SLSF_Reloaded_SetWhoreEventFlag"
+  },
+  "persistence": {
+    "scope": "new saves only",
+    "authority": "C++ PersistentState",
+    "legacyImport": false,
+    "versioned": true,
+    "stableKeys": [
+      "StableRegionKey",
+      "StableFormKey"
+    ],
+    "volatileFields": [
+      "epoch",
+      "revision",
+      "requestId",
+      "callback",
+      "RE handle"
+    ]
+  },
+  "ports": {
+    "vm": "IVmPort::Submit(VmRequest,VmCompletion)->RequestId",
+    "engine": "IEnginePort::Post(EngineRequest)->RequestId",
+    "wake": "IWakeSource::Start(WakeCallback)->bool; Stop()",
+    "completion": "VmCompletion carries only an owned VmResult and the original Epoch",
+    "providerContainers": "No third-party container crosses ProviderPort"
+  },
+  "rules": [
+    {
+      "id": "categories-25",
+      "area": "categories",
+      "classification": "preserve",
+      "statement": "Exactly 25 fame categories are exposed; the PSC comment order is the documented order and the ESP FameType array is the runtime order.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:128-152",
+        "SLSF_Reloaded_FameManager.psc:17",
+        "SLSF Reloaded.esp:0x06000808 (VMAD SLSF_Reloaded_FameManager.FameType)"
+      ]
+    },
+    {
+      "id": "category-aliases",
+      "area": "categories",
+      "classification": "preserve",
+      "statement": "Tattoo and Cum Dump use lowercase ESP names tattoo and cum dump; lookup is case-insensitive. Sex Worker is a separate non-category flag backed by SexWorkerFlags, and the deprecated Whore Event name is its query alias; neither adds a 26th Fame category. GetExternalFlags and DoesFlagExist do not expose either non-category flag.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:885-994",
+        "SLSF_Reloaded_DataManager.psc:140-2052",
+        "SLSF Reloaded.esp:0x0600080A (VMAD SLSF_Reloaded_Data_Exporter.ModFlags)"
+      ]
+    },
+    {
+      "id": "event-input-52",
+      "area": "events",
+      "classification": "preserve",
+      "statement": "The listener registers 52 input ModEvents. Event names, handler names, parameter types, parameter order and defaults are part of the compatibility contract.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:17-85"
+      ]
+    },
+    {
+      "id": "event-reply-7",
+      "area": "events",
+      "classification": "preserve",
+      "statement": "Seven query reply ModEvents are emitted; each reply Push order is fixed by the handler body.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+      ]
+    },
+    {
+      "id": "query-no-reply-on-unresolved",
+      "area": "events",
+      "classification": "preserve",
+      "statement": "A query for an unknown location/category returns without sending a reply. Unknown flag or mod queries still send the normal reply with FlagExists=No and a False state.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:1018-1143"
+      ]
+    },
+    {
+      "id": "location-default-21",
+      "area": "locations",
+      "classification": "preserve",
+      "statement": "There are 21 default locations in the fixed ESP order; slots 0-8 are major and slots 9-20 are minor.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:93-117",
+        "SLSF Reloaded.esp:0x0600080A (VMAD SLSF_Reloaded_LocationManager.DefaultLocation)"
+      ]
+    },
+    {
+      "id": "location-resolution-priority",
+      "area": "locations",
+      "classification": "preserve",
+      "statement": "Resolve an excluded location/keyword to Null first, then a custom location by registration order, then a minor location, then a major location. Custom and minor accept IsChild or exact name; major accepts IsChild only. Otherwise return Null.",
+      "source": [
+        "SLSF_Reloaded_LocationManager.psc:200-235"
+      ]
+    },
+    {
+      "id": "location-aliases",
+      "area": "locations",
+      "classification": "preserve",
+      "statement": "Normalize the six regional aliases before validation: Eastmarch->Windhelm, Haafingar->Solitude, Hjaalmarch->Morthal, the Reach->Markarth, the Pale->Dawnstar, the Rift->Riften. $NoneText is invalid.",
+      "source": [
+        "SLSF_Reloaded_LocationManager.psc:37-77"
+      ]
+    },
+    {
+      "id": "location-exclusion",
+      "area": "locations",
+      "classification": "preserve",
+      "statement": "Locations in ExcludedLocations or matching an excluded keyword return Null/None and do not become custom fame locations.",
+      "source": [
+        "SLSF_Reloaded_LocationManager.psc:37-77",
+        "SLSF_Reloaded_LocationManager.psc:200-235"
+      ]
+    },
+    {
+      "id": "manual-spread-formula",
+      "area": "spread",
+      "classification": "approved-change",
+      "statement": "Manual spread requires source value >= 10 and clamps percent to 10-100; result is min(150, int(target_old + source_old * (double(percent) / 100.0))). Truncate only the final result. The source must not be modified by this operation.",
+      "source": [
+        "SLSF_Reloaded_ModEventListener.psc:719-763",
+        "docs/research/category-and-spread-semantics.md"
+      ],
+      "approvedChange": "Fix the legacy integer-division bug: percentages 10-99 must have their normal proportional effect. Source 100, target 20, percent 30 produces 50, not 20. Downstream compatibility does not require reproducing obvious bugs."
+    },
+    {
+      "id": "auto-spread-pulse",
+      "area": "spread",
+      "classification": "approved-change",
+      "statement": "Spread and SpreadRoll are one-hop compatibility pulses: use a frozen source snapshot, recompute incoming edges, apply R=max(old R, G_R) on targets, do not cascade and do not decay in the same step.",
+      "source": [
+        "SLSF_Reloaded_FameManager.psc:1600-2782",
+        "docs/research/category-and-spread-semantics.md"
+      ],
+      "approvedChange": "Replace legacy random propagation with the agreed weighted model while retaining callable Spread/SpreadRoll entry points."
+    },
+    {
+      "id": "published-max",
+      "area": "numeric",
+      "classification": "approved-change",
+      "statement": "The published/API value is max(local L, remote/diffused R); L and R are stored separately and only R is changed by passive diffusion.",
+      "source": [
+        "docs/research/category-and-spread-semantics.md",
+        "docs/superpowers/plans/2026-10-27-native-migration-plan.md"
+      ],
+      "approvedChange": "Use the agreed local/imported state model; this is a new implementation rule, not a fact extracted from the old scripts."
+    },
+    {
+      "id": "set-no-clamp",
+      "area": "numeric",
+      "classification": "preserve",
+      "statement": "An explicit Set writes the supplied value without a global 0-150 clamp. Manual gain and automatic gain cap results at 150; manual decrease floors at zero; manual spread caps its result at 150. In the new L/R model, an explicit V sets L=V and R=min(R,V).",
+      "source": [
+        "SLSF_Reloaded_DataManager.psc:550-1022",
+        "SLSF_Reloaded_ModEventListener.psc:255-307,478-531,719-763"
+      ]
+    },
+    {
+      "id": "wipe-once",
+      "area": "cleanup",
+      "classification": "preserve",
+      "statement": "Wipe clears the selected category values once and is not a continuing zeroing policy. Cum Dump, Cuck, Unfaithful and Airhead are optional cleanup categories inside the same 25-category numeric array; optional means they can be selected for cleanup, not that they are separate from the 25 categories.",
+      "source": [
+        "docs/research/category-and-spread-semantics.md",
+        "SLSF_Reloaded_FameManager.psc:198-224"
+      ]
+    },
+    {
+      "id": "external-flags-or",
+      "area": "external-flags",
+      "classification": "preserve",
+      "statement": "Multiple registered mods contribute flags by OR. A single mod contribution is addressed by plugin name plus flag name; removing a mod clears that mod contribution and re-evaluates derived flags.",
+      "source": [
+        "SLSF_Reloaded_DataManager.psc:140-2052",
+        "SLSF_Reloaded_ModEventListener.psc:885-994"
+      ]
+    },
+    {
+      "id": "mod-registration",
+      "area": "external-flags",
+      "classification": "preserve",
+      "statement": "Register a mod only when Game.GetModByName(ModName) != 255; ignore duplicates; count non-empty slots. Unregister clears all flags and Enable* entries for that slot before re-evaluation.",
+      "source": [
+        "SLSF_Reloaded_DataManager.psc:140-2052"
+      ]
+    },
+    {
+      "id": "record-identities",
+      "area": "records",
+      "classification": "preserve",
+      "statement": "Public records are identified by plugin SLSF Reloaded.esp, editor ID and required VMAD script bindings. A file FormID such as 0x06000808 contains the file's master index 0x06; its local object ID is 0x000808. Persistent keys use plugin name plus local object ID, not that file index or a runtime load-order prefix. No ABI address is part of the contract.",
+      "source": [
+        "SLSF Reloaded.esp:58 records (4 QUST, 1 MGEF, 1 SPEL, 10 KYWD, 42 GLOB)"
+      ]
+    },
+    {
+      "id": "mcm-excluded",
+      "area": "scope",
+      "classification": "approved-change",
+      "statement": "The old MCM and its Papyrus menu are excluded; the new configuration menu uses the SKSE menu framework. No MCM Papyrus script is required.",
+      "source": [
+        "docs/superpowers/plans/2026-10-27-native-migration-plan.md"
+      ],
+      "approvedChange": "MCM Papyrus source is absent; the new UI uses the SKSE menu framework, so the MCM screen is not preserved as a Papyrus contract."
+    },
+    {
+      "id": "internal-arrays-excluded",
+      "area": "scope",
+      "classification": "approved-change",
+      "statement": "Legacy internal arrays, properties and helper functions are not compatibility commitments. Only the declared public API surface and event protocol are frozen.",
+      "source": [
+        "docs/research/papyrus-source-audit.md:68-76",
+        "docs/research/papyrus-source-audit.md:102-112"
+      ],
+      "approvedChange": "The 483 internal properties/arrays are implementation details; only public API functions, events, categories and location behavior are preserved."
+    },
+    {
+      "id": "new-save-only",
+      "area": "persistence",
+      "classification": "approved-change",
+      "statement": "Persisted state is versioned native co-save data for new saves only; no legacy Papyrus array, VMAD or old-save state is imported.",
+      "source": [
+        "docs/superpowers/plans/2026-10-27-native-migration-plan.md"
+      ],
+      "approvedChange": "Legacy save import is intentionally unsupported; the C++ persistent state starts with defaults in a new save."
+    },
+    {
+      "id": "single-executor",
+      "area": "threading",
+      "classification": "internal-only",
+      "statement": "One core executor processes state mutations. No business thread pool is allowed; ports may hand off to the game/VM thread, and tests may use threads.",
+      "source": [
+        "docs/superpowers/plans/2026-10-27-native-migration-plan.md"
+      ]
+    },
+    {
+      "id": "avx2-layout",
+      "area": "numeric",
+      "classification": "internal-only",
+      "statement": "A single AVX2 numerical implementation stores double values for 25 categories in 32 slots: 4 doubles per 256-bit vector, 8 vectors per 256-byte row, and 7 masked padding slots. Scalar reference code exists only in tests.",
+      "source": [
+        "docs/superpowers/plans/2026-10-27-native-migration-plan.md"
+      ]
+    },
+    {
+      "id": "no-abi-fabrication",
+      "area": "records",
+      "classification": "internal-only",
+      "statement": "Do not record guessed addresses or ABI offsets; runtime verification belongs to a later group and must be marked not run when the game environment is absent.",
+      "source": [
+        "docs/superpowers/plans/2026-10-27-task-books/00-execution-guide.md"
+      ]
+    }
+  ]
+}

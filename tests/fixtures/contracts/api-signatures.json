@@ -1,0 +1,1791 @@
+{
+  "schemaVersion": 1,
+  "provenance": "Historical declarations independently parsed from 17 PSC files and checked against their 17 matching PEX files decompiled by Orvid/Champollion v1.3.2. Defaults come from PSC because PEX omits them. Internal functions are an inventory, not an implementation obligation; behavior bugs are not frozen.",
+  "sourceFiles": [
+    {
+      "path": "Scripts/SLSF_Reloaded_CommentManager.pex",
+      "sha256": "37b090c6f040724749315f55295805a5bd0d63deab898bcf75c27fdb9690bcaf"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_Data_Exporter.pex",
+      "sha256": "5f9e4341477f9691fd5407ac3e17c794e0cae6fb71cc83064268a154bc1db863"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_Data_Importer.pex",
+      "sha256": "abb35ee4fb7fa08e36a7740f97b16e251d71d164fea2b007779b45651e83a0b4"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_DataManager.pex",
+      "sha256": "5e8bd81ac647cd5dae48afeb69469311e8c698cd76089ed71dd2823a004ea03d"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_DynamicAnonymity.pex",
+      "sha256": "8825411229e9db255c83278bcab459e32da0fbd2df2a39691d184468af1663e7"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_FameManager.pex",
+      "sha256": "da20569250b13ecbee86745c09cf906a61be0a79604f6c20f6d0d6ff397ab8d4"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_LegacyOverwrite.pex",
+      "sha256": "118d38498c0d777d8fc3f900df6a6fa58710ab53684e8f1afdbf58e2b48a6837"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_LocationManager.pex",
+      "sha256": "b1ce7de5ab1d520e1cff93042e862c1fb8995ce6e6766f1772b115665721933c"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_Logger.pex",
+      "sha256": "302e73838e90b4a429354fa5ca8048cb3d64bd3912d683fc1064d80d7ba38c42"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_MasterClock.pex",
+      "sha256": "5630ffefab8cca8f5566c84b972bf0634eb3ec3f216c8e7b12eafbf4fe0c5420"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_MCM.pex",
+      "sha256": "bef54eebf1fe2e481cae9dab7988d39498af07dbb327f8cad1c3b09375dc6c0a"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_ModEventListener.pex",
+      "sha256": "8630c74379ea50509a3ef124ea422c711fee895f9ed1a3d4a4e13a57885952c4"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_ModIntegration.pex",
+      "sha256": "216e8720f69d5e7a6a07bae7670e6287c6d0d4dbd948b81eba19c2382bce947d"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_NPCScan.pex",
+      "sha256": "67f2ba4dd10f29e0ff00cfc0888849000c587a32130c0a66e4a5b76b15e4a7db"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_PlayerScript.pex",
+      "sha256": "1aa33e4bba95a7f1f4391a7ea0cd79e6ba4bd651599dd51710a5b4e86944d300"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_SexAnimationAnalyzer.pex",
+      "sha256": "4232032bfb528aa64404982fd363dd6c4b95e6ad7215e3617d79c45917ae4109"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_Uninstall.pex",
+      "sha256": "580d341aed36eeeeb56003ba6b8c90e0248d2b15e48c02e763e0a9b1f191ca12"
+    },
+    {
+      "path": "Scripts/SLSF_Reloaded_VisibilityManager.pex",
+      "sha256": "590c91ea4484011e53329340dabeacf263b12368fef67316e831904572bf3b44"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_CommentManager.psc",
+      "sha256": "5e9d1372207d2d544c3f872916927cdd79f375907e01b3c8eb21767db98e17cb"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_Data_Exporter.psc",
+      "sha256": "4d7db09999f33283a5a6d9e50695d7cb9a77e870eb5339f7b25df14cc0431348"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_Data_Importer.psc",
+      "sha256": "005140e59ed12efb8d3655f7856b4b8c52b3c3586189b5f8e045c26752e30fb2"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_DataManager.psc",
+      "sha256": "f0431b8e785dba56697141c89fbc7a4ea0b363253c38349590be8dfc53e6805b"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_DynamicAnonymity.psc",
+      "sha256": "36a01967215150ce549ebf1bb2b4d0ac260d0fa16d9472c09855d109564659b3"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_FameManager.psc",
+      "sha256": "849d0f17a2e87ba6eb151ccf79d1f4610d20d8b19c4cf83fa53e8983971f91e9"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_LegacyOverwrite.psc",
+      "sha256": "2fbbfb3bb51c0b93e7d6dcf151b21d3a708556be0eb322885b565fa44a3b05d1"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_LocationManager.psc",
+      "sha256": "9aa6d842d7ce7cbc8572720be6cf712d27ecd62cf9b70fb21cdcc74b38857d5e"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_Logger.psc",
+      "sha256": "03764bb71bb10060a161010f915812dce0be17e15d8076771b1b50a5f7d54c99"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_MasterClock.psc",
+      "sha256": "1fb7d619752b860c0b87e83e22670d8de93bb86becc084d57079311aa8b1be4c"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_ModEventListener.psc",
+      "sha256": "46743a17d39a0d997a78def3328246948ee7b3f247ec609e3fb76d86cbf4e04a"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_ModIntegration.psc",
+      "sha256": "97871aaf551417b95e01864219eafa3592a662a08f51664530e94474c2a19413"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_NPCScan.psc",
+      "sha256": "dcf5d92df7f63328d645cb637110c18a89870871db7e63e0f2a91320d7ced4ba"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_PlayerScript.psc",
+      "sha256": "b5caf3ecb5f3b69c3fe8df7d35212ae8b9fe29700f401b2f7a3fc21ff3b14134"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_SexAnimationAnalyzer.psc",
+      "sha256": "6c00b2f06b21255ac81b7243db6e01eeba07d29f517e4837ed67a824c7f793dc"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_Uninstall.psc",
+      "sha256": "0fd58c66dc71184a8efff85ceb4dc9a734fd385e4e7308e4afd6afc51b6e64a8"
+    },
+    {
+      "path": "Scripts/Source/SLSF_Reloaded_VisibilityManager.psc",
+      "sha256": "5f41c1631d4b7a5061cc7930563b18c4600c18a146295f82762b13873b2bb3b7"
+    }
+  ],
+  "functions": [
+    {
+      "id": "SLSF_Reloaded_CommentManager.NakedCommentPublicWhoreCheck",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Exporter.RunExport",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Exporter.ExportData",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Importer.RunImport",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_Data_Importer.ImportData",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FileName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.FameCheck",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.SetDefaults",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CheckSpreadableFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.GetFameValue",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FameCategory",
+          "type": "String",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.SetFameValue",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FameCategory",
+          "type": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "FameValue",
+          "type": "Int",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.DecayDynamicAnonymityCheck",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationIndex",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "IsDefaultLocation",
+          "type": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.GetExternalFlags",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.RegisterExternalMod",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CountExternalMods",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CleanExternalModList",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.UnregisterExternalMod",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.GetModFlagState",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.DoesFlagExist",
+      "scriptType": "Quest",
+      "returnType": "String",
+      "parameters": [
+        {
+          "name": "FlagName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.IsModRegistered",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.SetExternalFlags",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "ModName",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "FlagName",
+          "type": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "FlagValue",
+          "type": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CheckSexWorker",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.CheckFlags",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DataManager.FameOverviewCheck",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CompareLocations",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "OldLocation",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "NewLocation",
+          "type": "Location",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.SetLastExitTime",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "GameTime",
+          "type": "Float",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.SetLastEnterTime",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "GameTime",
+          "type": "Float",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CheckRecognitionTimeIncrease",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CheckRecognitionTimeDecay",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.UpdateCurrentLocationAnonymity",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationIndex",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "GameTime",
+          "type": "Float",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "IsDefaultLocation",
+          "type": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.GetAnonymity",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.CheckAnonymityStatus",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationIndex",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "IsDefaultLocation",
+          "type": "Bool",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_DynamicAnonymity.ThaneStatus",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.Startup",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.UpdateFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "UpdateMultiplier",
+          "type": "Int",
+          "default": "1",
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeCuckFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeUnfaithfulFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeAirheadFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.WipeCumDumpFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CheckExternalFlags",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainWhoreFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainSlutFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainExhibitionistFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainOralFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainAnalFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainNastyFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainPregnantFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainBoundFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainTattooFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CanGainCumDumpFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CheckTattooExtraFame",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "ExtraFame",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameGainRoll",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "CalledExternally",
+          "type": "Bool",
+          "default": "False",
+          "order": 1
+        },
+        {
+          "name": "FameFromFriend",
+          "type": "Bool",
+          "default": "False",
+          "order": 2
+        },
+        {
+          "name": "FameFromLover",
+          "type": "Bool",
+          "default": "False",
+          "order": 3
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.GainFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "Category",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "LocationName",
+          "type": "String",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "IsForeplay",
+          "type": "Bool",
+          "default": null,
+          "order": 2
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.DecayFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "DecayMultiplier",
+          "type": "Int",
+          "default": "1",
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.SpreadFameRoll",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.SpreadFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "SpreadFromLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameGainNotification",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameDecayNotification",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.CalculateFameSpread",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [
+        {
+          "name": "FromFame",
+          "type": "Float",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "TargetFame",
+          "type": "Float",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.FameSpreadNotification",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.ClearFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationToClear",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.ClearAllFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_FameManager.UpdateGlobals",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LegacyOverwrite.OverwriteLegacyFame",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.IsLocationValid",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "CheckedLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.LocationCanBeRegistered",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "LocationToRegister",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "ExternalRegister",
+          "type": "Bool",
+          "default": "False",
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.UpdateCustomLocationCount",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.FetchLocationName",
+      "scriptType": "Quest",
+      "returnType": "String",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.CurrentLocationName",
+      "scriptType": "Quest",
+      "returnType": "String",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.GetLocalizedFameLocation",
+      "scriptType": "Quest",
+      "returnType": "String",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.GetFameLocation",
+      "scriptType": "Quest",
+      "returnType": "String",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.IsLocationExcluded",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.RegisterCustomLocation",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.AddToLocationList",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationRef",
+          "type": "Location",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.RemoveFromLocationList",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "FameLocation",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.UnregisterCustomLocation",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationIndexToUnregister",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.RegisterCustomLocationExternal",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationToRegister",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "LocationRefToRegister",
+          "type": "Location",
+          "default": null,
+          "order": 1
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_LocationManager.UnregisterCustomLocationExternal",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LocationToUnregister",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_Logger.Log",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LogString",
+          "type": "String",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "Severity",
+          "type": "Int",
+          "default": "0",
+          "order": 1
+        }
+      ],
+      "isGlobal": true,
+      "isNative": true
+    },
+    {
+      "id": "SLSF_Reloaded_Logger.EnableLogging",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "EnableLogging",
+          "type": "Bool",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": true,
+      "isNative": true
+    },
+    {
+      "id": "SLSF_Reloaded_Logger.SetLogLevel",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "LogLevel",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": true,
+      "isNative": true
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.Startup",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.HalfHourChecks",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.DecayHandler",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.SpreadHandler",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_MasterClock.PeriodicFameUpdate",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "Multiplier",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModEventListener.RegisterExternalEvents",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.CheckInstalledMods",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetFHUData",
+      "scriptType": "Quest",
+      "returnType": "sr_InflateQuest",
+      "parameters": [],
+      "isGlobal": true,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetPWData",
+      "scriptType": "Quest",
+      "returnType": "PW_MainLoopScript",
+      "parameters": [],
+      "isGlobal": true,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetLegacyConfig",
+      "scriptType": "Quest",
+      "returnType": "SLSF_Configuration",
+      "parameters": [],
+      "isGlobal": true,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.OverwriteLegacyConfig",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsFMPregnant",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsECPregnant",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsESPregnant",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsHentaiPregnant",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.IsPublicWhore",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_ModIntegration.GetFHUInflation",
+      "scriptType": "Quest",
+      "returnType": "Float",
+      "parameters": [
+        {
+          "name": "actorRef",
+          "type": "Actor",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_PlayerScript.Startup",
+      "scriptType": "ReferenceAlias",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_PlayerScript.RunNPCDetect",
+      "scriptType": "ReferenceAlias",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_SexAnimationAnalyzer.AnimationAnalyze",
+      "scriptType": "ReferenceAlias",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "threadID",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_SexAnimationAnalyzer.AnimationSubAnalyze",
+      "scriptType": "ReferenceAlias",
+      "returnType": "None",
+      "parameters": [
+        {
+          "name": "Actors",
+          "type": "Actor[]",
+          "default": null,
+          "order": 0
+        },
+        {
+          "name": "PlayerController",
+          "type": "sslThreadController",
+          "default": null,
+          "order": 1
+        },
+        {
+          "name": "PlayerThread",
+          "type": "Int",
+          "default": null,
+          "order": 2
+        },
+        {
+          "name": "Foreplay",
+          "type": "Bool",
+          "default": null,
+          "order": 3
+        },
+        {
+          "name": "PlayerLocation",
+          "type": "String",
+          "default": null,
+          "order": 4
+        },
+        {
+          "name": "Friend",
+          "type": "Bool",
+          "default": "False",
+          "order": 5
+        },
+        {
+          "name": "Lover",
+          "type": "Bool",
+          "default": "False",
+          "order": 6
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_Uninstall.RunUninstall",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.Startup",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.UpdateTattooSlots",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.FullUpdate",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsPlayerAnonymous",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CheckAppliedTattoos",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountAppliedTattoos",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [
+        {
+          "name": "TattooArea",
+          "type": "String",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleTattoos",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountBodyTattoos",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountHandTattoos",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountFaceTattoos",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountFootTattoos",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsBodyTattooVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsFaceTattooVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsHandTattooVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsFootTattooVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [
+        {
+          "name": "SlotNumber",
+          "type": "Int",
+          "default": null,
+          "order": 0
+        }
+      ],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsAssCumVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleAssCum",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsVaginalCumVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleVaginalCum",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.IsOralCumVisible",
+      "scriptType": "Quest",
+      "returnType": "Bool",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CountVisibleOralCum",
+      "scriptType": "Quest",
+      "returnType": "Int",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    },
+    {
+      "id": "SLSF_Reloaded_VisibilityManager.CheckBondage",
+      "scriptType": "Quest",
+      "returnType": "None",
+      "parameters": [],
+      "isGlobal": false,
+      "isNative": false
+    }
+  ]
+}

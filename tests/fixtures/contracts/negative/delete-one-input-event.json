@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "case": "delete-one-input-event",
+  "target": "contracts/legacy-events.json",
+  "operation": "removeInputEvent",
+  "selector": "SLSF_Reloaded_RequestModRegisterState",
+  "expected": "rejected",
+  "expectedFailure": "inputEvents length",
+  "reason": "The listener registers 52 input events; deleting one must fail the length check."
+}

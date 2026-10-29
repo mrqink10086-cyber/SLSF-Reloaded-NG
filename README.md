@@ -8,9 +8,31 @@ The build target and DLL basename are `SLSFReloadedNG`.
 
 Template authorship and licensing are recorded in [ATTRIBUTION.md](ATTRIBUTION.md).
 
-See [the local development guide](README-Skyrim1170.md) for configuration,
-build output, and runtime requirements. Plugin functionality is currently the
-original minimal SKSE initialization entry point.
+Start with the [project specification and roadmap](.scratch/native-migration/spec.md).
+It defines public compatibility, gameplay requirements, the chosen propagation
+model, engineering optimizations, task order and acceptance criteria. The baseline
+is SexLab P+ and DDNG, with a SKSE menu replacing MCM.
+
+The [codebase design](.scratch/native-migration/design.md) maps requirements to
+modules, interfaces, state ownership and the existing implementation.
+The [configuration and menu design](.scratch/native-migration/configuration-design.md)
+defines shared JSON settings, reload events and save-game boundaries.
+The [11 task groups](docs/superpowers/plans/2026-10-27-task-books/README.md)
+organize the 25 tasks and 37 planned C++ implementation files. Detailed task instructions link
+back to the specification and design. [Research](docs/research/migration-assessment.md)
+records source findings; evidence reports record actual verification.
+
+Public contracts, core types, explicit reputation commands, provider registrations,
+location indexing and the initial state codec are implemented. The
+[provider readiness correction](docs/evidence/2026-10-27-provider-readiness-fix.md)
+preserves registrations during temporary unknown states and limits automatic
+cleanup candidates to the four optional categories.
+
+The plugin entry point still performs minimal SKSE initialization. Runtime wiring,
+automatic settlement, integrations and in-game acceptance remain on the roadmap.
+See the [development guide](README-Skyrim1170.md) for build setup and
+[test instructions](docs/superpowers/plans/2026-10-27-task-books/00-native-testing.md)
+for core and boundary checks.
 
 ### Requirements
 * [XMake](https://xmake.io) [3.0.0+]
@@ -19,13 +41,13 @@ original minimal SKSE initialization entry point.
 ## Getting Started
 ```powershell
 Set-Location 'E:\source\repos\SLSF Reloaded NG'
-.\build-skyrim1170.ps1 -ConfigureOnly
+powershell -NoProfile -ExecutionPolicy Bypass -File build-skyrim1170.ps1 -ConfigureOnly
 ```
 
 ### Build
 To build the project, run the following command:
 ```powershell
-.\build-skyrim1170.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File build-skyrim1170.ps1
 ```
 
 > ***Note:*** *This will generate a `build/windows/` directory in the **project's root directory** with the build output.*

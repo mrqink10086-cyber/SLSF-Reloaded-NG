@@ -1,0 +1,89 @@
+[0m[32;1m[ 47%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\ReputationStateTests.cpp[0m
+[0m[32;1m[ 47%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\SharedTypesTests.cpp[0m
+[0m[32;1m[ 72%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\ReputationState.cpp[0m
+[0m[32;1m[ 75%]:[0m [36;1m<SLSFCore>[0m [36;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFCoreTests>[0m [36;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 2.172s[0m
+RUN SLSFCoreTests cases=69 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (29 assertions in 4 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (53 assertions in 4 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (43 assertions in 4 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (270 assertions in 4 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (39 assertions in 4 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (27 assertions in 4 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (57 assertions in 4 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (57162 assertions in 4 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (37 assertions in 4 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1510 assertions in 3 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (39947 assertions in 3 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (27 assertions in 3 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (22 assertions in 3 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (371 assertions in 3 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (64 assertions in 3 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44 assertions in 3 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (974 assertions in 3 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (73 assertions in 3 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (151 assertions in 3 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (18 assertions in 3 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.503s
+PASS native tests: mode=core seed=1170

@@ -1,0 +1,6759 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "https://github.com/NymphoElf/SLSF-Reloaded",
+    "scriptsDirectory": "Scripts/Source",
+    "esp": "SLSF Reloaded.esp",
+    "espSha256": "8ebd5ab79740e85a2a8d553e47391bdfdecd82d278e30bcfcd239c28fb544812",
+    "espSize": 23775,
+    "note": "Facts were extracted from the 17 legacy PSC files and the ESP VMAD; no FormID or default value was invented."
+  },
+  "recordCount": 58,
+  "signatureCounts": {
+    "QUST": 4,
+    "MGEF": 1,
+    "KYWD": 10,
+    "GLOB": 42,
+    "SPEL": 1
+  },
+  "publicRecordCount": 57,
+  "records": [
+    {
+      "signature": "KYWD",
+      "formId": "0x06000802",
+      "editorId": "SLSF_Reloaded_CoversFeet",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000828",
+      "editorId": "SLSF_Reloaded_CoversBack",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000833",
+      "editorId": "SLSF_Reloaded_DoesNotCoverFeet",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000803",
+      "editorId": "SLSF_Reloaded_NipplePiercing",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000804",
+      "editorId": "SLSF_Reloaded_VaginalPiercing",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000801",
+      "editorId": "SLSF_Reloaded_CoversHands",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000827",
+      "editorId": "SLSF_Reloaded_DoesNotHideIdentity",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000834",
+      "editorId": "SLSF_Reloaded_DoesNotCoverHands",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000800",
+      "editorId": "SLSF_Reloaded_HidesIdentity",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "KYWD",
+      "formId": "0x06000832",
+      "editorId": "SLSF_Reloaded_DoesNotCoverBack",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000811",
+      "editorId": "SLSF_Reloaded_CurrentNastyFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082A",
+      "editorId": "SLSF_Reloaded_CommentFrequency",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000829",
+      "editorId": "SLSF_AllowComment",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082B",
+      "editorId": "SLSF_Reloaded_VisiblyBound",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000835",
+      "editorId": "SLSF_Reloaded_OralCumCount",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000836",
+      "editorId": "SLSF_Reloaded_AnalCumCount",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000837",
+      "editorId": "SLSF_Reloaded_VaginalCumCount",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000820",
+      "editorId": "SLSF_Reloaded_CurrentTattooFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081C",
+      "editorId": "SLSF_Reloaded_CurrentArgonianFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000812",
+      "editorId": "SLSF_Reloaded_CurrentPregnantFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000805",
+      "editorId": "SLSF_Reloaded_CustomLocationCount",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080B",
+      "editorId": "SLSF_Reloaded_NPCScanSucess",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000821",
+      "editorId": "SLSF_Reloaded_CurrentCumDumpFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000822",
+      "editorId": "SLSF_Reloaded_CurrentCheatFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000823",
+      "editorId": "SLSF_Reloaded_CurrentCuckFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000824",
+      "editorId": "SLSF_Reloaded_OralCumVisible",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000825",
+      "editorId": "SLSF_Reloaded_AnalCumVisible",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080C",
+      "editorId": "SLSF_Reloaded_CurrentSlutFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080D",
+      "editorId": "SLSF_Reloaded_CurrentWhoreFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000810",
+      "editorId": "SLSF_Reloaded_CurrentAnalFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000826",
+      "editorId": "SLSF_Reloaded_VaginalCumVisible",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000814",
+      "editorId": "SLSF_Reloaded_CurrentSubmissiveFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000815",
+      "editorId": "SLSF_Reloaded_CurrentSadistFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080E",
+      "editorId": "SLSF_Reloaded_CurrentExhibitionistFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000813",
+      "editorId": "SLSF_Reloaded_CurrentDominantFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600080F",
+      "editorId": "SLSF_Reloaded_CurrentOralFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082C",
+      "editorId": "SLSF_Reloaded_LightlyBound",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000816",
+      "editorId": "SLSF_Reloaded_CurrentMasochistFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000817",
+      "editorId": "SLSF_Reloaded_CurrentGentleFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000818",
+      "editorId": "SLSF_Reloaded_CurrentMenFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000831",
+      "editorId": "SLSF_Reloaded_IsCollared",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000830",
+      "editorId": "SLSF_Reloaded_IsBelted",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000819",
+      "editorId": "SLSF_Reloaded_CurrentWomenFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081A",
+      "editorId": "SLSF_Reloaded_CurrentOrcFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081B",
+      "editorId": "SLSF_Reloaded_CurrentKhajiitFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081D",
+      "editorId": "SLSF_Reloaded_CurrentBestialityFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081E",
+      "editorId": "SLSF_Reloaded_CurrentGroupFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600081F",
+      "editorId": "SLSF_Reloaded_CurrentBoundFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082F",
+      "editorId": "SLSF_Reloaded_CurrentAirheadFame",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082D",
+      "editorId": "SLSF_Reloaded_HeavilyBound",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x0600082E",
+      "editorId": "SLSF_Reloaded_Skooma",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "GLOB",
+      "formId": "0x06000838",
+      "editorId": "SLSF_Reloaded_TotalCumCount",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "global": {
+        "type": "115",
+        "value": 0
+      }
+    },
+    {
+      "signature": "MGEF",
+      "formId": "0x06000806",
+      "editorId": "SLSF_Reloaded_NPCScanEffect",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": true,
+      "vmad": {
+        "version": 5,
+        "objectFormat": 2,
+        "scripts": [
+          {
+            "name": "SLSF_Reloaded_NPCScan",
+            "status": 0,
+            "properties": [
+              {
+                "name": "SLSF_Reloaded_NPCScanSucess",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080B"
+                }
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SexLab",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x05000D62"
+                }
+              },
+              {
+                "name": "PlayerRef",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x00000014"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "vmadScripts": [
+        "SLSF_Reloaded_NPCScan"
+      ]
+    },
+    {
+      "signature": "SPEL",
+      "formId": "0x06000807",
+      "editorId": "SLSF_Reloaded_NPCScanSpell",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "isPublic": false
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x06000808",
+      "editorId": "SLSF_Reloaded_Main",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "questFlags": "0x00000111",
+      "isPublic": true,
+      "vmad": {
+        "version": 5,
+        "objectFormat": 2,
+        "scripts": [
+          {
+            "name": "SLSF_Reloaded_ModEventListener",
+            "status": 0,
+            "properties": [
+              {
+                "name": "VisibilityManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CustomLocationCount",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "playerScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": 0,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "Anonymity",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "DATA",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_FameManager",
+            "status": 0,
+            "properties": [
+              {
+                "name": "GroupGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600081E"
+                }
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CustomLocationCount",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "NastyGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000811"
+                }
+              },
+              {
+                "name": "VisibilityManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "FameType",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "Whore",
+                  "Slut",
+                  "Exhibitionist",
+                  "Oral",
+                  "Anal",
+                  "Nasty",
+                  "Pregnant",
+                  "Dominant",
+                  "Submissive",
+                  "Sadist",
+                  "Masochist",
+                  "Gentle",
+                  "Likes Men",
+                  "Likes Women",
+                  "Likes Orc",
+                  "Likes Khajiit",
+                  "Likes Argonian",
+                  "Bestiality",
+                  "Group",
+                  "Bound",
+                  "tattoo",
+                  "cum dump",
+                  "Unfaithful",
+                  "Cuck",
+                  "Airhead"
+                ]
+              },
+              {
+                "name": "WomenGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000819"
+                }
+              },
+              {
+                "name": "MasochistGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000816"
+                }
+              },
+              {
+                "name": "BeastGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600081D"
+                }
+              },
+              {
+                "name": "CustomLocationCanDecay",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "OralGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080F"
+                }
+              },
+              {
+                "name": "OrcGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600081A"
+                }
+              },
+              {
+                "name": "IsVisiblyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082B"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "BoundGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600081F"
+                }
+              },
+              {
+                "name": "SlutGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080C"
+                }
+              },
+              {
+                "name": "IsLightlyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082C"
+                }
+              },
+              {
+                "name": "playerScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": 0,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "SadistGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000815"
+                }
+              },
+              {
+                "name": "DefaultLocationDecayPauseTimer",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "PregGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000812"
+                }
+              },
+              {
+                "name": "WhoreGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080D"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "AirheadGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082F"
+                }
+              },
+              {
+                "name": "LegacyOverwrite",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "ExhibGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080E"
+                }
+              },
+              {
+                "name": "CumDumpGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000821"
+                }
+              },
+              {
+                "name": "CustomLocationDecayPauseTimer",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "mods",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "AnalGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000810"
+                }
+              },
+              {
+                "name": "DefaultLocationCanDecay",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DATA",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "CheatGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000822"
+                }
+              },
+              {
+                "name": "DomGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000813"
+                }
+              },
+              {
+                "name": "KhajiitGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600081B"
+                }
+              },
+              {
+                "name": "TattooGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000820"
+                }
+              },
+              {
+                "name": "ArgonianGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600081C"
+                }
+              },
+              {
+                "name": "MenGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000818"
+                }
+              },
+              {
+                "name": "GentleGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000817"
+                }
+              },
+              {
+                "name": "SexLab",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x05000D62"
+                }
+              },
+              {
+                "name": "CuckGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000823"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_VaginalPiercing",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000804"
+                }
+              },
+              {
+                "name": "ExternalListener",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "PlayerRef",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x00000014"
+                }
+              },
+              {
+                "name": "IsHeavilyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082D"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_NipplePiercing",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000803"
+                }
+              },
+              {
+                "name": "SubGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000814"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_ModIntegration",
+            "status": 0,
+            "properties": [
+              {
+                "name": "LegacyOverwrite",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CommentFrequency",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082A"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_Logger",
+            "status": 0,
+            "properties": []
+          }
+        ],
+        "fragments": {
+          "unknown": 2,
+          "fragmentCount": 0,
+          "fileName": ""
+        },
+        "aliases": [
+          {
+            "aliasIndex": 0,
+            "aliasName": "PlayerAlias",
+            "questFormId": "0x06000808",
+            "version": 5,
+            "objectFormat": 2,
+            "object": {
+              "unused": 0,
+              "alias": 0,
+              "formId": "0x06000808"
+            },
+            "scripts": [
+              {
+                "name": "SLSF_Reloaded_SexAnimationAnalyzer",
+                "status": 0,
+                "properties": [
+                  {
+                    "name": "OrcRace",
+                    "type": 11,
+                    "status": 1,
+                    "value": [
+                      {
+                        "unused": 0,
+                        "alias": -1,
+                        "formId": "0x00013747"
+                      },
+                      {
+                        "unused": 0,
+                        "alias": -1,
+                        "formId": "0x000A82B9"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "LocationManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "SexLab",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x05000D62"
+                    }
+                  },
+                  {
+                    "name": "FameManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "config",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000809"
+                    }
+                  },
+                  {
+                    "name": "NPCScanSpell",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000807"
+                    }
+                  },
+                  {
+                    "name": "VisibilityManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "SLSF_Reloaded_NPCScanSucess",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080B"
+                    }
+                  },
+                  {
+                    "name": "ArgonianRace",
+                    "type": 11,
+                    "status": 1,
+                    "value": [
+                      {
+                        "unused": 0,
+                        "alias": -1,
+                        "formId": "0x00013740"
+                      },
+                      {
+                        "unused": 0,
+                        "alias": -1,
+                        "formId": "0x0008883A"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "mods",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "KhajiitRace",
+                    "type": 11,
+                    "status": 1,
+                    "value": [
+                      {
+                        "unused": 0,
+                        "alias": -1,
+                        "formId": "0x00013745"
+                      },
+                      {
+                        "unused": 0,
+                        "alias": -1,
+                        "formId": "0x00088845"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "PlayerRef",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x00000014"
+                    }
+                  },
+                  {
+                    "name": "Logger",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "DATA",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "SLSF_Reloaded_PlayerScript",
+                "status": 0,
+                "properties": [
+                  {
+                    "name": "DATA",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "LegacyOverwrite",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "LocationManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "mods",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "PlayerRef",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x00000014"
+                    }
+                  },
+                  {
+                    "name": "config",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000809"
+                    }
+                  },
+                  {
+                    "name": "TimeManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "AnimationAnalyzer",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": 0,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "VisibilityManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "SLSF_Reloaded_NPCScanSucess",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080B"
+                    }
+                  },
+                  {
+                    "name": "NPCScanSpell",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000807"
+                    }
+                  },
+                  {
+                    "name": "DynamicAnonymityScript",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600080A"
+                    }
+                  },
+                  {
+                    "name": "FameManager",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "Logger",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "Listener",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000808"
+                    }
+                  },
+                  {
+                    "name": "SLSF_Reloaded_Skooma",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x0600082E"
+                    }
+                  },
+                  {
+                    "name": "SLSF_AllowComment",
+                    "type": 1,
+                    "status": 1,
+                    "value": {
+                      "unused": 0,
+                      "alias": -1,
+                      "formId": "0x06000829"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "aliasCount": 1
+      },
+      "vmadScripts": [
+        "SLSF_Reloaded_ModEventListener",
+        "SLSF_Reloaded_FameManager",
+        "SLSF_Reloaded_ModIntegration",
+        "SLSF_Reloaded_Logger"
+      ]
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x06000809",
+      "editorId": "SLSF_Reloaded_MCM",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "questFlags": "0x00000111",
+      "isPublic": true,
+      "vmad": {
+        "version": 5,
+        "objectFormat": 2,
+        "scripts": [
+          {
+            "name": "SLSF_Reloaded_MCM",
+            "status": 0,
+            "properties": [
+              {
+                "name": "FameCategoryMultiplier",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "name": "SLSF_Reloaded_CustomLocationCount",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "VisibilityManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "Uninstaller",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CommentFrequency",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082A"
+                }
+              },
+              {
+                "name": "WICommentChanceNaked",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x000A8656"
+                }
+              },
+              {
+                "name": "CustomLocationSpreadChance",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "HasFameAtDefaultLocation",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "FameForbiddenByLover",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DATA",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "IsVisiblyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082B"
+                }
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "mods",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "FameForbiddenByFriend",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DataExporter",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "Comments",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "DefaultLocationSpreadChance",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "playerScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": 0,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "DataImporter",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "HasFameAtCustomLocation",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "vmadScripts": [
+        "SLSF_Reloaded_MCM"
+      ],
+      "identityScope": "legacy-menu-identification-only; MCM Papyrus functions are excluded"
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x0600080A",
+      "editorId": "SLSF_Reloaded_Managers",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "questFlags": "0x00000111",
+      "isPublic": true,
+      "vmad": {
+        "version": 5,
+        "objectFormat": 2,
+        "scripts": [
+          {
+            "name": "SLSF_Reloaded_CommentManager",
+            "status": 0,
+            "properties": [
+              {
+                "name": "VisibilityManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "WICommentChanceNaked",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x000A8656"
+                }
+              },
+              {
+                "name": "SLSF_AllowComment",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000829"
+                }
+              },
+              {
+                "name": "PlayerRef",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x00000014"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CommentFrequency",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082A"
+                }
+              },
+              {
+                "name": "mods",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_VisibilityManager",
+            "status": 0,
+            "properties": [
+              {
+                "name": "VaginalCumGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000826"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_DoesNotHideIdentity",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000827"
+                }
+              },
+              {
+                "name": "PlayerRef",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x00000014"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "IsBelted",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000830"
+                }
+              },
+              {
+                "name": "mods",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "DynamicAnonymityScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "IsCollared",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000831"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_DoesNotCoverBack",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000832"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CoversFeet",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000802"
+                }
+              },
+              {
+                "name": "AnalCumCountGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000836"
+                }
+              },
+              {
+                "name": "VaginalCumCountGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000837"
+                }
+              },
+              {
+                "name": "TotalCumCountGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000838"
+                }
+              },
+              {
+                "name": "SexLab",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x05000D62"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_DoesNotCoverHands",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000834"
+                }
+              },
+              {
+                "name": "IsVisiblyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082B"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_DoesNotCoverFeet",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000833"
+                }
+              },
+              {
+                "name": "OralCumGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000824"
+                }
+              },
+              {
+                "name": "OralCumCountGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000835"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_HidesIdentity",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000800"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "IsLightlyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082C"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CoversBack",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000828"
+                }
+              },
+              {
+                "name": "IsHeavilyBound",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082D"
+                }
+              },
+              {
+                "name": "AnalCumGlobal",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000825"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CoversHands",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000801"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_DataManager",
+            "status": 0,
+            "properties": [
+              {
+                "name": "WhiterunSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "FalkreathSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation6Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation5Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "NarzulburFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "WinterholdSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "MarkarthSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation14SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "IvarsteadFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation15SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation3SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DawnstarFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "RavenRockFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "MorthalFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "CustomLocation13Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "RiftenSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation16Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation21SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation1Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "NarzulburSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation1SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation16SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation14Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "LargashburSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation9Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "DragonBridgeFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation19Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation10Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "WhiterunFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "DragonBridgeSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation4Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation10SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "MorKhazgurFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "LargashburFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation2SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation20SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "SolitudeFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "SkaalVillageFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation8Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "DefaultLocationHasSpreadableFame",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "ShorsStoneFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation20Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation9SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "WindhelmSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation12Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocationDynamicAnonymityFlag",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "name": "ExternalFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation8SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation4SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "FalkreathFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "RiverwoodFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation13SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "SkaalVillageSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation19SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "RoriksteadSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation11Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "KarthwastenFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "RiverwoodSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation18SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation6SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation12SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DushnikhYalSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation5SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "SolitudeSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation11SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "MorthalSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation18Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "WinterholdFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation2Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "MorKhazgurSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation3Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "RoriksteadFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "WindhelmFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "IvarsteadSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DawnstarSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation15Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "ShorsStoneSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation7Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "MarkarthFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "CustomLocation21Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "KarthwastenSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation17SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocationHasSpreadableFame",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "RavenRockSpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "DefaultLocationDynamicAnonymityFlag",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "name": "CustomLocation7SpreadFlags",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              {
+                "name": "CustomLocation17Fame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "RiftenFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "name": "DushnikhYalFame",
+                "type": 13,
+                "status": 1,
+                "value": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_LegacyOverwrite",
+            "status": 0,
+            "properties": [
+              {
+                "name": "mods",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "DATA",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_Data_Exporter",
+            "status": 0,
+            "properties": [
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "CustomLocations",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "ModFlags",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "Whore",
+                  "Slut",
+                  "Exhibitionist",
+                  "Oral",
+                  "Anal",
+                  "Nasty",
+                  "Pregnant",
+                  "Dominant",
+                  "Submissive",
+                  "Sadist",
+                  "Masochist",
+                  "Gentle",
+                  "Likes Men",
+                  "Likes Women",
+                  "Likes Orc",
+                  "Likes Khajiit",
+                  "Likes Argonian",
+                  "Bestiality",
+                  "Group",
+                  "Bound",
+                  "tattoo",
+                  "cum dump",
+                  "Unfaithful",
+                  "Cuck",
+                  "Airhead",
+                  "Sex Worker"
+                ]
+              },
+              {
+                "name": "DataManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_Data_Importer",
+            "status": 0,
+            "properties": [
+              {
+                "name": "DataExporter",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "LegacyOverwrite",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "DataManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "CustomLocations",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_LocationManager",
+            "status": 0,
+            "properties": [
+              {
+                "name": "OverrideExcludedLocation",
+                "type": 11,
+                "status": 1,
+                "value": [
+                  {
+                    "alias": -1,
+                    "formId": "0x000130DF"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130EB"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130EC"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130F1"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001926A"
+                  }
+                ]
+              },
+              {
+                "name": "WhiterunLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "DataManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CustomLocationCount",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "MinorLocations",
+                "type": 11,
+                "status": 1,
+                "value": [
+                  {
+                    "alias": -1,
+                    "formId": "0x00013163"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00018A47"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00018A4B"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00018A4C"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00018A46"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00018A54"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x040143BB"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00019263"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00019171"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001927C"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00019282"
+                  }
+                ]
+              },
+              {
+                "name": "ExcludedLocations",
+                "type": 11,
+                "status": 1,
+                "value": [
+                  {
+                    "alias": -1,
+                    "formId": "0x000130F2"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130E4"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130E6"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130EF"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130DE"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130F0"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x000130EE"
+                  }
+                ]
+              },
+              {
+                "name": "CustomLocation",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "RiftLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "WinterholdLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "DynamicAnonymityScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "EastmarchLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "HjaalmarchLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "PaleLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "SolstheimLocation",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x04016E2A"
+                }
+              },
+              {
+                "name": "MajorLocations",
+                "type": 11,
+                "status": 1,
+                "value": [
+                  {
+                    "alias": -1,
+                    "formId": "0x00016772"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001676B"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001676A"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00016770"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001676C"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00016769"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001676E"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001676D"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x0001676F"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x040143B9"
+                  }
+                ]
+              },
+              {
+                "name": "HaafingarLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "SolstheimLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "CustomLocationRef",
+                "type": 11,
+                "status": 1,
+                "value": [
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  },
+                  {
+                    "alias": -1,
+                    "formId": "0x00000000"
+                  }
+                ]
+              },
+              {
+                "name": "FalkreathLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "DefaultLocation",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "Whiterun",
+                  "Winterhold",
+                  "Windhelm",
+                  "Solitude",
+                  "Riften",
+                  "Markarth",
+                  "Morthal",
+                  "Dawnstar",
+                  "Falkreath",
+                  "Raven Rock",
+                  "Riverwood",
+                  "Rorikstead",
+                  "Ivarstead",
+                  "Shor's Stone",
+                  "Dragon Bridge",
+                  "Karthwasten",
+                  "Skaal Village",
+                  "Largashbur",
+                  "Dushnikh Yal",
+                  "Mor Khazgur",
+                  "Narzulbur"
+                ]
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "UndefinedLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "ReachLocationList",
+                "type": 12,
+                "status": 1,
+                "value": [
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---",
+                  "---"
+                ]
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_Uninstall",
+            "status": 0,
+            "properties": [
+              {
+                "name": "mods",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "CommentManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "MainQuest",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "playerScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": 0,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "ConfigQuest",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "ManagerQuest",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SLSF_Reloaded_DynamicAnonymity",
+            "status": 0,
+            "properties": [
+              {
+                "name": "DLC2StoneCleanse",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x04035440"
+                }
+              },
+              {
+                "name": "DefaultLocationRecognitionTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0
+                ]
+              },
+              {
+                "name": "LocationManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "DataManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_CustomLocationCount",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000805"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "ThaneScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x00087E24"
+                }
+              },
+              {
+                "name": "VisibilityManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "OrcFriends",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x00024029"
+                }
+              },
+              {
+                "name": "CustomLocationLastExitTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0
+                ]
+              },
+              {
+                "name": "DefaultLocationVisitTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "name": "DefaultLocationLastExitTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0,
+                  -10.0
+                ]
+              },
+              {
+                "name": "CustomLocationLocalAnonymityStartedAsTrue",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "name": "CustomLocationLocalAnonymityFlag",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "name": "DefaultLocationLocalAnonymityStartedAsTrue",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "name": "CustomLocationVisitTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "name": "CustomLocationRecognitionTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0,
+                  7.0
+                ]
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "CustomLocationLastEnterTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "name": "DefaultLocationLastEnterTime",
+                "type": 14,
+                "status": 1,
+                "value": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              {
+                "name": "playerScript",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": 0,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "IsAnonymous",
+                "type": 5,
+                "status": 1,
+                "value": true
+              },
+              {
+                "name": "DefaultLocationLocalAnonymityFlag",
+                "type": 15,
+                "status": 1,
+                "value": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "vmadScripts": [
+        "SLSF_Reloaded_CommentManager",
+        "SLSF_Reloaded_VisibilityManager",
+        "SLSF_Reloaded_DataManager",
+        "SLSF_Reloaded_LegacyOverwrite",
+        "SLSF_Reloaded_Data_Exporter",
+        "SLSF_Reloaded_Data_Importer",
+        "SLSF_Reloaded_LocationManager",
+        "SLSF_Reloaded_Uninstall",
+        "SLSF_Reloaded_DynamicAnonymity"
+      ]
+    },
+    {
+      "signature": "QUST",
+      "formId": "0x06000839",
+      "editorId": "SLSF_Reloaded_MasterClock",
+      "plugin": "SLSF Reloaded.esp",
+      "recordFlags": "0x00000000",
+      "questFlags": "0x00000111",
+      "isPublic": true,
+      "vmad": {
+        "version": 5,
+        "objectFormat": 2,
+        "scripts": [
+          {
+            "name": "SLSF_Reloaded_MasterClock",
+            "status": 0,
+            "properties": [
+              {
+                "name": "LegacyOverwrite",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600080A"
+                }
+              },
+              {
+                "name": "FameManager",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              },
+              {
+                "name": "config",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000809"
+                }
+              },
+              {
+                "name": "SLSF_Reloaded_Skooma",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x0600082E"
+                }
+              },
+              {
+                "name": "Logger",
+                "type": 1,
+                "status": 1,
+                "value": {
+                  "alias": -1,
+                  "formId": "0x06000808"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "vmadScripts": [
+        "SLSF_Reloaded_MasterClock"
+      ]
+    }
+  ],
+  "notes": [
+    "The ESP has the 0x200 (ESL) flag and six masters; form IDs below are the values stored in the file.",
+    "recordFlags is the TES4 record-header flags field (header offset 8). All 58 records are 0x00000000 in this uncompressed plugin; this is not the quest gameplay flags.",
+    "For QUST, quest gameplay flags live in the DNAM subrecord. questFlags is the little-endian uint16 at DNAM+0; 0x00000111 means kEnabled (1<<0) | kStartsEnabled (1<<4) | kRunOnce (1<<8) per RE/T/TESQuest.h.",
+    "VMAD property values are decoded from the quest/effect scripts; object values are recorded as alias/formId."
+  ]
+}
