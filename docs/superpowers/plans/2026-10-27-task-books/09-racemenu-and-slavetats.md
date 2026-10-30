@@ -4,6 +4,8 @@
 
 先读[项目规格](../../../../.scratch/native-migration/spec.md)、[执行说明](00-execution-guide.md)和[测试说明](00-native-testing.md)。具体接口及验收见[C 任务说明](../2026-10-27-integrations-and-delivery-plan.md)中本组任务。
 
+注释默认不写，包括文档注释；严格执行 [AGENTS.md 的必要例外](../../../../AGENTS.md#code-comments)。不要复述代码或批量补说明，拿不准就不写。
+
 ## 负责文件
 
 - M28：`src/integrations/RaceMenu.cpp`
@@ -21,6 +23,7 @@
 - 目标安装版应完成公共接口最小查询；SlaveTats 监听应接收一次性广播，并按已验证共同前缀读取能力。
 - body/hands/feet/face 应复制为自有记录；JC 句柄应按协议 retain/release，换档时应释放本会话对象并重新采集。
 - 未知状态应保留类别设置及既有声望，暂停依赖该事实的新计分；就绪后按正常计分入口继续处理。
+- 本次新增或修改的注释已逐条检查，仅保留 AGENTS.md 允许的必要例外；零新增注释可通过验收。
 
 运行相关核心/边界检查；数值或生命周期模块运行对应 ASan 检查，解析器使用现有坏输入/模糊测试。随机输入记录 seed（默认 1170）及可重放用例，日志保存实际命令和退出码。
 
