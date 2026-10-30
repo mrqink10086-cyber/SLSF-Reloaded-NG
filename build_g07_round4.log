@@ -1,0 +1,10 @@
+[0m[32;1m[ 52%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\Settlement.cpp[0m
+[0m[32;1m[ 58%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\runtime\Dispatcher.cpp[0m
+[0m[32;1m[ 58%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\runtime\Lifecycle.cpp[0m
+[0m[32;1m[ 70%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 73%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\compat\ModEventBridge.cpp[0m
+[0m[1;31;1merror: [0mDispatcher.cpp
+src\runtime\Dispatcher.cpp(499): error C2039: "CommandResult": 不是 "slsf::runtime::Dispatcher" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/runtime/Dispatcher.h(56): note: 参见“slsf::runtime::Dispatcher”的声明
+
+  [33m> in [1msrc\runtime\Dispatcher.cpp[0m

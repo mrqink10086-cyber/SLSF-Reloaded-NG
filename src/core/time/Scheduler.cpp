@@ -10,9 +10,7 @@ namespace {
 bool ValidDomain(ClockDomain domain) noexcept {
     return static_cast<std::size_t>(domain) < kClockDomainCount;
 }
-
-} // namespace
-
+}
 bool Scheduler::LaterThan(const HeapEntry& lhs, const HeapEntry& rhs) noexcept {
     // "Later" = pops after the other.  std::make_heap with this comparator
     // keeps the earliest (deadline, sequence) entry at heap.front().
@@ -21,15 +19,12 @@ bool Scheduler::LaterThan(const HeapEntry& lhs, const HeapEntry& rhs) noexcept {
     }
     return lhs.sequence > rhs.sequence;
 }
-
 Scheduler::Domain& Scheduler::PickerDomain(ClockDomain domain) noexcept {
     return state_.domains[static_cast<std::size_t>(domain)];
 }
-
 const Scheduler::Domain& Scheduler::PickerDomain(ClockDomain domain) const noexcept {
     return state_.domains[static_cast<std::size_t>(domain)];
 }
-
 TaskBody Scheduler::RetireSlotLocked(Domain& domain, std::size_t slotIndex) {
     Slot& slot = domain.slots[slotIndex];
     domain.freeSlots.push_back(slotIndex);
@@ -39,13 +34,11 @@ TaskBody Scheduler::RetireSlotLocked(Domain& domain, std::size_t slotIndex) {
     slot.generation += 1;
     return released;
 }
-
 bool Scheduler::IsLiveLocked(const Domain& domain, const HeapEntry& entry) const {
     const Slot& slot = domain.slots[entry.slot];
     return slot.armed && slot.generation == entry.generation &&
            slot.session == state_.session;
-}
-std::size_t Scheduler::CompactLocked(Domain& domain) {
+}std::size_t Scheduler::CompactLocked(Domain& domain) {
     std::vector<HeapEntry> kept;
     kept.reserve(domain.heap.size());
     for (const HeapEntry& entry : domain.heap) {
@@ -60,7 +53,6 @@ std::size_t Scheduler::CompactLocked(Domain& domain) {
     domain.discardedTotal += dropped;
     return dropped;
 }
-
 TimerToken Scheduler::Schedule(ClockDomain domain, double deadline, TaskBody body) {
     if (!ValidDomain(domain) || !std::isfinite(deadline)) {
         return TimerToken{};
@@ -97,7 +89,6 @@ TimerToken Scheduler::Schedule(ClockDomain domain, double deadline, TaskBody bod
     token.generation = slot.generation;
     return token;
 }
-
 bool Scheduler::Cancel(TimerToken token) {
     TaskBody released;
     if (token.id.value == 0) {
@@ -124,7 +115,6 @@ bool Scheduler::Cancel(TimerToken token) {
     }
     return true;
 }
-
 std::vector<DueTask> Scheduler::AcquireDue(ClockDomain domain, double now) {
     std::vector<DueTask> due;
     if (!ValidDomain(domain) || !std::isfinite(now)) {
@@ -173,7 +163,6 @@ std::vector<DueTask> Scheduler::AcquireDue(ClockDomain domain, double now) {
     }
     return due;
 }
-
 bool Scheduler::HasDue(ClockDomain domain, double now) {
     if (!ValidDomain(domain) || !std::isfinite(now)) {
         return false;
@@ -188,7 +177,6 @@ bool Scheduler::HasDue(ClockDomain domain, double now) {
     }
     return !target.heap.empty() && target.heap.front().deadline <= now;
 }
-
 std::size_t Scheduler::DueCount(ClockDomain domain, double now) const {
     if (!ValidDomain(domain) || !std::isfinite(now)) {
         return 0;
@@ -206,7 +194,6 @@ std::size_t Scheduler::DueCount(ClockDomain domain, double now) const {
     }
     return count;
 }
-
 std::size_t Scheduler::PendingCount(ClockDomain domain) const {
     if (!ValidDomain(domain)) {
         return 0;
@@ -221,7 +208,6 @@ std::size_t Scheduler::PendingCount(ClockDomain domain) const {
     }
     return count;
 }
-
 std::size_t Scheduler::PendingCount() const {
     const std::lock_guard<std::mutex> guard(state_.mutex);
     std::size_t count = 0;
@@ -234,12 +220,10 @@ std::size_t Scheduler::PendingCount() const {
     }
     return count;
 }
-
 std::uint64_t Scheduler::NewSession() {
     std::vector<TaskBody> retired;
     return NewSession(retired);
 }
-
 std::uint64_t Scheduler::NewSession(std::vector<TaskBody>& retired) {
     const std::lock_guard<std::mutex> guard(state_.mutex);
     std::size_t capacity = retired.size();
@@ -259,12 +243,10 @@ std::uint64_t Scheduler::NewSession(std::vector<TaskBody>& retired) {
     }
     return state_.session;
 }
-
 std::uint64_t Scheduler::Session() const {
     const std::lock_guard<std::mutex> guard(state_.mutex);
     return state_.session;
 }
-
 std::size_t Scheduler::HeapSize(ClockDomain domain) const {
     if (!ValidDomain(domain)) {
         return 0;
@@ -272,7 +254,6 @@ std::size_t Scheduler::HeapSize(ClockDomain domain) const {
     const std::lock_guard<std::mutex> guard(state_.mutex);
     return PickerDomain(domain).heap.size();
 }
-
 std::size_t Scheduler::DiscardedCount(ClockDomain domain) const {
     if (!ValidDomain(domain)) {
         return 0;
@@ -280,5 +261,4 @@ std::size_t Scheduler::DiscardedCount(ClockDomain domain) const {
     const std::lock_guard<std::mutex> guard(state_.mutex);
     return PickerDomain(domain).discardedTotal;
 }
-
-} // namespace slsf::time
+}

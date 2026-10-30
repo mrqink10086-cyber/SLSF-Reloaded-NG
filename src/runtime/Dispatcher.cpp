@@ -32,7 +32,7 @@ Dispatcher::Flow::~Flow() {
             handle_.resume();
         }
     }
-    handle_.destroy(); // exactly one destroy: final_suspend holds the frame
+    handle_.destroy();
 }
 
 Dispatcher::Flow::Flow(Flow&& other) noexcept
@@ -81,7 +81,7 @@ bool Dispatcher::Flow::CancelWait() {
     if (!retired) {
         return false;
     }
-    retired->resume(); // awaiter flag was set under the dispatcher lock
+    retired->resume();
     return true;
 }
 
@@ -98,9 +98,6 @@ Dispatcher::Flow Dispatcher::SpawnFlow(std::function<Flow()> body) {
     if (!body) {
         return {};
     }
-    // Keep the body lambda on the heap and hand ownership to the promise:
-    // the frame copies the lambda's `this` as a raw pointer, so the capture
-    // container must outlive the SpawnFlow call expression (see header).
     auto keepBody = std::make_unique<std::function<Flow()>>(std::move(body));
     Flow flow = (*keepBody)();
     if (flow.handle_) {
@@ -136,8 +133,6 @@ bool Dispatcher::RegisterWait(Delay& awaiter, std::coroutine_handle<Flow::promis
             }
         });
     if (entry->token.id.value == 0) {
-        // The scheduler refused the deadline (non-finite clock reading):
-        // do not park a frame that no timer could ever wake.
         awaiter.aborted_ = true;
         return false;
     }
@@ -168,8 +163,6 @@ Dispatcher::RetireWait(const std::shared_ptr<WaitEntry>& entry, bool aborted, bo
             frame->promise().stopping = true;
         }
     }
-    // The timer must die with the wait: the entry leaves the table now, and
-    // the scheduler token is the only thing that could still call back.
     std::ignore = scheduler_.Cancel(entry->token);
     waits_.erase(entry->position);
     return frame;
@@ -188,11 +181,6 @@ void Dispatcher::FireWait(const std::shared_ptr<WaitEntry>& entry) {
 Dispatcher::~Dispatcher() {
     std::vector<time::TaskBody> retired;
     std::deque<EngineEvent> events;
-    // Abort, but never resume, parked frames here: resuming would run user
-    // business code against a half-destroyed dispatcher.  Clearing promise
-    // ownership makes every later Flow destruction settle its own frame
-    // locally (Delay reports false, the body settles, the frame is freed
-    // once) without calling back into this object.
     std::lock_guard<std::mutex> guard(mutex_);
     for (auto& wait : waits_) {
         if (!wait->live) {
@@ -360,8 +348,174 @@ CommandResult Dispatcher::Execute(const ExplicitCommand& command) {
     return result;
 }
 
+namespace {
+slsf::GameTime FloorToLastAdvance(const std::optional<slsf::GameTime>& lastAdvance,
+                                 slsf::GameTime now) {
+    if (lastAdvance && now.AsDays() < lastAdvance->AsDays()) {
+        return *lastAdvance;
+    }
+    return now;
+}
+
+}
+
+Dispatcher::GainOutcome Dispatcher::GainFame(GameTime now, RegionId account,
+                                             FameCategory category,
+                                             const GainFameInputs& ruleInputs) {
+    std::lock_guard<std::mutex> guard(mutex_);
+    if (!state_) {
+        return GainOutcome{Status::Stale, Revision{}, 0, "executor detached"};
+    }
+    if (suspended_) {
+        return GainOutcome{Status::NotReady, state_->revision, 0, "executor suspended"};
+    }
+    if (!bindings_.configuration || !bindings_.rng) {
+        return GainOutcome{Status::NotReady, state_->revision, 0,
+                           "settlement inputs not bound"};
+    }
+    now = FloorToLastAdvance(lastAdvance_, now);
+    const Revision before = state_->revision;
+    const auto settled = AdvanceLocked(now);
+    if (!settled) {
+        return GainOutcome{Status::NotReady, state_->revision, 0,
+                           settled.error().message};
+    }
+    auto result = slsf::ApplyGainFame(*state_, now, account, category, ruleInputs,
+                                      *bindings_.configuration, *bindings_.rng);
+    if (!result) {
+        return GainOutcome{Status::Invalid, state_->revision, 0, result.error().message};
+    }
+    if (state_->revision != before) {
+        PublishLocked();
+    }
+    return GainOutcome{Status::Ready, state_->revision, *result, ""};
+}
+
+Dispatcher::ApplyOutcome Dispatcher::ApplyManualSpread(RegionId source, RegionId target,
+                                                       FameCategory category,
+                                                       int percent) {
+    std::lock_guard<std::mutex> guard(mutex_);
+    if (!state_) {
+        return ApplyOutcome{Status::Stale, Revision{}, 0.0, "executor detached"};
+    }
+    if (suspended_) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0, "executor suspended"};
+    }
+    if (!bindings_.configuration) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
+                            "settlement inputs not bound"};
+    }
+    const Revision before = state_->revision;
+    const auto settled = AdvanceLocked(FloorToLastAdvance(lastAdvance_, clocks_.Game()));
+    if (!settled) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
+                            settled.error().message};
+    }
+    auto result =
+        slsf::ApplyManualSpread(*state_, source, target, category, percent,
+                                *bindings_.configuration);
+    if (!result) {
+        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
+    }
+    if (state_->revision != before) {
+        PublishLocked();
+    }
+    return ApplyOutcome{Status::Ready, state_->revision, *result, ""};
+}
+
+Dispatcher::ApplyOutcome Dispatcher::ApplyManualDecay(RegionId target, FameCategory category,
+                                                      int minimum, int maximum) {
+    std::lock_guard<std::mutex> guard(mutex_);
+    if (!state_) {
+        return ApplyOutcome{Status::Stale, Revision{}, 0.0, "executor detached"};
+    }
+    if (suspended_) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0, "executor suspended"};
+    }
+    if (!bindings_.configuration || !bindings_.rng) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
+                            "settlement inputs not bound"};
+    }
+    const Revision before = state_->revision;
+    const auto settled = AdvanceLocked(FloorToLastAdvance(lastAdvance_, clocks_.Game()));
+    if (!settled) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
+                            settled.error().message};
+    }
+    auto result = slsf::ApplyManualDecay(*state_, target, category, minimum, maximum,
+                                         *bindings_.configuration, *bindings_.rng);
+    if (!result) {
+        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
+    }
+    if (state_->revision != before) {
+        PublishLocked();
+    }
+    return ApplyOutcome{Status::Ready, state_->revision, *result, ""};
+}
+
+Dispatcher::ApplyOutcome Dispatcher::ApplyManualGain(RegionId target, FameCategory category,
+                                                     int minimum, int maximum) {
+    std::lock_guard<std::mutex> guard(mutex_);
+    if (!state_) {
+        return ApplyOutcome{Status::Stale, Revision{}, 0.0, "executor detached"};
+    }
+    if (suspended_) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0, "executor suspended"};
+    }
+    if (!bindings_.configuration || !bindings_.rng) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
+                            "settlement inputs not bound"};
+    }
+    const Revision before = state_->revision;
+    const auto settled = AdvanceLocked(FloorToLastAdvance(lastAdvance_, clocks_.Game()));
+    if (!settled) {
+        return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
+                            settled.error().message};
+    }
+    auto result = slsf::ApplyManualGain(*state_, target, category, minimum, maximum,
+                                        *bindings_.configuration, *bindings_.rng);
+    if (!result) {
+        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
+    }
+    if (state_->revision != before) {
+        PublishLocked();
+    }
+    return ApplyOutcome{Status::Ready, state_->revision, *result, ""};
+}
+
+CommandResult Dispatcher::ApplySpreadPulse(GameTime now,
+                                                       std::span<const RegionId> sources) {
+    std::lock_guard<std::mutex> guard(mutex_);
+    if (!state_) {
+        return CommandResult{Status::Stale, Revision{}, "executor detached"};
+    }
+    if (suspended_) {
+        return CommandResult{Status::NotReady, state_->revision, "executor suspended"};
+    }
+    if (!bindings_.configuration || !bindings_.graph || !bindings_.parameters) {
+        return CommandResult{Status::NotReady, state_->revision,
+                             "settlement inputs not bound"};
+    }
+    now = FloorToLastAdvance(lastAdvance_, now);
+    const Revision before = state_->revision;
+    const auto settled = AdvanceLocked(now);
+    if (!settled) {
+        return CommandResult{Status::NotReady, state_->revision, settled.error().message};
+    }
+    auto result = slsf::ApplySpreadPulse(*state_, now, sources, *bindings_.graph,
+                                         *bindings_.parameters,
+                                         *bindings_.configuration);
+    if (!result) {
+        return CommandResult{Status::Invalid, state_->revision, result.error().message};
+    }
+    if (state_->revision != before) {
+        PublishLocked();
+    }
+    return CommandResult{Status::Ready, state_->revision, ""};
+}
+
 Result<PublicView> Dispatcher::Query(const QueryRequest& request) const {
-    auto snapshot = Snapshot(); // atomic read; never holds mutex_
+    auto snapshot = Snapshot();
     if (!snapshot) {
         return std::unexpected(Error{Error::Code::InvalidState, "no published snapshot yet"});
     }
@@ -370,7 +524,7 @@ Result<PublicView> Dispatcher::Query(const QueryRequest& request) const {
 
 void Dispatcher::ScheduleChange(ScheduledChange change) {
     if (!std::isfinite(change.at.AsSeconds())) {
-        return; // a non-finite change would block every later settle
+        return;
     }
     std::lock_guard<std::mutex> guard(mutex_);
     if (!state_) {
@@ -425,12 +579,10 @@ Result<AdvanceResult> Dispatcher::AdvanceLocked(GameTime now) {
     inputs.regions = bindings_.regions;
     inputs.prepared = prepared_;
     inputs.workspace = workspace_;
-    inputs.scheduledChanges = std::move(changes_); // core erases due entries
+    inputs.scheduledChanges = std::move(changes_);
     auto result = Advance(*state_, now, inputs);
     changes_ = std::move(inputs.scheduledChanges);
     if (result) {
-        // Commit the monotonic floor only after the settle succeeded, so a
-        // rejected advance can never poison the session timeline.
         lastAdvance_ = now;
     }
     return result;
@@ -541,8 +693,6 @@ void Dispatcher::Step() {
         }
     }
 
-    // Each body is isolated: one throwing flow must not drop the rest of the
-    // batch (AcquireDue already retired the whole batch).
     auto runDue = [this, generation, schedulerSession](ClockDomain domain, double now) {
         {
             std::lock_guard<std::mutex> guard(mutex_);
@@ -562,7 +712,7 @@ void Dispatcher::Step() {
                 continue;
             }
             try {
-                task.body(); // bodies run outside dispatcher/clock locks
+                task.body();
             } catch (...) {
                 std::lock_guard<std::mutex> guard(mutex_);
                 ++stats_.timerErrors;
@@ -642,9 +792,6 @@ double Dispatcher::DomainNowLocked(ClockDomain domain) {
 }
 
 double Dispatcher::DeadlineLocked(ClockDomain domain, double seconds) {
-    // Delay/Schedule always speak seconds; the game domain's heap is keyed
-    // in game days (1 day = 86400 s), so convert instead of adding 1:86400
-    // mixed units.
     const double delay = domain == ClockDomain::Game ? seconds / 86400.0 : seconds;
     return DomainNowLocked(domain) + (std::max<double>)(0.0, delay);
 }
@@ -653,4 +800,4 @@ bool Dispatcher::HasDueChangeLocked(GameTime now) const {
     return !changes_.empty() && changes_.front().at.AsSeconds() <= now.AsSeconds();
 }
 
-} // namespace slsf::runtime
+}

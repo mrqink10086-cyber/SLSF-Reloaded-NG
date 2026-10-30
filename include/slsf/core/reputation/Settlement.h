@@ -66,6 +66,17 @@ Result<double> ApplyManualDecay(State& state,
                                 const Configuration& configuration,
                                 IRandom& rng);
 
+// Manual gain application (legacy OnExternalManualFameGain): samples the
+// increase, adds it to the published fame capped at maxFame, and mirrors the
+// result into the local row so the very next query sees it.
+Result<double> ApplyManualGain(State& state,
+                               RegionId target,
+                               FameCategory category,
+                               int minimum,
+                               int maximum,
+                               const Configuration& configuration,
+                               IRandom& rng);
+
 struct SpreadPulseResult {
     std::size_t appliedTargets{};
 };

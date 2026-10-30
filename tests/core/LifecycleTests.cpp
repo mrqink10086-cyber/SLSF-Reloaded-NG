@@ -169,8 +169,6 @@ struct Fixture {
     std::unique_ptr<Lifecycle> lifecycle;
 };
 
-} // namespace
-
 TEST_CASE("new game stays closed until the complete bind is activated") {
     Fixture fixture;
     auto& lifecycle = *fixture.lifecycle;
@@ -301,8 +299,6 @@ TEST_CASE("missing regions keep the complete record and rebind in another sessio
     REQUIRE(found != retained->locations.end());
     CHECK(*found == save.locations.front());
 
-    // The same process-static table is reused; adding the region to a new
-    // composition root is how a later load-order makes the record resolvable.
     RegionSnapshot larger = fixture.world;
     larger.regions.push_back(missingKey);
     std::sort(larger.regions.begin(), larger.regions.end());
@@ -368,11 +364,8 @@ TEST_CASE("each new session reloads and adopts the current cross-save configurat
     CHECK(lifecycle.Status().droppedConnectionEdges == 0);
     REQUIRE(lifecycle.ActivatePrepared());
 
-    // New JSON connections are compiled into this session's graph; an
-    // unknown endpoint is counted instead of failing the session.
     CHECK(lifecycle.Status().droppedConnectionEdges == 0);
 
-    // A save carries per-save business state, never the old JSON revision.
     auto captured = lifecycle.Capture();
     REQUIRE(captured.has_value());
     CHECK(captured->settings.empty());
@@ -451,6 +444,34 @@ TEST_CASE("one flush drains only the batch it started with") {
     CHECK(bridge.Flush() == 1);
     CHECK(handled.size() == 3);
     CHECK(bridge.Pending() == 0);
+}
+
+TEST_CASE("oversized payloads are rejected with their own counter") {
+    Fixture fixture;
+    auto& lifecycle = *fixture.lifecycle;
+    std::vector<std::string> handled;
+    slsf::engine::EventBridge bridge(lifecycle, [&](const slsf::engine::AsyncMessage& message) {
+        handled.push_back(message.topic);
+    });
+
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{.randomSeed = 30}));
+    REQUIRE(lifecycle.ActivatePrepared());
+
+    const std::string fits(slsf::engine::EventBridge::kMaxMessageBytes - 1, 'x');
+    REQUIRE(bridge.Enqueue("a", fits));
+    CHECK(bridge.Enqueue("a", std::string(slsf::engine::EventBridge::kMaxMessageBytes, 'y'))
+              == false);
+    CHECK(bridge.Stats().rejectedOversize == 1);
+    CHECK(bridge.Pending() == 1);
+
+    CHECK(bridge.Flush() == 1);
+    CHECK(handled == std::vector<std::string>{"a"});
+
+    lifecycle.ReturnToMenu();
+    CHECK(bridge.Enqueue("closed", std::string(slsf::engine::EventBridge::kMaxMessageBytes, 'z'))
+              == false);
+    CHECK(bridge.Stats().rejectedOversize == 2);
+    CHECK(bridge.Stats().rejectedClosed == 0);
 }
 
 TEST_CASE("typed configuration projects onto legacy settlement keys") {
@@ -582,4 +603,6 @@ TEST_CASE("light key migration rejects custom region collisions before activatio
     CHECK_FALSE(fixture.lifecycle->BusinessOpen());
     CHECK_FALSE(fixture.lifecycle->Executor().Attached());
     CHECK_FALSE(fixture.lifecycle->Capture());
+}
+
 }

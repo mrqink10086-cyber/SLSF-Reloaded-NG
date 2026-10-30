@@ -1,0 +1,141 @@
+[0m[32;1m[ 22%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LegacyOutputsTests.cpp[0m
+[0m[32;1m[ 25%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ModEventBridgeTests.cpp[0m
+[0m[32;1m[ 26%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusBindingsTests.cpp[0m
+[0m[32;1m[ 26%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusCallsTests.cpp[0m
+[0m[32;1m[ 27%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PublicApiTests.cpp[0m
+[0m[32;1m[ 64%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[32;1m[ 64%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 66%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[33;1mtests\core\PapyrusBindingsTests.cpp(45,14): warning: unused function 'F' [-Wunused-function]
+   45 | PapyrusValue F(double value) {
+      |              ^
+tests\core\PapyrusBindingsTests.cpp(52,14): warning: unused function 'Form' [-Wunused-function]
+   52 | PapyrusValue Form(std::uint32_t localFormId) {
+      |              ^~~~
+2 warnings generated.[0m
+[0m[33;1mtests\core\ModEventBridgeTests.cpp(42,15): warning: unused function 'F' [-Wunused-function]
+   42 | ModEventValue F(double value) {
+      |               ^
+1 warning generated.[0m
+[0m[32;1m[ 87%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFEngineAsan>[0m [36;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[33;1mtests\core\PublicApiTests.cpp(42,15): warning: unused variable 'gNextRegion' [-Wunused-variable]
+   42 | std::uint32_t gNextRegion = 1;
+      |               ^~~~~~~~~~~
+1 warning generated.[0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFCoreTestsAsan>[0m [36;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 3.359s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+error: execv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason
+
+=================================================================
+==9184==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x12e6951a0030 at pc 0x7ff7d7711189 bp 0x00e49ebafd00 sp 0x00e49ebafd48
+WRITE of size 4 at 0x12e6951a0030 thread T0
+    #0 0x7ff7d7711188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff7d7711d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff7d7711d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.079s[0m
+RUN SLSFCoreTestsAsan cases=290 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (943 assertions in 15 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (971 assertions in 15 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8903 assertions in 15 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (452 assertions in 15 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (116 assertions in 15 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (186 assertions in 15 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (676 assertions in 15 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2031 assertions in 15 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (58135 assertions in 15 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1721 assertions in 15 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (40242 assertions in 14 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2729 assertions in 14 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1107 assertions in 14 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (168 assertions in 14 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1111 assertions in 14 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1615 assertions in 14 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (14391 assertions in 14 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (226 assertions in 14 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (417 assertions in 14 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (142 assertions in 14 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.480s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.071s
+PASS native tests: mode=asan seed=1170

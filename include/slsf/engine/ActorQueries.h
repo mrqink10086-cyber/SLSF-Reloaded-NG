@@ -39,4 +39,4 @@ private:
 [[nodiscard]] gameplay::NpcScanTargetFacts ToNpcScanTargetFacts(
     const ActorSnapshot& snapshot);
 
-} // namespace slsf::engine
+}

@@ -44,4 +44,4 @@ public:
     CommentDecision Evaluate(const CommentFacts& facts, IRandom& rng) const;
 };
 
-} // namespace slsf::gameplay
+}

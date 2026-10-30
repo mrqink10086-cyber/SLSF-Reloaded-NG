@@ -1,0 +1,24 @@
+[0m[32;1m[  3%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\LegacyOutputsTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\PapyrusBindingsTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\RecordLookupTests.cpp[0m
+[0m[32;1m[ 10%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[32;1m[ 12%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LegacyOutputsTests.cpp[0m
+[0m[32;1m[ 13%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusBindingsTests.cpp[0m
+[0m[32;1m[ 14%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\RecordLookupTests.cpp[0m
+[0m[32;1m[ 19%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[32;1m[ 20%]:[0m [36;1m<SLSFReloadedNG>[0m compiling.releasedbg src\boundary\LegacyRecords.cpp[0m
+[0m[33;1mtests\core\PapyrusBindingsTests.cpp(36,14): warning: unused function 'F' [-Wunused-function]
+   36 | PapyrusValue F(double value) {
+      |              ^
+tests\core\PapyrusBindingsTests.cpp(42,14): warning: unused function 'Form' [-Wunused-function]
+   42 | PapyrusValue Form(std::uint32_t localFormId) {
+      |              ^~~~
+2 warnings generated.[0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFEngineAsan>[0m [36;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[32;1m[ 93%]:[0m [36;1m<SLSFCoreTestsAsan>[0m [36;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[ 93%]:[0m [36;1m<SLSFCore>[0m [36;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[32;1m[ 93%]:[0m [36;1m<SLSFEngine>[0m [36;1marchiving.releasedbg SLSFEngine.lib[0m
+[0m[32;1m[ 94%]:[0m [36;1m<SLSFCoreTests>[0m [36;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[ 94%]:[0m [36;1m<SLSFReloadedNG>[0m [36;1mlinking.releasedbg SLSFReloadedNG.dll[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 5.516s[0m

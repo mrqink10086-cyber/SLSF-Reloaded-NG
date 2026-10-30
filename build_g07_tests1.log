@@ -1,0 +1,12 @@
+[0m[32;1m[ 10%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\SettlementTests.cpp[0m
+[0m[32;1m[ 50%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 56%]:[0m [36;1m<SLSFEngine>[0m compiling.releasedbg src\engine\EventBridge.cpp[0m
+[0m[32;1m[ 60%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\GainRulesTests.cpp[0m
+[0m[32;1m[ 72%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\DispatcherTests.cpp[0m
+[0m[32;1m[ 74%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\LifecycleTests.cpp[0m
+[0m[32;1m[ 76%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\RandomTests.cpp[0m
+[0m[33;1mE:\source\repos\SLSF Reloaded NG\include\slsf/runtime/Dispatcher.h(1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失[0m
+[0m[32;1m[ 80%]:[0m [36;1m<SLSFCore>[0m [36;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[32;1m[ 81%]:[0m [36;1m<SLSFEngine>[0m [36;1marchiving.releasedbg SLSFEngine.lib[0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFCoreTests>[0m [36;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 5.375s[0m

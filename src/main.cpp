@@ -311,7 +311,21 @@ bool Activate(const char* reason, bool hostSucceeded = true) {
     return true;
 }
 
-void OnSerializationSave(SKSE::SerializationInterface* serialization) {
+// SKSE's serialization and messaging callbacks cross a C ABI boundary;
+// an exception escaping here would terminate the process through SKSE's
+// dispatch.  Every callback body is guarded and failures are routed to the log.
+template <typename Fn>
+void GuardedHostCallback(const char* where, Fn&& body) {
+    try {
+        body();
+    } catch (const std::exception& error) {
+        logs::error("lifecycle: exception in {}: {}", where, error.what());
+    } catch (...) {
+        logs::error("lifecycle: unknown exception in {}", where);
+    }
+}
+
+void OnSerializationSaveBody(SKSE::SerializationInterface* serialization) {
     if (serialization == nullptr || !g_lifecycle) {
         return;
     }
@@ -335,7 +349,12 @@ void OnSerializationSave(SKSE::SerializationInterface* serialization) {
     logs::info("lifecycle: native save record bytes={} written={}", encoded->size(), written);
 }
 
-void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
+void OnSerializationSave(SKSE::SerializationInterface* serialization) {
+    GuardedHostCallback("OnSerializationSave",
+                        [&] { OnSerializationSaveBody(serialization); });
+}
+
+void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
     if (serialization == nullptr || !g_lifecycle) {
         return;
     }
@@ -410,14 +429,24 @@ void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
                status.businessOpen);
 }
 
-void OnSerializationRevert(SKSE::SerializationInterface*) {
+void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
+    GuardedHostCallback("OnSerializationLoad",
+                        [&] { OnSerializationLoadBody(serialization); });
+}
+
+void OnSerializationRevertBody(SKSE::SerializationInterface*) {
     if (g_lifecycle) {
         g_lifecycle->ReturnToMenu();
         logs::info("lifecycle: revert closed the business switch");
     }
 }
 
-void OnMessage(SKSE::MessagingInterface::Message* message) {
+void OnSerializationRevert(SKSE::SerializationInterface* serialization) {
+    GuardedHostCallback("OnSerializationRevert",
+                        [&] { OnSerializationRevertBody(serialization); });
+}
+
+void OnMessageBody(SKSE::MessagingInterface::Message* message) {
     if (message == nullptr) {
         return;
     }
@@ -477,7 +506,11 @@ void OnMessage(SKSE::MessagingInterface::Message* message) {
     }
 }
 
-} // namespace
+void OnMessage(SKSE::MessagingInterface::Message* message) {
+    GuardedHostCallback("OnMessage", [&] { OnMessageBody(message); });
+}
+
+}
 
 SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
 {

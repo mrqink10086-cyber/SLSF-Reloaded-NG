@@ -10,11 +10,9 @@ namespace {
 const ItemFacts& Item(const VisibilityFacts& facts, ArmorSlot slot) {
     return facts.items[static_cast<std::size_t>(slot)];
 }
-
 Tri Present(const ItemFacts& item) {
     return TriOf(item.present);
 }
-
 Tri Property(const ItemFacts& item, const Fact& property) {
     const Tri present = Present(item);
     if (present == Tri::False) {
@@ -25,15 +23,12 @@ Tri Property(const ItemFacts& item, const Fact& property) {
     }
     return TriOf(property);
 }
-
 Tri Bikini(const ItemFacts& item) { return Property(item, item.bikiniArmor); }
 Tri DoesNotCoverBack(const ItemFacts& item) {
     return Property(item, item.doesNotCoverBack);
-}
-Tri DoesNotHideIdentity(const ItemFacts& item) {
+}Tri DoesNotHideIdentity(const ItemFacts& item) {
     return Property(item, item.doesNotHideIdentity);
 }
-
 Tri AnyRank(const VisibilityFacts& facts,
             std::initializer_list<AndLocation> locations) {
     Tri result = Tri::False;
@@ -43,12 +38,10 @@ Tri AnyRank(const VisibilityFacts& facts,
     }
     return result;
 }
-
 Tri AndCondition(const VisibilityFacts& facts,
                  std::initializer_list<AndLocation> locations) {
     return TriAnd(TriOf(facts.andRanks.installed), AnyRank(facts, locations));
 }
-
 Tri BackSlots(const VisibilityFacts& facts, bool requireBikiniUpper) {
     const ItemFacts& upper = Item(facts, ArmorSlot::BackUpper);
     const ItemFacts& lower = Item(facts, ArmorSlot::BackLower);
@@ -61,19 +54,16 @@ Tri BackSlots(const VisibilityFacts& facts, bool requireBikiniUpper) {
                                              : DoesNotCoverBack(upper);
     return TriAnd(lowerOpen, TriOr(TriNot(Present(upper)), upperOpen));
 }
-
 Tri HeadGate(const VisibilityFacts& facts) {
     const ItemFacts& head = Item(facts, ArmorSlot::Head);
     return TriOr(TriNot(Present(head)),
                  TriOr(Bikini(head), DoesNotHideIdentity(head)));
 }
-
 Tri IdentityBlocked(const VisibilityFacts& facts) {
     return TriOr(TriOf(facts.worn.hidesIdentity),
                  TriAnd(TriOf(facts.mods.deviousDevices),
                         TriOf(facts.worn.deviousHood)));
 }
-
 Tri TattooEarly(const VisibilityFacts& facts, const TattooAreaFacts& area,
                 std::size_t slot, std::string_view name) {
     if (facts.status != Status::Ready) {
@@ -107,7 +97,6 @@ Tri TattooEarly(const VisibilityFacts& facts, const TattooAreaFacts& area,
     (void)name;
     return Tri::True;
 }
-
 RuleDecision FromTriChecked(const VisibilityFacts& facts, Tri value,
                             std::string reason) {
     if (facts.status == Status::Invalid) {
@@ -120,7 +109,6 @@ RuleDecision FromTriChecked(const VisibilityFacts& facts, Tri value,
     }
     return RuleDecision::FromTri(value, std::move(reason));
 }
-
 NumericDecision FromTriCount(const VisibilityFacts& facts, Tri gate,
                              const CountFacts& count, std::string reason) {
     if (facts.status == Status::Invalid) {
@@ -140,7 +128,6 @@ NumericDecision FromTriCount(const VisibilityFacts& facts, Tri gate,
     }
     return NumericDecision::Known(count.value, std::move(reason));
 }
-
 struct SelectedCount {
     Tri positive{Tri::Unknown};
     int value{};
@@ -156,7 +143,6 @@ SelectedCount SelectCount(const VisibilityFacts& facts, const CountFacts& count)
     }
     return SelectedCount{count.value > 0 ? Tri::True : Tri::False, count.value};
 }
-
 Tri AssGate(const VisibilityFacts& facts) {
     const Tri andInstalled = TriOf(facts.andRanks.installed);
     const Tri bodyPresent = Present(Item(facts, ArmorSlot::Body));
@@ -167,25 +153,20 @@ Tri AssGate(const VisibilityFacts& facts) {
     return TriOr(AndCondition(facts, {AndLocation::Ass}),
                  TriAnd(TriNot(andInstalled), fallback));
 }
-
 Tri VaginalGate(const VisibilityFacts& facts) {
     const Tri andInstalled = TriOf(facts.andRanks.installed);
     return TriOr(AndCondition(facts, {AndLocation::Genitals}),
                  TriAnd(TriNot(andInstalled),
                         TriNot(Present(Item(facts, ArmorSlot::Body)))));
 }
-
 Tri OralGate(const VisibilityFacts& facts) {
     return TriAnd(TriNot(IdentityBlocked(facts)), HeadGate(facts));
 }
-
 RuleDecision Decision(const VisibilityFacts& facts, Tri value,
                       std::string reason) {
     return FromTriChecked(facts, value, std::move(reason));
 }
-
-} // namespace
-
+}
 std::vector<Tri> DeviousWornFacts::AnyUnhideable() const {
     return {
         TriOf(hood), TriOf(gag), TriOf(gagPanel), TriOf(armCuffs),
@@ -194,7 +175,6 @@ std::vector<Tri> DeviousWornFacts::AnyUnhideable() const {
         TriOf(corset), TriOf(blindfold),
     };
 }
-
 RuleDecision VisibilityRules::VisibilityReady(const VisibilityFacts& facts,
                                               std::string_view what) const {
     switch (facts.status) {
@@ -211,7 +191,6 @@ RuleDecision VisibilityRules::VisibilityReady(const VisibilityFacts& facts,
     }
     return RuleDecision::NotReady(std::string(what));
 }
-
 RuleDecision VisibilityRules::BodyTattooVisible(const VisibilityFacts& facts,
                                                 std::size_t slot) const {
     const TattooAreaFacts& area = facts.tattoos.body;
@@ -344,7 +323,6 @@ RuleDecision VisibilityRules::BodyTattooVisible(const VisibilityFacts& facts,
 
     return Decision(facts, TriNot(Present(body)), "branch D body absent");
 }
-
 RuleDecision VisibilityRules::FaceTattooVisible(const VisibilityFacts& facts,
                                                 std::size_t slot) const {
     const TattooAreaFacts& area = facts.tattoos.face;
@@ -382,7 +360,6 @@ RuleDecision VisibilityRules::FaceTattooVisible(const VisibilityFacts& facts,
                     TriAnd(TriNot(IdentityBlocked(facts)), HeadGate(facts)),
                     "face identity chain");
 }
-
 RuleDecision VisibilityRules::HandTattooVisible(const VisibilityFacts& facts,
                                                 std::size_t slot) const {
     const TattooAreaFacts& area = facts.tattoos.hands;
@@ -399,7 +376,6 @@ RuleDecision VisibilityRules::HandTattooVisible(const VisibilityFacts& facts,
                            TriNot(coveredHands)),
                     "hand tattoo visibility");
 }
-
 RuleDecision VisibilityRules::FootTattooVisible(const VisibilityFacts& facts,
                                                 std::size_t slot) const {
     const TattooAreaFacts& area = facts.tattoos.feet;
@@ -415,7 +391,6 @@ RuleDecision VisibilityRules::FootTattooVisible(const VisibilityFacts& facts,
                            TriNot(coveredFeet)),
                     "foot tattoo visibility");
 }
-
 RuleDecision VisibilityRules::AssCumVisible(const VisibilityFacts& facts) const {
     const SelectedCount count = SelectCount(facts, facts.cum.anal);
     if (count.positive == Tri::False) {
@@ -424,12 +399,10 @@ RuleDecision VisibilityRules::AssCumVisible(const VisibilityFacts& facts) const 
     const Tri gate = AssGate(facts);
     return Decision(facts, TriAnd(count.positive, gate), "anal cum visibility");
 }
-
 NumericDecision VisibilityRules::VisibleAssCum(const VisibilityFacts& facts) const {
     const Tri gate = AssGate(facts);
     return FromTriCount(facts, gate, facts.cum.anal, "visible anal cum");
 }
-
 RuleDecision VisibilityRules::VaginalCumVisible(const VisibilityFacts& facts) const {
     const Tri male = TriOf(facts.playerIsMale);
     if (male == Tri::True) {
@@ -447,7 +420,6 @@ RuleDecision VisibilityRules::VaginalCumVisible(const VisibilityFacts& facts) co
     return Decision(facts, TriAnd(count.positive, VaginalGate(facts)),
                     "vaginal cum visibility");
 }
-
 NumericDecision VisibilityRules::VisibleVaginalCum(const VisibilityFacts& facts) const {
     const Tri male = TriOf(facts.playerIsMale);
     // Both early exits still honour the snapshot status through FromTriCount.
@@ -461,7 +433,6 @@ NumericDecision VisibilityRules::VisibleVaginalCum(const VisibilityFacts& facts)
     return FromTriCount(facts, VaginalGate(facts), facts.cum.vaginal,
                         "visible vaginal cum");
 }
-
 RuleDecision VisibilityRules::OralCumVisible(const VisibilityFacts& facts) const {
     const SelectedCount count = SelectCount(facts, facts.cum.oral);
     if (count.positive == Tri::False) {
@@ -470,12 +441,10 @@ RuleDecision VisibilityRules::OralCumVisible(const VisibilityFacts& facts) const
     return Decision(facts, TriAnd(count.positive, OralGate(facts)),
                     "oral cum visibility");
 }
-
 NumericDecision VisibilityRules::VisibleOralCum(const VisibilityFacts& facts) const {
     return FromTriCount(facts, OralGate(facts), facts.cum.oral,
                         "visible oral cum");
 }
-
 BondageResult VisibilityRules::EvaluateBondage(const VisibilityFacts& facts) const {
     BondageResult result{};
     const auto make = [&](Tri value, std::string reason) {
@@ -633,5 +602,4 @@ BondageResult VisibilityRules::EvaluateBondage(const VisibilityFacts& facts) con
     result.collarWorn = make(collarWorn, "collar keyword");
     return result;
 }
-
-} // namespace slsf::gameplay
+}

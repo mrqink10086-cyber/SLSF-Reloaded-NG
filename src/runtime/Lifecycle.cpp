@@ -56,13 +56,10 @@ std::string UpdateMessage(const ConfigurationUpdateResult& update) {
     }
     return "configuration update failed";
 }
-
 double ValidOr(double value, double fallback) {
     return std::isfinite(value) ? value : fallback;
 }
-
-} // namespace
-
+}
 Configuration MakeRuleConfiguration(const ConfigurationData& data) {
     Configuration rules;
     // Category multipliers are authoritative in the typed snapshot; use the
@@ -88,7 +85,6 @@ Configuration MakeRuleConfiguration(const ConfigurationData& data) {
                          std::max(0.0, decayDays * 48.0));
     return rules;
 }
-
 struct Lifecycle::Assets {
     ConfigurationSnapshot configuration;
     Configuration rules;
@@ -115,7 +111,6 @@ Lifecycle::Lifecycle(StaticWorld world, IConfigurationSource& configuration)
 Lifecycle::~Lifecycle() {
     dispatcher_.Detach();
 }
-
 ConfigurationUpdateResult Lifecycle::ReloadConfiguration() {
     auto update = configuration_.Reload();
     if (update.status == ConfigurationUpdateStatus::Applied ||
@@ -130,7 +125,6 @@ ConfigurationUpdateResult Lifecycle::ReloadConfiguration() {
     message_ = update.message;
     return update;
 }
-
 bool Lifecycle::BuildAssets(const ConfigurationSnapshot& configuration,
                             const SessionContext& context, std::unique_ptr<Assets>& out,
                             std::uint32_t& droppedEdges, std::string& error) const {
@@ -180,11 +174,9 @@ bool Lifecycle::BuildAssets(const ConfigurationSnapshot& configuration,
     out = std::move(assets);
     return true;
 }
-
 Epoch Lifecycle::NextEpoch() {
     return Epoch{nextSession_++, 0, 0};
 }
-
 bool Lifecycle::Begin(SessionKind kind, const SessionContext& context,
                       const PersistentState* candidate) {
     ReturnToMenu();
@@ -255,19 +247,15 @@ bool Lifecycle::Begin(SessionKind kind, const SessionContext& context,
     pending_ = std::move(pending);
     return true;
 }
-
 bool Lifecycle::PrepareNewGame(const SessionContext& context) {
     return Begin(SessionKind::NewGame, context, nullptr);
 }
-
 bool Lifecycle::PrepareLoad(const PersistentState& candidate, const SessionContext& context) {
     return Begin(SessionKind::Load, context, &candidate);
 }
-
 bool Lifecycle::PrepareRevert(const PersistentState& candidate, const SessionContext& context) {
     return Begin(SessionKind::Revert, context, &candidate);
 }
-
 bool Lifecycle::ActivatePrepared(bool hostSucceeded) {
     if (!hostSucceeded) {
         RejectPreparation("host load failed; prepared session discarded");
@@ -298,7 +286,6 @@ bool Lifecycle::ActivatePrepared(bool hostSucceeded) {
     message_ = "session active";
     return true;
 }
-
 void Lifecycle::DiscardPrepared() {
     if (phase_ == LifecyclePhase::Preparing) {
         phase_ = LifecyclePhase::Detached;
@@ -306,13 +293,11 @@ void Lifecycle::DiscardPrepared() {
     pending_.reset();
     message_ = "prepared session discarded";
 }
-
 void Lifecycle::RejectPreparation(std::string reason) {
     ReturnToMenu();
     phase_ = LifecyclePhase::Failed;
     message_ = std::move(reason);
 }
-
 void Lifecycle::ReturnToMenu() {
     dispatcher_.Detach();
     active_.reset();
@@ -320,26 +305,21 @@ void Lifecycle::ReturnToMenu() {
     phase_ = LifecyclePhase::Detached;
     message_ = "returned to menu";
 }
-
 Result<PersistentState> Lifecycle::Capture() const {
     if (phase_ != LifecyclePhase::Active || !dispatcher_.Attached()) {
         return Fail(Error::Code::InvalidState, "no active session to capture");
     }
     return dispatcher_.Capture();
 }
-
 bool Lifecycle::BusinessOpen() const {
     return phase_ == LifecyclePhase::Active && dispatcher_.Attached() && !dispatcher_.Suspended();
 }
-
 bool Lifecycle::IsEpochCurrent(Epoch epoch) const {
     return BusinessOpen() && dispatcher_.CurrentEpoch() == epoch;
 }
-
 Epoch Lifecycle::CurrentEpoch() const {
     return dispatcher_.CurrentEpoch();
 }
-
 LifecycleStatus Lifecycle::Status() const {
     LifecycleStatus status;
     status.phase = phase_;
@@ -353,5 +333,4 @@ LifecycleStatus Lifecycle::Status() const {
     status.message = message_;
     return status;
 }
-
-} // namespace slsf
+}

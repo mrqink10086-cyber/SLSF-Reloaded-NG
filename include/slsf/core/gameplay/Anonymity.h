@@ -70,4 +70,4 @@ private:
     AnonymityState state_;
 };
 
-} // namespace slsf::gameplay
+}

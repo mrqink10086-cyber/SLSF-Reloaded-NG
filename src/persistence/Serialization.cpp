@@ -19,24 +19,20 @@ std::uint32_t Checksum(std::span<const std::byte> bytes) {
     }
     return hash;
 }
-
 void PutU16(std::vector<std::byte>& out, std::uint16_t value) {
     out.push_back(static_cast<std::byte>(value & 0xFFu));
     out.push_back(static_cast<std::byte>((value >> 8u) & 0xFFu));
 }
-
 void PutU32(std::vector<std::byte>& out, std::uint32_t value) {
     for (unsigned shift = 0; shift < 32; shift += 8) {
         out.push_back(static_cast<std::byte>((value >> shift) & 0xFFu));
     }
 }
-
 std::uint16_t GetU16(std::span<const std::byte> bytes, std::size_t offset) {
     return static_cast<std::uint16_t>(
         static_cast<std::uint16_t>(bytes[offset]) |
         (static_cast<std::uint16_t>(bytes[offset + 1]) << 8u));
 }
-
 std::uint32_t GetU32(std::span<const std::byte> bytes, std::size_t offset) {
     std::uint32_t value = 0;
     for (unsigned index = 0; index < 4; ++index) {
@@ -44,7 +40,6 @@ std::uint32_t GetU32(std::span<const std::byte> bytes, std::size_t offset) {
     }
     return value;
 }
-
 Result<std::span<const std::byte>> PayloadOf(std::span<const std::byte> bytes) {
     if (bytes.size() < kSaveEnvelopeHeaderBytes) {
         return Fail(Error::Code::InvalidArgument, "save record is shorter than its header");
@@ -74,9 +69,7 @@ Result<std::span<const std::byte>> PayloadOf(std::span<const std::byte> bytes) {
     }
     return payload;
 }
-
-} // namespace
-
+}
 Result<SaveRecordInfo> InspectSaveRecord(std::span<const std::byte> bytes) {
     if (bytes.size() < kSaveEnvelopeHeaderBytes) {
         return Fail(Error::Code::InvalidArgument, "save record is shorter than its header");
@@ -120,7 +113,6 @@ Result<SaveRecordInfo> InspectSaveRecord(std::span<const std::byte> bytes) {
         .checksum = GetU32(bytes, 16),
     };
 }
-
 Result<std::vector<std::byte>> EncodeSaveRecord(const PersistentState& state) {
     auto payload = EncodeState(state);
     if (!payload) {
@@ -144,7 +136,6 @@ Result<std::vector<std::byte>> EncodeSaveRecord(const PersistentState& state) {
     out.insert(out.end(), payload->begin(), payload->end());
     return out;
 }
-
 Result<PersistentState> DecodeSaveRecord(std::span<const std::byte> bytes) {
     const auto payload = PayloadOf(bytes);
     if (!payload) {
@@ -152,5 +143,4 @@ Result<PersistentState> DecodeSaveRecord(std::span<const std::byte> bytes) {
     }
     return DecodeState(*payload);
 }
-
-} // namespace slsf::persistence
+}

@@ -19,6 +19,7 @@ using slsf::integrations::CapabilityProbeResult;
 using slsf::integrations::CapabilityRecord;
 using slsf::integrations::CapabilityRegistry;
 using slsf::integrations::CapabilityRequirement;
+using slsf::integrations::CapabilityWaitPolicy;
 using slsf::integrations::CapabilityState;
 
 CapabilityRequirement Requirement() {
@@ -44,8 +45,6 @@ CapabilityProbeResult GoodProbe() {
     probe.functions.push_back(&function);
     return probe;
 }
-
-} // namespace
 
 TEST_CASE("capability requirements are validated and locked on first registration") {
     CapabilityRegistry registry([](const CapabilityRequirement&) { return GoodProbe(); });
@@ -258,4 +257,57 @@ TEST_CASE("cross-thread capability dependency cycles finish without duplicate qu
     CHECK(completed == 2);
     CHECK(registry.Find("ddng")->queryCount == 1);
     CHECK(registry.Find("sibling")->queryCount == 1);
+}
+
+TEST_CASE("piggyback wait on a hung query is bounded", "[fix05-06]") {
+    CapabilityRegistry registry([](const CapabilityRequirement&) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        return GoodProbe();
+    });
+    REQUIRE(registry.Require(Requirement()));
+    registry.SetWaitPolicy(CapabilityWaitPolicy{
+        .joinWait = std::chrono::milliseconds(20),
+        .waitingTimeout = std::chrono::milliseconds(0),
+        .maxWaitingProbes = 1,
+    });
+
+    CapabilityState piggyback = CapabilityState::Unqueried;
+    std::thread first([&] { registry.Ensure("ddng"); });
+    std::this_thread::sleep_for(std::chrono::milliseconds(30));
+    const auto started = std::chrono::steady_clock::now();
+    piggyback = registry.Ensure("ddng");
+    const auto waited = std::chrono::steady_clock::now() - started;
+    first.join();
+
+    CHECK(piggyback == CapabilityState::Waiting);
+    CHECK(waited < std::chrono::milliseconds(150));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    CHECK(registry.Find("ddng")->state == CapabilityState::Available);
+}
+
+TEST_CASE("EnsureAll re-probes Waiting records but respects the probe cap", "[fix05-06]") {
+    std::atomic<int> calls{0};
+    CapabilityRegistry registry([&](const CapabilityRequirement&) {
+        ++calls;
+        CapabilityProbeResult pending;
+        pending.pending = true;
+        return pending;
+    });
+    REQUIRE(registry.Require(Requirement()));
+    registry.SetWaitPolicy(CapabilityWaitPolicy{
+        .joinWait = std::chrono::milliseconds(5),
+        .waitingTimeout = std::chrono::milliseconds(0),
+        .maxWaitingProbes = 1,
+    });
+
+    CHECK(registry.Ensure("ddng") == CapabilityState::Waiting);
+    REQUIRE(calls == 1);
+
+    registry.EnsureAll();
+    CHECK(calls == 3);
+
+    registry.EnsureAll();
+    CHECK(calls == 4);
+}
 }

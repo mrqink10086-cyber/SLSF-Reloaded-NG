@@ -202,4 +202,4 @@ private:
     RuleDecision VisibilityReady(const VisibilityFacts& facts, std::string_view what) const;
 };
 
-} // namespace slsf::gameplay
+}

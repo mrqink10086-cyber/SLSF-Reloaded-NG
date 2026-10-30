@@ -31,4 +31,4 @@ public:
     virtual Result<void> Submit(const ProviderFactTransition& transition) = 0;
 };
 
-} // namespace slsf
+}

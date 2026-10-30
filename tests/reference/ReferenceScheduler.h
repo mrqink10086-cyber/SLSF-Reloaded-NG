@@ -1,7 +1,7 @@
 #pragma once
 
 // Independent, deliberately simple scheduler model for differential
-// verification of slsf::time::Scheduler (group 05).  Lives only in test
+// verification of slsf::time::Scheduler.  Lives only in test
 // targets: the flat record list trades speed for obviously-correct ordering
 // and cancellation semantics.
 
@@ -97,4 +97,4 @@ private:
     std::uint64_t session_{1};
 };
 
-} // namespace refsched
+}

@@ -12,15 +12,12 @@ constexpr std::uint32_t kMaxLocalFormId = 0x00FFFFFFu;
 [[nodiscard]] bool IsValidFormId(std::uint32_t localFormId) noexcept {
     return localFormId != 0 && localFormId <= kMaxLocalFormId;
 }
-
 [[nodiscard]] bool IsValidKey(const StableFormKey& key) noexcept {
     return !key.plugin.empty() && IsValidFormId(key.localFormId);
 }
-
 [[nodiscard]] char AsciiLower(char value) noexcept {
     return value >= 'A' && value <= 'Z' ? static_cast<char>(value + ('a' - 'A')) : value;
 }
-
 [[nodiscard]] bool EqualsAsciiIgnoreCase(std::string_view lhs,
                                           std::string_view rhs) noexcept {
     if (lhs.size() != rhs.size()) {
@@ -33,7 +30,6 @@ constexpr std::uint32_t kMaxLocalFormId = 0x00FFFFFFu;
     }
     return true;
 }
-
 Status ValidateSnapshot(const ActorSnapshot& snapshot) noexcept {
     if (snapshot.actor.plugin.empty() || !IsValidFormId(snapshot.actor.localFormId)) {
         return Status::Invalid;
@@ -56,9 +52,7 @@ Status ValidateSnapshot(const ActorSnapshot& snapshot) noexcept {
     }
     return Status::Ready;
 }
-
-} // namespace
-
+}
 GameDataService::GameDataService(IEngineBackend& backend) : backend_(backend) {}
 
 Status GameDataService::RefreshPlugins() {
@@ -80,7 +74,6 @@ Status GameDataService::RefreshPlugins() {
     dirty_ = std::move(normalizedDirty);
     return Status::Ready;
 }
-
 bool GameDataService::IsPluginLoaded(std::string_view plugin) const {
     if (plugin.empty()) {
         return false;
@@ -92,7 +85,6 @@ bool GameDataService::IsPluginLoaded(std::string_view plugin) const {
     }
     return false;
 }
-
 Result<StableFormKey> GameDataService::MakeStableKey(std::string_view plugin,
                                                     std::uint32_t localFormId) const {
     if (plugin.empty()) {
@@ -110,7 +102,6 @@ Result<StableFormKey> GameDataService::MakeStableKey(std::string_view plugin,
     return Fail(Error::Code::NotFound,
                 "plugin is not loaded: " + std::string(plugin));
 }
-
 StableFormKey GameDataService::NormalizeKey(const StableFormKey& actor) const {
     StableFormKey key = actor;
     if (key.plugin.empty()) {
@@ -124,7 +115,6 @@ StableFormKey GameDataService::NormalizeKey(const StableFormKey& actor) const {
     }
     return key;
 }
-
 Status GameDataService::MarkDirty(const StableFormKey& actor) {
     if (actor.plugin.empty() || !IsValidFormId(actor.localFormId)) {
         return Status::Invalid;
@@ -132,7 +122,6 @@ Status GameDataService::MarkDirty(const StableFormKey& actor) {
     dirty_.insert(NormalizeKey(actor));
     return Status::Ready;
 }
-
 Status GameDataService::Store(ActorSnapshot snapshot) {
     snapshot.actor = NormalizeKey(snapshot.actor);
     snapshot.player = NormalizeKey(snapshot.player);
@@ -152,7 +141,6 @@ Status GameDataService::Store(ActorSnapshot snapshot) {
     }
     return Status::Ready;
 }
-
 Status GameDataService::RefreshDirty(const StableFormKey& player) {
     if (!IsLegalContext(backend_.Context())) {
         return Status::NotReady;
@@ -164,7 +152,6 @@ Status GameDataService::RefreshDirty(const StableFormKey& player) {
     const std::vector<StableFormKey> targets(dirty_.begin(), dirty_.end());
     return RefreshTargetsImpl(targets, canonicalPlayer);
 }
-
 Status GameDataService::RefreshTargets(const std::vector<StableFormKey>& targets,
                                        const StableFormKey& player) {
     if (!IsLegalContext(backend_.Context())) {
@@ -192,7 +179,6 @@ Status GameDataService::RefreshTargets(const std::vector<StableFormKey>& targets
     const std::vector<StableFormKey> ordered(unique.begin(), unique.end());
     return RefreshTargetsImpl(ordered, canonicalPlayer);
 }
-
 Status GameDataService::RefreshTargetsImpl(const std::vector<StableFormKey>& targets,
                                            const StableFormKey& player) {
     Status firstFailure = Status::Ready;
@@ -257,7 +243,6 @@ Status GameDataService::RefreshTargetsImpl(const std::vector<StableFormKey>& tar
 
     return firstFailure;
 }
-
 Status GameDataService::Forget(const StableFormKey& actor) {
     if (actor.plugin.empty() || !IsValidFormId(actor.localFormId)) {
         return Status::Invalid;
@@ -267,18 +252,15 @@ Status GameDataService::Forget(const StableFormKey& actor) {
     dirty_.erase(key);
     return Status::Ready;
 }
-
 const ActorSnapshot* GameDataService::Find(const StableFormKey& actor) const {
     const auto it = cache_.find(NormalizeKey(actor));
     return it == cache_.end() ? nullptr : &it->second;
 }
-
 void GameDataService::Clear() {
     plugins_.clear();
     cache_.clear();
     dirty_.clear();
 }
-
 void GameDataService::StoreUnknown(const StableFormKey& actor,
                                    const StableFormKey& player,
                                    Status status) {
@@ -288,5 +270,4 @@ void GameDataService::StoreUnknown(const StableFormKey& actor,
     snapshot.player = player;
     cache_[actor] = std::move(snapshot);
 }
-
-} // namespace slsf::engine
+}

@@ -41,9 +41,7 @@ Status ValidateSnapshot(const ActorSnapshot& snapshot, const StableFormKey& expe
     }
     return Status::Ready;
 }
-
-} // namespace
-
+}
 ActorQueriesService::ActorQueriesService(IEngineBackend& backend, GameDataService& gameData)
     : backend_(backend), gameData_(gameData) {}
 
@@ -54,7 +52,6 @@ Result<ActorSnapshot> ActorQueriesService::Query(const StableFormKey& actor,
     }
     return QueryUnguarded(actor, player);
 }
-
 Result<std::vector<ActorSnapshot>> ActorQueriesService::QueryAll(
     const std::vector<StableFormKey>& actors,
     const StableFormKey& player) {
@@ -73,14 +70,12 @@ Result<std::vector<ActorSnapshot>> ActorQueriesService::QueryAll(
     }
     return snapshots;
 }
-
 Result<ActorSnapshot> ActorQueriesService::QueryCached(const StableFormKey& actor) const {
     if (!IsLegalContext(backend_.Context())) {
         return Fail(Error::Code::InvalidState, kLegalContextMessage);
     }
     return QueryCachedUnguarded(actor);
 }
-
 Status ActorQueriesService::RefreshCurrentActors(const std::vector<StableFormKey>& actors,
                                                   const StableFormKey& player) {
     if (!IsLegalContext(backend_.Context())) {
@@ -90,7 +85,6 @@ Status ActorQueriesService::RefreshCurrentActors(const std::vector<StableFormKey
     // targets must not be queried by, or fail, this scan.
     return gameData_.RefreshTargets(actors, player);
 }
-
 Result<ActorSnapshot> ActorQueriesService::QueryUnguarded(const StableFormKey& actor,
                                                            const StableFormKey& player) {
     auto queried = backend_.QueryActor(actor, player);
@@ -110,7 +104,6 @@ Result<ActorSnapshot> ActorQueriesService::QueryUnguarded(const StableFormKey& a
     }
     return snapshot;
 }
-
 Result<ActorSnapshot> ActorQueriesService::QueryCachedUnguarded(
     const StableFormKey& actor) const {
     const auto* snapshot = gameData_.Find(actor);
@@ -119,7 +112,6 @@ Result<ActorSnapshot> ActorQueriesService::QueryCachedUnguarded(
     }
     return *snapshot;
 }
-
 gameplay::NpcScanTargetFacts ToNpcScanTargetFacts(const ActorSnapshot& snapshot) {
     gameplay::NpcScanTargetFacts facts;
     facts.actor = snapshot.actor;
@@ -137,5 +129,4 @@ gameplay::NpcScanTargetFacts ToNpcScanTargetFacts(const ActorSnapshot& snapshot)
     facts.relationshipRank = snapshot.relationshipRank;
     return facts;
 }
-
-} // namespace slsf::engine
+}

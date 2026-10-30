@@ -31,5 +31,4 @@ void NormalizeLightPluginKeys(PersistentState& state,
         normalize(edit.to);
     }
 }
-
-} // namespace slsf::persistence
+}

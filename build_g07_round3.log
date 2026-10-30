@@ -1,0 +1,89 @@
+[0m[32;1m[ 42%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\GainRules.cpp[0m
+[0m[32;1m[ 49%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\Settlement.cpp[0m
+[0m[32;1m[ 55%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\runtime\Dispatcher.cpp[0m
+[0m[32;1m[ 55%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\runtime\Lifecycle.cpp[0m
+[0m[32;1m[ 64%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[32;1m[ 64%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 67%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\compat\ModEventBridge.cpp[0m
+[0m[1;31;1merror: [0mPublicApi.cpp
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(46): error C2039: "Dispatcher": 不是 "slsf" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(43): note: 参见“slsf”的声明
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(46): error C2873: “Dispatcher”: 符号不能用在 using 声明中
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(62): error C2061: 语法错误: 标识符“Dispatcher”
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(65): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(65): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(65): warning C4869: "nodiscard" 只可应用于类、枚举和函数
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(65): error C2334: “{”的前面有意外标记；跳过明显的函数体
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(123): error C2653: “Dispatcher”: 不是类或命名空间名称
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(123): error C3646: “GainFame”: 未知重写说明符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(123): error C2059: 语法错误:“(”
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(125): error C2334: “{”的前面有意外标记；跳过明显的函数体
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(125): error C2059: 语法错误:“)”
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(125): error C2238: 意外的标记位于“;”之前
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(126): error C2653: “Dispatcher”: 不是类或命名空间名称
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(126): error C3646: “ManualSpread”: 未知重写说明符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(126): error C2059: 语法错误:“(”
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(129): error C2238: 意外的标记位于“;”之前
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(130): error C2653: “Dispatcher”: 不是类或命名空间名称
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(130): error C3646: “ManualDecay”: 未知重写说明符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(130): error C2059: 语法错误:“(”
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(132): error C2238: 意外的标记位于“;”之前
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(133): error C2653: “Dispatcher”: 不是类或命名空间名称
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(133): error C3646: “ManualGain”: 未知重写说明符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(133): error C2059: 语法错误:“(”
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(135): error C2238: 意外的标记位于“;”之前
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(233): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(233): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(233): error C2238: 意外的标记位于“;”之前
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(67): error C2065: “executor_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(69): error C2065: “executor_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(71): error C2065: “executor_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(74): error C2065: “executor_”: 未声明的标识符
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(77): error C2065: “executor_”: 未声明的标识符
+src\api\PublicApi.cpp(78): error C7550: “slsf::api::PublicApi::{ctor}”: 此上下文中的限定名称对构造函数命名，而不是对类型命名
+src\api\PublicApi.cpp(78): error C2065: “Dispatcher”: 未声明的标识符
+src\api\PublicApi.cpp(78): error C2065: “executor”: 未声明的标识符
+src\api\PublicApi.cpp(78): error C2059: 语法错误:“const”
+src\api\PublicApi.cpp(79): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+src\api\PublicApi.cpp(79): error C2065: “executor”: 未声明的标识符
+src\api\PublicApi.cpp(79): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+src\api\PublicApi.cpp(79): error C2065: “regions”: 未声明的标识符
+src\api\PublicApi.cpp(79): error C2059: 语法错误:“{”
+src\api\PublicApi.cpp(79): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+src\api\PublicApi.cpp(79): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+src\api\PublicApi.cpp(240): error C2653: “Dispatcher”: 不是类或命名空间名称
+src\api\PublicApi.cpp(240): error C2039: "GainFame": 不是 "slsf::api::PublicApi" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(57): note: 参见“slsf::api::PublicApi”的声明
+src\api\PublicApi.cpp(240): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+src\api\PublicApi.cpp(240): error C2146: 语法错误: 缺少“;”(在标识符“GainFame”的前面)
+src\api\PublicApi.cpp(242): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+src\api\PublicApi.cpp(242): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+src\api\PublicApi.cpp(258): error C2653: “Dispatcher”: 不是类或命名空间名称
+src\api\PublicApi.cpp(258): error C2039: "ManualSpread": 不是 "slsf::api::PublicApi" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(57): note: 参见“slsf::api::PublicApi”的声明
+src\api\PublicApi.cpp(258): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+src\api\PublicApi.cpp(258): error C2146: 语法错误: 缺少“;”(在标识符“ManualSpread”的前面)
+src\api\PublicApi.cpp(261): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+src\api\PublicApi.cpp(261): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+src\api\PublicApi.cpp(274): error C2653: “Dispatcher”: 不是类或命名空间名称
+src\api\PublicApi.cpp(274): error C2039: "ManualDecay": 不是 "slsf::api::PublicApi" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(57): note: 参见“slsf::api::PublicApi”的声明
+src\api\PublicApi.cpp(274): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+src\api\PublicApi.cpp(274): error C2086: “int slsf::api::ApplyOutcome”: 重定义
+src\api\PublicApi.cpp(258): note: 参见“slsf::api::ApplyOutcome”的声明
+src\api\PublicApi.cpp(274): error C2146: 语法错误: 缺少“;”(在标识符“ManualDecay”的前面)
+src\api\PublicApi.cpp(276): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+src\api\PublicApi.cpp(276): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+src\api\PublicApi.cpp(288): error C2653: “Dispatcher”: 不是类或命名空间名称
+src\api\PublicApi.cpp(288): error C2039: "ManualGain": 不是 "slsf::api::PublicApi" 的成员
+E:\source\repos\SLSF Reloaded NG\include\slsf/api/PublicApi.h(57): note: 参见“slsf::api::PublicApi”的声明
+src\api\PublicApi.cpp(288): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+src\api\PublicApi.cpp(288): error C2086: “int slsf::api::ApplyOutcome”: 重定义
+src\api\PublicApi.cpp(258): note: 参见“slsf::api::ApplyOutcome”的声明
+src\api\PublicApi.cpp(288): error C2146: 语法错误: 缺少“;”(在标识符“ManualGain”的前面)
+src\api\PublicApi.cpp(290): error C2143: 语法错误: 缺少“;”(在“{”的前面)
+src\api\PublicApi.cpp(290): error C2447: “{”: 缺少函数标题(是否是老式的形式表?)
+src\api\PublicApi.cpp(517): warning C4834: 放弃具有 [[nodiscard]] 属性的函数的返回值
+src\api\PublicApi.cpp(521): warning C4834: 放弃具有 [[nodiscard]] 属性的函数的返回值
+
+  [33m> in [1msrc\api\PublicApi.cpp[0m

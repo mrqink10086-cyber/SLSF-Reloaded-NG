@@ -1,0 +1,6 @@
+[0m[32;1m[ 77%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[32;1m[ 81%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[32;1m[ 87%]:[0m [36;1m<SLSFCore>[0m [36;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFEngine>[0m [36;1marchiving.releasedbg SLSFEngine.lib[0m
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFCoreTests>[0m [36;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 3.797s[0m

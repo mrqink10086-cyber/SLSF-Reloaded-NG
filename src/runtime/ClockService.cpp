@@ -10,7 +10,6 @@ double ClockService::SteadyWallSeconds() noexcept {
     const auto now = std::chrono::steady_clock::now().time_since_epoch();
     return std::chrono::duration<double>(now).count();
 }
-
 ClockService::ClockService(WallNowFn wallNow)
     : wallNow_(std::make_shared<const WallNowFn>(wallNow ? std::move(wallNow)
                                   : WallNowFn{+[]() { return SteadyWallSeconds(); }})) {}
@@ -26,7 +25,6 @@ void ClockService::RecordGameTime(GameTime game) {
     }
     // Rewinds belong to a new session; the adapter calls Reset() there.
 }
-
 void ClockService::SetMenuOpen(bool open) {
     std::shared_ptr<const WallNowFn> source;
     std::uint64_t generation;
@@ -45,12 +43,10 @@ void ClockService::SetMenuOpen(bool open) {
     }
     menuOpen_ = open;
 }
-
 bool ClockService::MenuOpen() const {
     const std::lock_guard<std::mutex> guard(mutex_);
     return menuOpen_;
 }
-
 void ClockService::SetWallSource(WallNowFn wallNow) {
     if (!wallNow) {
         wallNow = WallNowFn{+[]() { return SteadyWallSeconds(); }};
@@ -63,7 +59,6 @@ void ClockService::SetWallSource(WallNowFn wallNow) {
         wallAnchored_ = false;
     }
 }
-
 ClockSnapshot ClockService::Tick() {
     std::shared_ptr<const WallNowFn> source;
     std::uint64_t generation;
@@ -79,7 +74,6 @@ ClockSnapshot ClockService::Tick() {
     }
     return ClockSnapshot{game_, RealSeconds{real_}, ActiveSeconds{active_}};
 }
-
 void ClockService::AccumulateLocked(double sample) {
     if (!std::isfinite(sample)) {
         // A non-finite wall sample would poison both accumulators; drop the
@@ -98,22 +92,18 @@ void ClockService::AccumulateLocked(double sample) {
         lastWall_ = anchored ? std::max(lastWall_, sample) : sample;
     }
 }
-
 GameTime ClockService::Game() const {
     const std::lock_guard<std::mutex> guard(mutex_);
     return game_;
 }
-
 RealSeconds ClockService::Real() const {
     const std::lock_guard<std::mutex> guard(mutex_);
     return RealSeconds{real_};
 }
-
 ActiveSeconds ClockService::Active() const {
     const std::lock_guard<std::mutex> guard(mutex_);
     return ActiveSeconds{active_};
 }
-
 void ClockService::Reset() {
     const std::lock_guard<std::mutex> guard(mutex_);
     wallAnchored_ = false;
@@ -124,5 +114,4 @@ void ClockService::Reset() {
     gameSet_ = false;
     ++sourceGeneration_;
 }
-
-} // namespace slsf::runtime
+}

@@ -29,8 +29,7 @@ private:
     double now_;
 };
 
-} // namespace
-
+}
 TEST_CASE("clock supplier can query clock state and rebind its source", "[fix05]") {
     ClockService clocks;
     double wall = 0;
@@ -57,7 +56,6 @@ TEST_CASE("clock supplier can query clock state and rebind its source", "[fix05]
     clocks.SetWallSource([] { return 101.0; });
     CHECK(released == 1);
 }
-
 TEST_CASE("clock service anchors on the first wall sample") {
     FakeWall wall{100.0};
     auto clocks = wall.WallService();
@@ -71,7 +69,6 @@ TEST_CASE("clock service anchors on the first wall sample") {
     CHECK(snapshot.real.value == Catch::Approx(0.5));
     CHECK(snapshot.active.value == Catch::Approx(0.5));
 }
-
 TEST_CASE("clock service accumulates active time only outside menus") {
     // MenuModeTimer vs Timer legacy split: the active clock freezes while
     // the engine adapter reports open menus; the real clock keeps running.
@@ -103,7 +100,6 @@ TEST_CASE("clock service accumulates active time only outside menus") {
     CHECK(snapshot.real.value == Catch::Approx(11.0));
     CHECK(snapshot.active.value == Catch::Approx(5.0));
 }
-
 TEST_CASE("clock service rejects game-clock rewinds and follows fresh pushes") {
     FakeWall wall;
     auto clocks = wall.WallService();
@@ -130,7 +126,6 @@ TEST_CASE("clock service rejects game-clock rewinds and follows fresh pushes") {
     wall.Advance(2.0);
     CHECK(clocks.Tick().real.value == Catch::Approx(2.0));
 }
-
 TEST_CASE("clock service menu state survives ticks without wall samples") {
     FakeWall wall;
     auto clocks = wall.WallService();
@@ -142,7 +137,6 @@ TEST_CASE("clock service menu state survives ticks without wall samples") {
     CHECK(snapshot.active.value == Catch::Approx(0.0));
     CHECK(clocks.MenuOpen());
 }
-
 TEST_CASE("clock service attributes the interval before a menu transition") {
     // Wall time between two ticks belongs to the state active *then*, not
     // the state at the next Tick.  Transitions settle the interval immediately.
@@ -160,7 +154,6 @@ TEST_CASE("clock service attributes the interval before a menu transition") {
     CHECK(clocks.Real().value == Catch::Approx(7.0));
     CHECK(clocks.Active().value == Catch::Approx(4.0));
 }
-
 TEST_CASE("clock service drops non-finite wall samples and re-anchors") {
     double wall = 0.0;
     bool poison = false;

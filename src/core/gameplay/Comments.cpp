@@ -30,9 +30,7 @@ CommentNakedResult EvaluateNaked(const CommentFacts& facts) {
     }
     return result;
 }
-
-} // namespace
-
+}
 CommentDecision CommentRules::Evaluate(const CommentFacts& facts, IRandom& rng) const {
     CommentDecision result;
     if (facts.status != Status::Ready) {
@@ -83,5 +81,4 @@ CommentDecision CommentRules::Evaluate(const CommentFacts& facts, IRandom& rng) 
     result.nextDelaySeconds = kCommentNormalDelaySeconds;
     return result;
 }
-
-} // namespace slsf::gameplay
+}

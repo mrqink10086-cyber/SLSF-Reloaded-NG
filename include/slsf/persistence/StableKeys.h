@@ -13,4 +13,4 @@ namespace slsf::persistence {
 void NormalizeLightPluginKeys(PersistentState& state,
                               const std::function<bool(std::string_view)>& isLightPlugin);
 
-} // namespace slsf::persistence
+}

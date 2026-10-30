@@ -10,7 +10,6 @@ namespace {
 [[nodiscard]] Tri BoolTri(bool value) noexcept {
     return value ? Tri::True : Tri::False;
 }
-
 [[nodiscard]] bool HasTag(const std::vector<std::string>& tags, std::string_view tag) noexcept {
     for (const std::string& value : tags) {
         if (value == tag) {
@@ -19,18 +18,15 @@ namespace {
     }
     return false;
 }
-
 [[nodiscard]] Tri TagTri(const std::vector<std::string>& tags, std::string_view tag) noexcept {
     return BoolTri(HasTag(tags, tag));
 }
-
 [[nodiscard]] Tri CountGreater(const ObservedNumber& number, int threshold) noexcept {
     if (!number.IsKnown()) {
         return Tri::Unknown;
     }
     return BoolTri(number.value > threshold);
 }
-
 // (Friend == false && Lover == false) || (Friend == true && !forbiddenFriend)
 // || (Lover == true && !forbiddenLover).  The masks are configuration, never
 // runtime facts, so this gate is always two-valued.
@@ -47,7 +43,6 @@ namespace {
     }
     return Tri::False;
 }
-
 // Papyrus expression:
 //   IsVictim == False || (IsVictim == True && AllowX == True) && relGate
 // Papyrus && binds tighter than ||, so relGate is only consulted for victims.
@@ -60,7 +55,6 @@ namespace {
         TriAnd(TriAnd(victim, TriOf(allowWhenVictim)), gate);
     return TriOr(TriNot(victim), victimBranch);
 }
-
 class SubAnalyzer {
 public:
     SubAnalyzer(const AnimationFacts& facts, bool friendOfPlayer, bool loverOfPlayer,
@@ -300,8 +294,7 @@ private:
     Tri gainedSadist_{Tri::False};
 };
 
-} // namespace
-
+}
 std::vector<Tri> AnimationDeviousFacts::AcceptedLockables() const {
     return {TriOf(hood),       TriOf(harness),      TriOf(belt),
             TriOf(bra),        TriOf(heavyBondage), TriOf(armCuffs),
@@ -310,7 +303,6 @@ std::vector<Tri> AnimationDeviousFacts::AcceptedLockables() const {
             TriOf(gag),        TriOf(gagPanel),     TriOf(suit),
             TriOf(corset),     TriOf(blindfold)};
 }
-
 AnimationResult AnimationClassifier::Classify(const AnimationFacts& facts, IRandom& rng) const {
     AnimationResult result;
     if (facts.status != Status::Ready) {
@@ -489,5 +481,4 @@ AnimationResult AnimationClassifier::Classify(const AnimationFacts& facts, IRand
     }
     return result;
 }
-
-} // namespace slsf::gameplay
+}

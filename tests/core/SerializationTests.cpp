@@ -50,25 +50,20 @@ PersistentState SampleState() {
     });
     return state;
 }
-
 std::uint32_t GetU16(const std::vector<std::byte>& bytes, std::size_t offset) {
     return static_cast<std::uint32_t>(bytes[offset]) |
            (static_cast<std::uint32_t>(bytes[offset + 1]) << 8u);
 }
-
 void PutU16(std::vector<std::byte>& bytes, std::size_t offset, std::uint16_t value) {
     bytes[offset] = static_cast<std::byte>(value & 0xFFu);
     bytes[offset + 1] = static_cast<std::byte>((value >> 8u) & 0xFFu);
 }
-
 void PutU32(std::vector<std::byte>& bytes, std::size_t offset, std::uint32_t value) {
     for (unsigned index = 0; index < 4; ++index) {
         bytes[offset + index] = static_cast<std::byte>((value >> (index * 8u)) & 0xFFu);
     }
 }
-
-} // namespace
-
+}
 TEST_CASE("save envelope roundtrips the complete persistent state") {
     const auto state = SampleState();
     auto encoded = slsf::persistence::EncodeSaveRecord(state);
@@ -86,7 +81,6 @@ TEST_CASE("save envelope roundtrips the complete persistent state") {
     REQUIRE(decoded.has_value());
     CHECK(*decoded == state);
 }
-
 TEST_CASE("legacy v1 save payload is still readable") {
     auto state = SampleState();
     state.codecVersion = slsf::kLegacyPersistentStateCodecVersion;
@@ -104,7 +98,6 @@ TEST_CASE("legacy v1 save payload is still readable") {
     CHECK(decoded->codecVersion == slsf::kLegacyPersistentStateCodecVersion);
     CHECK(decoded->locations == state.locations);
 }
-
 TEST_CASE("every truncation and checksum corruption is rejected") {
     auto encoded = slsf::persistence::EncodeSaveRecord(SampleState());
     REQUIRE(encoded.has_value());
@@ -142,7 +135,6 @@ TEST_CASE("every truncation and checksum corruption is rejected") {
     trailing.push_back(std::byte{0});
     CHECK_FALSE(slsf::persistence::DecodeSaveRecord(trailing).has_value());
 }
-
 TEST_CASE("deterministic malformed envelopes never escape as partial state") {
     std::mt19937_64 random(1170);
     std::uniform_int_distribution<int> sizeDistribution(0, 256);
@@ -161,7 +153,6 @@ TEST_CASE("deterministic malformed envelopes never escape as partial state") {
         }
     }
 }
-
 TEST_CASE("random valid states survive encode/decode with seed 1170") {
     std::mt19937_64 random(1170);
     std::uniform_real_distribution<double> values(-1000.0, 1000.0);

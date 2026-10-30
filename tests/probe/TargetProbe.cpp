@@ -1,4 +1,4 @@
-// Target-version probe for the group 04 engine contract.
+// Target-version probe for the engine contract.
 //
 // The compile-time section checks the ABI facts this project relies on against
 // the vendored CommonLibSSE-NG headers.  The run-time section exercises the
@@ -75,9 +75,7 @@ int Fail(const char* a_what) {
     std::printf("probe_result=FAIL reason=%s\n", a_what);
     return 1;
 }
-
-} // namespace
-
+}
 int main() {
     const auto version = SKSE::RUNTIME_SSE_LATEST;
     std::printf("probe_target_runtime=%u.%u.%u.%u\n",
@@ -131,7 +129,6 @@ int main() {
     std::printf("probe_detection_signature=RequestDetectionLevel(Actor*,DETECTION_PRIORITY)->int32\n");
     std::printf("probe_los_signature=HasLineOfSight(TESObjectREFR*,bool&)->bool\n");
 
-    // ---- Group 05: WakeSource entry-point evidence (B01) ------------------
     // The unified executor is driven from engine wake entries.  These
     // assertions pin the runtime APIs the adapter must call; the printed
     // markers list what a live 1.6.1170 session still has to confirm.

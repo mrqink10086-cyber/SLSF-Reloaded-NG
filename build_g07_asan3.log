@@ -1,0 +1,142 @@
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\SettlementTests.cpp[0m
+[0m[32;1m[ 50%]:[0m [36;1m<SLSFEngineAsan>[0m cache compiling.releasedbg src\engine\EventBridge.cpp[0m
+[0m[32;1m[ 54%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\headers\VmPortHeader.cpp[0m
+[0m[32;1m[ 57%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\PortTests.cpp[0m
+[0m[32;1m[ 64%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\GainRulesTests.cpp[0m
+[0m[32;1m[ 70%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\DispatcherTests.cpp[0m
+[0m[32;1m[ 73%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\RandomTests.cpp[0m
+[0m[32;1m[ 75%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LifecycleTests.cpp[0m
+[0m[32;1m[ 81%]:[0m [36;1m<SLSFEngineAsan>[0m [36;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[32;1m[ 84%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m [36;1mlinking.releasedbg SLSFBoundaryTestsAsan.exe[0m
+[0m[33;1mtests\core\DispatcherTests.cpp(156,61): warning: missing field 'name' initializer [-Wmissing-field-initializers]
+  156 |         QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0});
+      |                                                             ^
+tests\core\DispatcherTests.cpp(204,61): warning: missing field 'name' initializer [-Wmissing-field-initializers]
+  204 |         QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0});
+      |                                                             ^
+tests\core\DispatcherTests.cpp(723,78): warning: missing field 'name' initializer [-Wmissing-field-initializers]
+  723 |         dispatcher.Query(QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0});[0m
+[0m[33;1mtests\core\LifecycleTests.cpp(101,9): warning: missing field 'parentFormId' initializer [-Wmissing-designated-field-initializers]
+  101 |         });
+      |         ^
+tests\core\LifecycleTests.cpp(184,69): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers]
+  184 |     REQUIRE(lifecycle.PrepareNewGame(SessionContext{.randomSeed = 42}));
+      |                                                                     ^
+tests\core\LifecycleTests.cpp(184,69): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers]
+tests\core\LifecycleTests.cpp(208,68): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers][0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFCoreTestsAsan>[0m [36;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 3.875s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+error: execv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason
+
+=================================================================
+==42596==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x121f1faa0030 at pc 0x7ff613131189 bp 0x00aae8effc40 sp 0x00aae8effc88
+WRITE of size 4 at 0x121f1faa0030 thread T0
+    #0 0x7ff613131188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff613131d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff613131d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.078s[0m
+RUN SLSFCoreTestsAsan cases=249 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (862 assertions in 13 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1151 assertions in 13 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8930 assertions in 13 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (120 assertions in 13 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (126 assertions in 13 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (147 assertions in 13 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (694 assertions in 13 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1989 assertions in 13 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (58125 assertions in 13 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1644 assertions in 12 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (40161 assertions in 12 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2686 assertions in 12 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1110 assertions in 12 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (152 assertions in 12 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1073 assertions in 12 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (155 assertions in 12 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13973 assertions in 12 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (556 assertions in 12 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (400 assertions in 12 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (109 assertions in 12 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.908s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.031s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.091s
+PASS native tests: mode=asan seed=1170

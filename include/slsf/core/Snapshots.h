@@ -156,4 +156,4 @@ Result<ApiLocationIndex> ResolveLegacyLocation(const RegionSnapshot& snapshot,
 Result<DiffusionGraph> BuildDiffusionGraph(const RegionSnapshot& regions,
                                           std::vector<EdgeDefinition> edges);
 
-} // namespace slsf
+}

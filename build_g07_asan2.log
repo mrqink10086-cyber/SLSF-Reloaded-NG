@@ -1,0 +1,5 @@
+[0m[32;1m[ 61%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\Dispatcher.cpp[0m
+[0m[32;1m[ 61%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\Lifecycle.cpp[0m
+[0m[32;1m[ 73%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.328s[0m

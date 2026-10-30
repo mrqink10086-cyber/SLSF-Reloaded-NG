@@ -41,4 +41,4 @@ Result<PersistentState> DecodeSaveRecord(std::span<const std::byte> bytes);
 // validate the payload checksum beyond the header's declared length.
 Result<SaveRecordInfo> InspectSaveRecord(std::span<const std::byte> bytes);
 
-} // namespace slsf::persistence
+}

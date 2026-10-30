@@ -19,24 +19,20 @@ struct AsyncMessage {
     Epoch epoch;
 };
 
-// Engine callbacks run on arbitrary threads and may complete after a menu,
-// revert or A->B transition.  Enqueue stamps the session epoch while the
-// business switch is open; Flush revalidates every stamp immediately before
-// handing the message to the executor.  Messages are committed FIFO and each
-// exactly once.
 class EventBridge {
 public:
     using Handler = std::function<void(const AsyncMessage&)>;
 
-    // Bounds retained engine callbacks if a session never gets an executor
-    // round; overflow is rejected instead of growing without limit.
     static constexpr std::size_t kMaxPendingMessages = 4096;
+
+    static constexpr std::size_t kMaxMessageBytes = 64 * 1024;
 
     struct Counters {
         std::uint64_t enqueued{};
         std::uint64_t committed{};
         std::uint64_t rejectedClosed{};
         std::uint64_t rejectedOverflow{};
+        std::uint64_t rejectedOversize{};
         std::uint64_t droppedStale{};
         std::uint64_t handlerFailures{};
     };
@@ -56,4 +52,4 @@ private:
     Counters counters_;
 };
 
-} // namespace slsf::engine
+}

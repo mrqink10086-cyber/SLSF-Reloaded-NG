@@ -143,4 +143,4 @@ private:
     State state_;
 };
 
-} // namespace slsf::time
+}

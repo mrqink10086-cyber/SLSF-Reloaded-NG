@@ -124,6 +124,13 @@ Result<ManualSpreadResult> RuleManualSpreadFame(double sourceValue,
 Result<int> RuleManualDecayAmount(int minDecay, int maxDecay, IRandom& rng,
                                   double maxFameValue = kLegacyMaxFameValue);
 
+// Manual gain amount (legacy external manual fame gain): bounds clamp into
+// [0, min(kLegacyMaxFameValue, maxFameValue)]; min >= max uses the fixed
+// minimum; otherwise one uniform sample.  The caller applies
+// newFame = min(maxFameValue, previous + amount).
+Result<int> RuleManualGainAmount(int minGain, int maxGain, IRandom& rng,
+                                 double maxFameValue = kLegacyMaxFameValue);
+
 struct DecayRollResult {
     int amount{};     // points per owed period for this roll (>= 0).
     int tierIndex{};  // 0..4, veryLow..veryHigh.

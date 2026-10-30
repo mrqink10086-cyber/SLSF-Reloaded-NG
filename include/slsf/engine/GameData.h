@@ -65,4 +65,4 @@ private:
     std::set<StableFormKey> dirty_;
 };
 
-} // namespace slsf::engine
+}

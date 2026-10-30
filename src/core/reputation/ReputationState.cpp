@@ -524,11 +524,6 @@ PublishedState MakePublishedState(const State& state) {
     }
     return output;
 }
-// Task-group 05 (B02 handover): one published read.  Location is resolved
-// through the published location map; Fame returns the category value,
-// Flag the flag slot at the category index.  Recognition time stays out of
-// the published projection (task-group 02 handover note): the request fails
-// closed instead of inventing a time.
 Result<PublicView> Query(const PublishedState& state, const QueryRequest& request) {
     if (!request.location || request.location.value >= state.locationAccounts.size()) {
         return std::unexpected(Error{Error::Code::NotFound, "location not published"});
@@ -547,8 +542,6 @@ Result<PublicView> Query(const PublishedState& state, const QueryRequest& reques
     }
     const std::size_t base = row * kFameSlotCount;
 
-    // Fame and Flag both index the per-category slots; an out-of-range
-    // category is an invalid request regardless of the projection kind.
     if ((request.kind == QueryRequest::Kind::Fame || request.kind == QueryRequest::Kind::Flag)
         && static_cast<std::uint32_t>(request.category) >= kFameCategoryCount) {
         return Fail(Error::Code::InvalidArgument, "invalid fame category");

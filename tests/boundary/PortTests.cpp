@@ -87,8 +87,7 @@ public:
     std::int32_t lastHi{};
 };
 
-} // namespace
-
+}
 TEST_CASE("vm completion keeps the submitted epoch", "[ports]") {
     FakeVmPort vm;
     const slsf::Epoch epoch{11, 12, 13};
@@ -112,7 +111,6 @@ TEST_CASE("vm completion keeps the submitted epoch", "[ports]") {
     REQUIRE(seenEpoch == epoch);
     REQUIRE(seenValue == "ok");
 }
-
 TEST_CASE("engine and wake ports separate request ids from revisions", "[ports]") {
     FakeEnginePort engine;
     slsf::EngineRequest request;
@@ -135,7 +133,6 @@ TEST_CASE("engine and wake ports separate request ids from revisions", "[ports]"
     REQUIRE_FALSE(wake.started);
     REQUIRE_FALSE(static_cast<bool>(wake.callback_));
 }
-
 TEST_CASE("provider ports do not expose third-party containers", "[ports]") {
     FakeProvider provider;
     const auto snapshot = provider.Snapshot();
@@ -149,7 +146,6 @@ TEST_CASE("provider ports do not expose third-party containers", "[ports]") {
     REQUIRE(submitted.has_value());
     REQUIRE(provider.submitted.wipeOnce.size() == 1);
 }
-
 TEST_CASE("random interface is deterministic for tests", "[ports]") {
     FakeRandom random;
     REQUIRE(random.UniformInt(10, 20) == 15);

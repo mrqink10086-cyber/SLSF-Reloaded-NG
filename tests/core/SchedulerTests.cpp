@@ -18,8 +18,7 @@ using slsf::time::ClockDomain;
 using slsf::time::Scheduler;
 using slsf::time::TimerToken;
 
-} // namespace
-
+}
 TEST_CASE("scheduler same-deadline tasks fire in stable enqueue order") {
     Scheduler scheduler;
     std::vector<unsigned> firedOrder;
@@ -49,7 +48,6 @@ TEST_CASE("scheduler same-deadline tasks fire in stable enqueue order") {
     REQUIRE(scheduler.PendingCount() == 0);
     REQUIRE(scheduler.PendingCount(ClockDomain::Real) == 0);
 }
-
 TEST_CASE("scheduler cancels are idempotent and invalidate stale tokens") {
     Scheduler scheduler;
 
@@ -68,7 +66,6 @@ TEST_CASE("scheduler cancels are idempotent and invalidate stale tokens") {
     REQUIRE(due.size() == 1);
     REQUIRE(due.front().token == reused);
 }
-
 TEST_CASE("scheduler domains advance independently") {
     Scheduler scheduler;
     std::size_t gameRuns = 0;
@@ -106,7 +103,6 @@ TEST_CASE("scheduler domains advance independently") {
     REQUIRE(realToken.domain == ClockDomain::Real);
     REQUIRE(activeToken.domain == ClockDomain::Active);
 }
-
 TEST_CASE("scheduler session replacement invalidates every pending task") {
     Scheduler scheduler;
     std::size_t runs = 0;
@@ -132,7 +128,6 @@ TEST_CASE("scheduler session replacement invalidates every pending task") {
     const auto fresh = scheduler.Schedule(ClockDomain::Game, 5.0, [&] { ++runs; });
     REQUIRE(scheduler.Cancel(fresh));
 }
-
 TEST_CASE("scheduler recycles dead heap entries instead of growing forever") {
     Scheduler scheduler;
 
@@ -157,7 +152,6 @@ TEST_CASE("scheduler recycles dead heap entries instead of growing forever") {
     }
     REQUIRE(runs == 1);
 }
-
 TEST_CASE("scheduler due set matches reference across randomized interleavings") {
     // Seed 1170 is the project default; extra seeds widen the coverage.
     constexpr std::uint32_t kSeeds[] = {1170, 1171, 2, 3, 7, 19, 4242, 12345};
@@ -277,7 +271,6 @@ TEST_CASE("scheduler due set matches reference across randomized interleavings")
         REQUIRE(scheduler.PendingCount() == 0);
     }
 }
-
 TEST_CASE("scheduler rejects non-finite deadlines and unknown domains") {
     Scheduler scheduler;
 
@@ -307,7 +300,6 @@ TEST_CASE("scheduler rejects non-finite deadlines and unknown domains") {
     CHECK(scheduler.PendingCount(ClockDomain::Game) == 1);
     CHECK(runs == 0);
 }
-
 TEST_CASE("scheduler session change and slot reuse keep tokens isolated") {
     Scheduler scheduler;
     std::vector<unsigned> fired;
@@ -345,7 +337,6 @@ TEST_CASE("scheduler session change and slot reuse keep tokens isolated") {
     due.front().body();
     REQUIRE(fired == (std::vector<unsigned>{2, 4}));
 }
-
 TEST_CASE("scheduler reclaims cancelled far-future entries", "[fix05]") {
     Scheduler scheduler;
     for (int i = 0; i < 1000; ++i) {
@@ -357,7 +348,6 @@ TEST_CASE("scheduler reclaims cancelled far-future entries", "[fix05]") {
     CHECK(scheduler.HeapSize(ClockDomain::Real) == 0);
     CHECK(scheduler.DiscardedCount(ClockDomain::Real) == 1000);
 }
-
 TEST_CASE("scheduler HasDue discards dead roots and preserves live ordering", "[fix05]") {
     Scheduler scheduler;
     const auto dead = scheduler.Schedule(ClockDomain::Real, 1, {});
@@ -371,7 +361,6 @@ TEST_CASE("scheduler HasDue discards dead roots and preserves live ordering", "[
     CHECK(due.front().token == live);
     CHECK_FALSE(scheduler.HasDue(ClockDomain::Real, 2));
 }
-
 TEST_CASE("scheduler capture destruction can query the scheduler", "[fix05]") {
     Scheduler scheduler;
     int released = 0;

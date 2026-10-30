@@ -8,11 +8,12 @@ EventBridge::EventBridge(Lifecycle& lifecycle, Handler handler)
     : lifecycle_(lifecycle), handler_(std::move(handler)) {}
 
 bool EventBridge::Enqueue(std::string topic, std::string payload) {
-    // Capture the epoch before validating the gate.  A menu/load can switch
-    // sessions between these calls; stamping the old epoch is safe because
-    // Flush drops it, while reading the epoch after the check could commit an
-    // old-session callback into the newly activated session.
     const Epoch epoch = lifecycle_.CurrentEpoch();
+    if (topic.size() + payload.size() > kMaxMessageBytes) {
+        std::lock_guard lock(mutex_);
+        ++counters_.rejectedOversize;
+        return false;
+    }
     if (topic.empty() || !lifecycle_.BusinessOpen() || !lifecycle_.IsEpochCurrent(epoch)) {
         std::lock_guard lock(mutex_);
         ++counters_.rejectedClosed;
@@ -35,8 +36,6 @@ bool EventBridge::Enqueue(std::string topic, std::string payload) {
 
 std::size_t EventBridge::Flush() {
     std::size_t committed = 0;
-    // Only drain what was queued when this flush started.  A handler that
-    // enqueues more work cannot keep one round spinning forever.
     std::size_t budget = 0;
     {
         std::lock_guard lock(mutex_);
@@ -89,4 +88,4 @@ EventBridge::Counters EventBridge::Stats() const {
     return counters_;
 }
 
-} // namespace slsf::engine
+}

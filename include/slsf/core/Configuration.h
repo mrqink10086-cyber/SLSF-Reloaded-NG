@@ -22,7 +22,6 @@ constexpr std::array<double, kFameCategoryCount> MakeUnitCategoryMultipliers() n
     }
     return multipliers;
 }
-
 // Pure compiled configuration values; JSON parsing and validation stay in the adapter.
 struct FeatureSwitches {
     bool reduceFameAtNight{true};
@@ -140,4 +139,4 @@ struct ConfigurationSnapshot {
     bool HasData() const noexcept { return data != nullptr; }
 };
 
-} // namespace slsf
+}

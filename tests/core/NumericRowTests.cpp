@@ -10,9 +10,7 @@ namespace {
 std::uintptr_t AddressOf(const void* pointer) {
     return reinterpret_cast<std::uintptr_t>(pointer);
 }
-
-} // namespace
-
+}
 static_assert(sizeof(slsf::NumericRow) == 256);
 static_assert(alignof(slsf::NumericRow) == 32);
 static_assert(sizeof(slsf::NumericRow) / sizeof(double) == slsf::kFameSlotCount);
@@ -36,7 +34,6 @@ TEST_CASE("numeric rows allocate all 32 slots and start zeroed", "[numeric][layo
     row[30] = 9.0;
     REQUIRE_FALSE(row.PaddingIsZero());
 }
-
 TEST_CASE("numeric row buffers keep stride and address alignment", "[numeric][layout]") {
     slsf::NumericRowBuffer rows(4);
     REQUIRE(rows.size() == 4);
@@ -56,7 +53,6 @@ TEST_CASE("numeric row buffers keep stride and address alignment", "[numeric][la
     REQUIRE(AddressOf(rows.data()) % slsf::kNumericRowAlignment == 0);
     REQUIRE(AddressOf(&rows.back()) % slsf::kNumericRowAlignment == 0);
 }
-
 TEST_CASE("numeric row operations preserve padding and ignore it when scanning", "[numeric]") {
     slsf::NumericRow source{};
     source[slsf::FameCategory::Slut] = 12.5;

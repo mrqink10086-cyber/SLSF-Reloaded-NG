@@ -62,6 +62,5 @@ void CopyRow(NumericRow& destination, const NumericRow& source) noexcept;
 // Maximum over the 25 business slots; padding is deliberately ignored.
 double MaxSlot(const NumericRow& row) noexcept;
 
-} // namespace numeric
-
-} // namespace slsf
+}
+}

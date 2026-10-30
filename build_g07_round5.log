@@ -1,0 +1,52 @@
+[0m[32;1m[ 52%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\core\reputation\Settlement.cpp[0m
+[0m[32;1m[ 58%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\runtime\Dispatcher.cpp[0m
+[0m[32;1m[ 58%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\runtime\Lifecycle.cpp[0m
+[0m[32;1m[ 70%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 73%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\compat\ModEventBridge.cpp[0m
+[0m[1;31;1merror: [0mPublicApi.cpp
+src\api\PublicApi.cpp(517): warning C4834: 放弃具有 [[nodiscard]] 属性的函数的返回值
+src\api\PublicApi.cpp(521): warning C4834: 放弃具有 [[nodiscard]] 属性的函数的返回值
+src\api\PublicApi.cpp(687): error C2664: “slsf::CommandResult slsf::runtime::Dispatcher::ApplySpreadPulse(slsf::GameTime,std::span<const slsf::RegionId,18446744073709551615>)”: 无法将参数 2 从“initializer list”转换为“std::span<const slsf::RegionId,18446744073709551615>”
+src\api\PublicApi.cpp(687): note: “std::span<const slsf::RegionId,18446744073709551615>::span”: 没有重载函数可以转换所有参数类型
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(544): note: 可能是“std::span<const slsf::RegionId,18446744073709551615>::span(std::span<const slsf::RegionId,18446744073709551615> &&)”
+src\api\PublicApi.cpp(687): note: “std::span<const slsf::RegionId,18446744073709551615>::span(std::span<const slsf::RegionId,18446744073709551615> &&)”: 无法将参数 1 从“const _Ty”转换为“std::span<const slsf::RegionId,18446744073709551615> &&”
+        with
+        [
+            _Ty=slsf::RegionId
+        ]
+src\api\PublicApi.cpp(687): note: 原因如下: 无法从“const _Ty”转换为“std::span<const slsf::RegionId,18446744073709551615>”
+        with
+        [
+            _Ty=slsf::RegionId
+        ]
+src\api\PublicApi.cpp(687): note: 没有可用于执行该转换的用户定义的转换运算符，或者无法调用该运算符
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(544): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(const std::span<const slsf::RegionId,18446744073709551615> &)”
+src\api\PublicApi.cpp(687): note: “std::span<const slsf::RegionId,18446744073709551615>::span(const std::span<const slsf::RegionId,18446744073709551615> &)”: 无法将参数 1 从“const _Ty”转换为“const std::span<const slsf::RegionId,18446744073709551615> &”
+        with
+        [
+            _Ty=slsf::RegionId
+        ]
+src\api\PublicApi.cpp(687): note: 原因如下: 无法从“const _Ty”转换为“const std::span<const slsf::RegionId,18446744073709551615>”
+        with
+        [
+            _Ty=slsf::RegionId
+        ]
+src\api\PublicApi.cpp(687): note: 没有可用于执行该转换的用户定义的转换运算符，或者无法调用该运算符
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(300): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(void) noexcept”
+src\api\PublicApi.cpp(687): note: “std::span<const slsf::RegionId,18446744073709551615>::span”: 函数不接受 1 个参数
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(355): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(const std::span<_OtherTy,_OtherExtent> &) noexcept”
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(342): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(_Rng &&)”
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(339): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(const std::array<_OtherTy,_Size> &) noexcept”
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(334): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(std::array<_OtherTy,_Size> &) noexcept”
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(330): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(const slsf::RegionId (&)[_Size]) noexcept”
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(316): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(_It,_Sentinel) noexcept(<expr>)”
+E:\BuildTools\VC\Tools\MSVC\14.44.35207\include\span(305): note: 或    “std::span<const slsf::RegionId,18446744073709551615>::span(_It,std::span<const slsf::RegionId,18446744073709551615>::size_type) noexcept”
+src\api\PublicApi.cpp(687): note: 尝试匹配参数列表“(const _Ty)”时
+        with
+        [
+            _Ty=slsf::RegionId
+        ]
+E:\source\repos\SLSF Reloaded NG\include\slsf/runtime/Dispatcher.h(232): note: 参见“slsf::runtime::Dispatcher::ApplySpreadPulse”的声明
+src\api\PublicApi.cpp(687): note: 尝试匹配参数列表“(slsf::GameTime, initializer list)”时
+
+  [33m> in [1msrc\api\PublicApi.cpp[0m

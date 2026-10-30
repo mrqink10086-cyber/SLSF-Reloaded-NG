@@ -140,6 +140,8 @@ Configuration 负责进程级配置 JSON 的读写、校验、编译和版本。
 
 **公开输入**：PapyrusBindings 保留函数声明/实例绑定；ModEventBridge 负责 typed 事件参数；Menu 负责交互命令。它们把协议解析为原生业务命令，再调用同一个 Session 接口。每个旧入口的结果转换集中在对应 适配器。
 
+记录绑定统一使用 `StableFormKey{plugin, localFormId}`。历史合同的 `0x060008xx` 仅保留离线来源信息，生成运行表时剥除旧完整插件索引。Global、任务和 alias 所属任务均通过引擎 `TESDataHandler::LookupForm<T>(localFormId, plugin)` 定位并校验类型；引擎负责普通插件及 light plugin 的当前加载索引。VM 实例从引擎任务对象的源文件名和 `GetLocalFormID()` 取得稳定身份，alias 继续独立校验索引。记录暂缺或类型不符时不写入，不解析 ESP/ESL、不拼接运行时 FormID。
+
 **公开输出**：LegacyOutputs 读取快照并更新 Global、StorageUtil 及原 SLSF 桥接。JsonTransfer 分别处理旧公开文件和 NG 存档数据转移格式；Configuration 管理跨档设置文件。B06/B07 补齐逐字段合同。菜单显示快照和查询状态。游戏读档调用 Activate；当前游戏导入声望 JSON 时先准备完整数据，再由 Session 一次提交，归属变化时更新 index epoch。导入用户设置则经过 Configuration 保存到配置文件。
 
 ## 主要调用路径

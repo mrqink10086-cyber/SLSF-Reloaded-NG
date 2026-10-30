@@ -18,6 +18,11 @@ enum class VmValueType : std::uint8_t {
     Form,
 };
 
+enum class VmTargetKind : std::uint8_t {
+    Global = 0,
+    Instance,
+};
+
 struct VmValue {
     VmValueType type{VmValueType::None};
     bool boolValue{};
@@ -29,6 +34,8 @@ struct VmValue {
 
 struct VmRequest {
     Epoch epoch;
+    VmTargetKind target{VmTargetKind::Global};
+    StableFormKey instance{};
     std::string script;
     std::string function;
     std::vector<VmValue> arguments;
@@ -47,6 +54,8 @@ class IVmPort {
 public:
     virtual ~IVmPort() = default;
     virtual RequestId Submit(VmRequest request, VmCompletion completion) = 0;
+
+    virtual void RequestCancellation(RequestId) {}
 };
 
-} // namespace slsf
+}

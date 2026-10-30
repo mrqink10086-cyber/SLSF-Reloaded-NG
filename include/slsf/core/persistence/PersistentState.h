@@ -98,4 +98,4 @@ struct PersistentState {
 Result<PersistentState> DecodeState(std::span<const std::byte> bytes);
 Result<std::vector<std::byte>> EncodeState(const PersistentState& state);
 
-} // namespace slsf
+}

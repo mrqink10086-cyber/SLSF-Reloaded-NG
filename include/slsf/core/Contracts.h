@@ -53,7 +53,6 @@ constexpr std::string_view ToString(LegacyValueType type) noexcept {
     }
     return "Unknown";
 }
-
 struct LegacyParameter {
     std::string name;
     LegacyValueType type{LegacyValueType::Unknown};
@@ -109,4 +108,4 @@ inline constexpr std::array<std::string_view, 2> kLegacyNonCategoryFlags = {
 
 std::string_view BuildId() noexcept;
 
-} // namespace slsf
+}

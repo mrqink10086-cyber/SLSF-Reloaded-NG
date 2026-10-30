@@ -10,7 +10,7 @@ bool ValidText(std::string_view value) {
     return !value.empty() && value.size() <= 4096;
 }
 
-} // namespace
+}
 
 const char* CapabilityStateName(CapabilityState state) noexcept {
     switch (state) {
@@ -116,6 +116,7 @@ bool CapabilityRegistry::Require(CapabilityRequirement requirement) {
 
 CapabilityState CapabilityRegistry::Ensure(std::string_view id) {
     std::unique_lock lock(mutex_);
+    const CapabilityWaitPolicy policy = policy_;
     const auto found = std::find_if(entries_.begin(), entries_.end(), [&](const Entry& entry) {
         return entry.requirement.id == id;
     });
@@ -143,7 +144,8 @@ CapabilityState CapabilityRegistry::Ensure(std::string_view id) {
         }
         waitingOn_.emplace(caller, &entry);
         try {
-            entry.completed.wait(lock, [&entry] { return !entry.querying; });
+            entry.completed.wait_for(lock, policy.joinWait,
+                                     [&entry] { return !entry.querying; });
         } catch (...) {
             waitingOn_.erase(caller);
             throw;
@@ -156,11 +158,11 @@ CapabilityState CapabilityRegistry::Ensure(std::string_view id) {
     entry.querying = true;
     entry.queryThread = std::this_thread::get_id();
     entry.record.state = CapabilityState::Waiting;
+    if (entry.waitingSince.time_since_epoch() == std::chrono::steady_clock::duration::zero()) {
+        entry.waitingSince = std::chrono::steady_clock::now();
+    }
     ++entry.record.queryCount;
     const std::uint32_t queryCount = entry.record.queryCount;
-    // Provider code often queries the registry for sibling capabilities.  Do
-    // not hold the registry mutex across that call: duplicate callers wait on
-    // this entry and then consume the single result.
     lock.unlock();
 
     CapabilityRecord evaluated;
@@ -177,10 +179,24 @@ CapabilityState CapabilityRegistry::Ensure(std::string_view id) {
 
     lock.lock();
     entry.record = std::move(evaluated);
+    if (entry.record.state == CapabilityState::Waiting) {
+        if (entry.waitingSince.time_since_epoch() ==
+            std::chrono::steady_clock::duration::zero()) {
+            entry.waitingSince = std::chrono::steady_clock::now();
+        }
+    } else {
+        entry.waitingSince = {};
+        entry.waitingProbes = 0;
+    }
     entry.querying = false;
     entry.queryThread = {};
     entry.completed.notify_all();
     return entry.record.state;
+}
+
+void CapabilityRegistry::SetWaitPolicy(CapabilityWaitPolicy policy) {
+    std::lock_guard lock(mutex_);
+    policy_ = std::move(policy);
 }
 
 void CapabilityRegistry::EnsureAll() {
@@ -193,6 +209,32 @@ void CapabilityRegistry::EnsureAll() {
         }
     }
     for (const std::string& id : ids) {
+        Ensure(id);
+    }
+    const CapabilityWaitPolicy policy = policy_;
+    std::vector<std::string> retry;
+    {
+        std::lock_guard lock(mutex_);
+        const auto nowSteady = std::chrono::steady_clock::now();
+        for (Entry& entry : entries_) {
+            if (entry.record.state != CapabilityState::Waiting || entry.querying) {
+                continue;
+            }
+            if (entry.waitingProbes >= policy.maxWaitingProbes) {
+                continue;
+            }
+            const bool deadlineElapsed =
+                policy.waitingTimeout == std::chrono::milliseconds::zero() ||
+                entry.waitingSince.time_since_epoch() ==
+                    std::chrono::steady_clock::duration::zero() ||
+                nowSteady - entry.waitingSince >= policy.waitingTimeout;
+            if (deadlineElapsed) {
+                ++entry.waitingProbes;
+                retry.push_back(entry.requirement.id);
+            }
+        }
+    }
+    for (const std::string& id : retry) {
         Ensure(id);
     }
 }
@@ -228,4 +270,4 @@ std::size_t CapabilityRegistry::Size() const {
     return entries_.size();
 }
 
-} // namespace slsf::integrations
+}

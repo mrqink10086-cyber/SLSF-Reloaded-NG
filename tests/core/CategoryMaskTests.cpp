@@ -11,8 +11,7 @@ namespace {
 using slsf::CategoryMask;
 using slsf::FameCategory;
 
-} // namespace
-
+}
 static_assert(slsf::FameCategoryIndex(FameCategory::Whore) == 0);
 static_assert(slsf::FameCategoryIndex(FameCategory::Airhead) == 24);
 static_assert(slsf::FameCategoryIndex(FameCategory::Count) == 25);
@@ -49,7 +48,6 @@ TEST_CASE("category bits use canonical identity not documentation order", "[cate
     REQUIRE(CategoryMask::FromCategory(slsf::FameCategoryFromDocumentedIndex(0)).Test(
         FameCategory::Slut));
 }
-
 TEST_CASE("category mask rejects invalid categories and high bits", "[category][mask]") {
     CategoryMask mask;
     REQUIRE(mask.Set(FameCategory::Whore));
@@ -71,7 +69,6 @@ TEST_CASE("category mask rejects invalid categories and high bits", "[category][
     REQUIRE((~CategoryMask{}).Bits() == CategoryMask::kValidBits);
     REQUIRE((~CategoryMask{}).Count() == slsf::kFameCategoryCount);
 }
-
 TEST_CASE("category mask iteration follows canonical order", "[category][mask]") {
     CategoryMask mask;
     REQUIRE(mask.Set(FameCategory::Airhead));
@@ -90,7 +87,6 @@ TEST_CASE("category mask iteration follows canonical order", "[category][mask]")
     REQUIRE(mask.Empty());
     REQUIRE_FALSE(mask.Any());
 }
-
 TEST_CASE("all documented and ESP indices round trip to canonical identity", "[category][mask]") {
     for (std::size_t index = 0; index < slsf::kFameCategoryCount; ++index) {
         const auto documented = slsf::FameCategoryFromDocumentedIndex(index);

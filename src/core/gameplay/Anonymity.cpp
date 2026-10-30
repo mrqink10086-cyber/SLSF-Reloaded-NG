@@ -8,9 +8,7 @@ namespace {
 double ElapsedDays(GameTime later, GameTime earlier) {
     return std::max(0.0, later.AsDays() - earlier.AsDays());
 }
-
-} // namespace
-
+}
 Status AnonymityRules::ObserveRegion(std::optional<RegionId> previous,
                                      std::optional<RegionId> current,
                                      GameTime now) {
@@ -41,7 +39,6 @@ Status AnonymityRules::ObserveRegion(std::optional<RegionId> previous,
     state_.hasLastTransition = true;
     return Status::Ready;
 }
-
 void AnonymityRules::Leave(RegionId region, GameTime now) {
     AnonymityMemory& memory = state_.regions[region];
     memory.lastExit = now;
@@ -66,7 +63,6 @@ void AnonymityRules::Leave(RegionId region, GameTime now) {
         memory.recognitionDays = kMaxRecognitionDays;
     }
 }
-
 void AnonymityRules::Enter(RegionId region, GameTime now) {
     AnonymityMemory& memory = state_.regions[region];
     memory.lastEnter = now;
@@ -85,7 +81,6 @@ void AnonymityRules::Enter(RegionId region, GameTime now) {
     memory.recognitionDays =
         std::max(kMinRecognitionDays, 2.0 * memory.recognitionDays - away);
 }
-
 Status AnonymityRules::AdvanceHourly(RegionId current, GameTime now) {
     auto it = state_.regions.find(current);
     if (it == state_.regions.end()) {
@@ -99,7 +94,6 @@ Status AnonymityRules::AdvanceHourly(RegionId current, GameTime now) {
     }
     return Status::Ready;
 }
-
 RuleDecision AnonymityRules::Evaluate(RegionId region,
                                       const AnonymityConditions& conditions) const {
     const Tri enabled = TriOf(conditions.anonymityEnabled);
@@ -151,10 +145,8 @@ RuleDecision AnonymityRules::Evaluate(RegionId region,
     });
     return RuleDecision::FromTri(hidden, "static anonymity");
 }
-
 const AnonymityMemory* AnonymityRules::Find(RegionId region) const {
     const auto it = state_.regions.find(region);
     return it == state_.regions.end() ? nullptr : &it->second;
 }
-
-} // namespace slsf::gameplay
+}

@@ -52,7 +52,6 @@ Fact U() { return Fact{}; }
 void SetAllEligible(FameGainRollFacts& facts, bool value) {
     facts.eligible.fill(B(value));
 }
-
 RegionId R(std::uint32_t id) { return RegionId(id); }
 
 VisibilityFacts VisibilityFixture() {
@@ -123,15 +122,12 @@ VisibilityFacts VisibilityFixture() {
     facts.cum.oral = facts.cum.anal;
     return facts;
 }
-
 ItemFacts& Slot(VisibilityFacts& facts, ArmorSlot slot) {
     return facts.items[static_cast<std::size_t>(slot)];
 }
-
 void PresentAt(VisibilityFacts& facts, ArmorSlot slot) {
     Slot(facts, slot).present = B(true);
 }
-
 void SetTattoo(VisibilityFacts& facts, TattooSubcategory subcategory,
                std::size_t slot = 0) {
     TattooAreaFacts& area = facts.tattoos.body;
@@ -142,12 +138,10 @@ void SetTattoo(VisibilityFacts& facts, TattooSubcategory subcategory,
     area.slots[slot].applied = B(true);
     area.slots[slot].subcategory = subcategory;
 }
-
 void SetAndRank(VisibilityFacts& facts, AndLocation location) {
     facts.andRanks.installed = B(true);
     facts.andRanks.rankIsOne[static_cast<std::size_t>(location)] = B(true);
 }
-
 AnimationFacts AnimationFixture() {
     AnimationFacts facts;
     facts.status = Status::Ready;
@@ -179,7 +173,6 @@ AnimationFacts AnimationFixture() {
     facts.actors.back().isPlayer = true;
     return facts;
 }
-
 AnimationActorFacts Partner(int rank, AnimationRace race = AnimationRace::Other) {
     AnimationActorFacts actor;
     actor.isPlayer = false;
@@ -188,7 +181,6 @@ AnimationActorFacts Partner(int rank, AnimationRace race = AnimationRace::Other)
     actor.race = race;
     return actor;
 }
-
 NpcScanTargetFacts NpcFixture(std::string plugin = "Skyrim.esm",
                               std::uint32_t form = 0x100) {
     NpcScanTargetFacts target;
@@ -204,7 +196,6 @@ NpcScanTargetFacts NpcFixture(std::string plugin = "Skyrim.esm",
     target.relationshipRank = 0;
     return target;
 }
-
 WitnessSettings WitnessFixture() {
     WitnessSettings settings;
     settings.enemyChance = 50;
@@ -215,7 +206,6 @@ WitnessSettings WitnessFixture() {
     settings.minimumNpcLosDistance = 50.0;
     return settings;
 }
-
 CommentFacts CommentFixture() {
     CommentFacts facts;
     facts.status = Status::Ready;
@@ -227,9 +217,7 @@ CommentFacts CommentFixture() {
     facts.andInstalled = B(true);
     return facts;
 }
-
-} // namespace
-
+}
 TEST_CASE("anonymity consumes each region transition and preserves the legacy memory formula",
           "[gameplay][anonymity]") {
     AnonymityRules rules;
@@ -330,7 +318,6 @@ TEST_CASE("anonymity consumes each region transition and preserves the legacy me
         REQUIRE(rules.Find(a)->recognitionDays < 26.7);
     }
 }
-
 TEST_CASE("anonymity evaluation follows the static and dynamic legacy branches",
           "[gameplay][anonymity]") {
     AnonymityRules rules;
@@ -395,7 +382,6 @@ TEST_CASE("anonymity evaluation follows the static and dynamic legacy branches",
         REQUIRE_FALSE(rules.Evaluate(R(99), conditions).value);
     }
 }
-
 TEST_CASE("body tattoo visibility mirrors the four legacy branches", "[gameplay][visibility]") {
     VisibilityRules rules;
     VisibilityFacts facts = VisibilityFixture();
@@ -505,7 +491,6 @@ TEST_CASE("body tattoo visibility mirrors the four legacy branches", "[gameplay]
         REQUIRE_FALSE(rules.BodyTattooVisible(facts, 0).value);
     }
 }
-
 TEST_CASE("face, hand and foot tattoo visibility preserve keyword precedence",
           "[gameplay][visibility]") {
     VisibilityRules rules;
@@ -599,7 +584,6 @@ TEST_CASE("face, hand and foot tattoo visibility preserve keyword precedence",
         REQUIRE(rules.FootTattooVisible(facts, 0).value);
     }
 }
-
 TEST_CASE("cum visibility separates the count gate from the visibility gate",
           "[gameplay][visibility]") {
     VisibilityRules rules;
@@ -674,7 +658,6 @@ TEST_CASE("cum visibility separates the count gate from the visibility gate",
         REQUIRE(rules.VisibleOralCum(facts).value == 2);
     }
 }
-
 TEST_CASE("bondage visibility follows heavy, lockable and anonymous legacy paths",
           "[gameplay][visibility]") {
     VisibilityRules rules;
@@ -757,7 +740,6 @@ TEST_CASE("bondage visibility follows heavy, lockable and anonymous legacy paths
         REQUIRE(rules.EvaluateBondage(facts).collarVisible.value);
     }
 }
-
 TEST_CASE("NPC scan continues after skips, rolls once per survivor and scores once",
           "[gameplay][witness]") {
     WitnessSettings settings = WitnessFixture();
@@ -876,7 +858,6 @@ TEST_CASE("NPC scan continues after skips, rolls once per survivor and scores on
         REQUIRE(result.entries[3].loverOfPlayer);
     }
 }
-
 TEST_CASE("NPC scan applies the exact line-of-sight and detection gates",
           "[gameplay][witness]") {
     WitnessSettings settings = WitnessFixture();
@@ -914,7 +895,6 @@ TEST_CASE("NPC scan applies the exact line-of-sight and detection gates",
     REQUIRE(unknownDistance.Run({noDistance}).status == Status::NotReady);
     REQUIRE(unknownDistanceRng.calls == 0);
 }
-
 TEST_CASE("fame gain roll always pays the betray draw and preserves canonical order",
           "[gameplay][witness]") {
     SECTION("invalid location and anonymity skip before any RNG") {
@@ -1098,7 +1078,6 @@ TEST_CASE("fame gain roll always pays the betray draw and preserves canonical or
         REQUIRE(result.candidates[0] == FameCategory::Whore);
     }
 }
-
 TEST_CASE("candidate selection deduplicates and reports a 50-attempt shortfall",
           "[gameplay][witness]") {
     std::vector<std::int32_t> samples{2};
@@ -1120,7 +1099,6 @@ TEST_CASE("candidate selection deduplicates and reports a 50-attempt shortfall",
     REQUIRE(rng.ranges[1] == std::pair<std::int32_t, std::int32_t>{0, 2});
     REQUIRE(result.selectedMask.Test(FameCategory::Oral));
 }
-
 TEST_CASE("candidate selection preserves order and masks every selected category",
           "[gameplay][witness]") {
     ScriptedRandom rng({2, 0, 2});
@@ -1136,7 +1114,6 @@ TEST_CASE("candidate selection preserves order and masks every selected category
     REQUIRE(rng.ranges[0] == std::pair<std::int32_t, std::int32_t>{1, 3});
     REQUIRE(rng.ranges[1] == std::pair<std::int32_t, std::int32_t>{0, 2});
 }
-
 TEST_CASE("animation classification keeps the analyzer gate order and SubAnalyze order",
           "[gameplay][animation]") {
     AnimationClassifier classifier;
@@ -1324,7 +1301,6 @@ TEST_CASE("animation classification keeps the analyzer gate order and SubAnalyze
         REQUIRE(result.categories.empty());
     }
 }
-
 TEST_CASE("comments schedule and roll exactly like CommentManager", "[gameplay][comments]") {
     CommentRules rules;
 

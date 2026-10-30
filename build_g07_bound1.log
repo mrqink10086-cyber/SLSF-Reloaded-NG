@@ -1,0 +1,4 @@
+[0m[32;1m[ 35%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\headers\VmPortHeader.cpp[0m
+[0m[32;1m[ 47%]:[0m [36;1m<SLSFBoundaryTests>[0m compiling.releasedbg tests\boundary\PortTests.cpp[0m
+[0m[32;1m[ 71%]:[0m [36;1m<SLSFBoundaryTests>[0m [36;1mlinking.releasedbg SLSFBoundaryTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.75s[0m

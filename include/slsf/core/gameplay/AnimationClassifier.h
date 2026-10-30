@@ -126,4 +126,4 @@ public:
     AnimationResult Classify(const AnimationFacts& facts, IRandom& rng) const;
 };
 
-} // namespace slsf::gameplay
+}

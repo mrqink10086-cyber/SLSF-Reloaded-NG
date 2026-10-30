@@ -1,0 +1,15 @@
+[0m[32;1m[ 12%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[32;1m[ 15%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 18%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\LegacyOutputs.cpp[0m
+[0m[32;1m[ 21%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\ModEventBridge.cpp[0m
+[0m[32;1m[ 30%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\Settlement.cpp[0m
+[0m[32;1m[ 36%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\GainRules.cpp[0m
+[0m[32;1m[ 49%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\Dispatcher.cpp[0m
+[0m[32;1m[ 52%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\Lifecycle.cpp[0m
+[0m[33;1mIn file included from src\runtime\Dispatcher.cpp:1:
+include\slsf/runtime/Dispatcher.h(158,21): warning: private field 'dispatcher_' is not used [-Wunused-private-field]
+  158 |         Dispatcher* dispatcher_;
+      |                     ^
+1 warning generated.[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 2.203s[0m

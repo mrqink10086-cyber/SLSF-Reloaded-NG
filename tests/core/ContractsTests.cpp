@@ -22,8 +22,7 @@ static_assert(!std::is_same_v<slsf::LocationId, slsf::RegionId>);
 static_assert(!std::is_same_v<slsf::RequestId, slsf::Revision>);
 static_assert(std::is_constructible_v<slsf::LocationId, std::uint32_t>);
 
-} // namespace
-
+}
 TEST_CASE("legacy contract counts are fixed", "[contracts]") {
     STATIC_REQUIRE(slsf::kLegacyInputEventCount == 52);
     STATIC_REQUIRE(slsf::kLegacyReplyEventCount == 7);
@@ -34,7 +33,6 @@ TEST_CASE("legacy contract counts are fixed", "[contracts]") {
     STATIC_REQUIRE(slsf::kDocumentedFameCategoryOrder.size() == 25);
     REQUIRE(slsf::BuildId() == "SLSFCore/0.1.0");
 }
-
 TEST_CASE("fail constructs value and void results", "[contracts]") {
     slsf::Result<void> voidResult = slsf::Fail(slsf::Error::Code::InvalidArgument, "void failure");
     REQUIRE_FALSE(voidResult.has_value());
@@ -44,7 +42,6 @@ TEST_CASE("fail constructs value and void results", "[contracts]") {
     REQUIRE_FALSE(intResult.has_value());
     REQUIRE(intResult.error().code == slsf::Error::Code::OutOfRange);
 }
-
 TEST_CASE("fame category lookup handles ESP spelling", "[contracts]") {
     REQUIRE(slsf::ToString(slsf::FameCategory::Tattoo) == "Tattoo");
     REQUIRE(slsf::ToString(slsf::FameCategory::CumDump) == "Cum Dump");
@@ -56,7 +53,6 @@ TEST_CASE("fame category lookup handles ESP spelling", "[contracts]") {
     REQUIRE(slsf::kLegacyNonCategoryFlags.front() == "Whore Event");
     REQUIRE_FALSE(slsf::ParseFameCategory("not a category").has_value());
 }
-
 TEST_CASE("fame categories have a stable ESP order", "[contracts]") {
     REQUIRE(slsf::kEspFameCategoryOrder.front() == slsf::FameCategory::Whore);
     REQUIRE(slsf::kEspFameCategoryOrder[1] == slsf::FameCategory::Slut);
@@ -66,7 +62,6 @@ TEST_CASE("fame categories have a stable ESP order", "[contracts]") {
     REQUIRE(slsf::kDocumentedFameCategoryOrder[7] == slsf::FameCategory::Group);
     REQUIRE(slsf::kDocumentedFameCategoryOrder[20] == slsf::FameCategory::Tattoo);
 }
-
 TEST_CASE("strong ids do not convert", "[contracts]") {
     const slsf::LocationId location{42};
     const slsf::RegionId region{43};
@@ -78,7 +73,6 @@ TEST_CASE("strong ids do not convert", "[contracts]") {
     REQUIRE(static_cast<bool>(location));
     REQUIRE_FALSE(static_cast<bool>(slsf::LocationId{}));
 }
-
 TEST_CASE("zero is a valid dense location and public location index", "[ids]") {
     REQUIRE(static_cast<bool>(slsf::LocationId{0}));
     REQUIRE(static_cast<bool>(slsf::RegionId{0}));
@@ -88,7 +82,6 @@ TEST_CASE("zero is a valid dense location and public location index", "[ids]") {
     REQUIRE_FALSE(static_cast<bool>(slsf::ApiLocationIndex{}));
     REQUIRE_FALSE(static_cast<bool>(slsf::TaskId{}));
 }
-
 TEST_CASE("unknown facts are not false", "[contracts]") {
     const slsf::Fact unknown;
     REQUIRE(unknown.state == slsf::FactState::Unknown);
@@ -99,7 +92,6 @@ TEST_CASE("unknown facts are not false", "[contracts]") {
     REQUIRE(slsf::Fact::Known(true).IsKnownTrue());
     REQUIRE(slsf::Fact{slsf::FactState::Missing}.Value() == std::nullopt);
 }
-
 TEST_CASE("snapshots are value objects", "[contracts]") {
     slsf::SceneSnapshot original;
     original.status = slsf::Status::Ready;
@@ -126,7 +118,6 @@ TEST_CASE("snapshots are value objects", "[contracts]") {
     REQUIRE(publishedCopy.fame[0] == 1.0);
     REQUIRE(publishedCopy.revision.value == 3);
 }
-
 TEST_CASE("game time keeps day and second units separate", "[contracts]") {
     const auto day = slsf::GameTime::FromDays(1.0);
     const auto fromSeconds = slsf::GameTime::FromSeconds(86400.0);

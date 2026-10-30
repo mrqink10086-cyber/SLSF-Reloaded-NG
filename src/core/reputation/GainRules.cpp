@@ -243,6 +243,27 @@ Result<int> RuleManualDecayAmount(int minDecay, int maxDecay, IRandom& rng, doub
     return rng.UniformInt(minDecay, maxDecay);
 }
 
+Result<int> RuleManualGainAmount(int minGain, int maxGain, IRandom& rng, double maxFameValue) {
+    if (!std::isfinite(maxFameValue) || maxFameValue < 0.0) {
+        return Fail(Error::Code::InvalidArgument, "gain bounds are not finite");
+    }
+    const int cap = Saturate(std::min(kLegacyMaxFameValue, maxFameValue));
+    if (minGain < 0) {
+        minGain = 0;
+    } else if (minGain > cap) {
+        minGain = cap;
+    }
+    if (maxGain < 0) {
+        maxGain = 0;
+    } else if (maxGain > cap) {
+        maxGain = cap;
+    }
+    if (minGain >= maxGain) {
+        return minGain;
+    }
+    return rng.UniformInt(minGain, maxGain);
+}
+
 DecayRollResult RuleDecayRoll(double previousValue,
                               double multiplier,
                               IRandom& rng,

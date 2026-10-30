@@ -1,0 +1,289 @@
+[0m[32;1m[ 30%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\PapyrusBindingsTests.cpp[0m
+[0m[32;1m[ 35%]:[0m [36;1m<SLSFCoreTests>[0m compiling.releasedbg tests\core\RecordLookupTests.cpp[0m
+[0m[32;1m[ 80%]:[0m [36;1m<SLSFCore>[0m compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[32;1m[ 87%]:[0m [36;1m<SLSFCore>[0m [36;1marchiving.releasedbg SLSFCore.lib[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFEngine>[0m [36;1marchiving.releasedbg SLSFEngine.lib[0m
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFCoreTests>[0m [36;1mlinking.releasedbg SLSFCoreTests.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 4.125s[0m
+RUN SLSFCoreTests cases=300 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9170 assertions in 38 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5166 assertions in 38 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2655 assertions in 38 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60089 assertions in 38 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (43993 assertions in 37 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1408 assertions in 37 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (16128 assertions in 37 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (694 assertions in 37 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.611s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.032s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.115s
+[0m[32;1m[ 22%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LegacyOutputsTests.cpp[0m
+[0m[32;1m[ 27%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusBindingsTests.cpp[0m
+[0m[32;1m[ 27%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusCallsTests.cpp[0m
+[0m[32;1m[ 28%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PublicApiTests.cpp[0m
+[0m[32;1m[ 29%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\RecordLookupTests.cpp[0m
+[0m[32;1m[ 65%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[32;1m[ 65%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\LegacyOutputs.cpp[0m
+[0m[32;1m[ 66%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[33;1mtests\core\RecordLookupTests.cpp(170,30): warning: loop variable 'key' creates a copy from type 'const StableFormKey' [-Wrange-loop-construct]
+  170 |     for (const StableFormKey key : {
+      |                              ^
+tests\core\RecordLookupTests.cpp(170,10): note: use reference type 'const StableFormKey &' to prevent copying
+  170 |     for (const StableFormKey key : {
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                              &
+1 warning generated.[0m
+[0m[33;1mtests\core\PapyrusBindingsTests.cpp(36,14): warning: unused function 'F' [-Wunused-function]
+   36 | PapyrusValue F(double value) {
+      |              ^
+tests\core\PapyrusBindingsTests.cpp(42,14): warning: unused function 'Form' [-Wunused-function]
+   42 | PapyrusValue Form(std::uint32_t localFormId) {
+      |              ^~~~
+2 warnings generated.[0m
+[0m[32;1m[ 87%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[ 88%]:[0m [36;1m<SLSFEngineAsan>[0m [36;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[33;1mtests\core\PublicApiTests.cpp(26,15): warning: unused variable 'gNextRegion' [-Wunused-variable]
+   26 | std::uint32_t gNextRegion = 1;
+      |               ^~~~~~~~~~~
+1 warning generated.[0m
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFCoreTestsAsan>[0m [36;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 2.781s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+[0m[1;31;1merror: [0mexecv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason[0m
+
+=================================================================
+==33388==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x128c961a0030 at pc 0x7ff7d7711189 bp 0x0097beaff990 sp 0x0097beaff9d8
+WRITE of size 4 at 0x128c961a0030 thread T0
+    #0 0x7ff7d7711188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff7d7711d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff7d7711d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.094s[0m
+RUN SLSFCoreTestsAsan cases=300 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9170 assertions in 38 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5166 assertions in 38 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2655 assertions in 38 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60089 assertions in 38 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (43993 assertions in 37 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1408 assertions in 37 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (16128 assertions in 37 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (694 assertions in 37 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.347s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.085s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.031s[0m
+RUN StateCodecFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF6F4116108, 00007FF6F41167E3), 
+INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF6F40D39D0,00007FF6F40DA780), 
+INFO:      595 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\StateCodecFuzz-corpus
+INFO: seed corpus: files: 595 min: 1b max: 1673b total: 284812b rss: 37Mb
+#596	INITED cov: 865 ft: 2151 corp: 235/107Kb exec/s: 0 rss: 45Mb
+#1992	REDUCE cov: 865 ft: 2151 corp: 235/107Kb lim: 1329 exec/s: 0 rss: 49Mb L: 262/1319 MS: 1 EraseBytes-
+#3044	NEW    cov: 865 ft: 2153 corp: 236/107Kb lim: 1339 exec/s: 0 rss: 52Mb L: 98/1319 MS: 2 ChangeByte-ChangeByte-
+#5328	REDUCE cov: 865 ft: 2153 corp: 236/107Kb lim: 1359 exec/s: 0 rss: 56Mb L: 323/1319 MS: 4 ChangeASCIIInt-ChangeASCIIInt-ShuffleBytes-EraseBytes-
+#5489	NEW    cov: 865 ft: 2154 corp: 237/107Kb lim: 1359 exec/s: 0 rss: 56Mb L: 268/1319 MS: 1 ChangeBit-
+#7541	REDUCE cov: 865 ft: 2154 corp: 237/107Kb lim: 1379 exec/s: 0 rss: 60Mb L: 388/1319 MS: 2 ChangeByte-EraseBytes-
+#7613	NEW    cov: 865 ft: 2155 corp: 238/107Kb lim: 1379 exec/s: 0 rss: 60Mb L: 98/1319 MS: 2 ChangeByte-CMP- DE: "_\000\000\000\000\000\000\000"-
+#8564	NEW    cov: 865 ft: 2158 corp: 239/108Kb lim: 1379 exec/s: 0 rss: 62Mb L: 492/1319 MS: 1 PersAutoDict- DE: "_\000\000\000\000\000\000\000"-
+#8695	NEW    cov: 865 ft: 2164 corp: 240/108Kb lim: 1379 exec/s: 0 rss: 62Mb L: 89/1319 MS: 1 ChangeByte-
+#9816	NEW    cov: 865 ft: 2165 corp: 241/108Kb lim: 1389 exec/s: 0 rss: 64Mb L: 98/1319 MS: 1 PersAutoDict- DE: "_\000\000\000\000\000\000\000"-
+#12041	REDUCE cov: 865 ft: 2165 corp: 241/108Kb lim: 1409 exec/s: 0 rss: 68Mb L: 1120/1319 MS: 5 ChangeASCIIInt-ShuffleBytes-EraseBytes-PersAutoDict-InsertRepeatedBytes- DE: "_\000\000\000\000\000\000\000"-
+#15987	NEW    cov: 865 ft: 2166 corp: 242/108Kb lim: 1439 exec/s: 0 rss: 75Mb L: 98/1319 MS: 1 ChangeBinInt-
+#20522	REDUCE cov: 865 ft: 2166 corp: 242/108Kb lim: 1479 exec/s: 0 rss: 83Mb L: 716/1319 MS: 5 InsertByte-EraseBytes-InsertRepeatedBytes-InsertByte-InsertRepeatedBytes-
+#21054	REDUCE cov: 865 ft: 2166 corp: 242/108Kb lim: 1479 exec/s: 0 rss: 84Mb L: 192/1319 MS: 2 ShuffleBytes-EraseBytes-
+#21283	NEW    cov: 865 ft: 2167 corp: 243/108Kb lim: 1479 exec/s: 0 rss: 84Mb L: 98/1319 MS: 4 ShuffleBytes-ChangeASCIIInt-ChangeByte-ChangeBinInt-
+#28076	NEW    cov: 865 ft: 2171 corp: 244/108Kb lim: 1539 exec/s: 0 rss: 96Mb L: 89/1319 MS: 3 ChangeBit-ChangeByte-ChangeBit-
+#30357	REDUCE cov: 865 ft: 2171 corp: 244/108Kb lim: 1559 exec/s: 0 rss: 100Mb L: 229/1319 MS: 1 EraseBytes-
+#30844	REDUCE cov: 865 ft: 2171 corp: 244/108Kb lim: 1559 exec/s: 0 rss: 101Mb L: 103/1319 MS: 2 ChangeBit-EraseBytes-
+#30929	NEW    cov: 866 ft: 2172 corp: 245/108Kb lim: 1559 exec/s: 0 rss: 102Mb L: 352/1319 MS: 5 ChangeByte-ChangeByte-ShuffleBytes-ChangeBinInt-ChangeByte-
+#31872	REDUCE cov: 866 ft: 2172 corp: 245/108Kb lim: 1559 exec/s: 0 rss: 103Mb L: 450/1319 MS: 3 ShuffleBytes-ChangeByte-EraseBytes-
+#32533	NEW    cov: 866 ft: 2173 corp: 246/109Kb lim: 1559 exec/s: 0 rss: 104Mb L: 89/1319 MS: 1 ChangeBit-
+#34244	NEW    cov: 870 ft: 2188 corp: 247/109Kb lim: 1569 exec/s: 0 rss: 107Mb L: 540/1319 MS: 1 CrossOver-
+#35960	REDUCE cov: 870 ft: 2188 corp: 247/109Kb lim: 1579 exec/s: 0 rss: 111Mb L: 253/1319 MS: 1 EraseBytes-
+#36837	REDUCE cov: 870 ft: 2188 corp: 247/109Kb lim: 1579 exec/s: 0 rss: 112Mb L: 370/1319 MS: 2 CopyPart-EraseBytes-
+#41578	NEW    cov: 870 ft: 2189 corp: 248/109Kb lim: 1619 exec/s: 0 rss: 120Mb L: 368/1319 MS: 1 ShuffleBytes-
+#43285	NEW    cov: 870 ft: 2190 corp: 249/110Kb lim: 1629 exec/s: 0 rss: 123Mb L: 89/1319 MS: 2 ChangeBit-ChangeBinInt-
+#46131	REDUCE cov: 870 ft: 2190 corp: 249/109Kb lim: 1649 exec/s: 0 rss: 129Mb L: 295/1319 MS: 1 EraseBytes-
+#46202	NEW    cov: 870 ft: 2192 corp: 250/110Kb lim: 1649 exec/s: 0 rss: 129Mb L: 98/1319 MS: 1 ShuffleBytes-
+#46540	REDUCE cov: 870 ft: 2192 corp: 250/110Kb lim: 1649 exec/s: 0 rss: 129Mb L: 871/1319 MS: 3 CopyPart-InsertRepeatedBytes-EraseBytes-
+#46741	NEW    cov: 870 ft: 2193 corp: 251/110Kb lim: 1649 exec/s: 0 rss: 130Mb L: 89/1319 MS: 1 ChangeByte-
+#48532	NEW    cov: 870 ft: 2196 corp: 252/110Kb lim: 1659 exec/s: 0 rss: 133Mb L: 540/1319 MS: 1 ChangeByte-
+#50293	REDUCE cov: 870 ft: 2196 corp: 252/110Kb lim: 1669 exec/s: 0 rss: 136Mb L: 274/1319 MS: 1 EraseBytes-
+#50485	NEW    cov: 870 ft: 2198 corp: 253/111Kb lim: 1669 exec/s: 0 rss: 136Mb L: 540/1319 MS: 2 ChangeBit-ShuffleBytes-
+#52359	NEW    cov: 871 ft: 2200 corp: 254/111Kb lim: 1679 exec/s: 0 rss: 139Mb L: 540/1319 MS: 4 ChangeASCIIInt-ChangeByte-ShuffleBytes-ChangeByte-
+#55036	REDUCE cov: 871 ft: 2200 corp: 254/111Kb lim: 1699 exec/s: 0 rss: 144Mb L: 712/1319 MS: 2 CopyPart-EraseBytes-
+#58147	NEW    cov: 871 ft: 2201 corp: 255/112Kb lim: 1729 exec/s: 0 rss: 150Mb L: 540/1319 MS: 1 PersAutoDict- DE: "_\000\000\000\000\000\000\000"-
+#60278	REDUCE cov: 871 ft: 2201 corp: 255/112Kb lim: 1749 exec/s: 0 rss: 154Mb L: 483/1319 MS: 1 EraseBytes-
+#60875	REDUCE cov: 871 ft: 2201 corp: 255/112Kb lim: 1749 exec/s: 0 rss: 155Mb L: 707/1319 MS: 2 ChangeBit-EraseBytes-
+#61016	NEW    cov: 871 ft: 2203 corp: 256/112Kb lim: 1749 exec/s: 0 rss: 156Mb L: 540/1319 MS: 1 ChangeBit-
+#61478	REDUCE cov: 871 ft: 2203 corp: 256/112Kb lim: 1749 exec/s: 0 rss: 156Mb L: 112/1319 MS: 2 ShuffleBytes-EraseBytes-
+#65819	REDUCE cov: 871 ft: 2203 corp: 256/112Kb lim: 1789 exec/s: 0 rss: 163Mb L: 917/1319 MS: 1 EraseBytes-
+#66400	NEW    cov: 871 ft: 2204 corp: 257/113Kb lim: 1789 exec/s: 0 rss: 165Mb L: 540/1319 MS: 1 PersAutoDict- DE: "_\000\000\000\000\000\000\000"-
+#67942	NEW    cov: 871 ft: 2205 corp: 258/113Kb lim: 1799 exec/s: 67942 rss: 167Mb L: 541/1319 MS: 2 InsertByte-ChangeBinInt-
+#70284	NEW    cov: 871 ft: 2206 corp: 259/114Kb lim: 1819 exec/s: 70284 rss: 172Mb L: 541/1319 MS: 2 CMP-PersAutoDict- DE: "6L\000\001"-"_\000\000\000\000\000\000\000"-
+#76770	NEW    cov: 871 ft: 2207 corp: 260/114Kb lim: 1879 exec/s: 76770 rss: 183Mb L: 89/1319 MS: 1 CopyPart-
+#77521	REDUCE cov: 871 ft: 2207 corp: 260/114Kb lim: 1879 exec/s: 77521 rss: 184Mb L: 108/1319 MS: 1 EraseBytes-
+#78977	NEW    cov: 871 ft: 2208 corp: 261/114Kb lim: 1889 exec/s: 78977 rss: 186Mb L: 540/1319 MS: 1 PersAutoDict- DE: "_\000\000\000\000\000\000\000"-
+#79488	NEW    cov: 871 ft: 2211 corp: 262/115Kb lim: 1889 exec/s: 79488 rss: 187Mb L: 89/1319 MS: 1 ChangeBinInt-
+#79565	REDUCE cov: 871 ft: 2211 corp: 262/115Kb lim: 1889 exec/s: 79565 rss: 188Mb L: 101/1319 MS: 2 ChangeByte-EraseBytes-
+#80896	REDUCE cov: 871 ft: 2211 corp: 262/115Kb lim: 1899 exec/s: 80896 rss: 191Mb L: 225/1319 MS: 4 PersAutoDict-EraseBytes-ChangeBit-InsertByte- DE: "_\000\000\000\000\000\000\000"-
+#81122	NEW    cov: 871 ft: 2213 corp: 263/115Kb lim: 1899 exec/s: 81122 rss: 192Mb L: 89/1319 MS: 1 ChangeBinInt-
+#81728	NEW    cov: 871 ft: 2214 corp: 264/115Kb lim: 1899 exec/s: 81728 rss: 193Mb L: 89/1319 MS: 1 PersAutoDict- DE: "6L\000\001"-
+#84964	REDUCE cov: 871 ft: 2214 corp: 264/115Kb lim: 1929 exec/s: 84964 rss: 199Mb L: 68/1319 MS: 1 EraseBytes-
+#86563	REDUCE cov: 871 ft: 2214 corp: 264/115Kb lim: 1939 exec/s: 86563 rss: 202Mb L: 405/1319 MS: 4 ChangeByte-CMP-ChangeBit-EraseBytes- DE: "\377\377\377\377\377\377\377\016"-
+#86929	REDUCE cov: 871 ft: 2214 corp: 264/115Kb lim: 1939 exec/s: 86929 rss: 203Mb L: 106/1319 MS: 1 EraseBytes-
+#92595	NEW    cov: 871 ft: 2216 corp: 265/115Kb lim: 1989 exec/s: 92595 rss: 212Mb L: 540/1319 MS: 1 CMP- DE: "\010\000\000\000"-
+#92737	REDUCE cov: 871 ft: 2216 corp: 265/115Kb lim: 1989 exec/s: 92737 rss: 213Mb L: 1083/1319 MS: 2 ChangeASCIIInt-EraseBytes-
+#94441	REDUCE cov: 871 ft: 2216 corp: 265/115Kb lim: 1999 exec/s: 94441 rss: 216Mb L: 64/1319 MS: 4 ChangeByte-ChangeBinInt-ChangeBit-EraseBytes-
+#100000	DONE   cov: 871 ft: 2216 corp: 265/115Kb lim: 2049 exec/s: 100000 rss: 226Mb
+###### Recommended dictionary. ######
+"_\000\000\000\000\000\000\000" # Uses: 6608
+"6L\000\001" # Uses: 1047
+"\377\377\377\377\377\377\377\016" # Uses: 311
+"\010\000\000\000" # Uses: 164
+###### End of recommended dictionary. ######
+Done 100000 runs in 1 second(s)
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.094s[0m
+RUN SLSFCoreTests cases=8 jobs=8 seed=1170
+SHARD 1/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (600 assertions in 1 test case)
+SHARD 2/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (800 assertions in 1 test case)
+SHARD 3/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1600 assertions in 1 test case)
+SHARD 4/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (400 assertions in 1 test case)
+SHARD 5/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+SHARD 6/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+SHARD 7/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 8/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.145s
+[0m[32;1m[ 89%]:[0m [36;1m<SLSFBench>[0m [36;1mlinking.releasedbg SLSFBench.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.297s[0m
+RUN SLSFBench -> E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=26.54ms (63.2ns/row) avx2=6.29ms (15.0ns/row, 4.22x) relax_scalar=2.98ms (7.1ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=16.22ms (63.4ns/row) avx2=3.94ms (15.4ns/row, 4.12x) relax_scalar=1.78ms (6.9ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=12.56ms (65.4ns/row) avx2=3.35ms (17.4ns/row, 3.75x) relax_scalar=1.40ms (7.3ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=3.1µs/batch total=0.006s
+BENCH settlement accounts=64 batches=800 advance+publish=8.6µs/batch total=0.007s
+BENCH report: E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+[0m[32;1m[ 89%]:[0m [36;1m<SLSFDispatcherOfflineProbe>[0m [36;1mlinking.releasedbg SLSFDispatcherOfflineProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.313s[0m
+RUN SLSFDispatcherOfflineProbe
+heartbeat=3600 frames=3600 simulated_seconds=60 max_pump_us=83.8 long_wait_seconds=1000000 completions=3 stale_callbacks=0
+OFFLINE_WAKE_PROBE=PASS
+PASS native tests: mode=all seed=1170

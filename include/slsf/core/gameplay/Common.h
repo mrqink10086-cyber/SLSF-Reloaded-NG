@@ -25,7 +25,6 @@ inline Tri TriOf(const Fact& fact) noexcept {
     }
     return Tri::Unknown;
 }
-
 inline Tri TriNot(Tri value) noexcept {
     switch (value) {
     case Tri::False: return Tri::True;
@@ -33,7 +32,6 @@ inline Tri TriNot(Tri value) noexcept {
     default: return Tri::Unknown;
     }
 }
-
 inline Tri TriAnd(Tri lhs, Tri rhs) noexcept {
     if (lhs == Tri::False || rhs == Tri::False) {
         return Tri::False;
@@ -43,7 +41,6 @@ inline Tri TriAnd(Tri lhs, Tri rhs) noexcept {
     }
     return Tri::Unknown;
 }
-
 inline Tri TriOr(Tri lhs, Tri rhs) noexcept {
     if (lhs == Tri::True || rhs == Tri::True) {
         return Tri::True;
@@ -53,7 +50,6 @@ inline Tri TriOr(Tri lhs, Tri rhs) noexcept {
     }
     return Tri::Unknown;
 }
-
 inline Tri TriAll(const std::vector<Tri>& values) noexcept {
     Tri result = Tri::True;
     for (const Tri value : values) {
@@ -64,7 +60,6 @@ inline Tri TriAll(const std::vector<Tri>& values) noexcept {
     }
     return result;
 }
-
 inline Tri TriAny(const std::vector<Tri>& values) noexcept {
     Tri result = Tri::False;
     for (const Tri value : values) {
@@ -75,7 +70,6 @@ inline Tri TriAny(const std::vector<Tri>& values) noexcept {
     }
     return result;
 }
-
 struct RuleDecision {
     Status status{Status::NotReady};
     bool value{};
@@ -148,5 +142,4 @@ inline RelationshipGroup ClassifyRelationshipRank(int rank) noexcept {
     }
     return RelationshipGroup::Lover;
 }
-
-} // namespace slsf::gameplay
+}

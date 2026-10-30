@@ -1,6 +1,7 @@
 #pragma once
 
 #include <condition_variable>
+#include <chrono>
 #include <cstddef>
 #include <cstdint>
 #include <deque>
@@ -37,13 +38,8 @@ struct CapabilityRequirement {
     std::size_t requiredFunctionCount{0};
 };
 
-// A provider-owned snapshot of one optional runtime dependency.  The registry
-// validates it immediately and never retains the raw function pointers.
 struct CapabilityProbeResult {
     bool loaded{false};
-    // True when the dependency is known to be installable later (for example
-    // a plugin whose kPostLoad broadcast has not run yet).  Pending results
-    // become Waiting and are retried; a plain missing module is terminal.
     bool pending{false};
     std::uint32_t version{0};
     std::uint32_t apiVersion{0};
@@ -64,11 +60,12 @@ struct CapabilityRecord {
     std::string reason;
 };
 
-// Process-lifetime registry for optional integrations.  Ensure() is
-// serialized: a duplicate concurrent request observes the single in-flight
-// result instead of probing twice.  Waiting is the only retryable terminal
-// state, allowing a dependency loaded after our first message to complete its
-// query later.
+struct CapabilityWaitPolicy {
+    std::chrono::milliseconds joinWait{10000};
+    std::chrono::milliseconds waitingTimeout{60000};
+    std::uint32_t maxWaitingProbes{8};
+};
+
 class CapabilityRegistry {
 public:
     explicit CapabilityRegistry(CapabilityQuery query);
@@ -76,17 +73,13 @@ public:
     CapabilityRegistry(const CapabilityRegistry&) = delete;
     CapabilityRegistry& operator=(const CapabilityRegistry&) = delete;
 
-    // Returns false when the id is already registered with a different
-    // requirement or the requirement is malformed.
     bool Require(CapabilityRequirement requirement);
 
-    // Queries (or shares an in-flight query for) one capability.  Unknown ids
-    // are reported as Incompatible rather than auto-registered. A synchronous
-    // dependency cycle returns Incompatible to the nested caller; the active
-    // provider still owns its query result.
     CapabilityState Ensure(std::string_view id);
 
     void EnsureAll();
+
+    void SetWaitPolicy(CapabilityWaitPolicy policy);
 
     [[nodiscard]] std::optional<CapabilityRecord> Find(std::string_view id) const;
     [[nodiscard]] bool IsAvailable(std::string_view id) const;
@@ -100,16 +93,18 @@ private:
         bool querying{false};
         std::thread::id queryThread;
         std::condition_variable completed;
+        std::chrono::steady_clock::time_point waitingSince{};
+        std::uint32_t waitingProbes{0};
     };
 
     mutable std::mutex mutex_;
     CapabilityQuery query_;
-    // Deque keeps Entry references stable while callers wait on completed.
     std::deque<Entry> entries_;
     std::map<std::thread::id, Entry*> waitingOn_;
+    CapabilityWaitPolicy policy_;
 };
 
 [[nodiscard]] CapabilityRecord EvaluateCapability(const CapabilityRequirement& requirement,
                                                   const CapabilityProbeResult& probe);
 
-} // namespace slsf::integrations
+}

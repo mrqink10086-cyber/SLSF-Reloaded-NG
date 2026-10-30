@@ -32,7 +32,6 @@ struct EngineContext {
 [[nodiscard]] inline bool IsLegalContext(const EngineContext& context) noexcept {
     return context.mainThread && context.inGame;
 }
-
 inline constexpr std::size_t kEquipmentSlotCount = 61;
 
 struct EquippedItemSnapshot {
@@ -82,7 +81,6 @@ struct ActorSnapshot {
 [[nodiscard]] inline bool IsRelationshipRankValid(int rank) noexcept {
     return rank >= -4 && rank <= 4;
 }
-
 [[nodiscard]] inline Status StatusFromError(const Error& error) noexcept {
     switch (error.code) {
     case Error::Code::InvalidArgument:
@@ -99,7 +97,6 @@ struct ActorSnapshot {
     }
     return Status::Invalid;
 }
-
 // The adapter seam.  QueryActor is one call per target so tests can assert the
 // exact number of engine queries during a dirty refresh.
 class IEngineBackend {
@@ -112,4 +109,4 @@ public:
                                                            const StableFormKey& player) const = 0;
 };
 
-} // namespace slsf::engine
+}

@@ -188,4 +188,4 @@ private:
     IRandom& rng_;
 };
 
-} // namespace slsf::gameplay
+}

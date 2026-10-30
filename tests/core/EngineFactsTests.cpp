@@ -20,7 +20,6 @@ using namespace slsf::engine;
 StableFormKey Key(std::string plugin, std::uint32_t localFormId) {
     return StableFormKey{std::move(plugin), localFormId};
 }
-
 ActorSnapshot ReadyActor(const StableFormKey& actor, const StableFormKey& player,
                          int relationshipRank = 0) {
     ActorSnapshot snapshot;
@@ -46,7 +45,6 @@ ActorSnapshot ReadyActor(const StableFormKey& actor, const StableFormKey& player
     snapshot.equipment.slots[32].keywords = {"SLS_BikiniArmor"};
     return snapshot;
 }
-
 class FakeBackend final : public IEngineBackend {
 public:
     EngineContext context{true, true};
@@ -90,8 +88,7 @@ public:
     }
 };
 
-} // namespace
-
+}
 TEST_CASE("game data refresh canonicalizes loaded plugin names", "[engine][gamedata]") {
     FakeBackend backend;
     GameDataService gameData(backend);
@@ -126,7 +123,6 @@ TEST_CASE("game data refresh canonicalizes loaded plugin names", "[engine][gamed
     REQUIRE(maxId.has_value());
     REQUIRE(maxId->localFormId == 0x00FFFFFFu);
 }
-
 TEST_CASE("game data refuses illegal contexts and preserves the cache on failure",
           "[engine][gamedata]") {
     FakeBackend backend;
@@ -159,7 +155,6 @@ TEST_CASE("game data refuses illegal contexts and preserves the cache on failure
     REQUIRE(gameData.CachedCount() == 0);
     REQUIRE(gameData.DirtyCount() == 0);
 }
-
 TEST_CASE("dirty refresh issues exactly one engine query per target", "[engine][gamedata]") {
     FakeBackend backend;
     GameDataService gameData(backend);
@@ -187,7 +182,6 @@ TEST_CASE("dirty refresh issues exactly one engine query per target", "[engine][
     REQUIRE(gameData.RefreshDirty(player) == Status::Ready);
     REQUIRE(backend.queryCalls == callsAfterFirstRefresh);
 }
-
 TEST_CASE("plugin refresh and the cache share one canonical key spelling",
           "[engine][gamedata]") {
     FakeBackend backend;
@@ -222,7 +216,6 @@ TEST_CASE("plugin refresh and the cache share one canonical key spelling",
     REQUIRE(gameData.CachedCount() == 1);
     REQUIRE(gameData.Find(canonical) != nullptr);
 }
-
 TEST_CASE("targeted refresh never drains unrelated dirty history", "[engine][gamedata]") {
     FakeBackend backend;
     GameDataService gameData(backend);
@@ -250,7 +243,6 @@ TEST_CASE("targeted refresh never drains unrelated dirty history", "[engine][gam
     REQUIRE(gameData.DirtyCount() == 0);
     REQUIRE(gameData.Find(historical) != nullptr);
 }
-
 TEST_CASE("dirty refresh canonicalizes and rejects invalid player keys",
           "[engine][gamedata]") {
     FakeBackend backend;
@@ -281,7 +273,6 @@ TEST_CASE("dirty refresh canonicalizes and rejects invalid player keys",
     REQUIRE(backend.queryCalls == callsBeforeInvalidPlayer);
     REQUIRE(gameData.DirtyCount() == 1);
 }
-
 TEST_CASE("forget removes both the cached snapshot and its dirty bit", "[engine][gamedata]") {
     FakeBackend backend;
     GameDataService gameData(backend);
@@ -300,7 +291,6 @@ TEST_CASE("forget removes both the cached snapshot and its dirty bit", "[engine]
     REQUIRE(gameData.Find(actor) == nullptr);
     REQUIRE(gameData.Forget(Key("SLSF.esp", 0)) == Status::Invalid);
 }
-
 TEST_CASE("dirty refresh retries transient failures but forgets missing actors",
           "[engine][gamedata]") {
     FakeBackend backend;
@@ -342,7 +332,6 @@ TEST_CASE("dirty refresh retries transient failures but forgets missing actors",
     REQUIRE(gameData.DirtyCount() == 0);
     REQUIRE(gameData.Find(missing)->status == Status::Ready);
 }
-
 TEST_CASE("a returned non-ready snapshot stays dirty as a partial observation",
           "[engine][gamedata]") {
     FakeBackend backend;
@@ -365,7 +354,6 @@ TEST_CASE("a returned non-ready snapshot stays dirty as a partial observation",
     REQUIRE(backend.queryCalls == 2);
     REQUIRE(gameData.DirtyCount() == 1);
 }
-
 TEST_CASE("dirty refresh rejects actor mismatches, negative facts and partial snapshots",
           "[engine][gamedata]") {
     FakeBackend backend;
@@ -430,7 +418,6 @@ TEST_CASE("dirty refresh rejects actor mismatches, negative facts and partial sn
         REQUIRE(gameData.DirtyCount() == 1);
     }
 }
-
 TEST_CASE("game data store validates facts and clears the dirty bit", "[engine][gamedata]") {
     FakeBackend backend;
     GameDataService gameData(backend);
@@ -473,7 +460,6 @@ TEST_CASE("game data store validates facts and clears the dirty bit", "[engine][
     (void)emptyId;
     REQUIRE(gameData.MarkDirty(StableFormKey{}) == Status::Invalid);
 }
-
 TEST_CASE("actor queries require a legal engine context before touching the backend",
           "[engine][queries]") {
     FakeBackend backend;
@@ -503,7 +489,6 @@ TEST_CASE("actor queries require a legal engine context before touching the back
     REQUIRE(backend.contextCalls == 12);
     REQUIRE(gameData.CachedCount() == 0);
 }
-
 TEST_CASE("actor queries cache successful snapshots and expose cached lookups",
           "[engine][queries]") {
     FakeBackend backend;
@@ -542,7 +527,6 @@ TEST_CASE("actor queries cache successful snapshots and expose cached lookups",
     REQUIRE(backend.contextCalls == contextBefore + 1);
     REQUIRE(backend.queryCalls == 5);
 }
-
 TEST_CASE("actor queries reject a snapshot that belongs to another player",
           "[engine][queries]") {
     FakeBackend backend;
@@ -559,7 +543,6 @@ TEST_CASE("actor queries reject a snapshot that belongs to another player",
     REQUIRE(backend.queryCalls == 1);
     REQUIRE(gameData.CachedCount() == 0);
 }
-
 TEST_CASE("actor queries reject non-finite distances before caching",
           "[engine][queries]") {
     FakeBackend backend;
@@ -580,7 +563,6 @@ TEST_CASE("actor queries reject non-finite distances before caching",
         REQUIRE(gameData.CachedCount() == 0);
     }
 }
-
 TEST_CASE("actor queries propagate an engine error after earlier successes",
           "[engine][queries]") {
     FakeBackend backend;
@@ -598,7 +580,6 @@ TEST_CASE("actor queries propagate an engine error after earlier successes",
     REQUIRE(gameData.Find(first) != nullptr);
     REQUIRE(gameData.Find(missing) == nullptr);
 }
-
 TEST_CASE("refresh current actors marks each target and merges one query per actor",
           "[engine][queries]") {
     FakeBackend backend;
@@ -617,7 +598,6 @@ TEST_CASE("refresh current actors marks each target and merges one query per act
     REQUIRE(gameData.Find(first)->relationshipRank == 1);
     REQUIRE(gameData.Find(second)->relationshipRank == 4);
 }
-
 TEST_CASE("actor snapshots translate into the core witness DTO", "[engine][queries]") {
     const StableFormKey actor = Key("Skyrim.esm", 0x100);
     const StableFormKey player = Key("Skyrim.esm", 0x14);

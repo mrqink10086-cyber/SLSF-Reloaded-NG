@@ -1,0 +1,24 @@
+[0m[38;5;2;1m[  3%]:[0m [38;5;5;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\CapabilityRegistryTests.cpp[0m
+[0m[38;5;2;1m[ 23%]:[0m [38;5;5;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LifecycleTests.cpp[0m
+[0m[38;5;2;1m[ 29%]:[0m [38;5;5;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusCallsTests.cpp[0m
+[0m[38;5;2;1m[ 30%]:[0m [38;5;5;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PublicApiTests.cpp[0m
+[0m[38;5;2;1m[ 71%]:[0m [38;5;5;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\CapabilityRegistry.cpp[0m
+[0m[38;5;2;1m[ 71%]:[0m [38;5;5;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[38;5;2;1m[ 71%]:[0m [38;5;5;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[38;5;2;1m[ 76%]:[0m [38;5;5;1m<SLSFEngineAsan>[0m cache compiling.releasedbg src\engine\EventBridge.cpp[0m
+[0m[38;5;2;1m[ 82%]:[0m [38;5;5;1m<SLSFCoreAsan>[0m [38;5;5;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[38;5;2;1m[ 83%]:[0m [38;5;5;1m<SLSFEngineAsan>[0m [38;5;5;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[38;5;3;1mtests\core\PublicApiTests.cpp(42,15): warning: unused variable 'gNextRegion' [-Wunused-variable]
+   42 | std::uint32_t gNextRegion = 1;
+      |               ^~~~~~~~~~~
+1 warning generated.[0m
+[0m[38;5;3;1mtests\core\LifecycleTests.cpp(101,9): warning: missing field 'parentFormId' initializer [-Wmissing-designated-field-initializers]
+  101 |         });
+      |         ^
+tests\core\LifecycleTests.cpp(184,69): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers]
+  184 |     REQUIRE(lifecycle.PrepareNewGame(SessionContext{.randomSeed = 42}));
+      |                                                                     ^
+tests\core\LifecycleTests.cpp(184,69): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers]
+tests\core\LifecycleTests.cpp(208,68): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers][0m
+[0m[38;5;2;1m[ 92%]:[0m [38;5;5;1m<SLSFCoreTestsAsan>[0m [38;5;5;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 2.891s[0m

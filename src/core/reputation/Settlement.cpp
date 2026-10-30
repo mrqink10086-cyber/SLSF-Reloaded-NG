@@ -457,6 +457,40 @@ Result<double> ApplyManualDecay(State& state, RegionId target, FameCategory cate
     return *amount;
 }
 
+Result<double> ApplyManualGain(State& state, RegionId target, FameCategory category,
+                               int minimum, int maximum,
+                               const Configuration& configuration,
+                               IRandom& rng) {
+    if (!ValidCategory(category)) {
+        return Fail(Error::Code::InvalidArgument, "invalid fame category");
+    }
+    if (!ValidAccount(state, target)) {
+        return Fail(Error::Code::InvalidArgument, "invalid target region");
+    }
+    const auto amount =
+        RuleManualGainAmount(minimum, maximum, rng, kLegacyMaxFameValue);
+    if (!amount) {
+        return std::unexpected(amount.error());
+    }
+    static_cast<void>(configuration);
+    if (*amount <= 0.0) {
+        return *amount;
+    }
+
+    auto& account = state.accounts[target.value];
+    const double previous = account.fame[category];
+    const double next = std::min(kLegacyMaxFameValue, previous + *amount);
+    account.local[category] = next;
+    account.remote[category] = std::min(account.remote[category], next);
+
+    const auto oldPositive = account.positiveMask;
+    const auto oldLocal = account.localMask;
+    const auto oldFlagged = account.flaggedMask;
+    RepublishAccount(state, target.value, oldPositive, oldLocal, oldFlagged);
+    BumpRevision(state);
+    return next;
+}
+
 Result<SpreadPulseResult> ApplySpreadPulse(State& state, GameTime now,
                                            std::span<const RegionId> sources,
                                            const DiffusionGraph& graph,

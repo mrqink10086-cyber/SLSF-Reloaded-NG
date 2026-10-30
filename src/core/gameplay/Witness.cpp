@@ -7,8 +7,7 @@
 namespace slsf::gameplay {
 namespace {
 
-} // namespace
-
+}
 const NpcScanEntry* NpcScanResult::SuccessEntry() const {
     for (const NpcScanEntry& entry : entries) {
         if (entry.scored) {
@@ -17,7 +16,6 @@ const NpcScanEntry* NpcScanResult::SuccessEntry() const {
     }
     return nullptr;
 }
-
 NpcScanner::NpcScanner(WitnessSettings settings, IRandom& rng)
     : settings_(std::move(settings)), rng_(rng) {}
 
@@ -28,7 +26,6 @@ void NpcScanner::Reset() noexcept {
     batchActors_.clear();
     previousEntries_.clear();
 }
-
 NpcScanResult NpcScanner::Run(const std::vector<NpcScanTargetFacts>& targets) {
     // A paused batch may be retried with the same actor list.  Any other call is
     // a fresh cast, which must not inherit the previous scan's success flag.
@@ -186,7 +183,6 @@ NpcScanResult NpcScanner::Run(const std::vector<NpcScanTargetFacts>& targets) {
     batchActors_.clear();
     return result;
 }
-
 CandidateSelector::CandidateSelector(IRandom& rng) : rng_(rng) {}
 
 FameSelectionResult CandidateSelector::Select(
@@ -243,7 +239,6 @@ FameSelectionResult CandidateSelector::Select(
     result.shortfall = applied < result.wanted;
     return result;
 }
-
 FameGainRoller::FameGainRoller(IRandom& rng) : rng_(rng) {}
 
 namespace {
@@ -285,7 +280,6 @@ std::optional<int> UpdateBetrayModifier(const FameGainRollFacts& facts,
     }
     return fame.value / (friendRelationship ? 2 : 4);
 }
-
 Tri BetrayGate(const FameGainRollFacts& facts, std::size_t index, int roll,
                std::optional<int> modifier) {
     const WitnessSettings& settings = facts.settings;
@@ -315,9 +309,7 @@ Tri BetrayGate(const FameGainRollFacts& facts, std::size_t index, int roll,
     }
     return (roll - *modifier <= chance) ? Tri::True : Tri::False;
 }
-
-} // namespace
-
+}
 FameGainRollResult FameGainRoller::Run(const FameGainRollFacts& facts) {
     FameGainRollResult result;
     if (facts.status != Status::Ready) {
@@ -389,5 +381,4 @@ FameGainRollResult FameGainRoller::Run(const FameGainRollFacts& facts) {
     result.status = result.selection.status;
     return result;
 }
-
-} // namespace slsf::gameplay
+}

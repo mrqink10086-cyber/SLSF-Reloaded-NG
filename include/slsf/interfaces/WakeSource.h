@@ -15,4 +15,4 @@ public:
     virtual void Stop() = 0;
 };
 
-} // namespace slsf
+}
