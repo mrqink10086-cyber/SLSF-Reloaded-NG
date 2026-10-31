@@ -1,0 +1,7 @@
+Starting 1 compile threads for 1 files...
+Compiling "SLSFGroup08PPlusProbe"...
+E:\source\repos\SLSF Reloaded NG\.scratch\group08-probe\SLSFGroup08PPlusProbe.psc(4,29): GetCurrentInteractionFlags is not a function or does not exist
+No output generated for E:/source/repos/SLSF Reloaded NG/.scratch/group08-probe/SLSFGroup08PPlusProbe.psc, compilation failed.
+
+Batch compile of 1 files finished. 0 succeeded, 1 failed.
+Failed on E:/source/repos/SLSF Reloaded NG/.scratch/group08-probe/SLSFGroup08PPlusProbe.psc

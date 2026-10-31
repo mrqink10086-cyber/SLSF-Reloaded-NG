@@ -1,14 +1,16 @@
 #include "slsf/integrations/PapyrusCalls.h"
 
 #include <algorithm>
+#include <atomic>
 #include <cstddef>
+#include <stdexcept>
 #include <utility>
 
 namespace slsf {
 
 struct PapyrusCalls::Call {
     mutable std::mutex mutex;
-    bool delivered{false};
+    std::atomic<bool> delivered{false};
     RequestId id{};
     bool hasId{false};
     std::int64_t deadlineMs{0};
@@ -26,10 +28,10 @@ bool PapyrusCalls::DeliverCall(const std::shared_ptr<Call>& call,
     Outcome handler;
     {
         std::lock_guard<std::mutex> guard(call->mutex);
-        if (call->delivered) {
+        if (call->delivered.load()) {
             return false;
         }
-        call->delivered = true;
+        call->delivered.store(true);
         call->terminal = kind;
         handler = std::move(call->onDone);
     }
@@ -49,7 +51,7 @@ bool PapyrusCalls::DeliverCall(const std::shared_ptr<Call>& call,
 void PapyrusCalls::VacuumDelivered() {
     calls_.erase(std::remove_if(calls_.begin(), calls_.end(),
                                 [](const std::shared_ptr<Call>& call) {
-                                    return !call || call->delivered;
+                                    return !call || call->delivered.load();
                                 }),
                  calls_.end());
 }
@@ -59,16 +61,19 @@ PapyrusCalls::~PapyrusCalls() {
         std::lock_guard<std::mutex> guard(mutex_);
         pending.reserve(calls_.size());
         for (const auto& call : calls_) {
-            if (call && !call->delivered) {
+            if (call && !call->delivered.load()) {
                 pending.push_back(call);
             }
         }
         calls_.clear();
     }
     for (const auto& call : pending) {
-        transport_.RequestCancellation(call->id);
         PapyrusCalls::DeliverCall(call, PapyrusCallKind::Cancelled, Status::NotReady, {},
                                   "call destroyed with the owning PapyrusCalls instance");
+        try {
+            transport_.RequestCancellation(call->id);
+        } catch (...) {
+        }
     }
 }
 PapyrusCalls::PapyrusCalls(IVmPort& transport, EpochProbe currentEpoch,
@@ -89,7 +94,7 @@ RequestId PapyrusCalls::Submit(VmTargetKind target, const StableFormKey& instanc
         if (options_.maxInFlight > 0) {
             std::size_t pending = 0;
             for (const auto& entry : calls_) {
-                if (entry && !entry->delivered) {
+                if (entry && !entry->delivered.load()) {
                     ++pending;
                 }
             }
@@ -117,7 +122,14 @@ RequestId PapyrusCalls::Submit(VmTargetKind target, const StableFormKey& instanc
         return RequestId{};
     }
 
-    const Epoch submittedEpoch = epoch_ ? epoch_() : Epoch{};
+    Epoch submittedEpoch{};
+    try {
+        if (!epoch_) throw std::runtime_error("epoch probe unavailable");
+        submittedEpoch = epoch_();
+    } catch (...) {
+        DeliverCall(call, PapyrusCallKind::Failed, Status::NotReady, {}, "epoch probe failed");
+        return {};
+    }
 
     VmRequest request;
     request.epoch = submittedEpoch;
@@ -127,6 +139,13 @@ RequestId PapyrusCalls::Submit(VmTargetKind target, const StableFormKey& instanc
     request.function = std::move(function);
     request.arguments = std::move(arguments);
 
+    {
+        std::lock_guard<std::mutex> guard(mutex_);
+        call->hasId = false;
+        calls_.push_back(call);
+        lastInstanceTarget_ = (target == VmTargetKind::Instance);
+    }
+
     VmCompletion completion = [call, probe = epoch_, submittedEpoch](VmResult result) {
         PapyrusCallKind kind = PapyrusCallKind::Failed;
         Status base = result.status;
@@ -135,34 +154,47 @@ RequestId PapyrusCalls::Submit(VmTargetKind target, const StableFormKey& instanc
         bool terminal = true;
         {
             std::lock_guard<std::mutex> guard(call->mutex);
-            terminal = call->delivered;
+            terminal = call->delivered.load();
         }
         if (terminal) {
             return;
         }
-        if (result.status == Status::Ready) {
+        if (result.status == Status::Stale) {
+            kind = PapyrusCallKind::Stale;
+            error = error.empty() ? "transport reported a stale result" : error;
+        } else if (result.status == Status::Ready) {
             if (!probe) {
                 kind = PapyrusCallKind::Failed;
                 base = Status::Invalid;
                 error = "epoch probe unavailable";
-            } else if (probe() != submittedEpoch) {
-                kind = PapyrusCallKind::Stale;
-                base = Status::Stale;
-                error = "result epoch is not the current session epoch";
             } else {
-                kind = PapyrusCallKind::Ready;
+                try {
+                    if (result.epoch != submittedEpoch || probe() != submittedEpoch) {
+                        kind = PapyrusCallKind::Stale;
+                        base = Status::Stale;
+                        error = "result epoch is not the current session epoch";
+                    } else {
+                        kind = PapyrusCallKind::Ready;
+                    }
+                } catch (...) {
+                    base = Status::NotReady;
+                    error = "epoch probe failed";
+                }
             }
         }
         PapyrusCalls::DeliverCall(call, kind, base, std::move(values), std::move(error));
     };
 
-    const RequestId id = transport_.Submit(std::move(request), std::move(completion));
+    RequestId id{};
+    try {
+        id = transport_.Submit(std::move(request), std::move(completion));
+    } catch (...) {
+        DeliverCall(call, PapyrusCallKind::Failed, Status::NotReady, {}, "VM submission failed");
+    }
     {
         std::lock_guard<std::mutex> guard(mutex_);
         call->id = id;
         call->hasId = true;
-        calls_.push_back(call);
-        lastInstanceTarget_ = (target == VmTargetKind::Instance);
     }
     return id;
 }
@@ -171,6 +203,17 @@ RequestId PapyrusCalls::SubmitGlobal(std::string script, std::string function,
     return Submit(VmTargetKind::Global, StableFormKey{}, std::move(script),
                   std::move(function), std::move(arguments), std::move(onDone));
 }
+bool PapyrusCalls::IsEpochCurrent(const Epoch& epoch) const noexcept {
+    try { return epoch_ && epoch_() == epoch; } catch (...) { return false; }
+}
+Epoch PapyrusCalls::CurrentEpoch() const {
+    try {
+        return epoch_ ? epoch_() : Epoch{};
+    } catch (...) {
+        return {};
+    }
+}
+
 bool PapyrusCalls::Cancel(RequestId id) {
     std::shared_ptr<Call> call;
     {
@@ -185,8 +228,15 @@ bool PapyrusCalls::Cancel(RequestId id) {
     if (!call) {
         return false;
     }
-    return PapyrusCalls::DeliverCall(call, PapyrusCallKind::Cancelled, Status::NotReady,
-                                     {}, "call cancelled");
+    if (!PapyrusCalls::DeliverCall(call, PapyrusCallKind::Cancelled, Status::NotReady, {},
+                                   "call cancelled")) {
+        return false;
+    }
+    try {
+        transport_.RequestCancellation(id);
+    } catch (...) {
+    }
+    return true;
 }
 void PapyrusCalls::Advance(std::int64_t nowMs) {
     std::vector<std::shared_ptr<Call>> expired;
@@ -196,7 +246,7 @@ void PapyrusCalls::Advance(std::int64_t nowMs) {
             nowMs_ = nowMs;
         }
         for (const auto& call : calls_) {
-            if (call && !call->delivered && call->hasDeadline && nowMs_ >= call->deadlineMs) {
+            if (call && !call->delivered.load() && call->hasDeadline && nowMs_ >= call->deadlineMs) {
                 expired.push_back(call);
             }
         }
@@ -210,7 +260,7 @@ std::size_t PapyrusCalls::InFlight() const {
     std::lock_guard<std::mutex> guard(mutex_);
     std::size_t count = 0;
     for (const auto& call : calls_) {
-        if (call && !call->delivered) {
+        if (call && !call->delivered.load()) {
             ++count;
         }
     }

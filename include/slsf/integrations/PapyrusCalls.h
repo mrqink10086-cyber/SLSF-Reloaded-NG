@@ -51,6 +51,9 @@ public:
 
     void Advance(std::int64_t nowMs);
 
+    [[nodiscard]] Epoch CurrentEpoch() const;
+    [[nodiscard]] bool IsEpochCurrent(const Epoch& epoch) const noexcept;
+
     std::size_t InFlight() const;
 
     bool LastTargetWasInstance() const;

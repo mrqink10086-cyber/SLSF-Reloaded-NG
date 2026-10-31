@@ -68,8 +68,10 @@ public:
         const Tri strapon = TriOf(facts_.usingStrapon);
         const Tri female = TriOf(facts_.playerIsFemale);
 
-        Add(TagTri(facts_.tags, "Oral"), FameCategory::Oral);
-        Add(TagTri(facts_.tags, "Anal"), FameCategory::Anal);
+        Add(TriOr(TagTri(facts_.tags, "Oral"), facts_.oralInteraction ?
+                      TriOf(*facts_.oralInteraction) : Tri::False), FameCategory::Oral);
+        Add(TriOr(TagTri(facts_.tags, "Anal"), facts_.analInteraction ?
+                      TriOf(*facts_.analInteraction) : Tri::False), FameCategory::Anal);
         Add(TriOr(TagTri(facts_.tags, "Orgy"), BoolTri(facts_.actors.size() > 2)),
             FameCategory::Group);
 

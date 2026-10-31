@@ -1,0 +1,15 @@
+[0m[32;1m[ 13%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ExternalStateTests.cpp[0m
+[0m[32;1m[ 14%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\GameplayRulesTests.cpp[0m
+[0m[32;1m[ 26%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusCallsTests.cpp[0m
+[0m[32;1m[ 40%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\gameplay\AnimationClassifier.cpp[0m
+[0m[32;1m[ 62%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\DeviousDevices.cpp[0m
+[0m[32;1m[ 62%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\ExternalMods.cpp[0m
+[0m[32;1m[ 63%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[32;1m[ 63%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\ProviderCollectors.cpp[0m
+[0m[32;1m[ 63%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\SexLabPPlus.cpp[0m
+[0m[32;1m[ 86%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[ 87%]:[0m [36;1m<SLSFEngineAsan>[0m [36;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[32;1m[ 93%]:[0m [36;1m<SLSFCoreTestsAsan>[0m [36;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 4.187s[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.094s[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m

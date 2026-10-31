@@ -1,0 +1,36 @@
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.11s[0m
+RUN SLSFCoreTests cases=366 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9222 assertions in 46 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5241 assertions in 46 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6957 assertions in 46 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60291 assertions in 46 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44682 assertions in 46 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2412 assertions in 46 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (16152 assertions in 45 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (810 assertions in 45 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.615s
+PASS native tests: mode=core seed=1170

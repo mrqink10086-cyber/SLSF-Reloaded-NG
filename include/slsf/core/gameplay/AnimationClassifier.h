@@ -4,6 +4,7 @@
 #include "slsf/core/gameplay/Witness.h"
 
 #include <string>
+#include <optional>
 #include <vector>
 
 namespace slsf::gameplay {
@@ -67,6 +68,8 @@ struct AnimationFacts {
     Fact allowForeplayFame{FactState::Unknown};
 
     std::vector<std::string> tags;
+    std::optional<Fact> oralInteraction;
+    std::optional<Fact> analInteraction;
     std::vector<AnimationActorFacts> actors;
 
     Fact playerIsFemale{FactState::Unknown};

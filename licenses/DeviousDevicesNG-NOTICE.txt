@@ -1,0 +1,7 @@
+The virtual interface declaration in src/boundary/DdngV2.h is derived from
+DeviousDevicesNG, include/API.h (API version 2), licensed under Apache-2.0.
+The complete license is in DeviousDevicesNG-LICENSE.txt.
+
+Local modifications: retain the virtual interface order while omitting the
+original enum members, inline loader, and unrelated record definitions.
+Copyright 2022 ponzipyramid, as recorded in the upstream license.

@@ -8,6 +8,7 @@
 #include "slsf/persistence/Serialization.h"
 #include "slsf/persistence/StableKeys.h"
 #include "slsf/runtime/Lifecycle.h"
+#include "slsf/boundary/ProviderCollectors.h"
 
 #include <Windows.h>
 
@@ -329,6 +330,10 @@ void OnSerializationSaveBody(SKSE::SerializationInterface* serialization) {
     if (serialization == nullptr || !g_lifecycle) {
         return;
     }
+    if (!slsf::boundary::SaveProviderCollectorCalls(serialization)) {
+        logs::error("collectors: failed to save pending VM continuations");
+        return;
+    }
     auto captured = g_lifecycle->Capture();
     if (!captured) {
         logs::warn("lifecycle: save skipped: {}", captured.error().message);
@@ -358,6 +363,7 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
     if (serialization == nullptr || !g_lifecycle) {
         return;
     }
+    slsf::boundary::ResetProviderCollectorCalls();
     g_lifecycle->ReturnToMenu();
     std::vector<std::byte> bytes;
     bool found = false;
@@ -366,6 +372,13 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
     std::uint32_t version = 0;
     std::uint32_t length = 0;
     while (serialization->GetNextRecordInfo(type, version, length)) {
+        if (type == slsf::boundary::kCollectorCallsRecord) {
+            if (!slsf::boundary::LoadProviderCollectorCalls(serialization, version, length)) {
+                malformed = true;
+                break;
+            }
+            continue;
+        }
         if (type != slsf::persistence::kSaveRecordType) {
             continue;
         }
@@ -435,6 +448,7 @@ void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
 }
 
 void OnSerializationRevertBody(SKSE::SerializationInterface*) {
+    slsf::boundary::ResetProviderCollectorCalls();
     if (g_lifecycle) {
         g_lifecycle->ReturnToMenu();
         logs::info("lifecycle: revert closed the business switch");
@@ -464,6 +478,7 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
         }
         break;
     case SKSE::MessagingInterface::kPreLoadGame:
+        slsf::boundary::ResetProviderCollectorCalls();
         if (g_lifecycle) {
             g_lifecycle->ReturnToMenu();
             logs::info("lifecycle: pre-load closed the business switch");
@@ -472,6 +487,7 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
     case SKSE::MessagingInterface::kPostLoadGame:
         // SKSE encodes this bool in the pointer value, not in pointed-to data.
         Activate("post-load", message->data != nullptr);
+        slsf::boundary::ResumeProviderCollectorCalls(message->data != nullptr);
         break;
     case SKSE::MessagingInterface::kNewGame:
         if (g_lifecycle) {
@@ -498,6 +514,11 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
             g_capabilities->EnsureAll();
             LogCapabilities("dataloaded");
         }
+        slsf::boundary::InitializeProviderCollectors([] {
+            return g_lifecycle ? g_lifecycle->CurrentEpoch() : slsf::Epoch{};
+        }, [](const slsf::Epoch& epoch) {
+            return g_lifecycle && g_lifecycle->IsEpochCurrent(epoch);
+        });
         break;
     case SKSE::MessagingInterface::kSaveGame:
         break;
@@ -524,6 +545,8 @@ SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
     logs::info("lifecycle: baseline ISA check avx2={}", slsf::KernelSupportsAvx2());
 
     g_configuration = std::make_unique<BootstrapConfigurationSource>();
+    auto* papyrus = SKSE::GetPapyrusInterface();
+    if (!papyrus || !papyrus->Register(slsf::boundary::RegisterProviderCollectors)) return false;
 
     auto capabilities = std::make_unique<slsf::integrations::CapabilityRegistry>(ProbeDDNG);
     const bool ddngRequired = capabilities->Require(slsf::integrations::CapabilityRequirement{

@@ -1,0 +1,16 @@
+=== SexLabUtil.dll exports ===
+Export Table:
+ DLL name: SexLabUtil.dll
+ Ordinal base: 1
+ Ordinal      RVA  Name
+       1  0x2eb50  SKSEPlugin_Load
+       2 0x2823a0  SKSEPlugin_Version
+=== DeviousDevices.dll exports ===
+Export Table:
+ DLL name: DeviousDevices.dll
+ Ordinal base: 1
+ Ordinal      RVA  Name
+       1   0x5f40  GetAPI
+       2   0x6ab0  SKSEPlugin_Load
+       3  0xd93a0  SKSEPlugin_Query
+       4 0x266600  SKSEPlugin_Version

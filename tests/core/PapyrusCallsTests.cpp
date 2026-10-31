@@ -238,6 +238,8 @@ TEST_CASE("papyrus cancel fires once, late completion is ignored") {
     REQUIRE(delivered == 1);
     REQUIRE(seen.kind == PapyrusCallKind::Cancelled);
     REQUIRE(calls.InFlight() == 0);
+    REQUIRE(port.Cancelled().size() == 1);
+    REQUIRE(port.Cancelled().front() == id);
 
     REQUIRE_FALSE(calls.Cancel(RequestId{999}));
     REQUIRE_FALSE(calls.Cancel(id));
@@ -266,6 +268,19 @@ TEST_CASE("papyrus stale epoch result is demoted to Stale") {
     REQUIRE(seen.kind == PapyrusCallKind::Stale);
     REQUIRE(seen.status == Status::Stale);
     REQUIRE_FALSE(seen.values.empty());
+}
+TEST_CASE("papyrus transport stale status is not reported as Failed") {
+    FakeVmPort port;
+    EpochBox box;
+    PapyrusCalls calls(port, EpochProbe(box), PapyrusCallOptions{});
+
+    PapyrusCallResult seen;
+    const RequestId id = calls.SubmitGlobal(
+        "S", "F", {}, [&seen](PapyrusCallResult r) { seen = std::move(r); });
+
+    port.Complete(id, Status::Stale);
+    REQUIRE(seen.kind == PapyrusCallKind::Stale);
+    REQUIRE(seen.status == Status::Stale);
 }
 TEST_CASE("papyrus transport failure surfaces as Failed") {
     FakeVmPort port;

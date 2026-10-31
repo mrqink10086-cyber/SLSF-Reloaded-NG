@@ -1,0 +1,10 @@
+lead_in_end returned_request=0 request_count=1 ready=1 old_stage=1
+synthetic_stage_start request_count=2 waiting=1
+oral unknown_mask=0 parsed=1 tri=0 applied=1 tag=0 ready=1 kind=4 category=0 category_count=3
+oral unknown_mask=800000 parsed=1 tri=2 applied=1 tag=0 ready=1 kind=4 category=0 category_count=3
+facial known=1 applied=1 tag=0
+inactive applied=0 old_player_fact=1
+invalid_id=0 pplus=1 dd=1 external=1
+omitted_mod available=1 fact_state=3 known_false=0
+invalid_id=FFFFFFFF pplus=1 dd=1 external=1
+omitted_mod available=1 fact_state=3 known_false=0

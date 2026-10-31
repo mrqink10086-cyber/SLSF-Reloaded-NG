@@ -1,0 +1,67 @@
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.109s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+error: execv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason
+
+=================================================================
+==42784==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x128c657a0030 at pc 0x7ff79b001189 bp 0x0094f1affd30 sp 0x0094f1affd78
+WRITE of size 4 at 0x128c657a0030 thread T0
+    #0 0x7ff79b001188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff79b001d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff79b001d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.094s[0m
+RUN SLSFCoreTestsAsan cases=366 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9222 assertions in 46 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5241 assertions in 46 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6957 assertions in 46 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60291 assertions in 46 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44682 assertions in 46 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2412 assertions in 46 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (16152 assertions in 45 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (810 assertions in 45 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.255s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.031s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.082s
+PASS native tests: mode=asan seed=1170

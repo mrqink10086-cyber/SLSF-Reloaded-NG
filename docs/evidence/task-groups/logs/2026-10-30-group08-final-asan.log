@@ -1,0 +1,27 @@
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.359s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+[0m[1;38;5;1;1merror: [0mexecv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason[0m
+
+=================================================================
+==7512==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x11d8eb8a0030 at pc 0x7ff7d7711189 bp 0x00136efefbd0 sp 0x00136efefc18
+WRITE of size 4 at 0x11d8eb8a0030 thread T0
+    #0 0x7ff7d7711188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff7d7711d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff7d7711d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.25s[0m
+RUN SLSFCoreTestsAsan cases=336 jobs=1 seed=1170
+SHARD 1/1
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (145517 assertions in 336 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=35.327s
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.172s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=1 seed=1170
+SHARD 1/1
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (22 assertions in 4 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.467s
+PASS native tests: mode=asan seed=1170
