@@ -1,0 +1,494 @@
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.109s[0m
+RUN SLSFCoreTests cases=379 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1174 assertions in 19 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1018 assertions in 19 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8931 assertions in 19 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+DIAG batch body=141 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=84 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=286 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=258 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=52 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=195 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=275 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=118 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=220 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=284 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=73 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=121 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=267 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=115 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=217 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=103 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=9 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=54 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=138 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=206 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=233 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=131 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=31 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=195 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=11 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=127 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=77 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=227 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=82 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=74 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=210 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=37 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=241 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=246 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=205 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=45 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=127 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=1 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=80 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=296 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG test body size=256 enumBody=0 snapEpoch=2
+===============================================================================
+All tests passed (3567 assertions in 19 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=108,109,110,111
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=108,109,110,111
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=108,109,110,111
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+===============================================================================
+All tests passed (350 assertions in 19 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (187 assertions in 19 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+===============================================================================
+All tests passed (6167 assertions in 19 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2455 assertions in 19 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (378 assertions in 19 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (58145 assertions in 19 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1750 assertions in 19 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (40271 assertions in 19 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3750 assertions in 19 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (233 assertions in 19 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1963 assertions in 19 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1608 assertions in 19 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (15427 assertions in 19 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (703 assertions in 19 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+DIAG batch body=3 face=0 hands=1 feet=1 ids=100,101,102,103
+===============================================================================
+All tests passed (485 assertions in 19 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (177 assertions in 18 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.638s
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.088s
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.094s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+[0m[1;38;5;1;1merror: [0mexecv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason[0m
+
+=================================================================
+==32388==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x11f1508a0030 at pc 0x7ff79b001189 bp 0x00d7c02ff9d0 sp 0x00d7c02ffa18
+WRITE of size 4 at 0x11f1508a0030 thread T0
+    #0 0x7ff79b001188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff79b001d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff79b001d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.094s[0m
+RUN SLSFCoreTestsAsan cases=379 jobs=20 seed=1170
+SHARD 1/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1174 assertions in 19 test cases)
+SHARD 2/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1018 assertions in 19 test cases)
+SHARD 3/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8931 assertions in 19 test cases)
+SHARD 4/20
+Randomness seeded to: 1170
+DIAG batch body=141 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=84 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=286 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=258 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=52 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=195 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=275 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=118 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=220 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=284 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=73 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=121 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=267 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=115 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=217 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=103 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=9 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=54 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=138 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=206 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=233 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=131 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=31 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=195 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=11 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=127 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=77 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=227 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=82 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=74 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=210 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=37 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=241 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=246 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=205 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=45 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=127 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=1 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=80 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=296 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG test body size=256 enumBody=0 snapEpoch=2
+===============================================================================
+All tests passed (3567 assertions in 19 test cases)
+SHARD 5/20
+Randomness seeded to: 1170
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=108,109,110,111
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=108,109,110,111
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=108,109,110,111
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+===============================================================================
+All tests passed (350 assertions in 19 test cases)
+SHARD 6/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (187 assertions in 19 test cases)
+SHARD 7/20
+Randomness seeded to: 1170
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+===============================================================================
+All tests passed (6167 assertions in 19 test cases)
+SHARD 8/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2455 assertions in 19 test cases)
+SHARD 9/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (378 assertions in 19 test cases)
+SHARD 10/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (58145 assertions in 19 test cases)
+SHARD 11/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1750 assertions in 19 test cases)
+SHARD 12/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (40271 assertions in 19 test cases)
+SHARD 13/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3750 assertions in 19 test cases)
+SHARD 14/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (233 assertions in 19 test cases)
+SHARD 15/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1963 assertions in 19 test cases)
+SHARD 16/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1608 assertions in 19 test cases)
+SHARD 17/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (15427 assertions in 19 test cases)
+SHARD 18/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (703 assertions in 19 test cases)
+SHARD 19/20
+Randomness seeded to: 1170
+DIAG batch body=3 face=0 hands=1 feet=1 ids=100,101,102,103
+===============================================================================
+All tests passed (485 assertions in 19 test cases)
+SHARD 20/20
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (177 assertions in 18 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=7.674s
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.031s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.098s
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.032s[0m
+RUN StateCodecFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF7C8EF6108, 00007FF7C8EF67E3), 
+INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF7C8EB39D0,00007FF7C8EBA780), 
+INFO:      694 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\StateCodecFuzz-corpus
+INFO: seed corpus: files: 694 min: 1b max: 1673b total: 319896b rss: 38Mb
+#695	INITED cov: 872 ft: 2268 corp: 261/114Kb exec/s: 0 rss: 47Mb
+#1633	REDUCE cov: 872 ft: 2268 corp: 261/114Kb lim: 1329 exec/s: 0 rss: 49Mb L: 458/1319 MS: 3 CMP-ChangeByte-EraseBytes- DE: "\001\000\000\011"-
+#11975	REDUCE cov: 872 ft: 2268 corp: 261/114Kb lim: 1429 exec/s: 0 rss: 70Mb L: 510/1319 MS: 2 ChangeASCIIInt-EraseBytes-
+#16356	REDUCE cov: 872 ft: 2268 corp: 261/114Kb lim: 1469 exec/s: 0 rss: 77Mb L: 83/1319 MS: 1 EraseBytes-
+#19567	REDUCE cov: 872 ft: 2268 corp: 261/114Kb lim: 1499 exec/s: 0 rss: 83Mb L: 398/1319 MS: 1 EraseBytes-
+#19971	REDUCE cov: 872 ft: 2268 corp: 261/114Kb lim: 1499 exec/s: 0 rss: 84Mb L: 876/1319 MS: 4 ChangeBit-ShuffleBytes-CopyPart-EraseBytes-
+#20728	REDUCE cov: 872 ft: 2268 corp: 261/114Kb lim: 1499 exec/s: 0 rss: 85Mb L: 815/1319 MS: 2 CopyPart-EraseBytes-
+#21614	NEW    cov: 872 ft: 2270 corp: 262/114Kb lim: 1499 exec/s: 0 rss: 87Mb L: 89/1319 MS: 1 ChangeByte-
+#22290	REDUCE cov: 872 ft: 2270 corp: 262/114Kb lim: 1499 exec/s: 0 rss: 88Mb L: 458/1319 MS: 1 EraseBytes-
+#22757	REDUCE cov: 872 ft: 2270 corp: 262/114Kb lim: 1499 exec/s: 0 rss: 89Mb L: 202/1319 MS: 2 ChangeASCIIInt-EraseBytes-
+#25274	REDUCE cov: 872 ft: 2270 corp: 262/114Kb lim: 1519 exec/s: 0 rss: 93Mb L: 272/1319 MS: 2 ChangeBinInt-EraseBytes-
+#25627	REDUCE cov: 872 ft: 2270 corp: 262/114Kb lim: 1519 exec/s: 0 rss: 93Mb L: 199/1319 MS: 3 CMP-CopyPart-EraseBytes- DE: "7LS\002\000\000\373\000"-
+#32573	REDUCE cov: 872 ft: 2270 corp: 262/114Kb lim: 1579 exec/s: 0 rss: 105Mb L: 859/1319 MS: 1 EraseBytes-
+#34604	REDUCE cov: 872 ft: 2270 corp: 262/114Kb lim: 1599 exec/s: 0 rss: 108Mb L: 264/1319 MS: 1 EraseBytes-
+#36210	REDUCE cov: 872 ft: 2270 corp: 262/113Kb lim: 1609 exec/s: 0 rss: 111Mb L: 347/1319 MS: 1 CrossOver-
+#39255	REDUCE cov: 872 ft: 2270 corp: 262/113Kb lim: 1639 exec/s: 0 rss: 116Mb L: 923/1319 MS: 5 InsertRepeatedBytes-EraseBytes-InsertByte-PersAutoDict-CrossOver- DE: "\001\000\000\011"-
+#53137	REDUCE cov: 872 ft: 2270 corp: 262/113Kb lim: 1769 exec/s: 0 rss: 140Mb L: 486/1319 MS: 2 ShuffleBytes-EraseBytes-
+#57784	REDUCE cov: 872 ft: 2270 corp: 262/113Kb lim: 1809 exec/s: 0 rss: 147Mb L: 499/1319 MS: 2 PersAutoDict-EraseBytes- DE: "7LS\002\000\000\373\000"-
+#59960	REDUCE cov: 872 ft: 2270 corp: 262/113Kb lim: 1829 exec/s: 0 rss: 151Mb L: 62/1319 MS: 1 EraseBytes-
+#60241	REDUCE cov: 872 ft: 2270 corp: 262/113Kb lim: 1829 exec/s: 0 rss: 152Mb L: 346/1319 MS: 1 EraseBytes-
+#62605	NEW    cov: 872 ft: 2271 corp: 263/113Kb lim: 1849 exec/s: 0 rss: 156Mb L: 376/1319 MS: 4 ShuffleBytes-ChangeBit-PersAutoDict-ChangeByte- DE: "7LS\002\000\000\373\000"-
+#68326	REDUCE cov: 872 ft: 2271 corp: 263/113Kb lim: 1899 exec/s: 68326 rss: 166Mb L: 58/1319 MS: 1 EraseBytes-
+#68929	REDUCE cov: 872 ft: 2271 corp: 263/113Kb lim: 1899 exec/s: 68929 rss: 167Mb L: 709/1319 MS: 3 EraseBytes-ChangeByte-CrossOver-
+#70515	NEW    cov: 872 ft: 2272 corp: 264/114Kb lim: 1909 exec/s: 70515 rss: 170Mb L: 89/1319 MS: 1 CrossOver-
+#76408	REDUCE cov: 872 ft: 2272 corp: 264/114Kb lim: 1959 exec/s: 76408 rss: 180Mb L: 912/1319 MS: 3 CrossOver-InsertRepeatedBytes-EraseBytes-
+#76682	REDUCE cov: 872 ft: 2272 corp: 264/114Kb lim: 1959 exec/s: 76682 rss: 180Mb L: 80/1319 MS: 4 PersAutoDict-ChangeBit-ShuffleBytes-EraseBytes- DE: "7LS\002\000\000\373\000"-
+#81948	NEW    cov: 872 ft: 2273 corp: 265/114Kb lim: 2009 exec/s: 81948 rss: 191Mb L: 89/1319 MS: 1 ChangeByte-
+#87199	REDUCE cov: 872 ft: 2274 corp: 266/114Kb lim: 2060 exec/s: 87199 rss: 200Mb L: 499/1319 MS: 1 ChangeBinInt-
+#88111	REDUCE cov: 872 ft: 2274 corp: 266/114Kb lim: 2060 exec/s: 88111 rss: 202Mb L: 358/1319 MS: 2 ChangeASCIIInt-EraseBytes-
+#88431	REDUCE cov: 872 ft: 2274 corp: 266/114Kb lim: 2060 exec/s: 88431 rss: 203Mb L: 1064/1319 MS: 5 ShuffleBytes-PersAutoDict-ChangeByte-EraseBytes-CopyPart- DE: "7LS\002\000\000\373\000"-
+#94117	NEW    cov: 872 ft: 2278 corp: 267/114Kb lim: 2115 exec/s: 94117 rss: 213Mb L: 38/1319 MS: 1 ShuffleBytes-
+#94138	REDUCE cov: 872 ft: 2278 corp: 267/114Kb lim: 2115 exec/s: 94138 rss: 213Mb L: 495/1319 MS: 1 EraseBytes-
+#100000	DONE   cov: 872 ft: 2278 corp: 267/114Kb lim: 2170 exec/s: 100000 rss: 223Mb
+###### Recommended dictionary. ######
+"\001\000\000\011" # Uses: 5644
+"7LS\002\000\000\373\000" # Uses: 3247
+###### End of recommended dictionary. ######
+Done 100000 runs in 1 second(s)
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.093s[0m
+RUN SLSFCoreTests cases=11 jobs=11 seed=1170
+SHARD 1/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (600 assertions in 1 test case)
+SHARD 2/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (800 assertions in 1 test case)
+SHARD 3/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1600 assertions in 1 test case)
+SHARD 4/11
+Filters: [differential]
+Randomness seeded to: 1170
+DIAG batch body=141 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=84 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=286 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=258 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=52 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=195 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=275 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=118 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=220 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=284 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=73 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=121 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=267 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=115 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=3 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=217 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=103 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=9 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=54 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=138 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=206 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=233 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=131 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=31 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=195 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=11 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=127 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=77 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=227 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=82 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=74 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=210 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=37 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=241 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=246 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=205 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=45 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=127 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=1 face=0 hands=1 feet=0 ids=100,101,102,103
+DIAG batch body=80 face=0 hands=1 feet=0 ids=100,101,102,103
+===============================================================================
+All tests passed (205 assertions in 1 test case)
+SHARD 5/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (400 assertions in 1 test case)
+SHARD 6/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+SHARD 7/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (842 assertions in 1 test case)
+SHARD 8/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1397 assertions in 1 test case)
+SHARD 9/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+SHARD 10/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 11/11
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.299s
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.063s[0m
+RUN SLSFBench -> E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=27.57ms (65.6ns/row) avx2=6.99ms (16.6ns/row, 3.95x) relax_scalar=3.07ms (7.3ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=16.74ms (65.4ns/row) avx2=4.13ms (16.1ns/row, 4.05x) relax_scalar=1.77ms (6.9ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=13.07ms (68.1ns/row) avx2=3.35ms (17.4ns/row, 3.90x) relax_scalar=1.55ms (8.1ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=3.0µs/batch total=0.006s
+BENCH settlement accounts=64 batches=800 advance+publish=8.8µs/batch total=0.007s
+BENCH report: E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.062s[0m
+RUN SLSFDispatcherOfflineProbe
+heartbeat=3600 frames=3600 simulated_seconds=60 max_pump_us=3.4 long_wait_seconds=1000000 completions=3 stale_callbacks=0
+OFFLINE_WAKE_PROBE=PASS
+[0m[38;5;2;1m[100%]:[0m [38;5;2;1mbuild ok, spent 0.062s[0m
+RUN SLSFAppearanceProbe
+probe_target_runtime=1.6.1170:providers-pending(racemenu,skee,slavetatsng,jcontainers)
+probe_racemenu_exchange=ready:overlay_version=2:counts=3,1,0,2:records=3
+probe_slavetats_batch=body:3,hands:1,face:0,feet:0;slotfacts=slot0=true,slot1=false,slot2=true
+probe_slavetats_jc_ownership=balanced:creates=4:releases=4:retains=0
+probe_racemenu_pending=dispatch:0x9E3779B9,data=InterfaceExchangeMessage{void*interfaceMap:8B},sender='SKEE',phase=kPostPostLoad
+probe_racemenu_pending=query:'Overlay'->GetVersion()==2,GetOverlayCount(type=Normal=0,location=0..3)->u32,vtable slots 1/11
+probe_slavetats_pending=listener:messageType==1,data=AddressesTable*{8B},version==1,confirmed prefix=15 pointers
+probe_slavetats_pending=query:get_applied_tattoos_by_area at slot 14(offset 120),batch(target,body,face,hands,feet)
+probe_jc_pending=bindings:JFormDB::getObj(target,'.SlaveTats.applied')->array handle;per-entry mapGetStr('name')/mapGetInt('slot');temp arrays via RAII retain/release
+probe_result=OFFLINE_PASS
+PASS native tests: mode=all seed=1170

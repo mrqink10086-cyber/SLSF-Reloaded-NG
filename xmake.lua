@@ -55,6 +55,13 @@ target("SLSFDispatcherOfflineProbe")
     add_includedirs("include")
     add_deps("SLSFCore")
 
+target("SLSFAppearanceProbe")
+    set_kind("binary")
+    add_cxflags("/utf-8")
+    add_files("tests/probe/AppearanceProbe.cpp")
+    add_includedirs("include")
+    add_deps("SLSFCore")
+
 target("SLSFReloadedNG")
     add_rules("commonlibsse-ng.plugin", {
         name = "SLSF Reloaded NG",

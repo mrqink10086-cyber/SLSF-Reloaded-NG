@@ -14,7 +14,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-native-tests.ps1 -
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-native-tests.ps1 -Mode fuzz -Target StateCodecFuzz -Runs 100000 -Seed 1170
 ```
 
-`-Suite`是`-Mode`的别名，`-Runs`是`-FuzzIterations`的别名。core、boundary、asan、differential、bench 和 StateCodecFuzz 均已有目标。all 依次运行这些检查，最后运行 `SLSFDispatcherOfflineProbe`，结果写入 `build/test-results/dispatcher-offline-probe.txt`。
+`-Suite`是`-Mode`的别名，`-Runs`是`-FuzzIterations`的别名。core、boundary、asan、differential、bench 和 StateCodecFuzz 均已有目标。all 依次运行这些检查，然后运行 `SLSFDispatcherOfflineProbe`（`build/test-results/dispatcher-offline-probe.txt`）与 `SLSFAppearanceProbe`（`build/test-results/appearance-probe.txt`）。
 
 core、boundary 和 asan 的 Catch2 套件默认按逻辑 CPU 数多进程分片，并发数取 `min(Jobs, 用例数)`。`-Jobs N` 指定并发数，`-Jobs 1` 用于串行比较。所有分片使用相同 seed 和随机排序，以分散同一源文件中的重用例；每个用例只执行一次，同时生成控制台结果和 JUnit。构建、测试发现和 ASan 探针在分片前执行。
 

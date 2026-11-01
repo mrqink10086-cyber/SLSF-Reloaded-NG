@@ -173,6 +173,18 @@ function Invoke-OfflineWakeProbe {
     if ($LASTEXITCODE -ne 0) {
         throw "SLSFDispatcherOfflineProbe failed with exit code $LASTEXITCODE"
     }
+
+    Invoke-Xmake build -y SLSFAppearanceProbe
+    $appearanceResolve = "import('core.project.config'); import('core.project.project'); config.load(); print(path.absolute(project.target('SLSFAppearanceProbe'):targetfile()))"
+    $appearance = (& xmake lua -c $appearanceResolve | Select-Object -Last 1)
+    if ($LASTEXITCODE -ne 0) {
+        throw 'could not resolve executable for SLSFAppearanceProbe'
+    }
+    Write-Host 'RUN SLSFAppearanceProbe'
+    & $appearance.Trim() | Tee-Object -FilePath (Join-Path $resultsRoot 'appearance-probe.txt')
+    if ($LASTEXITCODE -ne 0) {
+        throw "SLSFAppearanceProbe failed with exit code $LASTEXITCODE"
+    }
 }
 
 function Invoke-Asan {
