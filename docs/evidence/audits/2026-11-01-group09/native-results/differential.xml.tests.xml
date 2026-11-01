@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MatchingTests>
+  <TestCase>
+    <Name>racemenu random exchange sequences stay consistent</Name>
+    <ClassName/>
+    <Tags>[differential][racemenu]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>519</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats random placements keep ordering and bounds</Name>
+    <ClassName/>
+    <Tags>[differential][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>792</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats random messages stay consistent with rejections</Name>
+    <ClassName/>
+    <Tags>[differential][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>832</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random gain parity against the reference</Name>
+    <ClassName/>
+    <Tags>[differential][gain][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>497</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random decay roll parity against the reference</Name>
+    <ClassName/>
+    <Tags>[decay][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>569</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random manual spread parity against the reference</Name>
+    <ClassName/>
+    <Tags>[differential][random][spread]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>593</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random manual decay parity against the reference</Name>
+    <ClassName/>
+    <Tags>[decay][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>612</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random advance parity scalar avx2 reference</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>634</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>an exact half-day boundary consumes one decay period on both paths</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>704</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduled set settles at its business time before the remaining interval</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>749</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduled clear resets the target decay anchor to its business time</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>794</Line>
+    </SourceInfo>
+  </TestCase>
+</MatchingTests>

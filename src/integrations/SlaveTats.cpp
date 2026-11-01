@@ -83,7 +83,9 @@ const SlaveTatsAreaRecords& SlaveTatsSnapshot::Area(SlaveTatsArea area) const {
 std::vector<gameplay::TattooSlotFacts> SlaveTatsSlotFacts(const SlaveTatsAreaRecords& records,
                                                           std::size_t capacity) {
     std::vector<gameplay::TattooSlotFacts> slots{
-        capacity, gameplay::TattooSlotFacts{Fact::Known(false),
+        capacity, gameplay::TattooSlotFacts{records.truncated || records.rejectedEntries != 0
+                                              ? Fact{}
+                                              : Fact::Known(false),
                                             gameplay::TattooSubcategory::Unknown}};
     for (const SlaveTatsPlacement& placement : records.placements) {
         if (placement.slot < 0 || static_cast<std::size_t>(placement.slot) >= capacity) {
@@ -132,7 +134,7 @@ void JcHandle::Release() noexcept {
     }
 }
 
-struct SlaveTats::Impl : std::enable_shared_from_this<Impl> {
+struct SlaveTats::Impl {
     SlaveTatsPort& port_;
     SlaveTatsOptions options_;
     mutable std::mutex mutex_;
@@ -284,8 +286,7 @@ struct SlaveTats::Impl : std::enable_shared_from_this<Impl> {
         }
         if (epoch != epoch_) {
             if (epochSeen_) {
-                gate_ = ExternalGate::Stale;
-                return {gate_, false};
+                return {ExternalGate::Stale, false};
             }
             epochSeen_ = true;
             epoch_ = epoch;

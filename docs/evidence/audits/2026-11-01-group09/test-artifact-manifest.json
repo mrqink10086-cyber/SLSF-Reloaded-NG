@@ -1,0 +1,123 @@
+{
+  "auditedHead": "5529ed98332ade1f8167f9cc2dac210ec0c393e5",
+  "baseline": "5062105aeec71df206c491d241892e847a4cfd60",
+  "run": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\tools\\run-native-tests.ps1 -Mode all -Jobs 4 -Seed 1170",
+  "transcriptLimitation": "fresh-native-all.log contains wrapper metadata, not native child stdout; temporary fuzz stdout was not preserved.",
+  "suites": [
+    {
+      "name": "core",
+      "cases": 379,
+      "assertions": 149650.0,
+      "failures": 0.0,
+      "errors": 0.0
+    },
+    {
+      "name": "core-asan",
+      "cases": 379,
+      "assertions": 149650.0,
+      "failures": 0.0,
+      "errors": 0.0
+    },
+    {
+      "name": "boundary",
+      "cases": 4,
+      "assertions": 22.0,
+      "failures": 0.0,
+      "errors": 0.0
+    },
+    {
+      "name": "boundary-asan",
+      "cases": 4,
+      "assertions": 22.0,
+      "failures": 0.0,
+      "errors": 0.0
+    },
+    {
+      "name": "differential",
+      "cases": 11,
+      "assertions": 19605.0,
+      "failures": 0.0,
+      "errors": 0.0
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "core.xml",
+      "sourceModifiedUtc": "2026-11-01T11:32:59.0466789Z",
+      "bytes": 79241,
+      "sha256": "54A36A0A62FFE62C30348A7A38F818C25FE278D1B7BF6AD30F34FBBA4427EBE0"
+    },
+    {
+      "name": "core.xml.tests.xml",
+      "sourceModifiedUtc": "2026-11-01T11:32:58.3828060Z",
+      "bytes": 99561,
+      "sha256": "03A73A495818DF99D99906BA79964595E9B4F13C26F67CFD82E07FF5CD63C52A"
+    },
+    {
+      "name": "core-asan.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:11.4967105Z",
+      "bytes": 81237,
+      "sha256": "CF138C2E29F5EFF7AFDEBD1E7B17A78DFB306322DEFAA0BB15A98B1199ED93C1"
+    },
+    {
+      "name": "core-asan.xml.tests.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:04.1859196Z",
+      "bytes": 99561,
+      "sha256": "03A73A495818DF99D99906BA79964595E9B4F13C26F67CFD82E07FF5CD63C52A"
+    },
+    {
+      "name": "boundary.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:00.2195901Z",
+      "bytes": 1773,
+      "sha256": "85D3D1F3C005CEB9ABD97D753EDE6C17B9AD3E3E0239E563FEE109FC7E63DAD2"
+    },
+    {
+      "name": "boundary.xml.tests.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:00.1228662Z",
+      "bytes": 1072,
+      "sha256": "6FA294779C466090D510EAA93E2AE0FE0D2B3702E9009AA6FE6FDBADFEAA6961"
+    },
+    {
+      "name": "boundary-asan.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:12.6240969Z",
+      "bytes": 1805,
+      "sha256": "AAA19429498268C5238B8397EB883182912BA26DE5822A1246D35277AD3E15F7"
+    },
+    {
+      "name": "boundary-asan.xml.tests.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:12.5279387Z",
+      "bytes": 1072,
+      "sha256": "6FA294779C466090D510EAA93E2AE0FE0D2B3702E9009AA6FE6FDBADFEAA6961"
+    },
+    {
+      "name": "differential.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:16.6357526Z",
+      "bytes": 3006,
+      "sha256": "7295CB1CAF98402D63219B492BB70E31F4544BA431AD267263B4334A294FC32A"
+    },
+    {
+      "name": "differential.xml.tests.xml",
+      "sourceModifiedUtc": "2026-11-01T11:33:16.4944117Z",
+      "bytes": 3129,
+      "sha256": "5EB507F2B7706DF04DA04CEABA715C604F7598A2948AD95E11824BAA79DA2448"
+    },
+    {
+      "name": "appearance-probe.txt",
+      "sourceModifiedUtc": "2026-11-01T11:33:19.8733103Z",
+      "bytes": 2020,
+      "sha256": "86F0C2DB29F83063310F8B2F3D3DEAE4EFC0FAD8A57EC5AC3CC94B2BB9FEA764"
+    },
+    {
+      "name": "bench.txt",
+      "sourceModifiedUtc": "2026-11-01T11:33:17.7733450Z",
+      "bytes": 1236,
+      "sha256": "F54A55F9F6505061BD96406670180E29605DF496DD3128DA3470942DE35B4CC0"
+    },
+    {
+      "name": "dispatcher-offline-probe.txt",
+      "sourceModifiedUtc": "2026-11-01T11:33:18.8208368Z",
+      "bytes": 298,
+      "sha256": "2DAC045D16D080B62927E37CDBAB97FD06C63574C2A7893899F0ACFF81E1268D"
+    }
+  ]
+}

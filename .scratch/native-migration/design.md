@@ -120,6 +120,8 @@ P+ 采集请求显式携带通知中的 thread ID 与字符串编码的完整 ep
 
 采集器的引擎记录查询和 DDNG v2 调用通过 SKSE task 投递，排队和执行时校验 IsEpochCurrent（含 BusinessOpen）；跨任务记录以 VM handle 固定寿命后重新解析。DDNG 接口所属 DLL 固定在进程内。原生 latent 查询用独立 SLCQ 记录保存 stack ID 与返回类型，载入后只返回类型匹配的空值终结旧查询；旧任务 token 在载入/重置时失效，不重放旧查询。实际宿主的线程与存读档顺序仍需目标运行时验收。
 
+RaceMenu/SlaveTats 生产端口也经上述 task/epoch/VM handle/SLCQ 路径查询，要求游戏线程串行调用；JC 字符串暂存不支持任意并发。PostLoad 订阅 SlaveTatsNG 与 JContainers64，早于 PostPostLoad 的一次性广播；JC 根消息只缓存，DataLoaded 再绑定反射接口。JcTable 是自有接缝，生产 thunk 使用真实 BSFixedString 签名，持有字符串直到核心复制；临时数组 retain 后由 JcHandle release。进程级地址表和绑定跨会话保留，会话只清快照。SLSFRM1/SLSFST1 返回带 epoch 的状态；不完整纹身区域的未观察槽位保持 Unknown。旧 epoch 请求不能污染当前 gate；非 Ready 查询不得发布旧 Available 快照。
+
 外部模组快照必须包含八项状态，缺失与未知分开表示，角色字段只能在相应模组 Available 时消费；保存 FM/HP 原始 faction rank 供原有分层规则使用。三个适配器以共享内部状态和弱完成回调管理寿命，允许回调期间销毁外层适配器；VM transport 与 epoch 提供器仍须活过其未完成调用，业务操作顺序由统一执行器负责。
 
 | 交接点 | 正式适配器 | 测试适配器 | 接口约定 |

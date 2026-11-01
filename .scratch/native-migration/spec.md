@@ -107,8 +107,8 @@ Status: ready-for-agent
 | C02 | 异步 VM 传输 | A02、B01；运行联调 B03 | 07 组已实现异步调用模块；实例目标使用稳定键，实际 VM 宿主传输及运行联调待完成 |
 | C03 | P+ 场景适配 | C01、C02、A07、B03 | 08 组适配器和实际 PSC 采集器已实现；LeadInEnd 重查、交互 Unknown 及角色映射已修复；生产事件桥/宽限时钟和 P+ 2.18 实机验收待装配，见[08 修复](../../docs/evidence/2026-11-01-08-fixes.md) |
 | C04 | DDNG 设备适配 | C01、B03、B04 | 08 组已实现 DataLoaded 后固定 v2 接口、游戏线程实际 worn devices/bondage 采集与 DTO 投影；目标二进制及穿戴数据验收待运行，见[08 修复](../../docs/evidence/2026-11-01-08-fixes.md) |
-| C05 | RaceMenu 外观适配 | C01、B03、B04 | 09 组已实现接口交换消费、Overlay 能力/版本验证与四部位容量快照；生产引擎接线与 1.6.1170 实装查询待运行，见[09 组报告](../../docs/evidence/task-groups/09-racemenu-and-slavetats.md) |
-| C06 | SlaveTats/JC 纹身适配 | C01、B03、B04 | 09 组已实现一次性广播校验、v1 前缀锁定与 JC RAII 四部位复制；引擎接线与目标三插件实装验收待运行，见[09 组报告](../../docs/evidence/task-groups/09-racemenu-and-slavetats.md) |
+| C05 | RaceMenu 外观适配 | C01、B03、B04 | 09 组已实现生产 skee 交换、Overlay 验证、四部位容量和原生查询；旧 epoch gate 污染已修复。业务事件/计分接线与 1.6.1170 实装查询待验收，见[09 修复](../../docs/evidence/2026-11-01-09-fixes.md) |
+| C06 | SlaveTats/JC 纹身适配 | C01、B03、B04 | 09 组已实现 PostLoad 订阅、v1 广播、真实 JC 字符串 thunk/所有权桥、四部位复制与原生查询；不完整记录投影保留 Unknown。下游消费与目标三插件实装验收待完成，见[09 修复](../../docs/evidence/2026-11-01-09-fixes.md) |
 | C07 | 其余外部状态 | C01、B03、B04；必要时 C02 | 08 组已实现八模组实际 PSC 采集、模块状态和 FM/HP 原始 ranks；生产业务消费、注册恢复及实机验收待装配，见[08 修复](../../docs/evidence/2026-11-01-08-fixes.md) |
 | C08 | SKSE 菜单 | B06、B07、C01 | 本地 3.8/API 1 事件入口已核对；运行时 probe/接入待完成 |
 | C09 | ESP、PEX、配置和发布包 | B06、B07、C02–C08 | 待实现 |

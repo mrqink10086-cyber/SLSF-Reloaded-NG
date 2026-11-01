@@ -1,0 +1,9 @@
+counterprobe.cpp
+race_stale first_ready=1 stale=1 valid_ready=0 gate_stale=1 exchanges=1
+race_reset_new_epoch_stale=1
+race_retry max=2 calls=5 attempts=5 failed=1
+tats_trunc ready=1 placements=256 rejected=1 truncated=1 actual_slot1=1 slot1_known_false=1
+tats_reset_new_epoch_stale=1
+tats_reject ready=1 rejected=1 actual_slot1=1 slot1_known_false=1
+tats_scan per_area_count=100000 object_reads=400000 cap=256 ready=1
+tats_retry max=2 attempts=5 failed=1

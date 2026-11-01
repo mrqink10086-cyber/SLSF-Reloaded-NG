@@ -1,0 +1,3414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MatchingTests>
+  <TestCase>
+    <Name>jc handle owns and releases exactly once</Name>
+    <ClassName/>
+    <Tags>[jc][raii][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>305</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>racemenu gather waits until the exchange produces the map</Name>
+    <ClassName/>
+    <Tags>[racemenu]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>354</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>racemenu rejects unregistered or incompatible overlay interfaces</Name>
+    <ClassName/>
+    <Tags>[racemenu]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>402</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>racemenu lifecycle tracks dirty stale and sessions</Name>
+    <ClassName/>
+    <Tags>[lifecycle][racemenu]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>451</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>racemenu random exchange sequences stay consistent</Name>
+    <ClassName/>
+    <Tags>[differential][racemenu]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>519</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats interface broadcast protocol</Name>
+    <ClassName/>
+    <Tags>[protocol][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>557</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats collects areas into owned records</Name>
+    <ClassName/>
+    <Tags>[collect][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>598</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats failure paths retry toward failed</Name>
+    <ClassName/>
+    <Tags>[lifecycle][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>698</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats rejects malformed records and truncates</Name>
+    <ClassName/>
+    <Tags>[bounds][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>751</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats truncates oversized areas at the record limit</Name>
+    <ClassName/>
+    <Tags>[bounds][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>771</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats random placements keep ordering and bounds</Name>
+    <ClassName/>
+    <Tags>[differential][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>792</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats random messages stay consistent with rejections</Name>
+    <ClassName/>
+    <Tags>[differential][slavetats]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>832</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>slavetats concurrent broadcasts and collects are stable</Name>
+    <ClassName/>
+    <Tags>[slavetats][threaded]</Tags>
+    <SourceInfo>
+      <File>tests\core\AppearanceStateTests.cpp</File>
+      <Line>868</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>capability requirements are validated and locked on first registration</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>49</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>late capability completes after a waiting query</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>69</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>missing and incompatible capabilities are terminal and explain the lock</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>103</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>duplicate concurrent requests share one provider query</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>140</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider exceptions become incompatible without escaping Ensure</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>166</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>loaded pending capabilities retry until the API is published</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>175</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>capability providers can query siblings and reject recursive cycles</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>199</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>cross-thread capability dependency cycles finish without duplicate queries</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>230</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>piggyback wait on a hung query is bounded</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>262</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>EnsureAll re-probes Waiting records but respects the probe cap</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\CapabilityRegistryTests.cpp</File>
+      <Line>289</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>category bits use canonical identity not documentation order</Name>
+    <ClassName/>
+    <Tags>[category][mask]</Tags>
+    <SourceInfo>
+      <File>tests\core\CategoryMaskTests.cpp</File>
+      <Line>30</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>category mask rejects invalid categories and high bits</Name>
+    <ClassName/>
+    <Tags>[category][mask]</Tags>
+    <SourceInfo>
+      <File>tests\core\CategoryMaskTests.cpp</File>
+      <Line>51</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>category mask iteration follows canonical order</Name>
+    <ClassName/>
+    <Tags>[category][mask]</Tags>
+    <SourceInfo>
+      <File>tests\core\CategoryMaskTests.cpp</File>
+      <Line>72</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>all documented and ESP indices round trip to canonical identity</Name>
+    <ClassName/>
+    <Tags>[category][mask]</Tags>
+    <SourceInfo>
+      <File>tests\core\CategoryMaskTests.cpp</File>
+      <Line>90</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock supplier can query clock state and rebind its source</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>33</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock service anchors on the first wall sample</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>59</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock service accumulates active time only outside menus</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>72</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock service rejects game-clock rewinds and follows fresh pushes</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>103</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock service menu state survives ticks without wall samples</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>129</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock service attributes the interval before a menu transition</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>140</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>clock service drops non-finite wall samples and re-anchors</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ClockServiceTests.cpp</File>
+      <Line>157</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>configuration data has a pure value default shape</Name>
+    <ClassName/>
+    <Tags>[configuration]</Tags>
+    <SourceInfo>
+      <File>tests\core\ConfigurationTests.cpp</File>
+      <Line>13</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>configuration revisions distinguish unset from applied</Name>
+    <ClassName/>
+    <Tags>[configuration]</Tags>
+    <SourceInfo>
+      <File>tests\core\ConfigurationTests.cpp</File>
+      <Line>39</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>configuration update results keep failure details and success state</Name>
+    <ClassName/>
+    <Tags>[configuration]</Tags>
+    <SourceInfo>
+      <File>tests\core\ConfigurationTests.cpp</File>
+      <Line>51</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>configuration snapshots bind immutable data to one revision</Name>
+    <ClassName/>
+    <Tags>[configuration]</Tags>
+    <SourceInfo>
+      <File>tests\core\ConfigurationTests.cpp</File>
+      <Line>73</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>legacy contract counts are fixed</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>26</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>fail constructs value and void results</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>36</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>fame category lookup handles ESP spelling</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>45</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>fame categories have a stable ESP order</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>56</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>strong ids do not convert</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>65</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>zero is a valid dense location and public location index</Name>
+    <ClassName/>
+    <Tags>[ids]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>76</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>unknown facts are not false</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>85</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>snapshots are value objects</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>95</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>game time keeps day and second units separate</Name>
+    <ClassName/>
+    <Tags>[contracts]</Tags>
+    <SourceInfo>
+      <File>tests\core\ContractsTests.cpp</File>
+      <Line>121</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>BuildDiffusionGraph validates edge definitions</Name>
+    <ClassName/>
+    <Tags>[graph]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionGraphTests.cpp</File>
+      <Line>40</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>CompileDiffusionGraph produces a by-target CSR</Name>
+    <ClassName/>
+    <Tags>[graph]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionGraphTests.cpp</File>
+      <Line>81</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>CompileDiffusionGraph rejects edges outside the numeric rows</Name>
+    <ClassName/>
+    <Tags>[graph]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionGraphTests.cpp</File>
+      <Line>126</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>CompileDiffusionGraph projects canonical owners and merges parallel edges</Name>
+    <ClassName/>
+    <Tags>[graph][locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionGraphTests.cpp</File>
+      <Line>142</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>CompileDiffusionGraph resolves long owner chains iteratively</Name>
+    <ClassName/>
+    <Tags>[graph][locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionGraphTests.cpp</File>
+      <Line>193</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>BuildLegacyDefaultGraph expands the JSON topology</Name>
+    <ClassName/>
+    <Tags>[graph]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionGraphTests.cpp</File>
+      <Line>224</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>incoming rows keep the strongest same-category candidate</Name>
+    <ClassName/>
+    <Tags>[kernel]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionKernelTests.cpp</File>
+      <Line>39</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>remote rows arrive fully and retreat along the remaining in-edges</Name>
+    <ClassName/>
+    <Tags>[kernel]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionKernelTests.cpp</File>
+      <Line>66</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>remote relaxation backends preserve floating-point boundary semantics</Name>
+    <ClassName/>
+    <Tags>[avx2][kernel]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionKernelTests.cpp</File>
+      <Line>103</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>remote relaxation handles empty and short spans</Name>
+    <ClassName/>
+    <Tags>[kernel]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionKernelTests.cpp</File>
+      <Line>203</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>kernels reject malformed graphs instead of reading through them</Name>
+    <ClassName/>
+    <Tags>[kernel][safety]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionKernelTests.cpp</File>
+      <Line>221</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scalar and AVX2 backends agree bit for bit</Name>
+    <ClassName/>
+    <Tags>[avx2][kernel]</Tags>
+    <SourceInfo>
+      <File>tests\core\DiffusionKernelTests.cpp</File>
+      <Line>260</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher attach prepares and publishes the settlement snapshot</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>94</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher sync command commits and publishes before returning</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>122</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher scheduled changes settle once at their game day</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>157</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher executor rounds run due timers in stable domain order</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>198</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher resumes parked timer flows exactly once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>230</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher session replacement aborts waits and releases once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>268</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher consumes queued events individually and drops stale epochs</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>319</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher merges same-target dirty requests inside the window</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>340</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher suspension gates commands, timers, and events</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>381</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher survives concurrent commands while the executor steps</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>413</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher flow move assignment destroys the replaced frame once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>476</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher cancel wait disarms the pending timer</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>520</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher destroying a parked flow disarms its timer</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>553</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher isolates throwing timer bodies</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>581</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher rejects non-finite game time without moving the floor</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>601</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher detach clears changes and dirty requests</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>623</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher reattach publishes a clean session snapshot</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>649</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher detach during a timer batch cannot double resume</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>679</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher preserves FIFO changes at the same business time</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>722</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher settles the current clock before a synchronous write</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>736</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher drops extracted work after session replacement</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>760</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dispatcher releases callbacks and samples clocks outside its lock</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>788</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>published query supports dense and reordered region rows</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>807</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>uncaught flow exceptions remain observable without stopping the executor</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>820</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>flow exceptions during abort finish only the failing frame</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>850</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>mixed wait retirement preserves expiry and detach order</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\DispatcherTests.cpp</File>
+      <Line>868</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>game data refresh canonicalizes loaded plugin names</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>92</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>game data refuses illegal contexts and preserves the cache on failure</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>127</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dirty refresh issues exactly one engine query per target</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>158</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>plugin refresh and the cache share one canonical key spelling</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>186</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>targeted refresh never drains unrelated dirty history</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>219</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dirty refresh canonicalizes and rejects invalid player keys</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>247</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>forget removes both the cached snapshot and its dirty bit</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>276</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dirty refresh retries transient failures but forgets missing actors</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>295</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a returned non-ready snapshot stays dirty as a partial observation</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>336</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>dirty refresh rejects actor mismatches, negative facts and partial snapshots</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>358</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>game data store validates facts and clears the dirty bit</Name>
+    <ClassName/>
+    <Tags>[engine][gamedata]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>421</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>actor queries require a legal engine context before touching the backend</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>464</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>actor queries cache successful snapshots and expose cached lookups</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>493</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>actor queries reject a snapshot that belongs to another player</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>531</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>actor queries reject non-finite distances before caching</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>547</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>actor queries propagate an engine error after earlier successes</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>567</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>refresh current actors marks each target and merges one query per actor</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>584</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>actor snapshots translate into the core witness DTO</Name>
+    <ClassName/>
+    <Tags>[engine][queries]</Tags>
+    <SourceInfo>
+      <File>tests\core\EngineFactsTests.cpp</File>
+      <Line>601</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 rejects invalid stable keys and incomplete available mod snapshots</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>152</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 collectors preserve request identity and reject ambiguous requests</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>181</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 propagates unknown P+ interactions into classification</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>200</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 resets rejected projections without changing category policy</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>236</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 collector continuation records reject corrupt and ambiguous stacks</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>263</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 keeps victim roles and stage tags separate from legacy category policy</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>285</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 notification selects a real thread and preserves wide epoch arguments</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>333</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 retains P+ sex codes without folding other sexes into male counts</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>355</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 adapter state survives concurrent wrapper destruction during completion</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>377</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Group08 isolates VM and epoch exceptions with a single terminal outcome</Name>
+    <ClassName/>
+    <Tags>[g08-fixes]</Tags>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>412</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ wire keeps only classification scopes and canonicalizes tags</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>443</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ wire rejects a mismatched scene epoch</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>462</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ facts use the validated scene actors and interactions</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>470</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ adapter retries within the bounded policy and gates readiness</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>487</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ adapter reports stale results and does not score them</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>531</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ stage changes refetch instead of serving a cached scene</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>552</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG wire applies device and bondage masks to the requested actor</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>569</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG bondage flags synthesize heavy bondage and mittens</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>593</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG wire rejects the bondage sentinel bit</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>611</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG adapter serves the validated snapshot and refetches equipment changes</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>623</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG equipment changes outside the active scene are ignored</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>661</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG actor outside the snapshot leaves facts unknown</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>683</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external wire exposes module and per-actor state</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>694</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external wire rejects duplicate modules and non-finite numbers</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>720</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external adapter retries on timeout and gates new scoring while missing</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>738</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external state changes invalidate a ready snapshot</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>767</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external state changes outside the active scene are ignored</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>784</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external mod events invalidate an in-flight request</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>801</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external adapter rejects another scene epoch</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>817</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ interaction flags synthesize classification scope tags</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>825</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ wire rejects duplicate singleton lines</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>846</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ adapter invokes the completion once after malformed responses</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>860</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ transient transport failure keeps the completion for the final attempt</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>891</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ repeated requests keep the bounded attempt budget</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>919</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG repeated requests keep the bounded attempt budget</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>960</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external repeated requests keep the bounded attempt budget</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>996</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG wire rejects duplicate providers and actors</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1032</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ stale request completes both waiters without submitting</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1051</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ end event for an old epoch cannot close the current scene</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1078</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ stale request for an older scene cannot replace the current request</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1099</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ events for an older scene cannot dirty the current scene</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1135</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ closed scene does not reopen for the same epoch</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1152</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ provider inactive frame closes the scene</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1175</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG new scene supersedes an old in-flight request once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1201</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG closed scene does not reopen for the same epoch</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1232</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external stale request cannot replace the current request</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1255</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ wire rejects interaction mask bits outside the ABI</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1282</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG chastity state contributes belt and bra facts</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1295</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG wire rejects unknown keys</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1312</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external wire requires the public whore flag when available</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1322</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external facts keep missing modules distinct from unavailable providers</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1334</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>public whore fact preserves an incompatible module state</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1352</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external wire rejects duplicate public whore lines</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1369</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external wire rejects duplicate player and actor lines</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1381</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ replaced waiter receives changed exactly once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1392</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ new scene start supersedes an active scene</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1423</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ facial interaction does not synthesize oral</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1449</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ LeadInEnd does not read the previous scene as ready</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1465</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ unknown availability retries within the bounded policy</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1490</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>P+ adapter notifies a replaced waiter when a retry is reclaimed</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1523</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Papyrus result epoch mismatch is reported stale</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1549</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG replaced waiter receives changed exactly once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1567</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>DDNG anal chastity contributes a belt fact</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1590</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>external replaced waiter receives changed exactly once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1602</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>wire parsers handle deterministic mutated input</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ExternalStateTests.cpp</File>
+      <Line>1625</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>gain floors small products at one point and truncates toward zero</Name>
+    <ClassName/>
+    <Tags>[gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>74</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>night reduction halves only for foreplay inside the window</Name>
+    <ClassName/>
+    <Tags>[gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>110</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>the night window uses strict legacy boundaries</Name>
+    <ClassName/>
+    <Tags>[gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>154</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>non-finite multipliers never break the one-point gain floor</Name>
+    <ClassName/>
+    <Tags>[gain][safety]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>169</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>gain tiers follow the legacy fame boundaries</Name>
+    <ClassName/>
+    <Tags>[gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>192</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>manual spread mirrors the legacy formula</Name>
+    <ClassName/>
+    <Tags>[gain][spread]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>205</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>manual decay amounts clamp into the legacy range</Name>
+    <ClassName/>
+    <Tags>[decay][gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>227</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>decay rolls follow the legacy tier caps</Name>
+    <ClassName/>
+    <Tags>[decay][gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>251</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>fame configuration compiles into typed rule data</Name>
+    <ClassName/>
+    <Tags>[configuration][decay][gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>274</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>typed fame rules match configuration rules and RNG ranges</Name>
+    <ClassName/>
+    <Tags>[configuration][decay][gain]</Tags>
+    <SourceInfo>
+      <File>tests\core\GainRulesTests.cpp</File>
+      <Line>312</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>anonymity consumes each region transition and preserves the legacy memory formula</Name>
+    <ClassName/>
+    <Tags>[anonymity][gameplay]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>222</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>anonymity evaluation follows the static and dynamic legacy branches</Name>
+    <ClassName/>
+    <Tags>[anonymity][gameplay]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>322</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>body tattoo visibility mirrors the four legacy branches</Name>
+    <ClassName/>
+    <Tags>[gameplay][visibility]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>385</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>face, hand and foot tattoo visibility preserve keyword precedence</Name>
+    <ClassName/>
+    <Tags>[gameplay][visibility]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>495</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>cum visibility separates the count gate from the visibility gate</Name>
+    <ClassName/>
+    <Tags>[gameplay][visibility]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>588</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>bondage visibility follows heavy, lockable and anonymous legacy paths</Name>
+    <ClassName/>
+    <Tags>[gameplay][visibility]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>662</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>NPC scan continues after skips, rolls once per survivor and scores once</Name>
+    <ClassName/>
+    <Tags>[gameplay][witness]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>744</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>NPC scan applies the exact line-of-sight and detection gates</Name>
+    <ClassName/>
+    <Tags>[gameplay][witness]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>862</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>fame gain roll always pays the betray draw and preserves canonical order</Name>
+    <ClassName/>
+    <Tags>[gameplay][witness]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>899</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>candidate selection deduplicates and reports a 50-attempt shortfall</Name>
+    <ClassName/>
+    <Tags>[gameplay][witness]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>1082</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>candidate selection preserves order and masks every selected category</Name>
+    <ClassName/>
+    <Tags>[gameplay][witness]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>1103</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>animation classification keeps the analyzer gate order and SubAnalyze order</Name>
+    <ClassName/>
+    <Tags>[animation][gameplay]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>1118</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>comments schedule and roll exactly like CommentManager</Name>
+    <ClassName/>
+    <Tags>[comments][gameplay]</Tags>
+    <SourceInfo>
+      <File>tests\core\GameplayRulesTests.cpp</File>
+      <Line>1304</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>LegacyOutputs pins the 25 Reloaded Current*Fame globals</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>57</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>LegacyOutputs pins the 20 StorageUtil keys and categories</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>74</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>LegacyOutputs pins the 24 legacy location indices</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>91</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>LegacyOutputs pins the 20 legacy esm bridge globals</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>112</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublishCurrentFameGlobals writes all 25 from the resolver</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>123</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublishCurrentFameGlobals writes zeros when nothing resolves</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>139</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublishStorageUtilLists writes 20 entries per 24 indices</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>152</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublishLegacyBridge writes all 20 bridge globals</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LegacyOutputsTests.cpp</File>
+      <Line>182</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>new game stays closed until the complete bind is activated</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>172</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>A then B then A restores each save's reputation and registration</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>202</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider registrations travel with each save and rebind per session</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>249</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>missing regions keep the complete record and rebind in another session</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>279</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>failed load never opens the switch and the next session recovers</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>318</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>each new session reloads and adopts the current cross-save configuration</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>347</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>async messages are committed only while their epoch is current</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>387</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>one flush drains only the batch it started with</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>423</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>oversized payloads are rejected with their own counter</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>449</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>typed configuration projects onto legacy settlement keys</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>477</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>host load failure discards a successfully prepared save</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>496</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>repeated activation closes an already attached session</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>513</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>historical light keys restore and recapture canonical local IDs</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>531</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>light key migration preserves full and unknown plugins and rejects collisions</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>551</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>light key migration rejects custom region collisions before activation</Name>
+    <ClassName/>
+    <Tags>[fix05-06]</Tags>
+    <SourceInfo>
+      <File>tests\core\LifecycleTests.cpp</File>
+      <Line>584</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>location index builds dense sorted identities and intervals</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\LocationIndexTests.cpp</File>
+      <Line>44</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>location index reports malformed forests</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\LocationIndexTests.cpp</File>
+      <Line>84</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>deep location chains are iterative</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\LocationIndexTests.cpp</File>
+      <Line>110</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region priority follows registration order before ancestry distance</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\LocationIndexTests.cpp</File>
+      <Line>125</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random location forests match the reference implementation</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\LocationIndexTests.cpp</File>
+      <Line>165</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random arbitrary location forests match the reference implementation</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\LocationRandomTests.cpp</File>
+      <Line>45</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 exposes exactly 52 inputs and 7 replies</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>47</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 pins representative input contracts</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>53</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 pins the 7 reply contracts</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>91</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 parses valid input payloads and reads values by name</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>146</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 fills contract defaults for omitted parameters</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>161</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 rejects unknown events, extra args, and wrong types</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>167</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 parses and validates the Form-typed spread request</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>178</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 dispatches to a registered handler exactly once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>189</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M33 forwards validated replies to the sink</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\ModEventBridgeTests.cpp</File>
+      <Line>210</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>numeric rows allocate all 32 slots and start zeroed</Name>
+    <ClassName/>
+    <Tags>[layout][numeric]</Tags>
+    <SourceInfo>
+      <File>tests\core\NumericRowTests.cpp</File>
+      <Line>20</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>numeric row buffers keep stride and address alignment</Name>
+    <ClassName/>
+    <Tags>[layout][numeric]</Tags>
+    <SourceInfo>
+      <File>tests\core\NumericRowTests.cpp</File>
+      <Line>37</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>numeric row operations preserve padding and ignore it when scanning</Name>
+    <ClassName/>
+    <Tags>[numeric]</Tags>
+    <SourceInfo>
+      <File>tests\core\NumericRowTests.cpp</File>
+      <Line>56</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 frozen table has 124 functions (86 public, 38 internal)</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>54</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 pins the DataManager.GetFameValue declaration</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>61</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 pins invalid-input results for the query functions</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>85</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 pins the reference-alias bound analyzer declaration</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>141</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 validates quest and global bindings</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>167</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 Find resolves by id and by script+function</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>180</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>Papyrus quest identity includes the plugin and ignores filename case</Name>
+    <ClassName/>
+    <Tags>[formid-fix][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>189</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 converts exact argument lists and rejects wrong counts</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>201</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 fills contracted defaults for omitted trailing parameters</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>219</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>M32 applies Papyrus implicit conversions</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusBindingsTests.cpp</File>
+      <Line>243</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus success delivers Ready exactly once with values</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>137</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus instance target carries the bound form</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>175</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus timeout fires once, late completion is ignored</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>196</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus cancel fires once, late completion is ignored</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>224</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus stale epoch result is demoted to Stale</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>251</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus transport stale status is not reported as Failed</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>272</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus transport failure surfaces as Failed</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>285</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus in-flight calls complete independently</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>301</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus overflow of the in-flight cap rejects with Failed</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>337</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus destructor delivers Cancelled once and ignores late completions</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>382</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>papyrus concurrent submit/cancel/complete race delivers exactly once</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\PapyrusCallsTests.cpp</File>
+      <Line>411</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>two providers contribute to the same category</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>22</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>unregister removes only its own contributions</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>43</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>temporary provider unavailability preserves registered contributions</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>63</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>unavailable unregistered providers do not create persistent state</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>97</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>confirmed invalidations wipe optional categories once per generation</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>108</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>automatic invalidation wipes only the four optional categories</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>153</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider categories stay isolated</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>168</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>invalidating a provider revokes all of its categories</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>185</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>duplicate categories count once and capacity is bounded</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>206</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>empty registration removal reports the durable change</Name>
+    <ClassName/>
+    <Tags>[providers][regression]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>226</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider commands reject invalid input</Name>
+    <ClassName/>
+    <Tags>[providers]</Tags>
+    <SourceInfo>
+      <File>tests\core\ProviderRegistryTests.cpp</File>
+      <Line>236</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi synchronous set commits before return</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>107</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi rejects unresolvable names and categories</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>123</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi reads only published regions</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>137</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi one-shot operations run through the executor</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>150</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi external-mod flag registry</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>161</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi legacy outputs read the committed revision</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>192</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi routes the 7 request events to reply ModEvents</Name>
+    <ClassName/>
+    <Tags>[api][events][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>230</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>PublicApi gates business commands on session state</Name>
+    <ClassName/>
+    <Tags>[api][public-api][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\PublicApiTests.cpp</File>
+      <Line>326</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random gain parity against the reference</Name>
+    <ClassName/>
+    <Tags>[differential][gain][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>497</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random decay roll parity against the reference</Name>
+    <ClassName/>
+    <Tags>[decay][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>569</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random manual spread parity against the reference</Name>
+    <ClassName/>
+    <Tags>[differential][random][spread]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>593</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random manual decay parity against the reference</Name>
+    <ClassName/>
+    <Tags>[decay][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>612</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random advance parity scalar avx2 reference</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>634</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random advance rejects null rng</Name>
+    <ClassName/>
+    <Tags>[advance][random][sanity]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>642</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random advance repeated settle is idempotent</Name>
+    <ClassName/>
+    <Tags>[advance][idempotence][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>659</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>an exact half-day boundary consumes one decay period on both paths</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>704</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduled set settles at its business time before the remaining interval</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>749</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduled clear resets the target decay anchor to its business time</Name>
+    <ClassName/>
+    <Tags>[advance][differential][random]</Tags>
+    <SourceInfo>
+      <File>tests\core\RandomTests.cpp</File>
+      <Line>794</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>legacy Global and quest lookups survive full and light load order changes</Name>
+    <ClassName/>
+    <Tags>[formid-fix][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\RecordLookupTests.cpp</File>
+      <Line>82</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>loaded record lookup rejects absent records and wrong types</Name>
+    <ClassName/>
+    <Tags>[formid-fix][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\RecordLookupTests.cpp</File>
+      <Line>139</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>loaded record lookup never sends full runtime IDs as local IDs</Name>
+    <ClassName/>
+    <Tags>[formid-fix][slsf]</Tags>
+    <SourceInfo>
+      <File>tests\core\RecordLookupTests.cpp</File>
+      <Line>165</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region aliases normalize case and whitespace</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>73</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>regions bind ownership aliases and legacy indices</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>81</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>owner child regions inherit their owner</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>117</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region ownership prefers legacy priority over nearest ancestor</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>127</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>child region registration priority survives ownership remapping</Name>
+    <ClassName/>
+    <Tags>[locations][regression]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>137</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region resolution ignores out of range parent ids</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>151</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>registering an independent region preserves unrelated ownership</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>162</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region binding rejects malformed definitions</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>186</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region binding validates owner graph without recursion</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>248</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region ownership reuses shared tails and keeps independent roots</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>271</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>empty custom order keeps owner rules ahead of registration order</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>290</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>partial custom order still yields unique public indices</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>307</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>hand-built location parent cycles are rejected</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>337</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region ownership detects a long cycle without location references</Name>
+    <ClassName/>
+    <Tags>[locations]</Tags>
+    <SourceInfo>
+      <File>tests\core\RegionRegistryTests.cpp</File>
+      <Line>355</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>explicit numeric writes preserve exact values</Name>
+    <ClassName/>
+    <Tags>[state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>71</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>published snapshot ties mapping values and configuration to one revision</Name>
+    <ClassName/>
+    <Tags>[publish][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>102</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>explicit clear zeroes local remote and published</Name>
+    <ClassName/>
+    <Tags>[state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>141</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>explicit clear all and category wipe follow legacy scope</Name>
+    <ClassName/>
+    <Tags>[state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>159</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>explicit commands reject invalid input without writing</Name>
+    <ClassName/>
+    <Tags>[state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>226</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>flags set and clear are independent</Name>
+    <ClassName/>
+    <Tags>[state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>265</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>category summaries follow the last region containing each value or flag</Name>
+    <ClassName/>
+    <Tags>[regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>289</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>locations owned by one region share one numeric account</Name>
+    <ClassName/>
+    <Tags>[accounts][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>330</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>explicit writes address a region without an actual location record</Name>
+    <ClassName/>
+    <Tags>[regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>346</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>binding migrates rows by stable region identity</Name>
+    <ClassName/>
+    <Tags>[accounts][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>357</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>capture and restore rebuild derived sets from current configuration</Name>
+    <ClassName/>
+    <Tags>[capture][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>380</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>restore keeps unknown accounts unresolved and ignores v1 settings</Name>
+    <ClassName/>
+    <Tags>[capture][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>426</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>temporarily missing regions retain their full reputation across saves and rebinds</Name>
+    <ClassName/>
+    <Tags>[capture][regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>453</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>mod registration can be saved before selecting reputation categories</Name>
+    <ClassName/>
+    <Tags>[capture][providers][regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>497</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider invalidation wipes only complete optional categories</Name>
+    <ClassName/>
+    <Tags>[providers][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>525</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider wipe validates every category before committing</Name>
+    <ClassName/>
+    <Tags>[providers][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>554</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>global cleanup also clears unresolved persisted accounts</Name>
+    <ClassName/>
+    <Tags>[capture][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>578</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>restore rejects provider contributions above runtime capacity</Name>
+    <ClassName/>
+    <Tags>[capture][providers][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>633</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>restore caps legacy provider flags before expanding them</Name>
+    <ClassName/>
+    <Tags>[capture][providers][regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>646</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>restore accepts exactly the provider registration capacity</Name>
+    <ClassName/>
+    <Tags>[capture][providers][regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>661</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>binding rejects duplicate account identities and bad owners</Name>
+    <ClassName/>
+    <Tags>[accounts][regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>677</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>restore rejects an out-of-range public location owner</Name>
+    <ClassName/>
+    <Tags>[capture][regression][state]</Tags>
+    <SourceInfo>
+      <File>tests\core\ReputationStateTests.cpp</File>
+      <Line>699</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler same-deadline tasks fire in stable enqueue order</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>22</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler cancels are idempotent and invalidate stale tokens</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>51</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler domains advance independently</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>69</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler session replacement invalidates every pending task</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>106</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler recycles dead heap entries instead of growing forever</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>131</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler due set matches reference across randomized interleavings</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>155</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler rejects non-finite deadlines and unknown domains</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>274</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler session change and slot reuse keep tokens isolated</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>303</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler reclaims cancelled far-future entries</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>340</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler HasDue discards dead roots and preserves live ordering</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>351</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduler capture destruction can query the scheduler</Name>
+    <ClassName/>
+    <Tags>[fix05]</Tags>
+    <SourceInfo>
+      <File>tests\core\SchedulerTests.cpp</File>
+      <Line>364</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>save envelope roundtrips the complete persistent state</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SerializationTests.cpp</File>
+      <Line>67</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>legacy v1 save payload is still readable</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SerializationTests.cpp</File>
+      <Line>84</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>every truncation and checksum corruption is rejected</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SerializationTests.cpp</File>
+      <Line>101</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>deterministic malformed envelopes never escape as partial state</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SerializationTests.cpp</File>
+      <Line>138</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random valid states survive encode/decode with seed 1170</Name>
+    <ClassName/>
+    <Tags/>
+    <SourceInfo>
+      <File>tests\core\SerializationTests.cpp</File>
+      <Line>156</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>propagation takes the strongest source and falls back when it leaves</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>147</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a batch delivery keeps the transmitted value without an instant fade</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>178</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>the same interval settles exactly once</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>193</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>scheduled changes join the settlement batch in time order</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>219</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a scheduled set starts decay at its business time</Name>
+    <ClassName/>
+    <Tags>[advance][boundary][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>277</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>one advance settles each scheduled boundary before replacing fame</Name>
+    <ClassName/>
+    <Tags>[advance][boundary][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>295</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>backward clock settlement re-anchors instead of owing debt</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>320</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a pure clock rewind re-anchors without replaying a hop</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>347</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>decay consumes whole periods once and skips protected batches</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>372</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>gain renews the whole-row decay protection</Name>
+    <ClassName/>
+    <Tags>[settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>472</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>gain reads the published fame and stays visible over a remote arrival</Name>
+    <ClassName/>
+    <Tags>[gain][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>508</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>the spread pulse transmits exactly one hop and is idempotent</Name>
+    <ClassName/>
+    <Tags>[pulse][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>532</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a spread pulse anchors the remote clock at its own time</Name>
+    <ClassName/>
+    <Tags>[pulse][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>588</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>custom locations use the hard-coded decay tiers</Name>
+    <ClassName/>
+    <Tags>[decay][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>613</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>gain reads the night switch from configuration</Name>
+    <ClassName/>
+    <Tags>[gain][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>635</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>manual decay and manual spread keep their legacy edges</Name>
+    <ClassName/>
+    <Tags>[rules][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>653</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>the passive path honours the public fame cap</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>686</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a long jump protects only the deadline ticks</Name>
+    <ClassName/>
+    <Tags>[decay][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>704</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>an equal-candidate pulse still renews protection</Name>
+    <ClassName/>
+    <Tags>[pulse][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>728</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>manual spread keeps the legacy same-location transfer</Name>
+    <ClassName/>
+    <Tags>[rules][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>757</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>legacy default parameters match the research record</Name>
+    <ClassName/>
+    <Tags>[settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>767</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>advance rejects missing or hostile inputs</Name>
+    <ClassName/>
+    <Tags>[advance][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>776</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>late commands apply after time already consumed</Name>
+    <ClassName/>
+    <Tags>[boundary][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>829</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>advance refreshes cached graph and rules after edits</Name>
+    <ClassName/>
+    <Tags>[prepared][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>850</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>advance refreshes custom-region membership without changing random order</Name>
+    <ClassName/>
+    <Tags>[prepared][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>884</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>prepared settlement owns inputs and matches the raw advance path</Name>
+    <ClassName/>
+    <Tags>[prepared][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>908</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>advance uses owner-projected edges and refreshes owner bindings</Name>
+    <ClassName/>
+    <Tags>[locations][prepared][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>955</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>a rejected boundary batch preserves rows, metadata and queue order</Name>
+    <ClassName/>
+    <Tags>[boundary][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>979</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>prepared pulses reuse selected frozen sources and workspace</Name>
+    <ClassName/>
+    <Tags>[prepared][pulse][settlement]</Tags>
+    <SourceInfo>
+      <File>tests\core\SettlementTests.cpp</File>
+      <Line>1021</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider facts and core contributions coexist in one translation unit</Name>
+    <ClassName/>
+    <Tags>[providers][shared]</Tags>
+    <SourceInfo>
+      <File>tests\core\SharedTypesTests.cpp</File>
+      <Line>28</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>shared category, row and configuration headers compose</Name>
+    <ClassName/>
+    <Tags>[shared]</Tags>
+    <SourceInfo>
+      <File>tests\core\SharedTypesTests.cpp</File>
+      <Line>48</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>region account slots are independent of place slots</Name>
+    <ClassName/>
+    <Tags>[account][shared]</Tags>
+    <SourceInfo>
+      <File>tests\core\SharedTypesTests.cpp</File>
+      <Line>70</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec encodes canonical empty v1 and v2 payloads</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>93</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec roundtrips the full v1 fixture</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>112</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec keys providers by name and category</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>131</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec rejects missing plugins and preserves exact finite values</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>149</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec random finite states roundtrip</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>173</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec rejects invalid source states</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>241</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec v2 roundtrips contributions and rejects legacy sections</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>299</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec reports malformed headers</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>374</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec rejects every truncation of valid payload</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>407</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>state codec validates enum and boolean fields</Name>
+    <ClassName/>
+    <Tags>[codec]</Tags>
+    <SourceInfo>
+      <File>tests\core\StateCodecTests.cpp</File>
+      <Line>416</Line>
+    </SourceInfo>
+  </TestCase>
+</MatchingTests>

@@ -5,3 +5,5 @@ String Function Hex(Int value) Global Native
 String Function RequestEpoch(String payload) Global Native
 Actor[] Function RequestActors(String payload) Global Native
 String Function ActorRace(Actor value) Global Native
+String Function CollectRaceMenu() Global Native
+String Function CollectSlaveTats(Actor value) Global Native

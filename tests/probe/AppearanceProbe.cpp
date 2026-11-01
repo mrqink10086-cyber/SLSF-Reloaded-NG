@@ -1,8 +1,3 @@
-// Offline appearance probe.  Compile-time section pins mirrored ABI facts;
-// run-time section drives both adapters against in-memory vector tables.
-// Live 1.6.1170 observations (providers absent on this host) print as
-// pending markers.
-
 #include "slsf/core/gameplay/Visibility.h"
 #include "slsf/integrations/RaceMenu.h"
 #include "slsf/integrations/SlaveTats.h"

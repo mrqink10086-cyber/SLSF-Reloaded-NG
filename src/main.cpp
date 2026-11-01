@@ -9,6 +9,7 @@
 #include "slsf/persistence/StableKeys.h"
 #include "slsf/runtime/Lifecycle.h"
 #include "slsf/boundary/ProviderCollectors.h"
+#include "slsf/boundary/AppearanceProviders.h"
 
 #include <Windows.h>
 
@@ -466,6 +467,7 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
     }
     switch (message->type) {
     case SKSE::MessagingInterface::kPostLoad:
+        slsf::boundary::SubscribeAppearanceProviders();
         if (g_capabilities) {
             g_capabilities->EnsureAll();
             LogCapabilities("postload");

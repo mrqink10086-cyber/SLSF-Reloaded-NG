@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "slsf/boundary/AppearanceProviders.h"
 #include "slsf/boundary/ProviderCollectors.h"
 #include "slsf/engine/RecordLookup.h"
 #include "slsf/integrations/ProviderCollectors.h"
@@ -138,7 +139,12 @@ bool OnGameThread(RE::BSScript::Internal::VirtualMachine* vm, RE::VMStackID stac
                 if (pending.erase(call) == 0) return;
             }
             Result result{};
-            try { if (IsCurrent(epoch)) result = work(); } catch (...) { result = {}; }
+            try {
+                if (IsCurrent(epoch)) {
+                    if constexpr (std::is_invocable_v<Work, const Epoch&>) result = work(epoch);
+                    else result = work();
+                }
+            } catch (...) { result = {}; }
             vm->ReturnLatentResult(stack, result);
         });
     } catch (...) {
@@ -169,6 +175,45 @@ bool RequestActorsAsync(RE::BSScript::Internal::VirtualMachine* vm,
     RE::VMStackID stack, RE::StaticFunctionTag*, std::string payload) {
     return OnGameThread<std::vector<RE::Actor*>>(vm, stack,
         [payload = std::move(payload)] { return RequestActors(nullptr, payload); });
+}
+bool CollectRaceMenuAsync(RE::BSScript::Internal::VirtualMachine* vm,
+    RE::VMStackID stack, RE::StaticFunctionTag*) {
+    return OnGameThread<std::string>(vm, stack, [](const Epoch& epoch) {
+        const auto snapshot = QueryRaceMenu(epoch);
+        auto wire = std::string{"SLSFRM1\nversion\t1\n"} + EpochLine(epoch);
+        if (!IsCurrent(epoch) || snapshot.availability != ExternalAvailability::Available)
+            return wire + "availability\tUnknown\n";
+        wire += "availability\tAvailable\ninterface\t" + std::to_string(snapshot.overlayInterfaceVersion) + "\n";
+        constexpr std::array locations{"Body", "Hand", "Feet", "Face"};
+        for (std::size_t index = 0; index < locations.size(); ++index)
+            wire += std::string{"capacity\t"} + locations[index] + "\t" + std::to_string(snapshot.overlays.counts[index]) + "\n";
+        return wire;
+    });
+}
+bool CollectSlaveTatsAsync(RE::BSScript::Internal::VirtualMachine* vm,
+    RE::VMStackID stack, RE::StaticFunctionTag*, RE::Actor* actor) {
+    auto pinned = std::make_shared<PinnedForm>(vm, actor);
+    return OnGameThread<std::string>(vm, stack, [pinned = std::move(pinned)](const Epoch& epoch) {
+        auto wire = std::string{"SLSFST1\nversion\t1\n"} + EpochLine(epoch);
+        auto* form = pinned->Get();
+        auto* resolved = form ? form->As<RE::Actor>() : nullptr;
+        if (!resolved) return wire + "availability\tUnknown\n";
+        const auto snapshot = QuerySlaveTats(resolved, epoch);
+        if (!IsCurrent(epoch) || snapshot.availability != ExternalAvailability::Available)
+            return wire + "availability\tUnknown\n";
+        wire += "availability\tAvailable\nactor\t" + Identity(nullptr, resolved) + "\ninterface\t" +
+                std::to_string(snapshot.interfaceVersion) + "\n";
+        constexpr std::array areas{"Body", "Face", "Hands", "Feet"};
+        for (std::size_t index = 0; index < areas.size(); ++index) {
+            const auto& area = snapshot.areas[index];
+            wire += std::string{"area\t"} + areas[index] + "\t" + std::to_string(area.rejectedEntries) + "\t" +
+                    (area.truncated ? "1\n" : "0\n");
+            for (const auto& placement : area.placements)
+                wire += std::string{"tattoo\t"} + areas[index] + "\t" + std::to_string(placement.slot) + "\t" +
+                        WireEscape(placement.name) + "\n";
+        }
+        return wire;
+    });
 }
 template <class Result, class Function>
 class CollectorFunction final : public RE::NativeFunction<Function> {
@@ -226,6 +271,7 @@ void ResumeProviderCollectorCalls(bool loaded) {
 }
 void InitializeProviderCollectors(std::function<Epoch()> epoch, std::function<bool(const Epoch&)> isCurrent) {
     { std::lock_guard guard(providerMutex); currentEpoch = std::move(epoch); epochIsCurrent = std::move(isCurrent); }
+    InitializeAppearanceProviders();
     if (ddng) return;
     GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_PIN, L"DeviousDevices.dll", &ddngModule);
     ddngAvailability = ddngModule ? "Incompatible" : "Missing";
@@ -247,6 +293,8 @@ bool RegisterProviderCollectors(RE::BSScript::IVirtualMachine* vm) {
     vm->BindNativeMethod(new CollectorFunction<std::vector<RE::Actor*>, decltype(RequestActorsAsync)>("RequestActors", "SLSF_Reloaded_ProbeNative", RequestActorsAsync));
     vm->BindNativeMethod(new CollectorFunction<std::string, decltype(ActorRaceAsync)>("ActorRace", "SLSF_Reloaded_ProbeNative", ActorRaceAsync));
     vm->BindNativeMethod(new CollectorFunction<std::string, decltype(CollectDdngAsync)>("CollectScene", "SLSF_Reloaded_DDProbe", CollectDdngAsync));
+    vm->BindNativeMethod(new CollectorFunction<std::string, decltype(CollectRaceMenuAsync)>("CollectRaceMenu", "SLSF_Reloaded_ProbeNative", CollectRaceMenuAsync));
+    vm->BindNativeMethod(new CollectorFunction<std::string, decltype(CollectSlaveTatsAsync)>("CollectSlaveTats", "SLSF_Reloaded_ProbeNative", CollectSlaveTatsAsync));
     return true;
 }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MatchingTests>
+  <TestCase>
+    <Name>vm completion keeps the submitted epoch</Name>
+    <ClassName/>
+    <Tags>[ports]</Tags>
+    <SourceInfo>
+      <File>tests\boundary\PortTests.cpp</File>
+      <Line>91</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>engine and wake ports separate request ids from revisions</Name>
+    <ClassName/>
+    <Tags>[ports]</Tags>
+    <SourceInfo>
+      <File>tests\boundary\PortTests.cpp</File>
+      <Line>114</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>provider ports do not expose third-party containers</Name>
+    <ClassName/>
+    <Tags>[ports]</Tags>
+    <SourceInfo>
+      <File>tests\boundary\PortTests.cpp</File>
+      <Line>136</Line>
+    </SourceInfo>
+  </TestCase>
+  <TestCase>
+    <Name>random interface is deterministic for tests</Name>
+    <ClassName/>
+    <Tags>[ports]</Tags>
+    <SourceInfo>
+      <File>tests\boundary\PortTests.cpp</File>
+      <Line>149</Line>
+    </SourceInfo>
+  </TestCase>
+</MatchingTests>

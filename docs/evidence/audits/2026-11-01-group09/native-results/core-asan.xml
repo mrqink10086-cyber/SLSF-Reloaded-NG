@@ -1,0 +1,525 @@
+<testsuites>
+  <testsuite name="SLSFCoreTestsAsan.exe" errors="0" failures="0" skipped="0" tests="15147" hostname="tbd" time="1.785" timestamp="2026-11-01T11:33:06Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublishCurrentFameGlobals writes all 25 from the resolver" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats failure paths retry toward failed" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats failure paths retry toward failed/actor unresolved" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats failure paths retry toward failed/missing batch pointer" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats failure paths retry toward failed/missing jc bindings" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats failure paths retry toward failed/negative array count is a batch failure" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ facial interaction does not synthesize oral" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi legacy outputs read the committed revision" time="0.006" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="mod registration can be saved before selecting reputation categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="unregister removes only its own contributions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="BuildLegacyDefaultGraph expands the JSON topology" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame category lookup handles ESP spelling" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="deep location chains are iterative" time="0.254" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random manual spread parity against the reference" time="0.005" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu rejects unregistered or incompatible overlay interfaces" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu rejects unregistered or incompatible overlay interfaces/overlay interface missing" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu rejects unregistered or incompatible overlay interfaces/overlay version below required" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu rejects unregistered or incompatible overlay interfaces/version entry missing at the verified slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu rejects unregistered or incompatible overlay interfaces/count entry missing at the verified slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="category mask iteration follows canonical order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh canonicalizes and rejects invalid player keys" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a scheduled set starts decay at its business time" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance uses owner-projected edges and refreshes owner bindings" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="bondage visibility follows heavy, lockable and anonymous legacy paths" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="bondage visibility follows heavy, lockable and anonymous legacy paths/heavy bondage reports the full legacy reset" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="bondage visibility follows heavy, lockable and anonymous legacy paths/lockable devices use slots 45, 49, 56 and 58 plus the belt fallback" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="bondage visibility follows heavy, lockable and anonymous legacy paths/a present belt slot wins before the harness fallback" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="bondage visibility follows heavy, lockable and anonymous legacy paths/an accepted unhideable device is visibly bound" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="bondage visibility follows heavy, lockable and anonymous legacy paths/a forbidden or cursed collar does not count" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 resets rejected projections without changing category policy" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="two providers contribute to the same category" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublishCurrentFameGlobals writes zeros when nothing resolves" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 dispatches to a registered handler exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="non-finite multipliers never break the one-point gain floor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="invalidating a provider revokes all of its categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="legacy default parameters match the research record" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 fills contract defaults for omitted parameters" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi reads only published regions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="comments schedule and roll exactly like CommentManager" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="comments schedule and roll exactly like CommentManager/an invalid snapshot is invalid and never draws" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="comments schedule and roll exactly like CommentManager/anonymous ticks do not roll and reschedule after ten seconds" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="comments schedule and roll exactly like CommentManager/combat ticks do not roll and reschedule after five seconds" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="comments schedule and roll exactly like CommentManager/normal ticks roll 1..100 against the integer frequency" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="comments schedule and roll exactly like CommentManager/naked comment chance follows the PublicWhore and AND branches" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher releases callbacks and samples clocks outside its lock" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random decay roll parity against the reference" time="0.007" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 collectors preserve request identity and reject ambiguous requests" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="remote rows arrive fully and retreat along the remaining in-edges" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 collector continuation records reject corrupt and ambiguous stacks" time="0.010" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="gain renews the whole-row decay protection" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ events for an older scene cannot dirty the current scene" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="duplicate concurrent requests share one provider query" time="0.022" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="explicit numeric writes preserve exact values" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external adapter retries on timeout and gates new scoring while missing" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="configuration update results keep failure details and success state" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="confirmed invalidations wipe optional categories once per generation" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random valid states survive encode/decode with seed 1170" time="0.009" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external repeated requests keep the bounded attempt budget" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ transient transport failure keeps the completion for the final attempt" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="configuration revisions distinguish unset from applied" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus timeout fires once, late completion is ignored" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 exposes exactly 52 inputs and 7 replies" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="remote relaxation handles empty and short spans" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler due set matches reference across randomized interleavings" time="0.007" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="candidate selection preserves order and masks every selected category" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ adapter notifies a replaced waiter when a retry is reclaimed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="LegacyOutputs pins the 25 Reloaded Current*Fame globals" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher flow move assignment destroys the replaced frame once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ wire rejects duplicate singleton lines" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG repeated requests keep the bounded attempt budget" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="unknown facts are not false" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="actor queries reject non-finite distances before caching" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region ownership detects a long cycle without location references" time="0.797" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random gain parity against the reference" time="0.012" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a rejected boundary batch preserves rows, metadata and queue order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider facts and core contributions coexist in one translation unit" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="the passive path honours the public fame cap" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region ownership prefers legacy priority over nearest ancestor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="LegacyOutputs pins the 20 legacy esm bridge globals" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="duplicate categories count once and capacity is bounded" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fail constructs value and void results" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats random placements keep ordering and bounds" time="0.150" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scalar and AVX2 backends agree bit for bit" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec v2 roundtrips contributions and rejects legacy sections" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="jc handle owns and releases exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external mod events invalidate an in-flight request" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external wire rejects duplicate public whore lines" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats truncates oversized areas at the record limit" time="0.007" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="legacy Global and quest lookups survive full and light load order changes" time="0.019" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance refreshes cached graph and rules after edits" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="EnsureAll re-probes Waiting records but respects the probe cap" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ LeadInEnd does not read the previous scene as ready" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher sync command commits and publishes before returning" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="actor queries reject a snapshot that belongs to another player" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external state changes outside the active scene are ignored" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="LegacyOutputs pins the 24 legacy location indices" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec reports malformed headers" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher reattach publishes a clean session snapshot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec roundtrips the full v1 fixture" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="piggyback wait on a hung query is bounded" time="0.452" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="light key migration preserves full and unknown plugins and rejects collisions" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ adapter reports stale results and does not score them" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ stage changes refetch instead of serving a cached scene" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="restore rejects provider contributions above runtime capacity" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler session replacement invalidates every pending task" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG adapter serves the validated snapshot and refetches equipment changes" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external wire rejects duplicate player and actor lines" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external replaced waiter receives changed exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi one-shot operations run through the executor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 keeps victim roles and stage tags separate from legacy category policy" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus cancel fires once, late completion is ignored" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher session replacement aborts waits and releases once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/repeat collect reports unchanged" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/mark dirty triggers recollect without change" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/mark dirty outside epoch ignored" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/slot facts projection" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/stale collection" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/session change resets snapshot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats collects areas into owned records/cancel and reset" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFCoreTestsAsan.exe" errors="0" failures="0" skipped="0" tests="68134" hostname="tbd" time="5.520" timestamp="2026-11-01T11:33:09Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 propagates unknown P+ interactions into classification" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler domains advance independently" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 isolates VM and epoch exceptions with a single terminal outcome" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="zero is a valid dense location and public location index" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="game data store validates facts and clears the dirty bit" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="typed configuration projects onto legacy settlement keys" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="targeted refresh never drains unrelated dirty history" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="backward clock settlement re-anchors instead of owing debt" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="restore accepts exactly the provider registration capacity" time="0.002" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="owner child regions inherit their owner" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher survives concurrent commands while the executor steps" time="0.005" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="explicit clear zeroes local remote and published" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="decay consumes whole periods once and skips protected batches" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="decay consumes whole periods once and skips protected batches/unprotected decay rolls per period with the batch floor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="decay consumes whole periods once and skips protected batches/protection skips the covered periods without back pay" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="decay consumes whole periods once and skips protected batches/a deadline inside a batch delays only the ticks it covers" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="decay consumes whole periods once and skips protected batches/the batch floor keeps at least one decay point" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="empty registration removal reports the durable change" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="night reduction halves only for foreplay inside the window" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="night reduction halves only for foreplay inside the window/daytime foreplay does not halve" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="night reduction halves only for foreplay inside the window/night foreplay halves the multiplier before the sample" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="night reduction halves only for foreplay inside the window/unknown foreplay never halves" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="night reduction halves only for foreplay inside the window/night needs the enabled flag" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher settles the current clock before a synchronous write" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec rejects missing plugins and preserves exact finite values" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduled changes join the settlement batch in time order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ stale request for an older scene cannot replace the current request" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a batch delivery keeps the transmitted value without an instant fade" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ stale request completes both waiters without submitting" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher executor rounds run due timers in stable domain order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ closed scene does not reopen for the same epoch" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="wire parsers handle deterministic mutated input" time="0.265" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="flags set and clear are independent" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats concurrent broadcasts and collects are stable" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG actor outside the snapshot leaves facts unknown" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ adapter invokes the completion once after malformed responses" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/invalid location and anonymity skip before any RNG" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/the betray roll is consumed even with zero candidates" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/candidates follow canonical enum order and a single candidate skips selection" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/an unknown candidate pauses selection after the betray draw" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/an ineligible category does not surface its forbidden high-fame unknown" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/friend betrayal applies the high-fame modifier before the chance test" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/the high-fame modifier persists across later prohibited categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame gain roll always pays the betray draw and preserves canonical order/a negative betray chance still respects an accumulated modifier" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="explicit commands reject invalid input without writing" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="the night window uses strict legacy boundaries" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance refreshes custom-region membership without changing random order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="candidate selection deduplicates and reports a 50-attempt shortfall" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus in-flight calls complete independently" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="loaded pending capabilities retry until the API is published" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame categories have a stable ESP order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG replaced waiter receives changed exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="snapshots are value objects" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="partial custom order still yields unique public indices" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="custom locations use the hard-coded decay tiers" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="async messages are committed only while their epoch is current" time="0.002" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="typed fame rules match configuration rules and RNG ranges" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus stale epoch result is demoted to Stale" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 validates quest and global bindings" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="category summaries follow the last region containing each value or flag" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="category bits use canonical identity not documentation order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ provider inactive frame closes the scene" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="one flush drains only the batch it started with" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random manual decay parity against the reference" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG wire applies device and bondage masks to the requested actor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="failed load never opens the switch and the next session recovers" time="0.002" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="decay rolls follow the legacy tier caps" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus overflow of the in-flight cap rejects with Failed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG new scene supersedes an old in-flight request once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="numeric row operations preserve padding and ignore it when scanning" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="mixed wait retirement preserves expiry and detach order" time="0.008" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG wire rejects the bondage sentinel bit" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="legacy v1 save payload is still readable" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 rejects unknown events, extra args, and wrong types" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="historical light keys restore and recapture canonical local IDs" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="propagation takes the strongest source and falls back when it leaves" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a pure clock rewind re-anchors without replaying a hop" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="published query supports dense and reordered region rows" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="prepared pulses reuse selected frozen sources and workspace" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="cross-thread capability dependency cycles finish without duplicate queries" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="explicit writes address a region without an actual location record" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a returned non-ready snapshot stays dirty as a partial observation" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="all documented and ESP indices round trip to canonical identity" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once/a skipped or invalid NPC no longer aborts the remaining scan" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once/an unknown fact pauses the scan without drawing for later NPCs" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once/a paused batch resumes without rerolling or scoring twice" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once/one success per scan while every survivor still rolls" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once/a reused scanner starts a fresh scan without a stale success flag" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan continues after skips, rolls once per survivor and scores once/relationship ranks map to enemy, neutral, friend and lover" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="binding rejects duplicate account identities and bad owners" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="missing regions keep the complete record and rebind in another session" time="0.002" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ facts use the validated scene actors and interactions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external stale request cannot replace the current request" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu gather waits until the exchange produces the map" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider invalidation wipes only complete optional categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Papyrus result epoch mismatch is reported stale" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="manual spread keeps the legacy same-location transfer" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random location forests match the reference implementation" time="5.180" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 Find resolves by id and by script+function" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG equipment changes outside the active scene are ignored" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi gates business commands on session state" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG wire rejects unknown keys" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="actor queries propagate an engine error after earlier successes" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity evaluation follows the static and dynamic legacy branches" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity evaluation follows the static and dynamic legacy branches/disabled switch overrides every gear fact" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity evaluation follows the static and dynamic legacy branches/static chain is an OR of identity, hood and head slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity evaluation follows the static and dynamic legacy branches/dynamic branch uses local state, fame and the thane block" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity evaluation follows the static and dynamic legacy branches/unknown thane switch with a known thane stays not ready" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity evaluation follows the static and dynamic legacy branches/dynamic local flag needs a live region memory" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="late capability completes after a waiting query" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec encodes canonical empty v1 and v2 payloads" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="game data refuses illegal contexts and preserves the cache on failure" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="gain reads the night switch from configuration" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler reclaims cancelled far-future entries" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider commands reject invalid input" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="configuration snapshots bind immutable data to one revision" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock service accumulates active time only outside menus" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG bondage flags synthesize heavy bondage and mittens" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="automatic invalidation wipes only the four optional categories" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFCoreTestsAsan.exe" errors="0" failures="0" skipped="0" tests="47967" hostname="tbd" time="7.119" timestamp="2026-11-01T11:33:11Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="the same interval settles exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ wire rejects a mismatched scene epoch" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="location index builds dense sorted identities and intervals" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external facts keep missing modules distinct from unavailable providers" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="locations owned by one region share one numeric account" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="LegacyOutputs pins the 20 StorageUtil keys and categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler HasDue discards dead roots and preserves live ordering" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 fills contracted defaults for omitted trailing parameters" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec random finite states roundtrip" time="0.152" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="refresh current actors marks each target and merges one query per actor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG closed scene does not reopen for the same epoch" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 rejects invalid stable keys and incomplete available mod snapshots" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="actor queries cache successful snapshots and expose cached lookups" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="missing and incompatible capabilities are terminal and explain the lock" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="actor queries require a legal engine context before touching the backend" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG wire rejects duplicate providers and actors" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ new scene start supersedes an active scene" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider categories stay isolated" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="kernels reject malformed graphs instead of reading through them" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region resolution ignores out of range parent ids" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublishLegacyBridge writes all 20 bridge globals" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="strong ids do not convert" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider wipe validates every category before committing" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random arbitrary location forests match the reference implementation" time="5.179" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="binding migrates rows by stable region identity" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 pins the 7 reply contracts" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="an equal-candidate pulse still renews protection" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec rejects invalid source states" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="restore keeps unknown accounts unresolved and ignores v1 settings" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler rejects non-finite deadlines and unknown domains" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="prepared settlement owns inputs and matches the raw advance path" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher preserves FIFO changes at the same business time" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="unavailable unregistered providers do not create persistent state" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ repeated requests keep the bounded attempt budget" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="gain reads the published fame and stays visible over a remote arrival" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock service rejects game-clock rewinds and follows fresh pushes" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="loaded record lookup rejects absent records and wrong types" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus concurrent submit/cancel/complete race delivers exactly once" time="0.005" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs/null graph" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs/null parameters" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs/null rng with decay owed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs/non-finite time" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs/retention outside [0, 1]" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="advance rejects missing or hostile inputs/an unresolvable graph edge fails the batch" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduled set settles at its business time before the remaining interval" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="every truncation and checksum corruption is rejected" time="0.011" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="global cleanup also clears unresolved persisted accounts" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ replaced waiter receives changed exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="legacy contract counts are fixed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock service attributes the interval before a menu transition" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="location index reports malformed forests" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="capability providers can query siblings and reject recursive cycles" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="registering an independent region preserves unrelated ownership" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="configuration data has a pure value default shape" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="hand-built location parent cycles are rejected" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="explicit clear all and category wipe follow legacy scope" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler recycles dead heap entries instead of growing forever" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher detach during a timer batch cannot double resume" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh rejects actor mismatches, negative facts and partial snapshots" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh rejects actor mismatches, negative facts and partial snapshots/an actor key mismatch invalidates the result" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh rejects actor mismatches, negative facts and partial snapshots/negative distance and detection are invalid" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh rejects actor mismatches, negative facts and partial snapshots/non-finite distances are invalid" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh rejects actor mismatches, negative facts and partial snapshots/a partial snapshot is cached but remains dirty" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh rejects actor mismatches, negative facts and partial snapshots/an illegal context performs no query" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu lifecycle tracks dirty stale and sessions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu lifecycle tracks dirty stale and sessions/mark dirty outside the epoch is ignored" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu lifecycle tracks dirty stale and sessions/mark dirty re-queries and reports count change" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu lifecycle tracks dirty stale and sessions/stale epoch results are not applied" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu lifecycle tracks dirty stale and sessions/session change clears the snapshot and re-collects" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu lifecycle tracks dirty stale and sessions/cancel closes and reset reopens" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher detach clears changes and dirty requests" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="new game stays closed until the complete bind is activated" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region binding rejects malformed definitions" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="child region registration priority survives ownership remapping" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="numeric rows allocate all 32 slots and start zeroed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ interaction flags synthesize classification scope tags" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi rejects unresolvable names and categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock supplier can query clock state and rebind its source" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region binding validates owner graph without recursion" time="1.571" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a long jump protects only the deadline ticks" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="category mask rejects invalid categories and high bits" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="manual decay amounts clamp into the legacy range" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh issues exactly one engine query per target" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="CompileDiffusionGraph resolves long owner chains iteratively" time="0.169" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="forget removes both the cached snapshot and its dirty bit" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region aliases normalize case and whitespace" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ end event for an old epoch cannot close the current scene" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="uncaught flow exceptions remain observable without stopping the executor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="A then B then A restores each save's reputation and registration" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="gain tiers follow the legacy fame boundaries" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="gain floors small products at one point and truncates toward zero" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher attach prepares and publishes the settlement snapshot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ wire keeps only classification scopes and canonicalizes tags" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ unknown availability retries within the bounded policy" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="empty custom order keeps owner rules ahead of registration order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock service menu state survives ticks without wall samples" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG anal chastity contributes a belt fact" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 parses valid input payloads and reads values by name" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="game data refresh canonicalizes loaded plugin names" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="regions bind ownership aliases and legacy indices" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region ownership reuses shared tails and keeps independent roots" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="public whore fact preserves an incompatible module state" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler cancels are idempotent and invalidate stale tokens" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="CompileDiffusionGraph rejects edges outside the numeric rows" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 pins representative input contracts" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats random messages stay consistent with rejections" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec rejects every truncation of valid payload" time="0.004" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus transport failure surfaces as Failed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="restore rejects an out-of-range public location owner" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external wire rejects duplicate modules and non-finite numbers" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFCoreTestsAsan.exe" errors="0" failures="0" skipped="0" tests="18402" hostname="tbd" time="0.325" timestamp="2026-11-01T11:33:04Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="late commands apply after time already consumed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ adapter retries within the bounded policy and gates readiness" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="loaded record lookup never sends full runtime IDs as local IDs" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher merges same-target dirty requests inside the window" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="host load failure discards a successfully prepared save" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="capability requirements are validated and locked on first registration" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dirty refresh retries transient failures but forgets missing actors" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external state changes invalidate a ready snapshot" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="restore caps legacy provider flags before expanding them" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher scheduled changes settle once at their game day" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region account slots are independent of place slots" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="manual decay and manual spread keep their legacy edges" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="manual decay and manual spread keep their legacy edges/manual decay subtracts and floors at zero" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="manual decay and manual spread keep their legacy edges/a source may spread to itself, as the legacy event allows" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/static anonymity only consults IsPlayerAnonymous" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/dynamic anonymity uses the identity chain" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/disabled anonymity ignores an unknown dynamic switch" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/stale snapshots cannot produce known bondage or cum results" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/an unapplied or out-of-range tattoo slot pauses" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/non-ready snapshots cannot produce tattoo decisions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/a devious hood blocks face tattoos in the identity chain" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="face, hand and foot tattoo visibility preserve keyword precedence/hands and feet require both keyword and slot checks to pass" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher drops extracted work after session replacement" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus transport stale status is not reported as Failed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="racemenu random exchange sequences stay consistent" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch A none uses the AND ranks or a bikini body slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch A back checks covers-back, upper and lower slots" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch A back still checks a covering lower slot when upper is absent" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch A thigh and calves use their blocking slots" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch B ignores the body armor for non-back subcategories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch B back also checks a covering lower slot when upper is absent" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch C needs open body, upper and lower back" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="body tattoo visibility mirrors the four legacy branches/branch D only requires an absent body slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher rejects non-finite game time without moving the floor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats interface broadcast protocol" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="temporarily missing regions retain their full reputation across saves and rebinds" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="a spread pulse anchors the remote clock at its own time" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="CompileDiffusionGraph produces a by-target CSR" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="oversized payloads are rejected with their own counter" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublishStorageUtilLists writes 20 entries per 24 indices" time="0.004" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="capture and restore rebuild derived sets from current configuration" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 adapter state survives concurrent wrapper destruction during completion" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 adapter state survives concurrent wrapper destruction during completion/P+" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 adapter state survives concurrent wrapper destruction during completion/DDNG" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 adapter state survives concurrent wrapper destruction during completion/external" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="region priority follows registration order before ancestry distance" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="fame configuration compiles into typed rule data" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus instance target carries the bound form" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="the spread pulse transmits exactly one hop and is idempotent" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external wire exposes module and per-actor state" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Papyrus quest identity includes the plugin and ignores filename case" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher isolates throwing timer bodies" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/anonymous, invalid location and ended scenes skip without RNG" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/an invalid snapshot is invalid rather than merely deferred" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/the ten second start grace defers before any scoring roll" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/lead-in without foreplay fails, with foreplay continues" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/a single actor triggers the NPC scan with no kiss roll" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/friends and lovers pay one kiss-and-tell roll before partner checks" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/friend and lover masks gate categories without changing append order" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/victim-only categories honour the allow flag and Papyrus precedence" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/a lockable devious actor adds Sadist only after the relationship gate" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/SubAnalyze appends in the legacy order and keeps repeated races" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/an unknown relationship pauses after the kiss roll and clears categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="animation classification keeps the analyzer gate order and SubAnalyze order/an unknown SubAnalyze fact defers and clears known categories" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="P+ wire rejects interaction mask bits outside the ABI" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="NPC scan applies the exact line-of-sight and detection gates" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random advance parity scalar avx2 reference" time="0.256" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher consumes queued events individually and drops stale epochs" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 converts exact argument lists and rejects wrong counts" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/first entry becomes anonymous with the seven day floor" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/a visit shorter than three game hours does not consume recognition" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/leaving after the grace subtracts exactly 0.125 days" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/a region change consumes one leave and one enter" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/hourly sampling expires local anonymity at the three hour boundary" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/non-monotonic samples are stale and do not consume a transition" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/leaving a region that was never entered creates no memory" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="anonymity consumes each region transition and preserves the legacy memory formula/recognition growth uses max(7, 2R - away)" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 applies Papyrus implicit conversions" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="CompileDiffusionGraph projects canonical owners and merges parallel edges" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external wire requires the public whore flag when available" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="one advance settles each scheduled boundary before replacing fame" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 pins the DataManager.GetFameValue declaration" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random advance repeated settle is idempotent" time="0.009" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="incoming rows keep the strongest same-category candidate" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher resumes parked timer flows exactly once" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="temporary provider unavailability preserves registered contributions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi synchronous set commits before return" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider exceptions become incompatible without escaping Ensure" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 pins invalid-input results for the query functions" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="provider registrations travel with each save and rebind per session" time="0.002" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="save envelope roundtrips the complete persistent state" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler session change and slot reuse keep tokens isolated" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 pins the reference-alias bound analyzer declaration" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="repeated activation closes an already attached session" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 notification selects a real thread and preserves wide epoch arguments" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus success delivers Ready exactly once with values" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="actor snapshots translate into the core witness DTO" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="cum visibility separates the count gate from the visibility gate" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="cum visibility separates the count gate from the visibility gate/anal cum needs a positive count, while the visible count does not" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="cum visibility separates the count gate from the visibility gate/an AND rank only matters when AND is installed" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="cum visibility separates the count gate from the visibility gate/vaginal cum excludes males and uses genitals or an open body slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="cum visibility separates the count gate from the visibility gate/oral cum is blocked by identity and by a closed head slot" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduled clear resets the target decay anchor to its business time" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="shared category, row and configuration headers compose" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="an exact half-day boundary consumes one decay period on both paths" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec keys providers by name and category" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="plugin refresh and the cache share one canonical key spelling" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="slavetats rejects malformed records and truncates" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="BuildDiffusionGraph validates edge definitions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="DDNG chastity state contributes belt and bra facts" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="numeric row buffers keep stride and address alignment" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="papyrus destructor delivers Cancelled once and ignores late completions" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="manual spread mirrors the legacy formula" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="published snapshot ties mapping values and configuration to one revision" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="remote relaxation backends preserve floating-point boundary semantics" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi external-mod flag registry" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher cancel wait disarms the pending timer" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="each new session reloads and adopts the current cross-save configuration" time="0.002" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher destroying a parked flow disarms its timer" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock service drops non-finite wall samples and re-anchors" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="game time keeps day and second units separate" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="clock service anchors on the first wall sample" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="random advance rejects null rng" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="PublicApi routes the 7 request events to reply ModEvents" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 parses and validates the Form-typed spread request" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="light key migration rejects custom region collisions before activation" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="flow exceptions during abort finish only the failing frame" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="flow exceptions during abort finish only the failing frame/explicit cancellation" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="flow exceptions during abort finish only the failing frame/session detach" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="state codec validates enum and boolean fields" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M33 forwards validated replies to the sink" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="Group08 retains P+ sex codes without folding other sexes into male counts" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="M32 frozen table has 124 functions (86 public, 38 internal)" time="0.003" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler capture destruction can query the scheduler" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler capture destruction can query the scheduler/cancel" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler capture destruction can query the scheduler/new session" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="external adapter rejects another scene epoch" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="dispatcher suspension gates commands, timers, and events" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTestsAsan.exe.global" name="scheduler same-deadline tasks fire in stable enqueue order" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+</testsuites>

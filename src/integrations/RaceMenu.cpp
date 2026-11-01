@@ -74,8 +74,7 @@ struct RaceMenu::Impl {
         }
         if (epoch != epoch_) {
             if (epochSeen_) {
-                gate_ = ExternalGate::Stale;
-                return {gate_, false};
+                return {ExternalGate::Stale, false};
             }
             epochSeen_ = true;
             epoch_ = epoch;

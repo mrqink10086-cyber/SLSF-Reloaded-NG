@@ -1,0 +1,42 @@
+[
+  {
+    "name": "core",
+    "cases": 379,
+    "assertions": 149650.0,
+    "failures": 0.0,
+    "errors": 0.0,
+    "suites": 4
+  },
+  {
+    "name": "core-asan",
+    "cases": 379,
+    "assertions": 149650.0,
+    "failures": 0.0,
+    "errors": 0.0,
+    "suites": 4
+  },
+  {
+    "name": "boundary",
+    "cases": 4,
+    "assertions": 22.0,
+    "failures": 0.0,
+    "errors": 0.0,
+    "suites": 4
+  },
+  {
+    "name": "boundary-asan",
+    "cases": 4,
+    "assertions": 22.0,
+    "failures": 0.0,
+    "errors": 0.0,
+    "suites": 4
+  },
+  {
+    "name": "differential",
+    "cases": 11,
+    "assertions": 19605.0,
+    "failures": 0.0,
+    "errors": 0.0,
+    "suites": 4
+  }
+]

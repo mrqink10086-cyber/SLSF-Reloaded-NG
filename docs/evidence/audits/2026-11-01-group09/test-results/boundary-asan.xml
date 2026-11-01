@@ -1,0 +1,34 @@
+<testsuites>
+  <testsuite name="SLSFBoundaryTestsAsan.exe" errors="0" failures="0" skipped="0" tests="8" hostname="tbd" time="0.001" timestamp="2026-11-01T11:33:12Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFBoundaryTestsAsan.exe.global" name="engine and wake ports separate request ids from revisions" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFBoundaryTestsAsan.exe" errors="0" failures="0" skipped="0" tests="6" hostname="tbd" time="0.001" timestamp="2026-11-01T11:33:12Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFBoundaryTestsAsan.exe.global" name="vm completion keeps the submitted epoch" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFBoundaryTestsAsan.exe" errors="0" failures="0" skipped="0" tests="3" hostname="tbd" time="0.001" timestamp="2026-11-01T11:33:12Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFBoundaryTestsAsan.exe.global" name="random interface is deterministic for tests" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFBoundaryTestsAsan.exe" errors="0" failures="0" skipped="0" tests="5" hostname="tbd" time="0.001" timestamp="2026-11-01T11:33:12Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+    </properties>
+    <testcase classname="SLSFBoundaryTestsAsan.exe.global" name="provider ports do not expose third-party containers" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+</testsuites>

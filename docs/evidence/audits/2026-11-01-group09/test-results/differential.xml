@@ -1,0 +1,45 @@
+<testsuites>
+  <testsuite name="SLSFCoreTests.exe" errors="0" failures="0" skipped="0" tests="3000" hostname="tbd" time="0.002" timestamp="2026-11-01T11:33:16Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+      <property name="filters" value="[differential]" />
+    </properties>
+    <testcase classname="SLSFCoreTests.exe.global" name="random manual spread parity against the reference" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="random decay roll parity against the reference" time="0.001" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="random gain parity against the reference" time="0.001" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFCoreTests.exe" errors="0" failures="0" skipped="0" tests="612" hostname="tbd" time="0.005" timestamp="2026-11-01T11:33:16Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+      <property name="filters" value="[differential]" />
+    </properties>
+    <testcase classname="SLSFCoreTests.exe.global" name="slavetats random placements keep ordering and bounds" time="0.004" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="random manual decay parity against the reference" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="scheduled set settles at its business time before the remaining interval" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFCoreTests.exe" errors="0" failures="0" skipped="0" tests="15979" hostname="tbd" time="0.019" timestamp="2026-11-01T11:33:16Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+      <property name="filters" value="[differential]" />
+    </properties>
+    <testcase classname="SLSFCoreTests.exe.global" name="slavetats random messages stay consistent with rejections" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="racemenu random exchange sequences stay consistent" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="random advance parity scalar avx2 reference" time="0.018" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+  <testsuite name="SLSFCoreTests.exe" errors="0" failures="0" skipped="0" tests="14" hostname="tbd" time="0.001" timestamp="2026-11-01T11:33:16Z">
+    <properties>
+      <property name="random-seed" value="1170" />
+      <property name="filters" value="[differential]" />
+    </properties>
+    <testcase classname="SLSFCoreTests.exe.global" name="scheduled clear resets the target decay anchor to its business time" time="0.000" status="run" />
+    <testcase classname="SLSFCoreTests.exe.global" name="an exact half-day boundary consumes one decay period on both paths" time="0.000" status="run" />
+    <system-out />
+    <system-err />
+  </testsuite>
+</testsuites>

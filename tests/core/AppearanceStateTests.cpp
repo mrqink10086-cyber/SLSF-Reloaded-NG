@@ -461,6 +461,19 @@ TEST_CASE("racemenu lifecycle tracks dirty stale and sessions", "[racemenu][life
     Epoch epoch{3, 4, 5};
     REQUIRE(menu.Ensure(epoch).gate == ExternalGate::Ready);
 
+    SECTION("wrong epoch does not contaminate the cached ready state") {
+        const auto snapshot = menu.Snapshot();
+        CHECK(menu.Ensure(Epoch{9, 9, 9}).gate == ExternalGate::Stale);
+        CHECK(menu.Gate() == ExternalGate::Ready);
+        CHECK(menu.Snapshot() == snapshot);
+        CHECK_FALSE(menu.Dirty());
+        CHECK(menu.Attempts() == 0u);
+        const auto cached = menu.Ensure(epoch);
+        CHECK(cached.gate == ExternalGate::Ready);
+        CHECK_FALSE(cached.changed);
+        CHECK(port.exchanges == 1);
+    }
+
     SECTION("mark dirty outside the epoch is ignored") {
         menu.MarkDirty(Epoch{9, 9, 9});
         CHECK_FALSE(menu.Dirty());
@@ -670,6 +683,10 @@ TEST_CASE("slavetats collects areas into owned records", "[slavetats][collect]")
         const auto stale = tats.Collect(0x14u, Epoch{9, 9, 9});
         CHECK(stale.gate == ExternalGate::Stale);
         CHECK(tats.Snapshot() == snapshot);
+        CHECK(tats.Gate() == ExternalGate::Ready);
+        CHECK_FALSE(tats.Dirty());
+        CHECK(tats.Attempts() == 0u);
+        CHECK(tats.Collect(0x14u, SlaveTatsFixture::kEpoch).gate == ExternalGate::Ready);
     }
 
     SECTION("session change resets snapshot") {
@@ -766,6 +783,12 @@ TEST_CASE("slavetats rejects malformed records and truncates", "[slavetats][boun
     const auto& feet = snapshot.Area(SlaveTatsArea::Feet);
     CHECK(feet.placements.empty());
     CHECK(feet.rejectedEntries == 1u);
+    const auto feetFacts = SlaveTatsSlotFacts(feet, 5);
+    CHECK(feetFacts.at(1).applied.state == slsf::FactState::Unknown);
+    const auto bodyFacts = SlaveTatsSlotFacts(body, 5);
+    CHECK(bodyFacts.at(0).applied.IsKnownTrue());
+    CHECK(bodyFacts.at(3).applied.IsKnownTrue());
+    CHECK(bodyFacts.at(4).applied.state == slsf::FactState::Unknown);
 }
 
 TEST_CASE("slavetats truncates oversized areas at the record limit", "[slavetats][bounds]") {
@@ -787,6 +810,9 @@ TEST_CASE("slavetats truncates oversized areas at the record limit", "[slavetats
     CHECK(body.HasRecordAtSlot(0));
     CHECK(body.HasRecordAtSlot(255));
     CHECK_FALSE(body.HasRecordAtSlot(256));
+    const auto facts = SlaveTatsSlotFacts(body, entries.size());
+    CHECK(facts.at(255).applied.IsKnownTrue());
+    CHECK(facts.at(256).applied.state == slsf::FactState::Unknown);
 }
 
 TEST_CASE("slavetats random placements keep ordering and bounds", "[slavetats][differential]") {
