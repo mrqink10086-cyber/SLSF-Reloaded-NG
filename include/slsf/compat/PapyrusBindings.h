@@ -20,6 +20,7 @@ struct PapyrusParameter {
     std::int64_t defaultInt{0};
     double defaultFloat{0.0};
     std::string defaultString;
+    std::string typeName;
 };
 
 enum class PapyrusBindingKind : std::uint8_t {

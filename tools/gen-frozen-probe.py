@@ -1,21 +1,4 @@
 #!/usr/bin/env python3
-"""Generate the frozen-client probe PSC used by the group 11 game run.
-
-The probe is compiled against the LEGACY repository's Papyrus sources (the
-declarations the frozen client surface was published with) plus the vanilla
-source set, so its bytecode represents the un-recompiled calling convention
-that the replacement provider must satisfy.  At runtime the VM resolves each
-call onto the replacement PEXs shipped by the NG package; the probe sends the
-52 frozen input events through ModEvent, calls the public 86 through quest
-instance casts, and reports results through SLSF_Reloaded_Logger.Log (a
-frozen native surface whose replacement lives in the NG DLL).
-
-The probe cannot register the 7 reply events from a static context, so the
-frozen reply check is done by the plugin's own reply sender (recorded in the
-plugin log) plus an offline contract replay.
-
-Output: .scratch/tools/SLSFR_FrozenProbe.psc
-"""
 
 import json
 import os
@@ -52,13 +35,10 @@ QUEST_OF = {
     "SLSF_Reloaded_VisibilityManager": "SLSF_Reloaded_Managers",
 }
 
-# The quest-dependent safe subset: functions with trivial names the frozen
-# runner can call right after load; the skip list is intentional and traced
-# in the group 11 report.
 SKIP_IDS = {
     "SLSF_Reloaded_ModIntegration.GetFHUData",
     "SLSF_Reloaded_ModIntegration.GetPWData",
-    "SLSF_Reloaded_ModIntegration.GetLegacyConfig",  # needs external esps
+    "SLSF_Reloaded_ModIntegration.GetLegacyConfig",
     "SLSF_Reloaded_Data_Exporter.RunExport",
     "SLSF_Reloaded_Data_Exporter.ExportData",
     "SLSF_Reloaded_Data_Importer.RunImport",
@@ -135,7 +115,6 @@ def main():
             lines.append('    %s probe_%s = questRef_%s as %s' % (
                 script, tag, tag, script))
     lines.append("")
-    # -- the 52 input events ------------------------------------------------
     for index, event in enumerate(events["inputEvents"], 1):
         if index > 52:
             break
@@ -157,7 +136,6 @@ def main():
         lines.append("    ModEvent.Send(handle%d)" % index)
         lines.append('    SLSF_Reloaded_Logger.Log("SLSFR FrozenProbe: event %s sent", 0)' % event["event"])
     lines.append("")
-    # -- the public surface --------------------------------------------------
     fn_counter = 0
     for fn in doc["functions"]:
         if not fn["isPublic"]:

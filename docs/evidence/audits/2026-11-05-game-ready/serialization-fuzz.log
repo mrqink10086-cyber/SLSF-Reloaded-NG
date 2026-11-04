@@ -1,0 +1,16 @@
+[0m[32;1m[ 15%]:[0m [36;1m<SerializationFuzz>[0m cache compiling.releasedbg tests\fuzz\SerializationFuzz.cpp[0m
+[0m[32;1m[ 15%]:[0m [36;1m<SerializationFuzz>[0m cache compiling.releasedbg src\persistence\Serialization.cpp[0m
+[0m[32;1m[ 15%]:[0m [36;1m<SerializationFuzz>[0m cache compiling.releasedbg src\core\persistence\StateCodec.cpp[0m
+[0m[32;1m[ 63%]:[0m [36;1m<SerializationFuzz>[0m [36;1mlinking.releasedbg SerializationFuzz.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 2.187s[0m
+RUN SerializationFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (2322 inline 8-bit counters): 2322 [00007FF634A83688, 00007FF634A83F9A), 
+INFO: Loaded 1 PC tables (2322 PCs): 2322 [00007FF634A3C9F8,00007FF634A45B18), 
+INFO:       14 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\SerializationFuzz-corpus
+INFO: seed corpus: files: 14 min: 1b max: 983b total: 3254b rss: 37Mb
+#15	INITED cov: 578 ft: 611 corp: 13/2271b exec/s: 0 rss: 39Mb
+#100000	DONE   cov: 578 ft: 611 corp: 13/2271b lim: 1968 exec/s: 0 rss: 96Mb
+Done 100000 runs in 0 second(s)
+PASS native tests: mode=fuzz seed=1170

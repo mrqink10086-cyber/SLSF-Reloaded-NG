@@ -277,7 +277,7 @@ bool UiAvailable() {
     return ImGuiApi::Fetch().Usable();
 }
 
-} // namespace
+}
 
 void MenuRequestQueue::Drain(const std::function<void(Kind)>& handler) {
     ++drainCount_;
@@ -511,6 +511,11 @@ void Menu::RenderOverview() {
     Checkbox("Reduce fame at night", &draft_->features.reduceFameAtNight);
     Checkbox("Fame spread restrictions", &draft_->features.fameSpreadRestrictions);
     Checkbox("Dynamic anonymity", &draft_->features.dynamicAnonymity);
+    for (const auto& setting : kGameplayBoolSettings) Checkbox(setting.name, &(draft_->gameplay.*setting.member));
+    for (const auto& setting : kGameplayNumberSettings) {
+        float value = static_cast<float>(draft_->gameplay.*setting.member);
+        if (SliderFloat(setting.name, &value, static_cast<float>(setting.minimum), static_cast<float>(setting.maximum))) draft_->gameplay.*setting.member = value;
+    }
     Separator();
     Checkbox("Notify fame increases", &draft_->menu.notifications.fameIncrease);
     Checkbox("Notify fame decay", &draft_->menu.notifications.fameDecay);
@@ -921,4 +926,4 @@ void Menu::RenderDiagnostics() {
     Text(counters);
 }
 
-} // namespace slsf::ui
+}

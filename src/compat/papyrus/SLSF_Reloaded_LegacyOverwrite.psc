@@ -1,10 +1,10 @@
-Scriptname SLSF_Reloaded_LegacyOverwrite extends Quest
+ScriptName SLSF_Reloaded_LegacyOverwrite Extends Quest
 
-Quest Property mods Auto
-Quest Property LocationManager Auto
-Quest Property config Auto
-Quest Property DATA Auto
-Quest Property Logger Auto
+slsf_reloaded_mcm Property Config Auto
+slsf_reloaded_datamanager Property Data Auto
+slsf_reloaded_locationmanager Property LocationManager Auto
+slsf_reloaded_logger Property Logger Auto
+slsf_reloaded_modintegration Property Mods Auto
 
 Function OverwriteLegacyFame()
 EndFunction

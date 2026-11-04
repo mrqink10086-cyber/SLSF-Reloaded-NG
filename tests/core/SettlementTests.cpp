@@ -1041,3 +1041,20 @@ TEST_CASE("prepared pulses reuse selected frozen sources and workspace",
     }
     REQUIRE(RemoteAt(cached, RegionId(2), kCat0) == 80);
 }
+
+TEST_CASE("explicit decay batch respects protection and custom account identity", "[game-ready][decay]") {
+    auto state = MakeState();
+    for (std::uint32_t row = 0; row < 3; ++row) REQUIRE(ApplySet(state, RegionId(row), kCat0, 150).status == Status::Ready);
+    state.customRegions.push_back(CustomRegionState{"Camp", Key(1)});
+    state.accounts[2].protectionUntilDay[0] = 2;
+    slsf::RegionSnapshot regions;
+    regions.regions = {Key(1), Key(0), Key(2)};
+    Configuration configuration;
+    configuration.values[std::string{kGainConfigKeyDecayVeryHigh}] = 5;
+    SampleQueue rng({5});
+    REQUIRE(slsf::ApplyDecayBatch(state, At(1), 3, configuration, &regions, rng));
+    REQUIRE(PublishedAt(state, RegionId(0), kCat0) == 135);
+    REQUIRE(PublishedAt(state, RegionId(1), kCat0) == 147);
+    REQUIRE(PublishedAt(state, RegionId(2), kCat0) == 150);
+    REQUIRE(rng.calls == 1);
+}

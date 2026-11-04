@@ -1,0 +1,5 @@
+parsed_number=1e+20
+integer=-9223372036854775808
+import_success=1 mods=0
+src\io\JsonTransfer.cpp:635:38: runtime error: 1e+20 is outside the range of representable values of type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src\io\JsonTransfer.cpp:635:38 

@@ -231,6 +231,13 @@ void NormalizeSelectedRegions(std::vector<StableRegionKey>& regions) {
 }
 
 [[nodiscard]] bool ValidateData(const ConfigurationData& data, std::string* error) {
+    for (const auto& setting : kGameplayNumberSettings) {
+        const double value = data.gameplay.*setting.member;
+        if (!std::isfinite(value) || value < setting.minimum || value > setting.maximum) {
+            if (error) *error = std::string("gameplay/") + setting.name + " is out of range";
+            return false;
+        }
+    }
     for (std::size_t index = 0; index < kFameCategoryCount; ++index) {
         const double multiplier = data.categories.multipliers[index];
         if (!std::isfinite(multiplier) || multiplier < 0.0 || multiplier > kConfigMaxValue) {
@@ -467,7 +474,7 @@ void NormalizeSelectedRegions(std::vector<StableRegionKey>& regions) {
     return true;
 }
 
-} // namespace
+}
 
 ConfigurationStore::ConfigurationStore(std::unique_ptr<ConfigurationFile> file)
     : file_(std::move(file)) {}
@@ -516,6 +523,11 @@ io::JsonPtr ConfigurationStore::Encode(const ConfigurationData& data) {
     AttachBool(*features, "fameSpreadRestrictions", data.features.fameSpreadRestrictions);
     AttachBool(*features, "dynamicAnonymity", data.features.dynamicAnonymity);
     root->AttachMember("features", std::move(features));
+
+    auto gameplay = std::make_shared<io::JsonValue>(io::JsonKind::Object);
+    for (const auto& field : kGameplayBoolSettings) AttachBool(*gameplay, field.name, data.gameplay.*field.member);
+    for (const auto& field : kGameplayNumberSettings) AttachNumber(*gameplay, field.name, data.gameplay.*field.member);
+    root->AttachMember("gameplay", std::move(gameplay));
 
     auto categories = std::make_shared<io::JsonValue>(io::JsonKind::Object);
     auto multipliers = std::make_shared<io::JsonValue>(io::JsonKind::Object);
@@ -596,6 +608,17 @@ Result<ConfigurationData> ConfigurationStore::Decode(const io::JsonPtr& root,
                                            "root is not an object"}};
     }
     ConfigurationData data = base;
+
+    if (const auto gameplay = root->MemberAt("gameplay")) {
+        std::string message;
+        if (!gameplay->IsObject()) return std::unexpected{Error{Error::Code::InvalidArgument, "gameplay must be an object"}};
+        for (const auto& field : kGameplayBoolSettings)
+            if (!ReadBoolField(*gameplay, field.name, data.gameplay.*field.member, "gameplay", &message))
+                return std::unexpected{Error{Error::Code::InvalidArgument, message}};
+        for (const auto& field : kGameplayNumberSettings)
+            if (!ReadNumberField(*gameplay, field.name, data.gameplay.*field.member, field.minimum, field.maximum, false, "gameplay", &message))
+                return std::unexpected{Error{Error::Code::InvalidArgument, message}};
+    }
 
     double schemaVersion = static_cast<double>(data.schemaVersion);
     std::string error;
@@ -1003,4 +1026,4 @@ Result<std::monostate> MemoryConfigurationFile::Write(const std::string& bytes) 
     return std::monostate{};
 }
 
-} // namespace slsf::config
+}

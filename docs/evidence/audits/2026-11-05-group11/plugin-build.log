@@ -1,0 +1,18 @@
+[0m[32;1m[  9%]:[0m [36;1m<SLSFReloadedNG>[0m compiling.releasedbg src\compat\VmNatives.cpp[0m
+[0m[1;31;1merror: [0mVmNatives.cpp
+src\compat\VmNatives.cpp(106): error C3668: “slsf::compat::`anonymous-namespace'::PapyrusLogSink::ProcessEvent”: 包含重写说明符“override”的方法没有重写任何基类方法
+src\compat\VmNatives.cpp(116): error C2259: “slsf::compat::`anonymous-namespace'::PapyrusLogSink”: 无法实例化抽象类
+src\compat\VmNatives.cpp(104): note: 参见“slsf::compat::`anonymous-namespace'::PapyrusLogSink”的声明
+src\compat\VmNatives.cpp(116): note: 由于下列成员:
+src\compat\VmNatives.cpp(116): note: “RE::BSEventNotifyControl RE::BSTEventSink<Event>::ProcessEvent(const Event *,RE::BSTEventSource<Event> *)”: 是抽象的
+        with
+        [
+            Event=RE::BSScript::LogEvent
+        ]
+E:\source\repos\SLSF Reloaded NG\lib\commonlibsse-ng\include\RE/B/BSTEvent.h(188): note: 参见“RE::BSTEventSink<Event>::ProcessEvent”的声明
+        with
+        [
+            Event=RE::BSScript::LogEvent
+        ]
+
+  [33m> in [1msrc\compat\VmNatives.cpp[0m

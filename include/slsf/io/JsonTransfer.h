@@ -1,6 +1,7 @@
 #pragma once
 
 #include "slsf/core/Types.h"
+#include "slsf/core/LegacyState.h"
 
 #include <cstdint>
 #include <map>
@@ -139,6 +140,7 @@ struct LegacyImport {
     std::vector<SpreadEntry> spread;
     std::vector<std::string> mods;
     std::vector<ModFlags> modFlags;
+    std::vector<CustomRegionState> customRegions;
 };
 
 [[nodiscard]] Result<LegacyImport> ExtractLegacyImport(const JsonPtr& root,
@@ -146,4 +148,4 @@ struct LegacyImport {
 
     std::string ToLowerAscii(std::string_view text);
 
-} // namespace slsf::io
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "slsf/core/Types.h"
+#include "slsf/core/LegacyState.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -115,6 +116,9 @@ struct PublishedState {
     std::vector<RegionId> locationAccounts;
     std::vector<double> fame;
     std::vector<std::uint8_t> flags;
+    std::vector<NamedProviderState> namedProviders;
+    std::vector<RegionSpreadState> spreadChances;
+    std::vector<CustomRegionState> customRegions;
 };
 
 using PublishedStatePtr = std::shared_ptr<const PublishedState>;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "slsf/core/CategoryMask.h"
+#include "slsf/core/LegacyState.h"
 #include "slsf/core/Types.h"
 
 #include <array>
@@ -15,7 +16,8 @@ namespace slsf {
 inline constexpr std::uint32_t kPersistentStateSchemaVersion = 1;
 // v1 kept settings and user graph edits in the native save.  v2 keeps only
 // per-save business state; both now live in the cross-save JSON configuration.
-inline constexpr std::uint32_t kPersistentStateCodecVersion = 2;
+inline constexpr std::uint32_t kPersistentStateCodecVersion = 3;
+inline constexpr std::uint32_t kPreviousPersistentStateCodecVersion = 2;
 inline constexpr std::uint32_t kLegacyPersistentStateCodecVersion = 1;
 
 struct LocationPersistentState {
@@ -54,13 +56,6 @@ struct ProviderContributionState {
                            const ProviderContributionState&) = default;
 };
 
-struct CustomRegionState {
-    std::string name;
-    StableRegionKey key;
-
-    friend bool operator==(const CustomRegionState&, const CustomRegionState&) = default;
-};
-
 struct GraphEditState {
     StableRegionKey from;
     StableRegionKey to;
@@ -86,6 +81,9 @@ struct PersistentState {
     std::vector<LocationPersistentState> locations;
     std::vector<ProviderContributionState> contributions;
     std::vector<CustomRegionState> customRegions;
+    std::vector<NamedProviderState> namedProviders;
+    std::vector<RegionSpreadState> spreadChances;
+    std::vector<RegionRecognitionState> recognition;
     // Legacy v1-only sections.  v2 encodes no graph edits or settings; loaders
     // must not apply these over the current cross-save JSON configuration.
     std::vector<ProviderFlagState> providerFlags;

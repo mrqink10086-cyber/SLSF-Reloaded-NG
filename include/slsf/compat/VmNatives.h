@@ -31,6 +31,8 @@ public:
 
     static void BindApiProvider(ApiProvider provider);
     static void BindBridge(ModEventBridge* bridge);
+    static void BindEpochProbe(std::function<Epoch()> current,
+                               std::function<bool(Epoch)> valid);
 
     static bool RegisterPapyrusNatives(RE::BSScript::Internal::VirtualMachine* vm);
 
@@ -39,6 +41,7 @@ public:
     static void DeliverReplyNow(const std::string& eventName,
                                 const std::vector<ModEventValue>& values);
     static void KickFrozenProbe();
+    static void PublishOutputs();
     static slsf::api::PublicApi* Api();
     static ModEventBridge* Bridge();
 
@@ -54,5 +57,5 @@ public:
     static void ResetStats() noexcept;
 };
 
-} // namespace compat
-} // namespace slsf
+}
+}

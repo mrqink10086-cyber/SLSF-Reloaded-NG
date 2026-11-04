@@ -1,13 +1,13 @@
-Scriptname SLSF_Reloaded_Data_Importer extends Quest
+ScriptName SLSF_Reloaded_Data_Importer Extends Quest
 
-Quest Property DataExporter Auto
-Quest Property LegacyOverwrite Auto
-Quest Property LocationManager Auto
-Quest Property DataManager Auto
-Quest Property FameManager Auto
-Quest Property config Auto
+slsf_reloaded_mcm Property Config Auto
 GlobalVariable Property CustomLocations Auto
-Quest Property Logger Auto
+slsf_reloaded_data_exporter Property DataExporter Auto
+slsf_reloaded_datamanager Property DataManager Auto
+slsf_reloaded_famemanager Property FameManager Auto
+slsf_reloaded_legacyoverwrite Property LegacyOverwrite Auto
+slsf_reloaded_locationmanager Property LocationManager Auto
+slsf_reloaded_logger Property Logger Auto
 
 Function RunImport(String FileName) Native
 

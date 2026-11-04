@@ -14,6 +14,18 @@
 #include <string>
 #include <vector>
 
+TEST_CASE("v2 decoding rejects custom metadata that cannot be saved", "[game-ready][codec]") {
+    slsf::PersistentState state;
+    state.codecVersion = slsf::kPreviousPersistentStateCodecVersion;
+    state.customRegions.push_back({"X", {"custom.esp", 1}});
+    auto bytes = slsf::EncodeState(state);
+    REQUIRE(bytes);
+    (*bytes)[26] = std::byte{0};
+    (*bytes)[27] = std::byte{0};
+    bytes->erase(bytes->begin() + 28);
+    REQUIRE_FALSE(slsf::DecodeState(*bytes));
+}
+
 namespace {
 
 #ifndef SLSF_FIXTURE_DIR
@@ -46,7 +58,7 @@ void PutU32(std::vector<std::byte>& bytes, std::size_t offset, std::uint32_t val
 }
 
 std::vector<std::byte> MinimalHeader() {
-    std::vector<std::byte> bytes(26, std::byte{0});
+    std::vector<std::byte> bytes(38, std::byte{0});
     PutU32(bytes, 0, slsf::kStateCodecMagic);
     PutU16(bytes, 4, static_cast<std::uint16_t>(slsf::kStateCodecVersion));
     PutU32(bytes, 6, slsf::kPersistentStateSchemaVersion);
@@ -55,6 +67,7 @@ std::vector<std::byte> MinimalHeader() {
 
 std::vector<std::byte> MinimalHeaderV1() {
     std::vector<std::byte> bytes = MinimalHeader();
+    bytes.resize(26);
     PutU16(bytes, 4, static_cast<std::uint16_t>(slsf::kLegacyStateCodecVersion));
     return bytes;
 }
@@ -90,7 +103,26 @@ slsf::PersistentState FixtureState() {
 
 }
 
-TEST_CASE("state codec encodes canonical empty v1 and v2 payloads", "[codec]") {
+TEST_CASE("state codec preserves save-owned registration and spread settings", "[codec][game-ready]") {
+    slsf::PersistentState state;
+    state.namedProviders = {{"example.esp", 0x2000001}};
+    state.spreadChances = {{{"Skyrim.esm", 0x1234}, 73}};
+    const auto encoded = slsf::EncodeState(state);
+    REQUIRE(encoded);
+    const auto decoded = slsf::DecodeState(*encoded);
+    REQUIRE(decoded);
+    CHECK(*decoded == state);
+    state.codecVersion = slsf::kPreviousPersistentStateCodecVersion;
+    CHECK_FALSE(slsf::EncodeState(state));
+    state.namedProviders.clear();
+    state.spreadChances.clear();
+    const auto previous = slsf::EncodeState(state);
+    REQUIRE(previous);
+    CHECK(previous->size() == 26);
+    CHECK(slsf::DecodeState(*previous) == state);
+}
+
+TEST_CASE("state codec encodes canonical empty payloads", "[codec]") {
     const std::vector<std::byte> expectedV2 = MinimalHeader();
     const auto encodedV2 = slsf::EncodeState(slsf::PersistentState{});
     REQUIRE(encodedV2.has_value());
@@ -298,7 +330,7 @@ TEST_CASE("state codec rejects invalid source states", "[codec]") {
 
 TEST_CASE("state codec v2 roundtrips contributions and rejects legacy sections", "[codec]") {
     slsf::PersistentState state;
-    state.codecVersion = slsf::kStateCodecVersion;
+    state.codecVersion = slsf::kPreviousPersistentStateCodecVersion;
     state.locations.push_back(slsf::LocationPersistentState{
         slsf::StableRegionKey{"region.esp", 3}, {}, {}, {}, {}, 5.0, 6.0, 1, {}});
     state.locations[0].local[static_cast<std::size_t>(slsf::FameCategory::Nasty)] = 12.5;
@@ -333,6 +365,8 @@ TEST_CASE("state codec v2 roundtrips contributions and rejects legacy sections",
     REQUIRE_FALSE(slsf::EncodeState(withEmptyCustomKey).has_value());
 
     auto emptyCustomKeyBytes = MinimalHeader();
+    emptyCustomKeyBytes.resize(26);
+    PutU16(emptyCustomKeyBytes, 4, slsf::kPreviousPersistentStateCodecVersion);
     PutU16(emptyCustomKeyBytes, 16, 1);
     for (const char ch : std::string("hideout")) {
         emptyCustomKeyBytes.push_back(std::byte{static_cast<unsigned char>(ch)});
@@ -383,7 +417,7 @@ TEST_CASE("state codec reports malformed headers", "[codec]") {
     REQUIRE(slsf::DecodeState(bytes).error().code == slsf::Error::Code::InvalidArgument);
 
     bytes = MinimalHeader();
-    PutU16(bytes, 4, 3);
+    PutU16(bytes, 4, 4);
     REQUIRE(slsf::DecodeState(bytes).error().code == slsf::Error::Code::Unsupported);
 
     bytes = MinimalHeader();

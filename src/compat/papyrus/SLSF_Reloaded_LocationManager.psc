@@ -1,29 +1,31 @@
-Scriptname SLSF_Reloaded_LocationManager extends Quest
+ScriptName SLSF_Reloaded_LocationManager Extends Quest
 
-Int[] Property OverrideExcludedLocation Auto
-String[] Property WhiterunLocationList Auto
-Quest Property DataManager Auto
-GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
-Int[] Property MinorLocations Auto
-Int[] Property ExcludedLocations Auto
+Location Property CurrentLocation Auto hidden
 String[] Property CustomLocation Auto
-String[] Property RiftLocationList Auto
-String[] Property WinterholdLocationList Auto
-Quest Property DynamicAnonymityScript Auto
-String[] Property EastmarchLocationList Auto
-String[] Property HjaalmarchLocationList Auto
-String[] Property PaleLocationList Auto
-Form Property SolstheimLocation Auto
-Int[] Property MajorLocations Auto
-String[] Property HaafingarLocationList Auto
-String[] Property SolstheimLocationList Auto
-Int[] Property CustomLocationRef Auto
-String[] Property FalkreathLocationList Auto
+Location[] Property CustomLocationRef Auto
+Bool Property CustomLocationsFull Auto hidden
+slsf_reloaded_datamanager Property DataManager Auto
 String[] Property DefaultLocation Auto
-Quest Property Logger Auto
-String[] Property UndefinedLocationList Auto
+slsf_reloaded_dynamicanonymity Property DynamicAnonymityScript Auto
+String[] Property EastmarchLocationList Auto
+Keyword[] Property ExcludedLocations Auto
+String[] Property FalkreathLocationList Auto
+slsf_reloaded_famemanager Property FameManager Auto
+String[] Property HaafingarLocationList Auto
+String[] Property HjaalmarchLocationList Auto
+slsf_reloaded_logger Property Logger Auto
+Location[] Property MajorLocations Auto
+Location[] Property MinorLocations Auto
+Keyword[] Property OverrideExcludedLocation Auto
+String[] Property PaleLocationList Auto
 String[] Property ReachLocationList Auto
-Quest Property FameManager Auto
+String[] Property RiftLocationList Auto
+GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
+Location Property SolstheimLocation Auto
+String[] Property SolstheimLocationList Auto
+String[] Property UndefinedLocationList Auto
+String[] Property WhiterunLocationList Auto
+String[] Property WinterholdLocationList Auto
 
 Bool Function IsLocationValid(String CheckedLocation) Native
 

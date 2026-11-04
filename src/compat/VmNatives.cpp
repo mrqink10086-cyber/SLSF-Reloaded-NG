@@ -9,12 +9,14 @@
 namespace logs = SKSE::log;
 
 #include "slsf/compat/VmNatives.h"
+#include <unordered_set>
 
 #include "slsf/compat/PapyrusBindings.h"
 #include "slsf/api/PublicApi.h"
 #include "slsf/engine/RecordLookup.h"
 #include "slsf/compat/ModEventBridge.h"
 #include "slsf/compat/LegacyOutputs.h"
+#include "slsf/compat/StorageOutputQueue.h"
 #include "slsf/io/JsonTransfer.h"
 
 #include <RE/B/BSTSmartPointer.h>
@@ -53,12 +55,30 @@ using compat::ModEventValue;
 std::mutex stateMutex;
 VmNatives::ApiProvider apiProvider;
 ModEventBridge* bridgeInstance = nullptr;
+std::function<Epoch()> currentEpoch;
+std::function<bool(Epoch)> validEpoch;
 VmNatives::Counters countersImpl;
 std::atomic<bool> nativeKindTrace{true};
+std::atomic<bool> legacyLogging{true};
+std::atomic<int> legacyLogLevel{0};
 
 slsf::api::PublicApi* CurrentApi() {
+    VmNatives::ApiProvider provider;
+    {
+        std::lock_guard guard(stateMutex);
+        provider = apiProvider;
+    }
+    return provider ? provider() : nullptr;
+}
+
+Epoch ReplyEpoch() {
     std::lock_guard guard(stateMutex);
-    return apiProvider ? apiProvider() : nullptr;
+    return currentEpoch ? currentEpoch() : Epoch{};
+}
+
+bool ReplyCurrent(Epoch epoch) {
+    std::lock_guard guard(stateMutex);
+    return validEpoch && validEpoch(epoch);
 }
 
 ModEventValue BoolResult(bool value) {
@@ -104,10 +124,10 @@ RE::TESGlobal* ResolveLoadedGlobal(const StableFormKey& key) {
 class PapyrusLogSink final : public RE::BSTEventSink<RE::BSScript::LogEvent> {
 public:
     RE::BSEventNotifyControl ProcessEvent(
-        const RE::BSScript::LogEvent& event,
+        const RE::BSScript::LogEvent* event,
         RE::BSTEventSource<RE::BSScript::LogEvent>*) override {
-        if (event.errorMsg && *event.errorMsg) {
-            logs::info("papyrus[{}] {}", static_cast<int>(event.severity), event.errorMsg);
+        if (event && event->errorMsg && *event->errorMsg) {
+            logs::info("papyrus[{}] {}", static_cast<int>(event->severity), event->errorMsg);
         }
         return RE::BSEventNotifyControl::kContinue;
     }
@@ -122,64 +142,83 @@ class NoopCallback final : public RE::BSScript::IStackCallbackFunctor {public:
 
 class ReplyCreateCallback final : public RE::BSScript::IStackCallbackFunctor {
 public:
-    ReplyCreateCallback(std::string eventName, std::vector<ModEventValue> values)
-        : eventName_(std::move(eventName)), values_(std::move(values)) {}
+    ReplyCreateCallback(std::string eventName, std::vector<ModEventValue> values,
+                        Epoch epoch, std::int32_t handle = 0, std::size_t next = 0)
+        : eventName_(std::move(eventName)), values_(std::move(values)),
+          epoch_(epoch), handle_(handle), next_(next) {}
 
     void operator()(RE::BSScript::Variable result) override {
-        auto object = result.GetObject();
-        if (!object) {
-            ++countersImpl.implFallbacks;
-            return;
-        }
-        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> none{
-            new NoopCallback()};
         auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
         if (!vm) {
             ++countersImpl.implFallbacks;
             return;
         }
-        for (const auto& value : values_) {
-            RE::BSScript::IFunctionArguments* args = nullptr;
-            const char* methodName = nullptr;
+        if (handle_ == 0) {
+            if (!result.IsInt() || result.GetSInt() == 0) {
+                logs::error("compat: ModEvent.Create failed for {}", eventName_);
+                ++countersImpl.implFallbacks;
+                return;
+            }
+            handle_ = result.GetSInt();
+        }
+        if (next_ > values_.size()) {
+            if (result.IsBool() && result.GetBool()) ++countersImpl.repliesSent;
+            else logs::error("compat: ModEvent.Send failed for {}", eventName_);
+            return;
+        }
+        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> none{new NoopCallback()};
+        if (!ReplyCurrent(epoch_)) {
+            vm->DispatchStaticCall("ModEvent", "Release",
+                RE::MakeFunctionArguments(std::int32_t(handle_)), none);
+            return;
+        }
+        RE::BSScript::IFunctionArguments* args = nullptr;
+        const char* methodName = "Send";
+        if (next_ == values_.size()) {
+            args = RE::MakeFunctionArguments(std::int32_t(handle_));
+        } else {
+            const auto& value = values_[next_];
             switch (value.type) {
             case ModEventType::String:
                 methodName = "PushString";
-                args = RE::MakeFunctionArguments(std::string(value.stringValue));
+                args = RE::MakeFunctionArguments(std::int32_t(handle_), std::string(value.stringValue));
                 break;
             case ModEventType::Int: {
                 methodName = "PushInt";
                 const std::int32_t pushed = static_cast<std::int32_t>(value.intValue);
-                args = RE::MakeFunctionArguments(std::int32_t(pushed));
+                args = RE::MakeFunctionArguments(std::int32_t(handle_), std::int32_t(pushed));
                 break;
             }
             case ModEventType::Float: {
                 methodName = "PushFloat";
                 const float pushed = static_cast<float>(value.floatValue);
-                args = RE::MakeFunctionArguments(float(pushed));
+                args = RE::MakeFunctionArguments(std::int32_t(handle_), float(pushed));
                 break;
             }
             case ModEventType::Bool: {
                 methodName = "PushBool";
                 const bool pushed = value.boolValue;
-                args = RE::MakeFunctionArguments(bool(pushed));
+                args = RE::MakeFunctionArguments(std::int32_t(handle_), bool(pushed));
                 break;
             }
             case ModEventType::Form:
                 methodName = "PushForm";
-                if (auto* form = ResolveLoadedForm(value.formValue)) {
-                    args = RE::MakeFunctionArguments(static_cast<RE::TESForm*>(form));
-                }
+                args = RE::MakeFunctionArguments(std::int32_t(handle_),
+                    static_cast<RE::TESForm*>(value.hasForm ? ResolveLoadedForm(value.formValue) : nullptr));
                 break;
             default:
                 methodName = nullptr;
                 break;
             }
-            if (methodName == nullptr || args == nullptr) continue;
-            vm->DispatchMethodCall2(object->GetHandle(), "ModEvent", methodName,
-                                    args, none);
-            ++countersImpl.repliesSent;
         }
-        vm->DispatchMethodCall2(object->GetHandle(), "ModEvent", "Send", nullptr, none);
+        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> continuation{
+            new ReplyCreateCallback(eventName_, values_, epoch_, handle_, next_ + 1)};
+        if (!methodName || !args || !vm->DispatchStaticCall("ModEvent", methodName, args, continuation)) {
+            ++countersImpl.implFallbacks;
+            logs::error("compat: reply {} failed at argument {}", eventName_, next_);
+            vm->DispatchStaticCall("ModEvent", "Release",
+                RE::MakeFunctionArguments(std::int32_t(handle_)), none);
+        }
     }
 
     void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
@@ -187,10 +226,58 @@ public:
 private:
     std::string eventName_;
     std::vector<ModEventValue> values_;
+    Epoch epoch_;
+    std::int32_t handle_{};
+    std::size_t next_{};
 };
 
 class EngineGlobalsOutputSink final : public LegacyOutputSink {
+    class Completion final : public RE::BSScript::IStackCallbackFunctor {
+    public:
+        explicit Completion(std::uint64_t request) : request_(request) {}
+        void operator()(RE::BSScript::Variable) override {
+            if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([request = request_] {
+                { std::lock_guard lock(outputMutex); outputQueue.Complete(request); }
+                Pump();
+            });
+        }
+        void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
+    private:
+        std::uint64_t request_;
+    };
 public:
+    void Flush() {
+        auto* api = CurrentApi();
+        auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
+        if (!api || !vm) return;
+        const auto epoch = api->CurrentEpoch();
+        const auto token = std::to_string(epoch.session) + ":" + std::to_string(epoch.index) + ":" + std::to_string(epoch.scene) + ":" + std::to_string(api->LastPublishedRevision().value);
+        std::vector<StorageOutput> batch;
+        for (auto& [key, values] : lists_) {
+            batch.push_back({epoch, token, key, std::move(values)});
+        }
+        { std::lock_guard lock(outputMutex); outputQueue.Submit(std::move(batch)); }
+        Pump();
+    }
+    static bool OutputCurrent(RE::StaticFunctionTag*, std::string token) {
+        std::lock_guard lock(outputMutex);
+        const auto epoch = ReplyEpoch();
+        return outputQueue.Current(token, epoch) && ReplyCurrent(epoch);
+    }
+    static void Pump() {
+        for (;;) {
+            std::optional<StorageOutput> next;
+            { std::lock_guard lock(outputMutex); next = outputQueue.Take(); }
+            if (!next) return;
+            auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
+            if (vm && ReplyCurrent(next->epoch)) {
+                RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callback{new Completion(next->request)};
+                if (vm->DispatchStaticCall("SLSFR_GameplayNative", "PublishStorage", RE::MakeFunctionArguments(std::string(next->token), std::string(next->key), std::vector<std::int32_t>(next->values)), callback)) return;
+                logs::error("compat: StorageUtil dispatch failed key={} token={}", next->key, next->token);
+            }
+            { std::lock_guard lock(outputMutex); outputQueue.Complete(next->request); }
+        }
+    }
     void SetCurrentFameGlobal(const StableFormKey& key, int value) override {
         if (auto* toast = ResolveLoadedGlobal(key)) {
             toast->value = static_cast<float>(value);
@@ -198,39 +285,46 @@ public:
     }
     void SetStorageIntList(const std::string& key, std::size_t locationIndex,
                            int value) override {
-        (void)key;
-        (void)locationIndex;
-        (void)value;
+        auto& values = lists_[key];
+        if (values.size() <= locationIndex) values.resize(locationIndex + 1);
+        values[locationIndex] = value;
     }
     void SetLegacyBridgeGlobal(const StableFormKey& key, int value) override {
         if (auto* toast = ResolveLoadedGlobal(key)) {
             toast->value = static_cast<float>(value);
         }
     }
+private:
+    std::map<std::string, std::vector<std::int32_t>> lists_;
+    inline static std::mutex outputMutex;
+    inline static StorageOutputQueue outputQueue;
 };
 
 using ImplBody = std::function<void(std::vector<ModEventValue>&, ModEventValue&)>;
 
 class BridgeFunction final : public RE::BSScript::NF_util::NativeFunctionBase {
 public:
-    BridgeFunction(const PapyrusFunction& spec, bool isStatic, ImplBody body)
+    BridgeFunction(RE::BSScript::Internal::VirtualMachine& vm,
+                   const PapyrusFunction& spec, bool isStatic, ImplBody body)
         : RE::BSScript::NF_util::NativeFunctionBase(
               spec.name, spec.script, isStatic,
               static_cast<std::uint16_t>(spec.parameters.size())),
           spec_(spec),
           body_(std::move(body)) {
-        _retType.SetType(RawTypeFor(spec.returnType));
+        _isLatent = true;
+        _retType.SetType(RawTypeFor(vm, spec.returnType, spec.returnTypeName));
         for (std::size_t i = 0; i < spec.parameters.size(); ++i) {
             _descTable.entries[i].first = spec.parameters[i].name;
-            _descTable.entries[i].second.SetType(RawTypeFor(spec.parameters[i].type));
+            _descTable.entries[i].second.SetType(RawTypeFor(vm, spec.parameters[i].type,
+                                                           spec.parameters[i].typeName));
         }
     }
 
     bool HasStub() const override { return true; }
 
-    bool MarshallAndDispatch(RE::BSScript::Variable&,
-                             RE::BSScript::Internal::VirtualMachine&,
-                             RE::VMStackID,
+    bool MarshallAndDispatch(RE::BSScript::Variable& base,
+                             RE::BSScript::Internal::VirtualMachine& vm,
+                             RE::VMStackID stack,
                              RE::BSScript::Variable& a_resultValue,
                              const RE::BSScript::StackFrame& a_frame) const override {
         std::vector<ModEventValue> args;
@@ -241,8 +335,24 @@ public:
                 static_cast<std::uint32_t>(i), page);
             args.push_back(ConvertArg(variable, spec_.parameters[i].type));
         }
-        ModEventValue result = NoneResult();
-        if (body_) {
+        if (!_isStatic && (!base.IsObject() || !base.GetObject())) return RE::BSScript::kFailed;
+        auto* tasks = SKSE::GetTaskInterface();
+        if (!tasks || !body_) return RE::BSScript::kFailed;
+        const auto epoch = ReplyEpoch();
+        const auto self = base.IsObject() && base.GetObject() ? base.GetObject()->GetHandle() : RE::VMHandle{};
+        tasks->AddTask([this, args = std::move(args), epoch, self, vm = &vm, stack]() mutable {
+            if (!ReplyCurrent(epoch)) return;
+            ModEventValue result = NoneResult();
+            bool validSelf = _isStatic;
+            if (!_isStatic) {
+                auto* quest = engine::LookupLoadedRecord<RE::TESQuest>(RE::TESDataHandler::GetSingleton(), spec_.quest);
+                if (quest) {
+                    auto* policy = vm->GetObjectHandlePolicy();
+                    if (spec_.aliasIndex < 0) validSelf = self == policy->GetHandleForObject(RE::FormType::Quest, quest);
+                    else for (auto* alias : quest->aliases) if (alias && alias->aliasID == static_cast<std::uint32_t>(spec_.aliasIndex)) validSelf = self == policy->GetHandleForObject(alias->GetVMTypeID(), alias);
+                }
+            }
+            if (validSelf) {
             try {
                 body_(args, result);
                 ++countersImpl.nativeCalls;
@@ -252,13 +362,18 @@ public:
             } catch (...) {
                 logs::error("compat: native impl crashed for {}", spec_.id);
             }
-        }
-        PackResult(a_resultValue, result, spec_.returnType);
-        return true;
+            }
+            RE::BSScript::Variable packed;
+            PackResult(packed, result, spec_.returnType);
+            vm->ReturnFromLatent(stack, packed);
+        });
+        a_resultValue.SetNone();
+        return RE::BSScript::kStarted;
     }
 
 private:
-    static RE::BSScript::TypeInfo::RawType RawTypeFor(LegacyValueType type) {
+    static RE::BSScript::TypeInfo::RawType RawTypeFor(
+        RE::BSScript::Internal::VirtualMachine& vm, LegacyValueType type, std::string name) {
         using RawType = RE::BSScript::TypeInfo::RawType;
         switch (type) {
         case LegacyValueType::None: return RawType::kNone;
@@ -266,16 +381,17 @@ private:
         case LegacyValueType::Int: return RawType::kInt;
         case LegacyValueType::Float: return RawType::kFloat;
         case LegacyValueType::String: return RawType::kString;
-        case LegacyValueType::Form:
-        case LegacyValueType::Actor:
-        case LegacyValueType::Quest:
-        case LegacyValueType::ReferenceAlias:
-        case LegacyValueType::Script: return RawType::kObject;
         case LegacyValueType::StringArray: return RawType::kStringArray;
-        case LegacyValueType::FormArray: return RawType::kObjectArray;
-        case LegacyValueType::ActorArray: return RawType::kObjectArray;
-        default: return RawType::kNone;
+        default: break;
         }
+        const bool array = type == LegacyValueType::FormArray || type == LegacyValueType::ActorArray;
+        if (name.ends_with("[]")) name.resize(name.size() - 2);
+        if (name.empty()) name = type == LegacyValueType::Actor || type == LegacyValueType::ActorArray
+                                    ? "Actor" : "Form";
+        RE::BSTSmartPointer<RE::BSScript::ObjectTypeInfo> objectType;
+        if (!vm.GetScriptObjectType(name, objectType) || !objectType)
+            throw std::runtime_error("cannot resolve Papyrus type " + name);
+        return static_cast<RawType>(reinterpret_cast<std::uintptr_t>(objectType.get()) | (array ? 1u : 0u));
     }
 
     static ModEventValue ConvertArg(const RE::BSScript::Variable& variable,
@@ -301,8 +417,7 @@ private:
         case LegacyValueType::Form:
         case LegacyValueType::Actor:
         case LegacyValueType::Quest:
-        case LegacyValueType::ReferenceAlias:
-        case LegacyValueType::Script: {
+        {
             out.type = ModEventType::Form;
             if (auto* form = variable.Unpack<RE::TESForm*>()) {
                 out.formValue = slsf::engine::LoadedRecordKey(form);
@@ -310,21 +425,31 @@ private:
             }
             break;
         }
+        case LegacyValueType::ReferenceAlias:
+        case LegacyValueType::Script:
+            out.type = ModEventType::Form;
+            if (variable.IsObject()) {
+                if (const auto object = variable.GetObject()) {
+                    out.scriptHandle = object->GetHandle();
+                    out.scriptName = object->GetTypeInfo()->GetName();
+                }
+            }
+            break;
+        case LegacyValueType::FormArray:
         case LegacyValueType::ActorArray: {
-            out.type = ModEventType::Int;
+            out.type = ModEventType::Form;
             if (auto array = variable.GetArray()) {
-                out.intValue = static_cast<std::int64_t>(array->size());
-            } else {
-                out.intValue = 0;
+                for (const auto& element : *array) {
+                    const auto* form = element.Unpack<RE::TESForm*>();
+                    out.formArray.push_back(form ? slsf::engine::LoadedRecordKey(form) : StableFormKey{});
+                }
             }
             break;
         }
         case LegacyValueType::StringArray: {
             out.type = ModEventType::String;
             if (auto array = variable.GetArray()) {
-                if (array->size() > 0) {
-                    out.stringValue = std::string((*array)[0].GetString());
-                }
+                for (const auto& element : *array) out.stringArray.emplace_back(element.GetString());
             }
             break;
         }
@@ -339,6 +464,24 @@ private:
     static void PackResult(RE::BSScript::Variable& out, const ModEventValue& value,
                            LegacyValueType returnType) {
         switch (returnType) {
+        case LegacyValueType::StringArray:
+            out.Pack(std::vector<std::string>(value.stringArray));
+            break;
+        case LegacyValueType::FormArray: {
+            std::vector<RE::TESForm*> forms;
+            for (const auto& key : value.formArray) forms.push_back(ResolveLoadedForm(key));
+            out.Pack(std::move(forms));
+            break;
+        }
+        case LegacyValueType::ActorArray: {
+            std::vector<RE::Actor*> actors;
+            for (const auto& key : value.formArray) {
+                const auto form = ResolveLoadedForm(key);
+                actors.push_back(form ? form->As<RE::Actor>() : nullptr);
+            }
+            out.Pack(std::move(actors));
+            break;
+        }
         case LegacyValueType::Bool:
             out.SetBool(value.boolValue);
             break;
@@ -356,7 +499,12 @@ private:
         case LegacyValueType::Quest:
         case LegacyValueType::ReferenceAlias:
         case LegacyValueType::Script:
-            if (value.hasForm) {
+            if (value.scriptHandle && !value.scriptName.empty()) {
+                RE::BSTSmartPointer<RE::BSScript::Object> object;
+                auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
+                if (vm && vm->FindBoundObject(value.scriptHandle, value.scriptName.c_str(), object)) out.SetObject(object);
+                else out.SetNone();
+            } else if (value.hasForm) {
                 out.Pack<RE::TESForm*>(ResolveLoadedForm(value.formValue));
             } else {
                 out.SetNone();
@@ -373,9 +521,6 @@ private:
     ImplBody body_;
 };
 
-// ---------------------------------------------------------------------------
-// Impl dispatch for the 86 frozen public functions.
-// ---------------------------------------------------------------------------
 
 int ArgInt(const ModEventValue& value) {
     return static_cast<int>(value.intValue);
@@ -442,7 +587,14 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
         };
     }
     if (id == "SLSF_Reloaded_DataManager.CleanExternalModList") {
-        return [](std::vector<ModEventValue>&, ModEventValue&) {};
+        return [](std::vector<ModEventValue>&, ModEventValue&) {
+            auto* api = CurrentApi();
+            auto* data = RE::TESDataHandler::GetSingleton();
+            if (!api || !data) return;
+            for (const auto& name : api->RegisteredMods()) {
+                if (!data->LookupModByName(name)) (void)api->UnregisterMod(name);
+            }
+        };
     }
     if (id == "SLSF_Reloaded_DataManager.UnregisterExternalMod") {
         return [](std::vector<ModEventValue>& args, ModEventValue&) {
@@ -503,12 +655,7 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
         return [category](std::vector<ModEventValue>&, ModEventValue&) {
             auto* api = CurrentApi();
             if (!api) return;
-            for (std::size_t i = 0; i < LegacyOutputs::kLegacyLocationIndexCount; ++i) {
-                const auto name = LegacyOutputs::LegacyLocationName(i);
-                if (name) {
-                    (void)api->ClearFame(*name, category);
-                }
-            }
+            for (const auto& name : api->RegisteredLocations()) (void)api->ClearFame(name, category);
         };
     }
     if (id == "SLSF_Reloaded_FameManager.CalculateFameSpread") {
@@ -532,12 +679,7 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
         return [](std::vector<ModEventValue>&, ModEventValue&) {
             auto* api = CurrentApi();
             if (!api) return;
-            for (std::size_t i = 0; i < LegacyOutputs::kLegacyLocationIndexCount; ++i) {
-                const auto name = LegacyOutputs::LegacyLocationName(i);
-                if (name) {
-                    (void)api->ClearAllFame(*name);
-                }
-            }
+            for (const auto& name : api->RegisteredLocations()) (void)api->ClearAllFame(name);
         };
     }
     if (id == "SLSF_Reloaded_FameManager.SpreadFame") {
@@ -551,14 +693,7 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
         return [](std::vector<ModEventValue>&, ModEventValue&) {
             auto* api = CurrentApi();
             if (!api) return;
-            std::vector<std::string> sources;
-            for (std::size_t i = 0; i < LegacyOutputs::kLegacyLocationIndexCount; ++i) {
-                const auto name = LegacyOutputs::LegacyLocationName(i);
-                if (name) {
-                    sources.push_back(*name);
-                }
-            }
-            (void)api->SpreadPulse(sources);
+            (void)api->SpreadPulse(api->RegisteredLocations());
         };
     }
     if (id == "SLSF_Reloaded_FameManager.GainFame") {
@@ -568,6 +703,7 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
                 inputs.previousFame =
                     static_cast<double>(api->GetFameValue(ArgString(args[1]),
                                                           ArgString(args[0])).value_or(0));
+                if (args.size() >= 3) inputs.foreplay = Fact::Known(ArgBool(args[2]));
                 (void)api->GainFame(ArgString(args[1]), ArgString(args[0]), inputs);
             }
         };
@@ -601,17 +737,21 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
     }
     if (id == "SLSF_Reloaded_Logger.Log") {
         return [](std::vector<ModEventValue>& args, ModEventValue&) {
-            if (args.size() >= 1) {
+            if (args.size() >= 1 && legacyLogging.load()) {
                 const int level = args.size() >= 2 ? ArgInt(args[1]) : 0;
-                logs::info("legacy log({}): {}", level, ArgString(args[0]));
+                if (level >= legacyLogLevel.load()) logs::info("legacy log({}): {}", level, ArgString(args[0]));
             }
         };
     }
     if (id == "SLSF_Reloaded_Logger.EnableLogging") {
-        return [](std::vector<ModEventValue>&, ModEventValue&) {};
+        return [](std::vector<ModEventValue>& args, ModEventValue&) {
+            if (!args.empty()) legacyLogging.store(ArgBool(args[0]));
+        };
     }
     if (id == "SLSF_Reloaded_Logger.SetLogLevel") {
-        return [](std::vector<ModEventValue>&, ModEventValue&) {};
+        return [](std::vector<ModEventValue>& args, ModEventValue&) {
+            if (!args.empty()) legacyLogLevel.store(ArgInt(args[0]));
+        };
     }
     if (id == "SLSF_Reloaded_Data_Exporter.RunExport" ||
         id == "SLSF_Reloaded_Data_Exporter.ExportData") {
@@ -619,23 +759,13 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
             if (args.size() < 1) return;
             auto* api = CurrentApi();
             if (!api) return;
-            io::LegacyDocument document;
-            for (const auto& flagName : slsf::api::PublicApi::FlagNames()) {
-                for (std::size_t i = 0; i < LegacyOutputs::kLegacyLocationIndexCount; ++i) {
-                    const auto location = LegacyOutputs::LegacyLocationName(i);
-                    if (!location) continue;
-                    const auto value = api->GetFameValue(*location, flagName);
-                    if (value) {
-                        document.SetInt(*location + "." + flagName, *value);
-                    }
-                }
-            }
+            const auto document = api->ExportLegacy();
             std::error_code ec;
             const std::filesystem::path dir("Data/SKSE/Plugins/StorageUtilData/SLSF_Reloaded");
             std::filesystem::create_directories(dir, ec);
             if (ec) return;
             const std::filesystem::path outFile =
-                dir / std::filesystem::path(ArgString(args[0]) + ".json");
+                dir / std::filesystem::path(ArgString(args[0]) + " SLSF Reloaded Data.json");
             std::ofstream stream(outFile, std::ios::binary | std::ios::trunc);
             if (!stream) return;
             stream << document.Write();
@@ -649,7 +779,7 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
             if (!api) return;
             const std::filesystem::path inFile =
                 std::filesystem::path("Data/SKSE/Plugins/StorageUtilData/SLSF_Reloaded") /
-                (ArgString(args[0]) + ".json");
+                (ArgString(args[0]) + " SLSF Reloaded Data.json");
             std::ifstream stream(inFile, std::ios::binary);
             if (!stream) return;
             const std::string bytes((std::istreambuf_iterator<char>(stream)),
@@ -660,21 +790,19 @@ ImplBody MakeImpl(const PapyrusFunction& spec) {
             const auto import =
                 io::ExtractLegacyImport(parsed, slsf::api::PublicApi::FlagNames());
             if (!import) return;
-            for (const auto& entry : import->fame) {
-                (void)api->SetFameValue(entry.location,
-                                        std::string(slsf::ToString(entry.category)),
-                                        entry.value);
-            }
-            for (const auto& mod : import->modFlags) {
-                if (!api->RegisterMod(mod.mod)) continue;
-                for (const auto& [flag, enabled] : mod.flags) {
-                    if (enabled) {
-                        api->SetExternalFlag(mod.mod, flag, true);
-                    }
-                }
-            }
+            const auto result = api->ImportLegacy(*import);
+            if (result.status != Status::Ready) logs::error("legacy import rejected: {}", result.message);
         };
     }
+    static const std::unordered_set<std::string> gameplayScripts{
+        "SLSF_Reloaded_DynamicAnonymity", "SLSF_Reloaded_LocationManager",
+        "SLSF_Reloaded_FameManager", "SLSF_Reloaded_ModIntegration",
+        "SLSF_Reloaded_PlayerScript", "SLSF_Reloaded_SexAnimationAnalyzer",
+        "SLSF_Reloaded_Uninstall", "SLSF_Reloaded_VisibilityManager"};
+    if (gameplayScripts.contains(spec.script)) return [id](std::vector<ModEventValue>& args, ModEventValue& out) {
+        if (auto* api = CurrentApi(); api && !api->CallGameplay(id, args, out))
+            logs::debug("gameplay: {} awaiting facts or rejected", id);
+    };
     return nullptr;
 }
 
@@ -703,7 +831,7 @@ void DeliverNowInternal(const std::string& eventName,
         return;
     }
     RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> create{
-        new ReplyCreateCallback(eventName, values)};
+        new ReplyCreateCallback(eventName, values, ReplyEpoch())};
     const std::string createName = eventName;
     auto* createArgs = RE::MakeFunctionArguments(std::string(eventName));
     if (!vm->DispatchStaticCall("ModEvent", "Create", createArgs, create)) {
@@ -712,10 +840,18 @@ void DeliverNowInternal(const std::string& eventName,
     }
 }
 
-} // namespace
+}
 
 const VmNatives::Counters& VmNatives::Stats() noexcept {
     return countersImpl;
+}
+
+void VmNatives::PublishOutputs() {
+    if (auto* api = CurrentApi()) {
+        EngineGlobalsOutputSink sink;
+        (void)api->PublishAllOutputs(sink);
+        sink.Flush();
+    }
 }
 
 void VmNatives::ResetStats() noexcept {
@@ -737,6 +873,13 @@ void VmNatives::BindApiProvider(ApiProvider provider) {
 
 void VmNatives::BindBridge(ModEventBridge* bridge) {
     bridgeInstance = bridge;
+}
+
+void VmNatives::BindEpochProbe(std::function<Epoch()> current,
+                               std::function<bool(Epoch)> valid) {
+    std::lock_guard guard(stateMutex);
+    currentEpoch = std::move(current);
+    validEpoch = std::move(valid);
 }
 
 void VmNatives::DeliverReply(const std::string& eventName,
@@ -784,6 +927,49 @@ bool VmNatives::RegisterPapyrusNatives(RE::BSScript::Internal::VirtualMachine* v
     if (!vm) {
         return false;
     }
+    bool helpers = true;
+    const auto bindHelper = [&](const char* name, const char* script, auto callback) { return vm->BindNativeMethod(new RE::NativeFunction(name, script, callback)); };
+    const auto checked = [&](bool success, const char* name) { if (!success) logs::error("compat: helper binding failed for SLSFR_GameplayNative.{}", name); helpers = success && helpers; };
+    checked(bindHelper("OutputCurrent", "SLSFR_GameplayNative", EngineGlobalsOutputSink::OutputCurrent), "OutputCurrent");
+    checked(bindHelper("Equipped", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, RE::TESForm* form) {
+        const auto* file = form ? form->GetFile(0) : nullptr;
+        if (!file) return;
+        const auto epoch = ReplyEpoch(); const StableFormKey key{std::string(file->GetFilename()), form->GetLocalFormID()};
+        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, key] {
+            if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) {
+                ModEventValue value; value.type = ModEventType::Form; value.hasForm = true; value.formValue = key;
+                ModEventValue result; api->CallGameplay("Equipped", {value}, result);
+            }
+        });
+    }), "Equipped");
+    checked(bindHelper("Refresh", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, std::string source) {
+        const auto epoch = ReplyEpoch();
+        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, source = std::move(source)] {
+            if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) { ModEventValue result; api->CallGameplay(source, {}, result); }
+        });
+    }), "Refresh");
+    checked(bindHelper("SceneEvent", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, std::string topic, std::int32_t thread) {
+        const auto epoch = ReplyEpoch();
+        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, topic = std::move(topic), thread] {
+            if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) {
+                ModEventValue t; t.type = ModEventType::String; t.stringValue = topic;
+                ModEventValue id; id.type = ModEventType::Int; id.intValue = thread;
+                ModEventValue result; api->CallGameplay("SceneEvent", {t, id}, result);
+            }
+        });
+    }), "SceneEvent");
+    checked(bindHelper("ObserveNpc", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, RE::Actor* actor) {
+        if (!actor) return;
+        const auto epoch = ReplyEpoch(); const auto* file = actor->GetFile(0);
+        if (!file) return;
+        const StableFormKey key{std::string(file->GetFilename()), actor->GetLocalFormID()};
+        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, key] {
+            if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) {
+                ModEventValue arg; arg.type = ModEventType::Form; arg.hasForm = true; arg.formValue = key;
+                ModEventValue result; api->CallGameplay("ObserveNpc", {arg}, result);
+            }
+        });
+    }), "ObserveNpc");
     static const PapyrusBindings bindings;
     std::size_t registered = 0;
     std::size_t expected = 0;
@@ -792,34 +978,38 @@ bool VmNatives::RegisterPapyrusNatives(RE::BSScript::Internal::VirtualMachine* v
             continue;
         }
         if (fn.id == "SLSF_Reloaded_ModIntegration.GetFHUData" ||
+            fn.id == "SLSF_Reloaded_ModIntegration.GetFHUInflation" ||
             fn.id == "SLSF_Reloaded_ModIntegration.GetPWData" ||
             fn.id == "SLSF_Reloaded_ModIntegration.GetLegacyConfig") {
             continue;
         }
         const bool isStatic = fn.binding == PapyrusBindingKind::GlobalNative ||
                               fn.binding == PapyrusBindingKind::Global;
+        ++expected;
         ImplBody body = MakeImpl(fn);
         if (!body) {
             ++countersImpl.implFallbacks;
-            body = [](std::vector<ModEventValue>&, ModEventValue& out) {
-                out.type = ModEventType::None;
-                out.boolValue = false;
-                out.intValue = 0;
-                out.floatValue = 0.0;
-            };
+            logs::error("compat: implementation missing for {}", fn.id);
+            continue;
         }
-        if (!vm->BindNativeMethod(new BridgeFunction(fn, isStatic, std::move(body)))) {
+        try {
+        if (!vm->BindNativeMethod(new BridgeFunction(*vm, fn, isStatic, std::move(body)))) {
             ++countersImpl.implFallbacks;
+            logs::error("compat: binding failed for {}", fn.id);
             continue;
         }
         ++registered;
+        } catch (const std::exception& error) {
+            ++countersImpl.implFallbacks;
+            logs::error("compat: binding failed for {}: {}", fn.id, error.what());
+        }
     }
-    expected = registered;
     for (const auto& contract : ModEventBridge::InputContracts()) {
         std::vector<PapyrusParameter> params;
         for (const auto& p : contract.parameters) {
             PapyrusParameter entry;
             entry.name = p.name;
+            entry.typeName = p.type == ModEventType::Form ? "Form" : "";
             entry.type = p.type == ModEventType::None ? LegacyValueType::None
                         : p.type == ModEventType::Bool ? LegacyValueType::Bool
                         : p.type == ModEventType::Int ? LegacyValueType::Int
@@ -836,15 +1026,16 @@ bool VmNatives::RegisterPapyrusNatives(RE::BSScript::Internal::VirtualMachine* v
         sink.returnType = LegacyValueType::None;
         sink.parameters = std::move(params);
         sink.isPublic = false;
-        if (!vm->BindNativeMethod(new BridgeFunction(sink, true, EventSinkImpl(contract)))) {
+        if (!vm->BindNativeMethod(new BridgeFunction(*vm, sink, true, EventSinkImpl(contract)))) {
             ++countersImpl.implFallbacks;
+            logs::error("compat: event binding failed for {}", sink.id);
             continue;
         }
         ++registered;
     }
     vm->RegisterForLogEvent(&g_papyrusLogSink);
     logs::info("compat: registered {} papyrus bridge functions", registered);
-    return registered >= expected + kLegacyInputEventCount;
+    return helpers && registered == expected + kLegacyInputEventCount;
 }
 
-} // namespace slsf::compat
+}

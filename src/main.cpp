@@ -1,6 +1,8 @@
 #include "pch.h"
 
 #include "slsf/core/Snapshots.h"
+#include "slsf/core/location/DefaultRegions.h"
+#include "slsf/core/location/RegionRegistry.h"
 #include "slsf/core/reputation/DiffusionKernel.h"
 #include "slsf/core/reputation/Settlement.h"
 #include "slsf/engine/EventBridge.h"
@@ -10,6 +12,7 @@
 #include "slsf/runtime/Lifecycle.h"
 #include "slsf/boundary/ProviderCollectors.h"
 #include "slsf/boundary/AppearanceProviders.h"
+#include "slsf/boundary/Gameplay.h"
 
 #include <chrono>
 #include <thread>
@@ -86,8 +89,12 @@ bool LogHostVersions(const SKSE::LoadInterface* a_skse) {
 std::unique_ptr<slsf::config::ConfigurationStore> g_configuration;
 std::unique_ptr<slsf::Lifecycle> g_lifecycle;
 std::unique_ptr<slsf::engine::EventBridge> g_events;
+std::unique_ptr<slsf::boundary::Gameplay> g_gameplay;
+std::atomic<bool> g_pumpQueued{false};
+std::jthread g_pump;
 std::unique_ptr<slsf::integrations::CapabilityRegistry> g_capabilities;
 slsf::RegionSnapshot g_regions;
+std::map<slsf::StableFormKey, slsf::RegionId> g_locationOwners;
 bool g_worldBuilt{false};
 bool g_dataLoaded{false};
 
@@ -226,14 +233,20 @@ bool BuildStaticWorld() {
         definitions.keys.push_back(key);
     }
     std::sort(definitions.keys.begin(), definitions.keys.end());
-    for (const auto& [owner, children] : childrenByOwner) {
-        definitions.ownerRules.push_back(slsf::OwnerRule{owner, children});
+    for (const auto& entry : slsf::kDefaultRegions) {
+        const slsf::StableRegionKey key{std::string(entry.plugin), entry.form};
+        if (std::binary_search(definitions.keys.begin(), definitions.keys.end(), key)) {
+            definitions.customOrder.push_back(key);
+            definitions.apiAliases.push_back({std::string(entry.name), key});
+        }
     }
-    std::sort(definitions.ownerRules.begin(), definitions.ownerRules.end(),
-              [](const slsf::OwnerRule& left, const slsf::OwnerRule& right) {
-                  return left.owner < right.owner;
-              });
-    definitions.customOrder = definitions.keys;
+    for (const auto& [alias, name] : std::array<std::pair<const char*, const char*>, 6>{{
+        {"Eastmarch", "Windhelm"}, {"Haafingar", "Solitude"}, {"Hjaalmarch", "Morthal"},
+        {"the Reach", "Markarth"}, {"the Pale", "Dawnstar"}, {"the Rift", "Riften"}}}) {
+        const auto found = std::find_if(definitions.apiAliases.begin(), definitions.apiAliases.end(),
+            [name](const auto& entry) { return entry.alias == name; });
+        if (found != definitions.apiAliases.end()) definitions.apiAliases.push_back({alias, found->target});
+    }
 
     auto index = slsf::BuildLocationIndex(records);
     if (!index) {
@@ -246,6 +259,9 @@ bool BuildStaticWorld() {
         return false;
     }
     g_regions = std::move(*regions);
+    for (std::size_t i = 0; i < index->records.size(); ++i)
+        if (const auto owner = slsf::ResolveRegion(g_regions, slsf::LocationId(static_cast<std::uint32_t>(i))))
+            g_locationOwners.emplace(index->records[i].formId, *owner);
     logs::info("lifecycle: static table built locations={} regions={} ownershipRules={}",
                g_regions.locationOwners.size(), g_regions.regions.size(),
                g_regions.ownership.size());
@@ -259,13 +275,15 @@ void EnsureLifecycle() {
     if (!g_lifecycle) {
         g_lifecycle = std::make_unique<slsf::Lifecycle>(
             slsf::StaticWorld{.regions = &g_regions}, *g_configuration);
+        slsf::compat::VmNatives::BindEpochProbe([] { return g_lifecycle->CurrentEpoch(); },
+            [](slsf::Epoch epoch) { return g_lifecycle->IsEpochCurrent(epoch); });
         g_events = std::make_unique<slsf::engine::EventBridge>(
             *g_lifecycle, [](const slsf::engine::AsyncMessage& message) {
                 logs::info("event: {} payload={} epoch={}.{}.{}", message.topic, message.payload,
                            message.epoch.session, message.epoch.index, message.epoch.scene);
-                // Dispatcher revalidates the epoch when the round consumes the
-                // event, so a menu transition between Flush and Step still wins.
-                g_lifecycle->Executor().Post(message.epoch, [] {});
+                g_lifecycle->Executor().Post(message.epoch, [topic = message.topic, payload = message.payload] {
+                    if (g_gameplay) g_gameplay->OnEvent(topic, payload);
+                });
             });
     }
 }
@@ -456,6 +474,30 @@ void WireCompatBridge() {
         logs::info("compat: bridge created");
     }
     auto& api = MenuPublicApi();
+    if (!g_gameplay) {
+        g_gameplay = std::make_unique<slsf::boundary::Gameplay>(api, g_regions, g_locationOwners);
+        api.SetGameplayCall([](const auto& name, const auto& args, auto& out) { return g_gameplay->Invoke(name, args, out); });
+        api.SetFormRegionResolver([](const auto& key) { return g_gameplay->ResolveForm(key); });
+        api.SetStrictLocationResolver([]() -> std::optional<std::string> {
+            auto* player = RE::PlayerCharacter::GetSingleton();
+            auto* location = player ? player->GetCurrentLocation() : nullptr;
+            return location && location->GetName()[0] ? location->GetName() : "$NoneText";
+        });
+        g_pump = std::jthread([](std::stop_token stop) {
+            while (!stop.stop_requested()) {
+                if (!g_pumpQueued.exchange(true)) {
+                    SKSE::GetTaskInterface()->AddTask([] {
+                        GuardedHostCallback("gameplay pump", [] {
+                            if (g_events) g_events->Flush();
+                            if (g_gameplay) g_gameplay->Tick();
+                        });
+                        g_pumpQueued.store(false);
+                    });
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            }
+        });
+    }
     api.AttachToBridge(*bridge);
     bridge->SetReplySink([](const std::string& eventName,
                             const std::vector<slsf::compat::ModEventValue>& values) {
@@ -584,45 +626,10 @@ void InstallSlsfMenu() {
         }
         slsf::api::PublicApi& api = MenuPublicApi();
 
-        std::size_t applied = 0;
-        std::size_t rejected = 0;
-        std::string firstError;
-        for (const auto& entry : import->fame) {
-            const slsf::CommandResult result = api.SetFameValue(
-                entry.location, std::string(slsf::ToString(entry.category)), entry.value);
-            if (result.status == slsf::Status::Ready) {
-                ++applied;
-            } else {
-                ++rejected;
-                if (firstError.empty()) {
-                    firstError = entry.location + " (" + result.message + ")";
-                }
-            }
-        }
-        std::size_t modsRegistered = 0;
-        std::size_t flagsImported = 0;
-        for (const auto& mod : import->modFlags) {
-            if (!api.RegisterMod(mod.mod)) {
-                continue;
-            }
-            ++modsRegistered;
-            for (const auto& [flag, enabled] : mod.flags) {
-                if (enabled) {
-                    api.SetExternalFlag(mod.mod, flag, true);
-                    ++flagsImported;
-                }
-            }
-        }
-        std::string summary = "legacy import '" + file + "': fame " +
-                              std::to_string(applied) + " applied, " +
-                              std::to_string(rejected) + " rejected";
-        summary += ", spread " + std::to_string(import->spread.size()) +
-                   " extracted, mods " + std::to_string(modsRegistered) + " registered, " +
-                   std::to_string(flagsImported) + " flags";
-        if (!firstError.empty()) {
-            summary += "; first rejection: " + firstError;
-        }
-        return summary;
+        const auto result = api.ImportLegacy(*import);
+        logs::info("legacy import: file={} status={} message={}", file,
+                   static_cast<int>(result.status), result.message);
+        return std::string("legacy import '") + file + "': " + OutcomeText(result);
     };
     const bool installed = slsf::ui::Menu::Instance().Install(std::move(ports));
     logs::info("menu: framework binding installed={}", installed);
@@ -690,24 +697,6 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
         }, [](const slsf::Epoch& epoch) {
             return g_lifecycle && g_lifecycle->IsEpochCurrent(epoch);
         });
-        if (auto* tasks = SKSE::GetTaskInterface()) {
-            tasks->AddTask([] { slsf::compat::VmNatives::KickFrozenProbe(); });
-            std::thread delayed{[] {
-                std::this_thread::sleep_for(std::chrono::seconds(6));
-                if (auto* late = SKSE::GetTaskInterface()) {
-                    late->AddTask([] {
-                        const slsf::compat::VmNatives::Counters counters{
-                            slsf::compat::VmNatives::Stats()};
-                        logs::info("compat: counters+6s nativeCalls={} sinkEvents={} repliesScheduled={} repliesSent={} fallbacks={}",
-                                   counters.nativeCalls, counters.sinkEvents,
-                                   counters.repliesScheduled, counters.repliesSent,
-                                   counters.implFallbacks);
-                        slsf::compat::VmNatives::KickFrozenProbe();
-                    });
-                }
-            }};
-            delayed.detach();
-        }
         break;
     case SKSE::MessagingInterface::kSaveGame:
         break;
@@ -741,6 +730,13 @@ SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
             logs::info("lifecycle: configuration published revision={} status={} message={}",
                        snapshot.revision.value, static_cast<int>(snapshot.lastUpdate.status),
                        snapshot.lastUpdate.message);
+            if (g_lifecycle && g_lifecycle->BusinessOpen()) {
+                SKSE::GetTaskInterface()->AddTask([] {
+                    if (!g_lifecycle || !g_lifecycle->BusinessOpen()) return;
+                    const auto applied = g_lifecycle->ApplyCurrentConfiguration();
+                    if (!applied.Succeeded()) logs::error("configuration apply failed: {}", applied.message);
+                });
+            }
         });
     }
     auto* papyrus = SKSE::GetPapyrusInterface();

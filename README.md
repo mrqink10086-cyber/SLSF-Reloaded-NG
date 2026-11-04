@@ -28,8 +28,12 @@ location indexing and the initial state codec are implemented. The
 preserves registrations during temporary unknown states and limits automatic
 cleanup candidates to the four optional categories.
 
-The plugin entry point still performs minimal SKSE initialization. Runtime wiring,
-automatic settlement, integrations and in-game acceptance remain on the roadmap.
+The plugin connects the engine-thread pump, automatic settlement, scene and
+optional-provider facts, compatibility output and SKSE settings menu. Native
+state survives saves; same-name Papyrus scripts retain quest/alias attachments
+and forward engine events. In-game acceptance remains user-run.
+See [package installation](docs/distribution/INSTALL.md) and
+[dependencies](docs/distribution/DEPENDENCIES.md).
 See the [development guide](README-Skyrim1170.md) for build setup and
 [test instructions](docs/superpowers/plans/2026-10-27-task-books/00-native-testing.md)
 for core and boundary checks.

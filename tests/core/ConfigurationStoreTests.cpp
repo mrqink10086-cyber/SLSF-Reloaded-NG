@@ -32,7 +32,7 @@ std::unique_ptr<ConfigurationStore> MakeStore(MemoryConfigurationFile** fileOut 
     return ConfigurationStore::Open(std::move(file));
 }
 
-} // namespace
+}
 
 TEST_CASE("configuration store generates defaults for a missing file", "[configuration]") {
     MemoryConfigurationFile* file = nullptr;

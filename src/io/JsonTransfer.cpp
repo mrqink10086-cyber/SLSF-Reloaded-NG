@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <charconv>
 #include <cmath>
+#include <limits>
 
 namespace slsf::io {
 namespace {
@@ -550,7 +551,7 @@ private:
     int level_{0};
 };
 
-} // namespace
+}
 
 JsonPtr JsonValue::Parse(std::string_view text, std::size_t maxBytes, std::string* error) {
     if (text.size() > maxBytes) {
@@ -629,8 +630,14 @@ std::string JsonValue::StringAt(std::string_view missing) const {
 }
 
 std::int64_t JsonValue::IntAt(std::int64_t missing) const noexcept {
-    if (kind_ != JsonKind::Number) {
+    if (kind_ != JsonKind::Number || !std::isfinite(number_)) {
         return missing;
+    }
+    if (number_ >= static_cast<double>(std::numeric_limits<std::int64_t>::max())) {
+        return std::numeric_limits<std::int64_t>::max();
+    }
+    if (number_ <= static_cast<double>(std::numeric_limits<std::int64_t>::min())) {
+        return std::numeric_limits<std::int64_t>::min();
     }
     return static_cast<std::int64_t>(number_);
 }
@@ -820,7 +827,7 @@ namespace {
     return static_cast<int>(std::llround(value));
 }
 
-} // namespace
+}
 
 Result<LegacyImport> ExtractLegacyImport(const JsonPtr& root,
                                          const std::vector<std::string>& flagNames) {
@@ -922,7 +929,34 @@ Result<LegacyImport> ExtractLegacyImport(const JsonPtr& root,
             import.modFlags.push_back(std::move(entry));
         }
     }
+    const auto forms = root->MemberAt("form");
+    const auto locationTotal = intGroup ? intGroup->MemberAt("locationtotal") : nullptr;
+    const auto locationCount = locationTotal ? locationTotal->IntAt(0) : 0;
+    if (locationCount < 0 || locationCount > 65535) {
+        return Fail(Error::Code::InvalidArgument, "invalid imported custom location count");
+    }
+    for (std::int64_t i = 0; i < locationCount; ++i) {
+        const auto suffix = std::to_string(i);
+        const auto name = stringGroup ? stringGroup->MemberAt("location_string_" + suffix) : nullptr;
+        const auto form = forms ? forms->MemberAt("location_form_" + suffix) : nullptr;
+        if (!name || !name->IsString() || name->StringAt("").empty() || !form || !form->IsString()) {
+            return Fail(Error::Code::InvalidArgument, "incomplete imported custom location");
+        }
+        const auto identity = form->StringAt("");
+        const auto separator = identity.find('|');
+        if (separator == std::string::npos || separator + 1 == identity.size()) {
+            return Fail(Error::Code::InvalidArgument, "invalid imported location identity");
+        }
+        auto id = std::string_view(identity).substr(0, separator);
+        if (id.starts_with("0x") || id.starts_with("0X")) id.remove_prefix(2);
+        std::uint32_t localId{};
+        const auto parsed = std::from_chars(id.data(), id.data() + id.size(), localId, 16);
+        if (parsed.ec != std::errc{} || parsed.ptr != id.data() + id.size() || localId == 0 || localId > 0x00FFFFFFu) {
+            return Fail(Error::Code::InvalidArgument, "invalid imported local form ID");
+        }
+        import.customRegions.push_back({name->StringAt(""), {identity.substr(separator + 1), localId}});
+    }
     return import;
 }
 
-} // namespace slsf::io
+}

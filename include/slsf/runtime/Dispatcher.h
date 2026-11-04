@@ -35,6 +35,7 @@ struct RuntimeBindings {
     const Configuration* configuration{};
     const RegionSnapshot* regions{};
     IRandom* rng{};
+    std::shared_ptr<const ConfigurationData> settings;
 };
 
 class Dispatcher {
@@ -125,6 +126,8 @@ public:
     Dispatcher& operator=(const Dispatcher&) = delete;
 
     bool Attach(Epoch epoch, const RuntimeBindings& bindings, State state);
+    Result<void> Reconfigure(const RuntimeBindings& bindings,
+                             const ConfigurationSnapshot& configuration);
     void Detach();
     bool Attached() const;
     Epoch CurrentEpoch() const;
@@ -134,6 +137,8 @@ public:
     bool Suspended() const;
 
     CommandResult Execute(const ExplicitCommand& command);
+    CommandResult EditState(const std::function<Result<void>(State&)>& edit);
+    CommandResult DecayBatch(int multiplier);
 
     struct GainOutcome {
         Status status{Status::NotReady};
@@ -162,6 +167,7 @@ public:
         return published_.load(std::memory_order_acquire);
     }
     Result<PersistentState> Capture() const;
+    std::shared_ptr<const ConfigurationData> Settings() const;
     Result<PublicView> Query(const QueryRequest& request) const;
 
     void ScheduleChange(ScheduledChange change);

@@ -1,12 +1,12 @@
-Scriptname SLSF_Reloaded_CommentManager extends Quest
+ScriptName SLSF_Reloaded_CommentManager Extends Quest
 
-Quest Property VisibilityManager Auto
-Form Property WICommentChanceNaked Auto
+slsf_reloaded_mcm Property Config Auto
+slsf_reloaded_modintegration Property Mods Auto
+Actor Property PlayerRef Auto
 GlobalVariable Property SLSF_AllowComment Auto
-ObjectReference Property PlayerRef Auto
-Quest Property config Auto
 GlobalVariable Property SLSF_Reloaded_CommentFrequency Auto
-Quest Property mods Auto
+slsf_reloaded_visibilitymanager Property VisibilityManager Auto
+GlobalVariable Property WICommentChanceNaked Auto
 
 Function NakedCommentPublicWhoreCheck()
 EndFunction

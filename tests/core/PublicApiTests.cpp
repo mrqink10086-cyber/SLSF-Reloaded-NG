@@ -86,6 +86,43 @@ struct ApiFixture {
     }
 };
 
+TEST_CASE("legacy import commits fame and save-owned metadata together", "[public-api][game-ready]") {
+    ApiFixture fx;
+    REQUIRE(fx.api.SetFameValue("Whiterun", "Whore", 20).status == slsf::Status::Ready);
+    const auto revision = fx.api.LastPublishedRevision();
+    slsf::io::LegacyImport invalid;
+    invalid.fame = {{"Whiterun", FameCategory::Whore, 12}, {"Unknown", FameCategory::Whore, 7}};
+    CHECK(fx.api.ImportLegacy(invalid).status == slsf::Status::Invalid);
+    CHECK(fx.api.GetFameValue("Whiterun", "Whore") == 20);
+    CHECK(fx.api.LastPublishedRevision() == revision);
+
+    slsf::io::LegacyImport input;
+    input.customRegions = {{"Favorite House", Key(1)}};
+    input.fame = {{"Favorite House", FameCategory::Whore, 37}};
+    input.spread = {{"Favorite House", 73}};
+    input.mods = {"example.esp"};
+    input.modFlags = {{"example.esp", {{"Whore", true}, {"Sex Worker", true}}}};
+    REQUIRE(fx.api.ImportLegacy(input).status == slsf::Status::Ready);
+    CHECK(fx.api.GetFameValue("Favorite House", "Whore") == 37);
+    CHECK(fx.api.GetModFlag("example.esp", "Whore"));
+    CHECK(fx.api.GetAggregatedFlag("Sex Worker"));
+    CHECK(fx.api.SpreadChance("Favorite House") == 73);
+    REQUIRE(fx.dispatcher.Capture());
+    CHECK(fx.dispatcher.Capture()->namedProviders.size() == 1);
+    CHECK(fx.dispatcher.Capture()->customRegions.size() == 1);
+    const auto exported = fx.api.ExportLegacy();
+    const auto extracted = slsf::io::ExtractLegacyImport(slsf::io::LegacyDocument::ToJsonPtr(exported), slsf::api::PublicApi::FlagNames());
+    REQUIRE(extracted);
+    ApiFixture restored;
+    REQUIRE(restored.api.ImportLegacy(*extracted).status == slsf::Status::Ready);
+    CHECK(restored.api.GetFameValue("Favorite House", "Whore") == 37);
+    CHECK(restored.api.SpreadChance("Favorite House") == 73);
+    CHECK(restored.api.GetModFlag("example.esp", "Whore"));
+    CHECK(restored.api.GetAggregatedFlag("Sex Worker"));
+    CHECK(restored.api.UnregisterMod("example.esp"));
+    CHECK_FALSE(restored.api.GetAggregatedFlag("Whore"));
+}
+
 struct RecordingSink : slsf::compat::LegacyOutputSink {
     std::vector<std::pair<slsf::StableFormKey, int>> globals;
     std::vector<std::tuple<std::string, std::size_t, int>> storage;
@@ -226,6 +263,27 @@ TEST_CASE("PublicApi legacy outputs read the committed revision",
     }
     REQUIRE(bridged == 20);
 }
+TEST_CASE("EnableFameType is durable and separate from scoring flags", "[game-ready][api][events]") {
+    ApiFixture fx;
+    slsf::compat::ModEventBridge bridge;
+    fx.api.AttachToBridge(bridge);
+    REQUIRE(fx.api.RegisterMod("Provider"));
+    const auto text = [](const char* value) { slsf::compat::ModEventValue out; out.type = slsf::compat::ModEventType::String; out.stringValue = value; return out; };
+    slsf::compat::ModEventValue enabled; enabled.type = slsf::compat::ModEventType::Bool; enabled.boolValue = true;
+    REQUIRE(bridge.Dispatch("SLSF_Reloaded_EnableFameType", {text("Cum Dump"), text("Provider"), enabled}));
+    REQUIRE(fx.api.GetAggregatedFlag("EnableCumDump"));
+    REQUIRE_FALSE(fx.api.GetAggregatedFlag("Cum Dump"));
+    fx.api.SetExternalFlag("Provider", "EnableAirhead", true);
+    REQUIRE(fx.api.GetModFlag("Provider", "EnableAirhead"));
+    const auto saved = fx.dispatcher.Capture();
+    REQUIRE(saved);
+    const auto encoded = slsf::EncodeState(*saved);
+    REQUIRE(encoded);
+    const auto decoded = slsf::DecodeState(*encoded);
+    REQUIRE(decoded);
+    REQUIRE(decoded->namedProviders == saved->namedProviders);
+}
+
 TEST_CASE("PublicApi routes the 7 request events to reply ModEvents",
          "[slsf][api][public-api][events]") {
     ApiFixture fx;
@@ -291,9 +349,28 @@ TEST_CASE("PublicApi routes the 7 request events to reply ModEvents",
     REQUIRE(bridge
                 .Dispatch("SLSF_Reloaded_RequestCumVisibility", {str("Any")})
                 .has_value());
+    REQUIRE(replies.empty());
+    api.SetGameplayCall([](const std::string& name, const auto& arguments, auto& result) {
+        if (name == "CumVisibility") {
+            REQUIRE(arguments.size() == 1);
+            REQUIRE(arguments[0].stringValue == "Any");
+            result.type = slsf::compat::ModEventType::Bool;
+            result.boolValue = true;
+            return true;
+        }
+        if (name == "RecognitionTime") {
+            REQUIRE(arguments.size() == 1);
+            REQUIRE(arguments[0].stringValue == "Whiterun");
+            result.type = slsf::compat::ModEventType::Float;
+            result.floatValue = 2.5;
+            return true;
+        }
+        return false;
+    });
+    REQUIRE(bridge.Dispatch("SLSF_Reloaded_RequestCumVisibility", {str("Any")}).has_value());
     REQUIRE(replies.size() == 1);
     REQUIRE(replies[0].first == "SLSF_Reloaded_ReturnRequestedCum");
-    REQUIRE(replies[0].second[0].boolValue == false);
+    REQUIRE(replies[0].second[0].boolValue == true);
 
     replies.clear();
     REQUIRE(bridge
@@ -306,7 +383,7 @@ TEST_CASE("PublicApi routes the 7 request events to reply ModEvents",
                 .has_value());
     REQUIRE(replies.size() == 1);
     REQUIRE(replies[0].first == "SLSF_Reloaded_ReturnRecognitionTime");
-    REQUIRE(replies[0].second[0].floatValue == 0.0);
+    REQUIRE(replies[0].second[0].floatValue == 2.5);
 
     replies.clear();
     REQUIRE(bridge

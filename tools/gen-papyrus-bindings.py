@@ -1,34 +1,4 @@
 #!/usr/bin/env python3
-"""Generate the frozen Papyrus binding table, thin PSC facades and VM tables.
-
-Reads the frozen legacy contracts (contracts/legacy-api.json,
-contracts/legacy-records.json, contracts/legacy-events.json, group 01)
-and emits:
-
-  1. src/compat/papyrus_function_table.inc
-       A C++ aggregate table with all 124 legacy function declarations
-       (86 public + 38 internal), their parameters, instance bindings and
-       invalid-input results.  Included by src/compat/PapyrusBindings.cpp.
-
-  2. src/compat/papyrus/<ScriptName>.psc
-       Compilable thin Pycron facades for the 16 bound scripts: the frozen
-       public surface is declared `native` and is backed by VmNatives, the
-       internal declarations get contract-informed default bodies, and
-       SLSF_Reloaded_ModEventListener owns the 52 RegisterForModEvent calls
-       plus forwarding event handlers.  VMAD-b-properties from legacy-records
-       are re-declared so the frozen ESP attaches cleanly.
-
-  3. src/compat/papyrus/SLSFR_EventSink.psc
-       The native-passer bridge script: 52 global-native declarations with
-       the frozen handler names, backed by VmNatives.
-
-  4. src/compat/papyrus_vm_table.inc
-       C++ parameter/return descriptors per function, consumed by
-       VmNatives.cpp to build generic NativeFunctionBase bindings.
-
-The contracts are the single source of truth; re-run this script only when
-they change (they are validated by tools/verify-contracts.ps1).
-"""
 
 import json
 import os
@@ -67,7 +37,6 @@ BINDINGS = {
     "reference-alias": "BindingKind::ReferenceAlias",
 }
 
-# Papyrus C++ signature element per LegacyValueType for the VM table.
 VM_CPP_TYPES = {
     "None": "void",
     "Bool": "bool",
@@ -113,7 +82,6 @@ def psc_literal(psc_type, raw):
     text = str(raw).strip()
     if psc_type == "String":
         scaled = cpp_string(text)
-        # Contract literals keep their surrounding quotes only in some rows.
         if scaled[1:-1] == text and (text.startswith('"') is False):
             return '"%s"' % text.replace('"', '\\"')
         return scaled
@@ -237,7 +205,6 @@ def main():
         print("function count mismatch", file=sys.stderr)
         return 1
 
-    # ---- 1. C++ table -----------------------------------------------------
     lines = []
     lines.append("// GENERATED FILE - do not edit.")
     lines.append("// Source: contracts/legacy-api.json (frozen, group 01).")
@@ -269,7 +236,7 @@ def main():
                 d_float = 0.0
             d_str = str(raw) if has_default else ""
             params.append(
-                "{%s, LegacyValueType::%s, %s, %s, %d, %s, %s}" % (
+                "{%s, LegacyValueType::%s, %s, %s, %d, %s, %s, %s}" % (
                     cpp_string(p["name"]),
                     map_type(p["type"]),
                     "true" if has_default else "false",
@@ -277,6 +244,7 @@ def main():
                     d_int,
                     repr(d_float) if d_float != int(d_float) else f"{int(d_float)}.0",
                     cpp_string(d_str),
+                    cpp_string(p["type"]),
                 )
             )
         param_init = "{%s}" % ", ".join(params) if params else "{}"
@@ -309,7 +277,6 @@ def main():
         f.write("\n".join(lines))
     print("wrote %s (%d functions)" % (INC_OUT, len(functions)))
 
-    # ---- 2. VM signature table --------------------------------------------
     def cpp_type(psc_type):
         return VM_CPP_TYPES.get(psc_type, "RE::TESForm*")
 
@@ -339,7 +306,6 @@ def main():
         f.write("\n".join(vm_lines))
     print("wrote %s (%d signatures)" % (VM_INC_OUT, len(functions)))
 
-    # ---- 3. Compilable thin PSC facades ------------------------------------
     os.makedirs(PSC_DIR, exist_ok=True)
     by_script = {}
     for fn in functions:
@@ -369,7 +335,6 @@ def main():
                 out.append("")
                 continue
             if script == "SLSF_Reloaded_ModEventListener" and fn["name"] == "RegisterExternalEvents":
-                # Emitted once by ModEventListenerExtras below (OnInit body).
                 continue
             if fn["isPublic"]:
                 mods.append("Native")
@@ -395,7 +360,6 @@ def main():
             f.write("\n".join(out))
     print("wrote %d thin PSC files to %s" % (len(by_script), PSC_DIR))
 
-    # ---- 4. SLSFR_EventSink bridge -----------------------------------------
     sink = []
     sink.append("Scriptname %s extends %s Hidden" % (EVENT_HANDLER_BRIDGE, BRIDGE_SCRIPT_BASE))
     sink.append("")
@@ -408,16 +372,6 @@ def main():
         f.write("\n".join(sink))
     print("wrote %s (%d handlers)" % (path, len(events["inputEvents"])))
 
-    # ---- 5. Compile stubs ---------------------------------------------------
-    stub_dir = os.path.join(REPO, "build", "papyrus", "stubs")
-    os.makedirs(stub_dir, exist_ok=True)
-    for script_type in ("sr_InflateQuest", "PW_MainLoopScript", "SLSF_Configuration",
-                        "sslThreadController"):
-        path = os.path.join(stub_dir, script_type + ".psc")
-        base = "Form" if script_type != "sslThreadController" else "Quest"
-        with open(path, "w", encoding="utf-8", newline="\n") as f:
-            f.write("Scriptname %s extends %s\n" % (script_type, base))
-    print("wrote compile stubs to %s" % stub_dir)
     return 0
 
 
@@ -432,6 +386,8 @@ PAPYRUS_BODY_GLOBALS = {
 
 
 def vmad_properties_for(records, script):
+    with open(os.path.join(REPO, "contracts", "legacy-property-types.json"), encoding="utf-8") as f:
+        declared = json.load(f).get(script, {})
     matched = None
     for _, record in records.items():
         if record["signature"] != "QUST":
@@ -480,7 +436,7 @@ def vmad_properties_for(records, script):
             found = property_type_for(records, value)
             if found:
                 ptype = found
-        out.append((ptype, name))
+        out.append((declared.get(name, ptype), name))
     return out
 
 

@@ -22,7 +22,7 @@ JsonPtr ParseOr(std::string_view text, std::string* error) {
     return JsonValue::Parse(text, 1u << 20, error);
 }
 
-} // namespace
+}
 
 TEST_CASE("json parser accepts every legal shape used by the config and legacy files",
           "[json]") {
@@ -49,6 +49,37 @@ TEST_CASE("json parser accepts every legal shape used by the config and legacy f
         INFO(error);
         REQUIRE(parsed != nullptr);
     }
+}
+
+TEST_CASE("json integer reads saturate before converting out of range values",
+          "[json][game-ready]") {
+    std::string error;
+    const auto positive = ParseOr("1e20", &error);
+    const auto negative = ParseOr("-1e20", &error);
+    REQUIRE(positive != nullptr);
+    REQUIRE(negative != nullptr);
+    CHECK(positive->IntAt(0) == std::numeric_limits<std::int64_t>::max());
+    CHECK(negative->IntAt(0) == std::numeric_limits<std::int64_t>::min());
+    CHECK(ParseOr("9223372036854775808", &error)->IntAt(0) ==
+          std::numeric_limits<std::int64_t>::max());
+    CHECK(ParseOr("-9223372036854775808", &error)->IntAt(0) ==
+          std::numeric_limits<std::int64_t>::min());
+    CHECK(ParseOr("42.75", &error)->IntAt(0) == 42);
+    CHECK(ParseOr("-42.75", &error)->IntAt(0) == -42);
+}
+
+TEST_CASE("legacy import rejects incomplete custom locations after document edits", "[game-ready][json]") {
+    const auto root = slsf::io::JsonValue::Parse(R"({"int":{"locationtotal":1}})", 1024);
+    REQUIRE(root);
+    auto document = slsf::io::LegacyDocument::FromValue(root);
+    REQUIRE(document);
+    document->SetInt("fuzz.whore", 7);
+    document->SetString("modindex[0]", "Example Mod.esp");
+    const auto edited = slsf::io::JsonValue::Parse(document->Write(), 4096);
+    REQUIRE(edited);
+    const auto imported = slsf::io::ExtractLegacyImport(edited, {"Whore"});
+    REQUIRE_FALSE(imported);
+    REQUIRE(imported.error().message == "incomplete imported custom location");
 }
 
 TEST_CASE("json parser rejects malformed documents and reports the failing byte",

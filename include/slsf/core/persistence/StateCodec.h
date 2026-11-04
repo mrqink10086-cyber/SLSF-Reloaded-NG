@@ -17,4 +17,6 @@ inline constexpr std::size_t kStateCodecMaxGraphEdits = 1u << 20;
 inline constexpr std::size_t kStateCodecMaxSettings = 1u << 16;
 inline constexpr std::size_t kStateCodecMaxStringBytes = 65535;
 
+Result<void> ValidateSaveMetadata(const PersistentState& state);
+
 }

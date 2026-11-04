@@ -32,6 +32,10 @@ struct ModEventValue {
     std::string stringValue;
     StableFormKey formValue;
     bool hasForm = false;
+    std::vector<std::string> stringArray;
+    std::vector<StableFormKey> formArray;
+    std::uint64_t scriptHandle{};
+    std::string scriptName;
 };
 
 struct ModEvent {

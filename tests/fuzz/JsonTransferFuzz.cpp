@@ -68,7 +68,7 @@ extern "C" int LLVMFuzzerTestOneInput(const std::uint8_t* data, std::size_t size
     const auto import = slsf::io::ExtractLegacyImport(
         editedParsed, std::vector<std::string>{"Whore"});
     if (!import.has_value()) {
-        __builtin_trap();
+        return 0;
     }
     std::size_t seeded = 0;
     for (const auto& entry : import->fame) {

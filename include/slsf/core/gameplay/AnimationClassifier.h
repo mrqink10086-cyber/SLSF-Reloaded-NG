@@ -127,6 +127,7 @@ struct AnimationResult {
 class AnimationClassifier {
 public:
     AnimationResult Classify(const AnimationFacts& facts, IRandom& rng) const;
+    AnimationResult ClassifySubAnalyze(const AnimationFacts& facts, bool foreplay, bool friendOfPlayer, bool loverOfPlayer) const;
 };
 
 }

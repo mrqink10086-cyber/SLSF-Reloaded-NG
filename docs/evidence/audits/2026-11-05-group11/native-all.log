@@ -1,0 +1,395 @@
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.515s[0m
+RUN SLSFCoreTests cases=414 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9545 assertions in 52 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5697 assertions in 52 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7808 assertions in 52 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60443 assertions in 52 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44746 assertions in 52 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3369 assertions in 52 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (17595 assertions in 51 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (848 assertions in 51 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.617s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.069s
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\AppearanceStateTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\CapabilityRegistryTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\CategoryMaskTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ConfigurationStoreTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\DiffusionKernelTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\DispatcherTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ConfigurationTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\EngineFactsTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ExternalStateTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ClockServiceTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\GameplayRulesTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ContractsTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\GainRulesTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\DiffusionGraphTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LegacyOutputsTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LifecycleTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\headers\SnapshotsHeader.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\headers\CommandsHeader.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\headers\PersistentStateHeader.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\JsonTransferTests.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\headers\TypesHeader.cpp[0m
+[0m[32;1m[  4%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\headers\ContractsHeader.cpp[0m
+[0m[32;1m[  5%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LocationIndexTests.cpp[0m
+[0m[32;1m[  6%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\LocationRandomTests.cpp[0m
+[0m[32;1m[  7%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\MenuRequestTests.cpp[0m
+[0m[32;1m[  8%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ModEventBridgeTests.cpp[0m
+[0m[32;1m[  9%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\NumericRowTests.cpp[0m
+[0m[32;1m[  9%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusBindingsTests.cpp[0m
+[0m[32;1m[ 10%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PapyrusCallsTests.cpp[0m
+[0m[32;1m[ 11%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ProviderRegistryTests.cpp[0m
+[0m[32;1m[ 12%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\PublicApiTests.cpp[0m
+[0m[32;1m[ 13%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\RandomTests.cpp[0m
+[0m[32;1m[ 14%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\RecordLookupTests.cpp[0m
+[0m[32;1m[ 15%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\RegionRegistryTests.cpp[0m
+[0m[32;1m[ 16%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\ReputationStateTests.cpp[0m
+[0m[33;1mIn file included from tests\core\AppearanceStateTests.cpp:1:
+include\slsf/integrations/RaceMenu.h(77,7): warning: attribute 'nodiscard' cannot be applied to functions without return value [-Wignored-attributes]
+   77 |     [[nodiscard]] void Capabilities(std::vector<RaceMenuCapabilityRecord>& out) const;
+      |       ^
+tests\core\AppearanceStateTests.cpp(109,40): warning: missing field 'arrayItems' initializer [-Wmissing-field-initializers]
+  109 |         objects[id] = FakeJcObject{kind};
+      |                                        ^
+2 warnings generated.[0m
+[0m[32;1m[ 17%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\SchedulerTests.cpp[0m
+[0m[32;1m[ 18%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\SerializationTests.cpp[0m
+[0m[32;1m[ 19%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\SettlementTests.cpp[0m
+[0m[32;1m[ 19%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\SharedTypesTests.cpp[0m
+[0m[32;1m[ 20%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\core\StateCodecTests.cpp[0m
+[0m[33;1mtests\core\DispatcherTests.cpp(144,61): warning: missing field 'name' initializer [-Wmissing-field-initializers]
+  144 |         QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0});
+      |                                                             ^
+tests\core\DispatcherTests.cpp(190,61): warning: missing field 'name' initializer [-Wmissing-field-initializers]
+  190 |         QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0});
+      |                                                             ^
+tests\core\DispatcherTests.cpp(675,78): warning: missing field 'name' initializer [-Wmissing-field-initializers]
+  675 |         dispatcher.Query(QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0});[0m
+[0m[32;1m[ 21%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\reference\DiffusionReference.cpp[0m
+[0m[32;1m[ 22%]:[0m [36;1m<SLSFCoreTestsAsan>[0m cache compiling.releasedbg tests\reference\LocationReference.cpp[0m
+[0m[32;1m[ 24%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\BuildInfo.cpp[0m
+[0m[33;1mtests\core\LifecycleTests.cpp(101,9): warning: missing field 'parentFormId' initializer [-Wmissing-designated-field-initializers]
+  101 |         });
+      |         ^
+tests\core\LifecycleTests.cpp(182,69): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers]
+  182 |     REQUIRE(lifecycle.PrepareNewGame(SessionContext{.randomSeed = 42}));
+      |                                                                     ^
+tests\core\LifecycleTests.cpp(182,69): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers]
+tests\core\LifecycleTests.cpp(206,68): warning: missing field 'scene' initializer [-Wmissing-designated-field-initializers][0m
+[0m[32;1m[ 25%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\gameplay\Anonymity.cpp[0m
+[0m[32;1m[ 25%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\gameplay\AnimationClassifier.cpp[0m
+[0m[32;1m[ 26%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\gameplay\Comments.cpp[0m
+[0m[32;1m[ 27%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\gameplay\Visibility.cpp[0m
+[0m[33;1mtests\core\ModEventBridgeTests.cpp(34,15): warning: unused function 'F' [-Wunused-function]
+   34 | ModEventValue F(double value) {
+      |               ^
+1 warning generated.[0m
+[0m[32;1m[ 28%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\gameplay\Witness.cpp[0m
+[0m[33;1mtests\core\PapyrusBindingsTests.cpp(36,14): warning: unused function 'F' [-Wunused-function]
+   36 | PapyrusValue F(double value) {
+      |              ^
+tests\core\PapyrusBindingsTests.cpp(42,14): warning: unused function 'Form' [-Wunused-function]
+   42 | PapyrusValue Form(std::uint32_t localFormId) {
+      |              ^~~~
+2 warnings generated.[0m
+[0m[32;1m[ 28%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\location\LocationIndex.cpp[0m
+[0m[32;1m[ 29%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\location\RegionRegistry.cpp[0m
+[0m[32;1m[ 31%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\persistence\StateCodec.cpp[0m
+[0m[32;1m[ 32%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\DiffusionGraph.cpp[0m
+[0m[32;1m[ 33%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\DiffusionKernel.cpp[0m
+[0m[32;1m[ 33%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\numeric\NumericRowOps.cpp[0m
+[0m[32;1m[ 34%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\DiffusionKernelAvx2.cpp[0m
+[0m[32;1m[ 35%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\GainRules.cpp[0m
+[0m[32;1m[ 36%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\ProviderRegistry.cpp[0m
+[0m[32;1m[ 37%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\ReputationState.cpp[0m
+[0m[32;1m[ 38%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\reputation\Settlement.cpp[0m
+[0m[33;1mtests\core\PublicApiTests.cpp(26,15): warning: unused variable 'gNextRegion' [-Wunused-variable]
+   26 | std::uint32_t gNextRegion = 1;
+      |               ^~~~~~~~~~~
+1 warning generated.[0m
+[0m[32;1m[ 38%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\core\time\Scheduler.cpp[0m
+[0m[33;1mtests\core\SerializationTests.cpp(53,15): warning: unused function 'GetU16' [-Wunused-function]
+   53 | std::uint32_t GetU16(const std::vector<std::byte>& bytes, std::size_t offset) {
+      |               ^~~~~~
+1 warning generated.[0m
+[0m[32;1m[ 39%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\ClockService.cpp[0m
+[0m[32;1m[ 40%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\Dispatcher.cpp[0m
+[0m[32;1m[ 41%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\runtime\Lifecycle.cpp[0m
+[0m[32;1m[ 42%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\persistence\Serialization.cpp[0m
+[0m[32;1m[ 43%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\persistence\StableKeys.cpp[0m
+[0m[32;1m[ 44%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\CapabilityRegistry.cpp[0m
+[0m[32;1m[ 45%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\DeviousDevices.cpp[0m
+[0m[32;1m[ 46%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\ExternalMods.cpp[0m
+[0m[32;1m[ 47%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\ExternalState.cpp[0m
+[0m[32;1m[ 47%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\PapyrusCalls.cpp[0m
+[0m[32;1m[ 48%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\ProviderCollectors.cpp[0m
+[0m[32;1m[ 49%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\RaceMenu.cpp[0m
+[0m[32;1m[ 50%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\SexLabPPlus.cpp[0m
+[0m[32;1m[ 51%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\integrations\SlaveTats.cpp[0m
+[0m[32;1m[ 52%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\api\PublicApi.cpp[0m
+[0m[33;1msrc\core\reputation\DiffusionGraph.cpp(15,6): warning: unused function 'IsFiniteRetention' [-Wunused-function]
+   15 | bool IsFiniteRetention(double value) noexcept {
+      |      ^~~~~~~~~~~~~~~~~
+1 warning generated.[0m
+[0m[32;1m[ 53%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\LegacyOutputs.cpp[0m
+[0m[32;1m[ 54%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\ModEventBridge.cpp[0m
+[0m[32;1m[ 55%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\compat\PapyrusBindings.cpp[0m
+[0m[32;1m[ 56%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\io\JsonTransfer.cpp[0m
+[0m[32;1m[ 56%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\config\Configuration.cpp[0m
+[0m[32;1m[ 57%]:[0m [36;1m<SLSFCoreAsan>[0m cache compiling.releasedbg src\ui\Menu.cpp[0m
+[0m[32;1m[ 58%]:[0m [36;1m<SLSFEngineAsan>[0m cache compiling.releasedbg src\engine\ActorQueries.cpp[0m
+[0m[32;1m[ 59%]:[0m [36;1m<SLSFEngineAsan>[0m cache compiling.releasedbg src\engine\EventBridge.cpp[0m
+[0m[32;1m[ 60%]:[0m [36;1m<SLSFEngineAsan>[0m cache compiling.releasedbg src\engine\GameData.cpp[0m
+[0m[32;1m[ 61%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\headers\EnginePortHeader.cpp[0m
+[0m[32;1m[ 62%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\headers\ProviderPortHeader.cpp[0m
+[0m[32;1m[ 63%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\headers\VmPortHeader.cpp[0m
+[0m[32;1m[ 64%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\headers\WakeSourceHeader.cpp[0m
+[0m[32;1m[ 65%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m cache compiling.releasedbg tests\boundary\PortTests.cpp[0m
+[0m[32;1m[ 66%]:[0m [36;1m<SLSFAsanProbe>[0m cache compiling.releasedbg tests\asan\AsanProbe.cpp[0m
+[0m[32;1m[ 70%]:[0m [36;1m<SLSFAsanProbe>[0m [36;1mlinking.releasedbg SLSFAsanProbe.exe[0m
+[0m[33;1mIn file included from src\integrations\RaceMenu.cpp:1:
+include\slsf/integrations/RaceMenu.h(77,7): warning: attribute 'nodiscard' cannot be applied to functions without return value [-Wignored-attributes]
+   77 |     [[nodiscard]] void Capabilities(std::vector<RaceMenuCapabilityRecord>& out) const;
+      |       ^
+1 warning generated.[0m
+[0m[33;1msrc\integrations\SlaveTats.cpp(34,30): warning: unused variable 'kGetAppliedTattooInSlotIndex' [-Wunused-const-variable]
+   34 | inline constexpr std::size_t kGetAppliedTattooInSlotIndex = 13;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.[0m
+[0m[33;1msrc\compat\ModEventBridge.cpp(220,13): warning: unused function 'ModEventTypeToString' [-Wunused-function]
+  220 | const char* ModEventTypeToString(ModEventType type) noexcept {
+      |             ^~~~~~~~~~~~~~~~~~~~
+1 warning generated.[0m
+[0m[33;1msrc\ui\Menu.cpp(41,12): warning: cast from 'FARPROC' (aka 'long long (*)()') to 'void (*)(const char *, ...)' converts to incompatible function type [-Wcast-function-type-mismatch]
+   41 |     return reinterpret_cast<T>(GetProcAddress(module, name));
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src\ui\Menu.cpp(94,20): note: in instantiation of function template specialization 'slsf::ui::(anonymous namespace)::FrameworkFunction<void (*)(const char *, ...)>' requested here
+   94 |         api.text = FrameworkFunction<ImGuiApi::TextFn>("igText");
+      |                    ^
+src\ui\Menu.cpp(41,12): warning: cast from 'FARPROC' (aka 'long long (*)()') to 'void (*)(const char *, const char *)' converts to incompatible function type [-Wcast-function-type-mismatch]
+   41 |     return reinterpret_cast<T>(GetProcAddress(module, name));[0m
+[0m[32;1m[ 85%]:[0m [36;1m<SLSFBoundaryTestsAsan>[0m [36;1mlinking.releasedbg SLSFBoundaryTestsAsan.exe[0m
+[0m[32;1m[ 87%]:[0m [36;1m<SLSFCoreAsan>[0m [36;1marchiving.releasedbg SLSFCoreAsan.lib[0m
+[0m[32;1m[ 90%]:[0m [36;1m<SLSFEngineAsan>[0m [36;1marchiving.releasedbg SLSFEngineAsan.lib[0m
+[0m[32;1m[ 92%]:[0m [36;1m<SLSFCoreTestsAsan>[0m [36;1mlinking.releasedbg SLSFCoreTestsAsan.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 14.015s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+error: execv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason
+
+=================================================================
+==10220==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x11b0960a0030 at pc 0x7ff775dd1189 bp 0x005fc91cfc00 sp 0x005fc91cfc48
+WRITE of size 4 at 0x11b0960a0030 thread T0
+    #0 0x7ff775dd1188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff775dd1d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff775dd1d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.109s[0m
+RUN SLSFCoreTestsAsan cases=414 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9545 assertions in 52 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5697 assertions in 52 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7808 assertions in 52 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60443 assertions in 52 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44746 assertions in 52 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3369 assertions in 52 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (17595 assertions in 51 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (848 assertions in 51 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=5.361s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.075s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.125s[0m
+RUN StateCodecFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (1755 inline 8-bit counters): 1755 [00007FF7C8EF6108, 00007FF7C8EF67E3), 
+INFO: Loaded 1 PC tables (1755 PCs): 1755 [00007FF7C8EB39D0,00007FF7C8EBA780), 
+INFO:      856 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\StateCodecFuzz-corpus
+INFO: seed corpus: files: 856 min: 1b max: 1673b total: 386260b rss: 38Mb
+#857	INITED cov: 878 ft: 2433 corp: 267/116Kb exec/s: 0 rss: 49Mb
+#3867	REDUCE cov: 878 ft: 2433 corp: 267/116Kb lim: 1599 exec/s: 0 rss: 57Mb L: 972/1569 MS: 5 CopyPart-CrossOver-ChangeASCIIInt-ChangeASCIIInt-EraseBytes-
+#8974	NEW    cov: 878 ft: 2435 corp: 268/117Kb lim: 1649 exec/s: 0 rss: 67Mb L: 383/1569 MS: 2 ChangeASCIIInt-CMP- DE: "\377\377\377\377\377\377\377\003"-
+#11875	REDUCE cov: 878 ft: 2435 corp: 268/117Kb lim: 1669 exec/s: 0 rss: 72Mb L: 509/1569 MS: 1 EraseBytes-
+#14749	REDUCE cov: 878 ft: 2435 corp: 268/117Kb lim: 1689 exec/s: 0 rss: 77Mb L: 154/1569 MS: 4 ChangeBit-ChangeBinInt-InsertByte-EraseBytes-
+#35246	REDUCE cov: 878 ft: 2435 corp: 268/117Kb lim: 1889 exec/s: 0 rss: 112Mb L: 478/1569 MS: 2 ChangeBit-EraseBytes-
+#38058	REDUCE cov: 878 ft: 2435 corp: 268/117Kb lim: 1909 exec/s: 0 rss: 117Mb L: 1016/1569 MS: 2 EraseBytes-InsertRepeatedBytes-
+#39511	REDUCE cov: 878 ft: 2435 corp: 268/117Kb lim: 1919 exec/s: 0 rss: 119Mb L: 316/1569 MS: 3 EraseBytes-InsertByte-InsertByte-
+#43727	NEW    cov: 878 ft: 2436 corp: 269/117Kb lim: 1959 exec/s: 0 rss: 127Mb L: 346/1569 MS: 1 ShuffleBytes-
+#56233	REDUCE cov: 878 ft: 2436 corp: 269/117Kb lim: 2082 exec/s: 0 rss: 148Mb L: 64/1569 MS: 1 EraseBytes-
+#57854	REDUCE cov: 878 ft: 2436 corp: 269/117Kb lim: 2093 exec/s: 0 rss: 151Mb L: 1199/1569 MS: 1 EraseBytes-
+#60005	REDUCE cov: 878 ft: 2436 corp: 269/117Kb lim: 2104 exec/s: 0 rss: 155Mb L: 970/1569 MS: 1 EraseBytes-
+#60931	REDUCE cov: 878 ft: 2436 corp: 269/117Kb lim: 2104 exec/s: 0 rss: 157Mb L: 312/1569 MS: 1 EraseBytes-
+#66087	NEW    cov: 878 ft: 2437 corp: 270/117Kb lim: 2148 exec/s: 66087 rss: 166Mb L: 383/1569 MS: 1 ChangeByte-
+#72143	REDUCE cov: 878 ft: 2437 corp: 270/117Kb lim: 2203 exec/s: 72143 rss: 176Mb L: 99/1569 MS: 1 EraseBytes-
+#75284	REDUCE cov: 878 ft: 2437 corp: 270/117Kb lim: 2225 exec/s: 75284 rss: 182Mb L: 963/1569 MS: 1 EraseBytes-
+#80370	NEW    cov: 878 ft: 2440 corp: 271/118Kb lim: 2269 exec/s: 80370 rss: 190Mb L: 346/1569 MS: 1 ChangeBinInt-
+#94780	NEW    cov: 878 ft: 2441 corp: 272/118Kb lim: 2412 exec/s: 94780 rss: 217Mb L: 346/1569 MS: 3 ChangeASCIIInt-ChangeByte-ChangeBit-
+#95181	REDUCE cov: 878 ft: 2441 corp: 272/118Kb lim: 2412 exec/s: 95181 rss: 218Mb L: 911/1569 MS: 1 EraseBytes-
+#100000	DONE   cov: 878 ft: 2441 corp: 272/118Kb lim: 2456 exec/s: 100000 rss: 226Mb
+###### Recommended dictionary. ######
+"\377\377\377\377\377\377\377\003" # Uses: 8183
+###### End of recommended dictionary. ######
+Done 100000 runs in 1 second(s)
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.11s[0m
+RUN SLSFCoreTests cases=11 jobs=8 seed=1170
+SHARD 1/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1400 assertions in 2 test cases)
+SHARD 2/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1805 assertions in 2 test cases)
+SHARD 3/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (407 assertions in 2 test cases)
+SHARD 4/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (842 assertions in 1 test case)
+SHARD 5/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1397 assertions in 1 test case)
+SHARD 6/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+SHARD 7/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 8/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.161s
+[0m[32;1m[ 90%]:[0m [36;1m<SLSFBench>[0m [36;1mlinking.releasedbg SLSFBench.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.328s[0m
+RUN SLSFBench -> E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=26.65ms (63.5ns/row) avx2=6.47ms (15.4ns/row, 4.12x) relax_scalar=2.96ms (7.0ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=16.40ms (64.1ns/row) avx2=4.21ms (16.5ns/row, 3.89x) relax_scalar=1.73ms (6.8ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=13.02ms (67.8ns/row) avx2=3.51ms (18.3ns/row, 3.71x) relax_scalar=1.42ms (7.4ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=2.8µs/batch total=0.006s
+BENCH settlement accounts=64 batches=800 advance+publish=8.8µs/batch total=0.007s
+BENCH report: E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+[0m[32;1m[ 90%]:[0m [36;1m<SLSFDispatcherOfflineProbe>[0m [36;1mlinking.releasedbg SLSFDispatcherOfflineProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.328s[0m
+RUN SLSFDispatcherOfflineProbe
+heartbeat=3600 frames=3600 simulated_seconds=60 max_pump_us=2.9 long_wait_seconds=1000000 completions=3 stale_callbacks=0
+OFFLINE_WAKE_PROBE=PASS
+[0m[32;1m[ 90%]:[0m [36;1m<SLSFAppearanceProbe>[0m [36;1mlinking.releasedbg SLSFAppearanceProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.281s[0m
+RUN SLSFAppearanceProbe
+probe_target_runtime=1.6.1170:providers-pending(racemenu,skee,slavetatsng,jcontainers)
+probe_racemenu_exchange=ready:overlay_version=2:counts=3,1,0,2:records=3
+probe_slavetats_batch=body:3,hands:1,face:0,feet:0;slotfacts=slot0=true,slot1=false,slot2=true
+probe_slavetats_jc_ownership=balanced:creates=4:releases=4:retains=0
+probe_racemenu_pending=dispatch:0x9E3779B9,data=InterfaceExchangeMessage{void*interfaceMap:8B},sender='SKEE',phase=kPostPostLoad
+probe_racemenu_pending=query:'Overlay'->GetVersion()==2,GetOverlayCount(type=Normal=0,location=0..3)->u32,vtable slots 1/11
+probe_slavetats_pending=listener:messageType==1,data=AddressesTable*{8B},version==1,confirmed prefix=15 pointers
+probe_slavetats_pending=query:get_applied_tattoos_by_area at slot 14(offset 120),batch(target,body,face,hands,feet)
+probe_jc_pending=bindings:JFormDB::getObj(target,'.SlaveTats.applied')->array handle;per-entry mapGetStr('name')/mapGetInt('slot');temp arrays via RAII retain/release
+probe_result=OFFLINE_PASS
+[0m[32;1m[ 90%]:[0m [36;1m<SLSFMenuFrameworkProbe>[0m [36;1mlinking.releasedbg SLSFMenuFrameworkProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.296s[0m
+RUN SLSFMenuFrameworkProbe
+module_loaded=0
+source_facts=menu framework 3.8f self-reported version, API version 1
+runtime_note=SKSEMenuFramework.dll is not loaded in this process; probe validates the plugin-side guard path only
+install_without_module=0
+MENU_FRAMEWORK_PROBE=PASS
+PASS native tests: mode=all seed=1170

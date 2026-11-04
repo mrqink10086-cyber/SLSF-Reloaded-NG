@@ -82,6 +82,7 @@ public:
     // keep the source's last valid snapshot; the lifecycle reports the
     // status but never applies partially parsed data.
     ConfigurationUpdateResult ReloadConfiguration();
+    ConfigurationUpdateResult ApplyCurrentConfiguration();
 
     bool PrepareNewGame(const SessionContext& context);
     bool PrepareLoad(const PersistentState& candidate, const SessionContext& context);

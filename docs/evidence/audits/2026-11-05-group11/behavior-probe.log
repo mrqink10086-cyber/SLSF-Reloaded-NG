@@ -1,0 +1,2 @@
+config_update_success=1 notifications=2 initial_revision=1 store_revision=2 status_revision=2 published_revision=1
+import_before=20 applied=1 rejected=1 import_after=12

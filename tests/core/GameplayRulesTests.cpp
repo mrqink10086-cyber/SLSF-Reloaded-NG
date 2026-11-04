@@ -1114,6 +1114,26 @@ TEST_CASE("candidate selection preserves order and masks every selected category
     REQUIRE(rng.ranges[0] == std::pair<std::int32_t, std::int32_t>{1, 3});
     REQUIRE(rng.ranges[1] == std::pair<std::int32_t, std::int32_t>{0, 2});
 }
+TEST_CASE("direct SubAnalyze preserves explicit flags without grace or relationship rolls", "[game-ready][animation]") {
+    auto facts = AnimationFixture();
+    facts.startGraceElapsed = B(false);
+    facts.actors.push_back(Partner(0, AnimationRace::Orc));
+    facts.actors.push_back(Partner(0, AnimationRace::Orc));
+    facts.actors[1].relationshipKnown = U();
+    facts.actors[2].relationshipKnown = U();
+    facts.sexWorker = B(true);
+    facts.settings.forbiddenByFriend.Set(FameCategory::Whore);
+    facts.settings.forbiddenByLover.Set(FameCategory::Whore);
+    facts.settings.forbiddenByLover.Set(FameCategory::Slut);
+    const auto result = AnimationClassifier{}.ClassifySubAnalyze(facts, true, true, true);
+    REQUIRE(result.kind == AnimationResultKind::Analyzed);
+    REQUIRE(result.foreplay);
+    REQUIRE(result.kissAndTellRoll == -1);
+    REQUIRE(std::find(result.categories.begin(), result.categories.end(), FameCategory::Whore) == result.categories.end());
+    REQUIRE(std::find(result.categories.begin(), result.categories.end(), FameCategory::Slut) != result.categories.end());
+    REQUIRE(std::count(result.categories.begin(), result.categories.end(), FameCategory::LikesOrc) == 2);
+}
+
 TEST_CASE("animation classification keeps the analyzer gate order and SubAnalyze order",
           "[gameplay][animation]") {
     AnimationClassifier classifier;

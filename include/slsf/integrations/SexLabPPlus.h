@@ -135,6 +135,7 @@ public:
     RequestId RequestScene(const Epoch& epoch, std::int64_t nowMs,
                            Completion completion = {});
     void SetThreadId(std::int32_t threadId);
+    [[nodiscard]] std::int32_t ThreadId() const;
     RequestId OnSceneNotification(std::string_view event, std::string_view threadId,
                                   const Epoch& epoch, std::int64_t nowMs,
                                   Completion completion = {});

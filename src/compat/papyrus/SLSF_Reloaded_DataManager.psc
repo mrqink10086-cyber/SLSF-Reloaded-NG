@@ -1,98 +1,130 @@
-Scriptname SLSF_Reloaded_DataManager extends Quest
+ScriptName SLSF_Reloaded_DataManager Extends Quest
 
-Bool[] Property WhiterunSpreadFlags Auto
-Quest Property LocationManager Auto
-Bool[] Property FalkreathSpreadFlags Auto
-Int[] Property CustomLocation6Fame Auto
-Int[] Property CustomLocation5Fame Auto
-Int[] Property NarzulburFame Auto
-Bool[] Property WinterholdSpreadFlags Auto
-Bool[] Property MarkarthSpreadFlags Auto
-Bool[] Property CustomLocation14SpreadFlags Auto
-Int[] Property IvarsteadFame Auto
-Bool[] Property CustomLocation15SpreadFlags Auto
-Bool[] Property CustomLocation3SpreadFlags Auto
-Int[] Property DawnstarFame Auto
-Int[] Property RavenRockFame Auto
-Int[] Property MorthalFame Auto
-Quest Property Logger Auto
-Int[] Property CustomLocation13Fame Auto
-Bool[] Property RiftenSpreadFlags Auto
-Int[] Property CustomLocation16Fame Auto
-Bool[] Property CustomLocation21SpreadFlags Auto
-Int[] Property CustomLocation1Fame Auto
-Bool[] Property NarzulburSpreadFlags Auto
-Bool[] Property CustomLocation1SpreadFlags Auto
-Bool[] Property CustomLocation16SpreadFlags Auto
-Int[] Property CustomLocation14Fame Auto
-Bool[] Property LargashburSpreadFlags Auto
-Int[] Property CustomLocation9Fame Auto
-Int[] Property DragonBridgeFame Auto
-Int[] Property CustomLocation19Fame Auto
+Bool[] Property AirheadFlags Auto hidden
+Bool[] Property AnalFlags Auto hidden
+Bool[] Property BestialityFlags Auto hidden
+Bool[] Property BoundFlags Auto hidden
+slsf_reloaded_mcm Property Config Auto
+Bool[] Property CuckFlags Auto hidden
+Bool[] Property CumDumpFlags Auto hidden
 Int[] Property CustomLocation10Fame Auto
-Int[] Property WhiterunFame Auto
-Bool[] Property DragonBridgeSpreadFlags Auto
-Int[] Property CustomLocation4Fame Auto
 Bool[] Property CustomLocation10SpreadFlags Auto
-Int[] Property MorKhazgurFame Auto
-Int[] Property LargashburFame Auto
-Bool[] Property CustomLocation2SpreadFlags Auto
-Bool[] Property CustomLocation20SpreadFlags Auto
-Int[] Property SolitudeFame Auto
-Quest Property FameManager Auto
-Int[] Property SkaalVillageFame Auto
-Int[] Property CustomLocation8Fame Auto
-Bool[] Property DefaultLocationHasSpreadableFame Auto
-Int[] Property ShorsStoneFame Auto
-Int[] Property CustomLocation20Fame Auto
-Bool[] Property CustomLocation9SpreadFlags Auto
-Bool[] Property WindhelmSpreadFlags Auto
-Int[] Property CustomLocation12Fame Auto
-Bool[] Property CustomLocationDynamicAnonymityFlag Auto
-Bool[] Property ExternalFlags Auto
-Bool[] Property CustomLocation8SpreadFlags Auto
-Bool[] Property CustomLocation4SpreadFlags Auto
-Int[] Property FalkreathFame Auto
-Int[] Property RiverwoodFame Auto
-Bool[] Property CustomLocation13SpreadFlags Auto
-Bool[] Property SkaalVillageSpreadFlags Auto
-Bool[] Property CustomLocation19SpreadFlags Auto
-Bool[] Property RoriksteadSpreadFlags Auto
 Int[] Property CustomLocation11Fame Auto
-Int[] Property KarthwastenFame Auto
-Bool[] Property RiverwoodSpreadFlags Auto
-Bool[] Property CustomLocation18SpreadFlags Auto
-Bool[] Property CustomLocation6SpreadFlags Auto
-Bool[] Property CustomLocation12SpreadFlags Auto
-Bool[] Property DushnikhYalSpreadFlags Auto
-Bool[] Property CustomLocation5SpreadFlags Auto
-Bool[] Property SolitudeSpreadFlags Auto
 Bool[] Property CustomLocation11SpreadFlags Auto
-Bool[] Property MorthalSpreadFlags Auto
-Int[] Property CustomLocation18Fame Auto
-Int[] Property WinterholdFame Auto
-Int[] Property CustomLocation2Fame Auto
-Bool[] Property MorKhazgurSpreadFlags Auto
-Int[] Property CustomLocation3Fame Auto
-Int[] Property RoriksteadFame Auto
-Int[] Property WindhelmFame Auto
-Bool[] Property IvarsteadSpreadFlags Auto
-Bool[] Property DawnstarSpreadFlags Auto
+Int[] Property CustomLocation12Fame Auto
+Bool[] Property CustomLocation12SpreadFlags Auto
+Int[] Property CustomLocation13Fame Auto
+Bool[] Property CustomLocation13SpreadFlags Auto
+Int[] Property CustomLocation14Fame Auto
+Bool[] Property CustomLocation14SpreadFlags Auto
 Int[] Property CustomLocation15Fame Auto
-Bool[] Property ShorsStoneSpreadFlags Auto
-Int[] Property CustomLocation7Fame Auto
-Quest Property config Auto
-Int[] Property MarkarthFame Auto
-Int[] Property CustomLocation21Fame Auto
-Bool[] Property KarthwastenSpreadFlags Auto
-Bool[] Property CustomLocation17SpreadFlags Auto
-Bool[] Property CustomLocationHasSpreadableFame Auto
-Bool[] Property RavenRockSpreadFlags Auto
-Bool[] Property DefaultLocationDynamicAnonymityFlag Auto
-Bool[] Property CustomLocation7SpreadFlags Auto
+Bool[] Property CustomLocation15SpreadFlags Auto
+Int[] Property CustomLocation16Fame Auto
+Bool[] Property CustomLocation16SpreadFlags Auto
 Int[] Property CustomLocation17Fame Auto
-Int[] Property RiftenFame Auto
+Bool[] Property CustomLocation17SpreadFlags Auto
+Int[] Property CustomLocation18Fame Auto
+Bool[] Property CustomLocation18SpreadFlags Auto
+Int[] Property CustomLocation19Fame Auto
+Bool[] Property CustomLocation19SpreadFlags Auto
+Int[] Property CustomLocation1Fame Auto
+Bool[] Property CustomLocation1SpreadFlags Auto
+Int[] Property CustomLocation20Fame Auto
+Bool[] Property CustomLocation20SpreadFlags Auto
+Int[] Property CustomLocation21Fame Auto
+Bool[] Property CustomLocation21SpreadFlags Auto
+Int[] Property CustomLocation2Fame Auto
+Bool[] Property CustomLocation2SpreadFlags Auto
+Int[] Property CustomLocation3Fame Auto
+Bool[] Property CustomLocation3SpreadFlags Auto
+Int[] Property CustomLocation4Fame Auto
+Bool[] Property CustomLocation4SpreadFlags Auto
+Int[] Property CustomLocation5Fame Auto
+Bool[] Property CustomLocation5SpreadFlags Auto
+Int[] Property CustomLocation6Fame Auto
+Bool[] Property CustomLocation6SpreadFlags Auto
+Int[] Property CustomLocation7Fame Auto
+Bool[] Property CustomLocation7SpreadFlags Auto
+Int[] Property CustomLocation8Fame Auto
+Bool[] Property CustomLocation8SpreadFlags Auto
+Int[] Property CustomLocation9Fame Auto
+Bool[] Property CustomLocation9SpreadFlags Auto
+Bool[] Property CustomLocationDynamicAnonymityFlag Auto
+Bool[] Property CustomLocationHasSpreadableFame Auto
+Int[] Property DawnstarFame Auto
+Bool[] Property DawnstarSpreadFlags Auto
+Bool[] Property DefaultLocationDynamicAnonymityFlag Auto
+Bool[] Property DefaultLocationHasSpreadableFame Auto
+Bool[] Property DisplayFameFlags Auto hidden
+Bool[] Property DominantFlags Auto hidden
+Int[] Property DragonBridgeFame Auto
+Bool[] Property DragonBridgeSpreadFlags Auto
 Int[] Property DushnikhYalFame Auto
+Bool[] Property DushnikhYalSpreadFlags Auto
+Bool[] Property EnableAirheadFlags Auto hidden
+Bool[] Property EnableCuckFlags Auto hidden
+Bool[] Property EnableCumDumpFlags Auto hidden
+Bool[] Property EnableUnfaithfulFlags Auto hidden
+Bool[] Property ExhibitionistFlags Auto hidden
+Bool[] Property ExternalFlags Auto
+String[] Property ExternalMods Auto hidden
+Int[] Property FalkreathFame Auto
+Bool[] Property FalkreathSpreadFlags Auto
+slsf_reloaded_famemanager Property FameManager Auto
+Bool[] Property GentleFlags Auto hidden
+Bool[] Property GroupFlags Auto hidden
+Int[] Property IvarsteadFame Auto
+Bool[] Property IvarsteadSpreadFlags Auto
+Int[] Property KarthwastenFame Auto
+Bool[] Property KarthwastenSpreadFlags Auto
+Int[] Property LargashburFame Auto
+Bool[] Property LargashburSpreadFlags Auto
+Bool[] Property LikesArgonianFlags Auto hidden
+Bool[] Property LikesKhajiitFlags Auto hidden
+Bool[] Property LikesMenFlags Auto hidden
+Bool[] Property LikesOrcFlags Auto hidden
+Bool[] Property LikesWomenFlags Auto hidden
+slsf_reloaded_locationmanager Property LocationManager Auto
+slsf_reloaded_logger Property Logger Auto
+Int[] Property MarkarthFame Auto
+Bool[] Property MarkarthSpreadFlags Auto
+Bool[] Property MasochistFlags Auto hidden
+Int[] Property MorKhazgurFame Auto
+Bool[] Property MorKhazgurSpreadFlags Auto
+Int[] Property MorthalFame Auto
+Bool[] Property MorthalSpreadFlags Auto
+Int[] Property NarzulburFame Auto
+Bool[] Property NarzulburSpreadFlags Auto
+Bool[] Property NastyFlags Auto hidden
+Bool[] Property OralFlags Auto hidden
+Bool[] Property PregnantFlags Auto hidden
+Int[] Property RavenRockFame Auto
+Bool[] Property RavenRockSpreadFlags Auto
+Int[] Property RiftenFame Auto
+Bool[] Property RiftenSpreadFlags Auto
+Int[] Property RiverwoodFame Auto
+Bool[] Property RiverwoodSpreadFlags Auto
+Int[] Property RoriksteadFame Auto
+Bool[] Property RoriksteadSpreadFlags Auto
+Bool[] Property SadistFlags Auto hidden
+Bool[] Property SexWorkerFlags Auto hidden
+Int[] Property ShorsStoneFame Auto
+Bool[] Property ShorsStoneSpreadFlags Auto
+Int[] Property SkaalVillageFame Auto
+Bool[] Property SkaalVillageSpreadFlags Auto
+Bool[] Property SlutFlags Auto hidden
+Int[] Property SolitudeFame Auto
+Bool[] Property SolitudeSpreadFlags Auto
+Bool[] Property SubmissiveFlags Auto hidden
+Bool[] Property TattooFlags Auto hidden
+Bool[] Property UnfaithfulFlags Auto hidden
+Int[] Property WhiterunFame Auto
+Bool[] Property WhiterunSpreadFlags Auto
+Bool[] Property WhoreFlags Auto hidden
+Int[] Property WindhelmFame Auto
+Bool[] Property WindhelmSpreadFlags Auto
+Int[] Property WinterholdFame Auto
+Bool[] Property WinterholdSpreadFlags Auto
 
 Function FameCheck()
 EndFunction

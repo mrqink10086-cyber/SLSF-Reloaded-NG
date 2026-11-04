@@ -1,52 +1,86 @@
-Scriptname SLSF_Reloaded_FameManager extends Quest
+ScriptName SLSF_Reloaded_FameManager Extends Quest
 
-GlobalVariable Property GroupGlobal Auto
-Quest Property LocationManager Auto
-GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
-GlobalVariable Property NastyGlobal Auto
-Quest Property VisibilityManager Auto
-String[] Property FameType Auto
-GlobalVariable Property WomenGlobal Auto
-GlobalVariable Property MasochistGlobal Auto
+Bool Property AirheadFameCleared Auto hidden
+GlobalVariable Property AirheadGlobal Auto
+GlobalVariable Property AnalGlobal Auto
+GlobalVariable Property ArgonianGlobal Auto
 GlobalVariable Property BeastGlobal Auto
+GlobalVariable Property BoundGlobal Auto
+GlobalVariable Property CheatGlobal Auto
+slsf_reloaded_mcm Property Config Auto
+Bool Property CuckFameCleared Auto hidden
+GlobalVariable Property CuckGlobal Auto
+Bool Property CumDumpFameCleared Auto hidden
+GlobalVariable Property CumDumpGlobal Auto
 Bool[] Property CustomLocationCanDecay Auto
+Int[] Property CustomLocationDecayPauseTimer Auto
+slsf_reloaded_datamanager Property Data Auto
+Int Property DecayCountdown Auto hidden
+Bool[] Property DefaultLocationCanDecay Auto
+Int[] Property DefaultLocationDecayPauseTimer Auto
+GlobalVariable Property DomGlobal Auto
+GlobalVariable Property ExhibGlobal Auto
+Bool Property ExternalAirheadFlag Auto hidden
+Bool Property ExternalAnalFlag Auto hidden
+Bool Property ExternalBestialityFlag Auto hidden
+Bool Property ExternalBoundFlag Auto hidden
+Bool Property ExternalCuckFlag Auto hidden
+Bool Property ExternalCumDumpFlag Auto hidden
+Bool Property ExternalDominantFlag Auto hidden
+Bool Property ExternalExhibitionistFlag Auto hidden
+Bool Property ExternalGentleFlag Auto hidden
+Bool Property ExternalGroupFlag Auto hidden
+Bool Property ExternalLikesArgonianFlag Auto hidden
+Bool Property ExternalLikesKhajiitFlag Auto hidden
+Bool Property ExternalLikesMenFlag Auto hidden
+Bool Property ExternalLikesOrcFlag Auto hidden
+Bool Property ExternalLikesWomenFlag Auto hidden
+slsf_reloaded_modeventlistener Property ExternalListener Auto
+Bool Property ExternalMasochistFlag Auto hidden
+Bool Property ExternalNastyFlag Auto hidden
+Bool Property ExternalOralFlag Auto hidden
+Bool Property ExternalPregnantFlag Auto hidden
+Bool Property ExternalSadistFlag Auto hidden
+Bool Property ExternalSlutFlag Auto hidden
+Bool Property ExternalSubmissiveFlag Auto hidden
+Bool Property ExternalTattooFlag Auto hidden
+Bool Property ExternalUnfaithfulFlag Auto hidden
+Bool Property ExternalWhoreFlag Auto hidden
+Bool Property FameGainNotifyCooldown Auto hidden
+String[] Property FameType Auto
+Int Property GainIterationMultiplier Auto hidden
+GlobalVariable Property GentleGlobal Auto
+GlobalVariable Property GroupGlobal Auto
+GlobalVariable Property IsHeavilyBound Auto
+GlobalVariable Property IsLightlyBound Auto
+GlobalVariable Property IsVisiblyBound Auto
+GlobalVariable Property KhajiitGlobal Auto
+slsf_reloaded_legacyoverwrite Property LegacyOverwrite Auto
+slsf_reloaded_locationmanager Property LocationManager Auto
+slsf_reloaded_logger Property Logger Auto
+GlobalVariable Property MasochistGlobal Auto
+GlobalVariable Property MenGlobal Auto
+slsf_reloaded_modintegration Property Mods Auto
+GlobalVariable Property NastyGlobal Auto
 GlobalVariable Property OralGlobal Auto
 GlobalVariable Property OrcGlobal Auto
-GlobalVariable Property IsVisiblyBound Auto
-Quest Property Logger Auto
-GlobalVariable Property BoundGlobal Auto
-GlobalVariable Property SlutGlobal Auto
-GlobalVariable Property IsLightlyBound Auto
-ReferenceAlias Property playerScript Auto
-GlobalVariable Property SadistGlobal Auto
-Int[] Property DefaultLocationDecayPauseTimer Auto
+Actor Property PlayerRef Auto
+slsf_reloaded_playerscript Property PlayerScript Auto
 GlobalVariable Property PregGlobal Auto
-GlobalVariable Property WhoreGlobal Auto
-Quest Property config Auto
-GlobalVariable Property AirheadGlobal Auto
-Quest Property LegacyOverwrite Auto
-GlobalVariable Property ExhibGlobal Auto
-GlobalVariable Property CumDumpGlobal Auto
-Int[] Property CustomLocationDecayPauseTimer Auto
-Quest Property mods Auto
-GlobalVariable Property AnalGlobal Auto
-Bool[] Property DefaultLocationCanDecay Auto
-Quest Property DATA Auto
-GlobalVariable Property CheatGlobal Auto
-GlobalVariable Property DomGlobal Auto
-GlobalVariable Property KhajiitGlobal Auto
-GlobalVariable Property TattooGlobal Auto
-GlobalVariable Property ArgonianGlobal Auto
-GlobalVariable Property MenGlobal Auto
-GlobalVariable Property GentleGlobal Auto
-Form Property SexLab Auto
-GlobalVariable Property CuckGlobal Auto
-Keyword Property SLSF_Reloaded_VaginalPiercing Auto
-Quest Property ExternalListener Auto
-ObjectReference Property PlayerRef Auto
-GlobalVariable Property IsHeavilyBound Auto
+Bool Property SLSFCFameTypesCleared Auto hidden
+GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
 Keyword Property SLSF_Reloaded_NipplePiercing Auto
+Keyword Property SLSF_Reloaded_VaginalPiercing Auto
+GlobalVariable Property SadistGlobal Auto
+sexlabframework Property Sexlab Auto
+GlobalVariable Property SlutGlobal Auto
+Int Property SpreadCountdown Auto hidden
 GlobalVariable Property SubGlobal Auto
+GlobalVariable Property TattooGlobal Auto
+Bool Property UnfaithfulFameCleared Auto hidden
+slsf_reloaded_visibilitymanager Property VisibilityManager Auto
+GlobalVariable Property WhoreGlobal Auto
+GlobalVariable Property WomenGlobal Auto
 
 Function Startup()
 EndFunction

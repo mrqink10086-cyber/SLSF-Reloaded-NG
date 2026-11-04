@@ -40,7 +40,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.GetFameValue", "SLSF_Reloaded_DataManager", "GetFameValue",
         "Int", LegacyValueType::Int,
-        {{"LocationName", LegacyValueType::String, false, false, 0, 0.0, ""}, {"FameCategory", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"LocationName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"FameCategory", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "0",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -48,7 +48,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.SetFameValue", "SLSF_Reloaded_DataManager", "SetFameValue",
         "None", LegacyValueType::None,
-        {{"LocationName", LegacyValueType::String, false, false, 0, 0.0, ""}, {"FameCategory", LegacyValueType::String, false, false, 0, 0.0, ""}, {"FameValue", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"LocationName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"FameCategory", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"FameValue", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -56,7 +56,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.DecayDynamicAnonymityCheck", "SLSF_Reloaded_DataManager", "DecayDynamicAnonymityCheck",
         "None", LegacyValueType::None,
-        {{"LocationIndex", LegacyValueType::Int, false, false, 0, 0.0, ""}, {"IsDefaultLocation", LegacyValueType::Bool, false, false, 0, 0.0, ""}},
+        {{"LocationIndex", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}, {"IsDefaultLocation", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -64,7 +64,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.GetExternalFlags", "SLSF_Reloaded_DataManager", "GetExternalFlags",
         "Bool", LegacyValueType::Bool,
-        {{"FlagName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FlagName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -72,7 +72,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.RegisterExternalMod", "SLSF_Reloaded_DataManager", "RegisterExternalMod",
         "None", LegacyValueType::None,
-        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op (invalid plugin, duplicate, or full list)",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -96,7 +96,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.UnregisterExternalMod", "SLSF_Reloaded_DataManager", "UnregisterExternalMod",
         "None", LegacyValueType::None,
-        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -104,7 +104,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.GetModFlagState", "SLSF_Reloaded_DataManager", "GetModFlagState",
         "Bool", LegacyValueType::Bool,
-        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, ""}, {"FlagName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"FlagName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -112,7 +112,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.DoesFlagExist", "SLSF_Reloaded_DataManager", "DoesFlagExist",
         "String", LegacyValueType::String,
-        {{"FlagName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FlagName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "\"No\"",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -120,7 +120,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.IsModRegistered", "SLSF_Reloaded_DataManager", "IsModRegistered",
         "Bool", LegacyValueType::Bool,
-        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -128,7 +128,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DataManager.SetExternalFlags", "SLSF_Reloaded_DataManager", "SetExternalFlags",
         "None", LegacyValueType::None,
-        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, ""}, {"FlagName", LegacyValueType::String, false, false, 0, 0.0, ""}, {"FlagValue", LegacyValueType::Bool, false, false, 0, 0.0, ""}},
+        {{"ModName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"FlagName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"FlagValue", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -160,7 +160,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Data_Exporter.RunExport", "SLSF_Reloaded_Data_Exporter", "RunExport",
         "None", LegacyValueType::None,
-        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -168,7 +168,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Data_Exporter.ExportData", "SLSF_Reloaded_Data_Exporter", "ExportData",
         "None", LegacyValueType::None,
-        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -176,7 +176,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Data_Importer.RunImport", "SLSF_Reloaded_Data_Importer", "RunImport",
         "None", LegacyValueType::None,
-        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -184,7 +184,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Data_Importer.ImportData", "SLSF_Reloaded_Data_Importer", "ImportData",
         "None", LegacyValueType::None,
-        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FileName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -192,7 +192,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.CompareLocations", "SLSF_Reloaded_DynamicAnonymity", "CompareLocations",
         "None", LegacyValueType::None,
-        {{"OldLocation", LegacyValueType::Form, false, false, 0, 0.0, ""}, {"NewLocation", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"OldLocation", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}, {"NewLocation", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -200,7 +200,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.SetLastExitTime", "SLSF_Reloaded_DynamicAnonymity", "SetLastExitTime",
         "None", LegacyValueType::None,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}, {"GameTime", LegacyValueType::Float, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"GameTime", LegacyValueType::Float, false, false, 0, 0.0, "", "Float"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -208,7 +208,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.SetLastEnterTime", "SLSF_Reloaded_DynamicAnonymity", "SetLastEnterTime",
         "None", LegacyValueType::None,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}, {"GameTime", LegacyValueType::Float, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"GameTime", LegacyValueType::Float, false, false, 0, 0.0, "", "Float"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -216,7 +216,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.CheckRecognitionTimeIncrease", "SLSF_Reloaded_DynamicAnonymity", "CheckRecognitionTimeIncrease",
         "None", LegacyValueType::None,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -224,7 +224,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.CheckRecognitionTimeDecay", "SLSF_Reloaded_DynamicAnonymity", "CheckRecognitionTimeDecay",
         "None", LegacyValueType::None,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -232,7 +232,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.UpdateCurrentLocationAnonymity", "SLSF_Reloaded_DynamicAnonymity", "UpdateCurrentLocationAnonymity",
         "None", LegacyValueType::None,
-        {{"LocationIndex", LegacyValueType::Int, false, false, 0, 0.0, ""}, {"GameTime", LegacyValueType::Float, false, false, 0, 0.0, ""}, {"IsDefaultLocation", LegacyValueType::Bool, false, false, 0, 0.0, ""}},
+        {{"LocationIndex", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}, {"GameTime", LegacyValueType::Float, false, false, 0, 0.0, "", "Float"}, {"IsDefaultLocation", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -240,7 +240,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.GetAnonymity", "SLSF_Reloaded_DynamicAnonymity", "GetAnonymity",
         "None", LegacyValueType::None,
-        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -248,7 +248,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.CheckAnonymityStatus", "SLSF_Reloaded_DynamicAnonymity", "CheckAnonymityStatus",
         "None", LegacyValueType::None,
-        {{"LocationIndex", LegacyValueType::Int, false, false, 0, 0.0, ""}, {"IsDefaultLocation", LegacyValueType::Bool, false, false, 0, 0.0, ""}},
+        {{"LocationIndex", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}, {"IsDefaultLocation", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -256,7 +256,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_DynamicAnonymity.ThaneStatus", "SLSF_Reloaded_DynamicAnonymity", "ThaneStatus",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -272,7 +272,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.UpdateFame", "SLSF_Reloaded_FameManager", "UpdateFame",
         "None", LegacyValueType::None,
-        {{"UpdateMultiplier", LegacyValueType::Int, true, false, 1, 1.0, "1"}},
+        {{"UpdateMultiplier", LegacyValueType::Int, true, false, 1, 1.0, "1", "Int"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -328,7 +328,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainSlutFame", "SLSF_Reloaded_FameManager", "CanGainSlutFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -336,7 +336,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainExhibitionistFame", "SLSF_Reloaded_FameManager", "CanGainExhibitionistFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -344,7 +344,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainOralFame", "SLSF_Reloaded_FameManager", "CanGainOralFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -352,7 +352,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainAnalFame", "SLSF_Reloaded_FameManager", "CanGainAnalFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -360,7 +360,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainNastyFame", "SLSF_Reloaded_FameManager", "CanGainNastyFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -368,7 +368,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainPregnantFame", "SLSF_Reloaded_FameManager", "CanGainPregnantFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -376,7 +376,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainBoundFame", "SLSF_Reloaded_FameManager", "CanGainBoundFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -384,7 +384,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CanGainTattooFame", "SLSF_Reloaded_FameManager", "CanGainTattooFame",
         "Bool", LegacyValueType::Bool,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -400,7 +400,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CheckTattooExtraFame", "SLSF_Reloaded_FameManager", "CheckTattooExtraFame",
         "Bool", LegacyValueType::Bool,
-        {{"ExtraFame", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"ExtraFame", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -408,7 +408,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.FameGainRoll", "SLSF_Reloaded_FameManager", "FameGainRoll",
         "None", LegacyValueType::None,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}, {"CalledExternally", LegacyValueType::Bool, true, false, 0, 0.0, "False"}, {"FameFromFriend", LegacyValueType::Bool, true, false, 0, 0.0, "False"}, {"FameFromLover", LegacyValueType::Bool, true, false, 0, 0.0, "False"}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"CalledExternally", LegacyValueType::Bool, true, false, 0, 0.0, "False", "Bool"}, {"FameFromFriend", LegacyValueType::Bool, true, false, 0, 0.0, "False", "Bool"}, {"FameFromLover", LegacyValueType::Bool, true, false, 0, 0.0, "False", "Bool"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -416,7 +416,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.GainFame", "SLSF_Reloaded_FameManager", "GainFame",
         "None", LegacyValueType::None,
-        {{"Category", LegacyValueType::String, false, false, 0, 0.0, ""}, {"LocationName", LegacyValueType::String, false, false, 0, 0.0, ""}, {"IsForeplay", LegacyValueType::Bool, false, false, 0, 0.0, ""}},
+        {{"Category", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"LocationName", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"IsForeplay", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -424,7 +424,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.DecayFame", "SLSF_Reloaded_FameManager", "DecayFame",
         "None", LegacyValueType::None,
-        {{"DecayMultiplier", LegacyValueType::Int, true, false, 1, 1.0, "1"}},
+        {{"DecayMultiplier", LegacyValueType::Int, true, false, 1, 1.0, "1", "Int"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -440,7 +440,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.SpreadFame", "SLSF_Reloaded_FameManager", "SpreadFame",
         "None", LegacyValueType::None,
-        {{"SpreadFromLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"SpreadFromLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -464,7 +464,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.CalculateFameSpread", "SLSF_Reloaded_FameManager", "CalculateFameSpread",
         "Int", LegacyValueType::Int,
-        {{"FromFame", LegacyValueType::Float, false, false, 0, 0.0, ""}, {"TargetFame", LegacyValueType::Float, false, false, 0, 0.0, ""}},
+        {{"FromFame", LegacyValueType::Float, false, false, 0, 0.0, "", "Float"}, {"TargetFame", LegacyValueType::Float, false, false, 0, 0.0, "", "Float"}},
         false, false, false, true, "public",
         "0",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -480,7 +480,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_FameManager.ClearFame", "SLSF_Reloaded_FameManager", "ClearFame",
         "None", LegacyValueType::None,
-        {{"LocationToClear", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"LocationToClear", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -512,7 +512,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.IsLocationValid", "SLSF_Reloaded_LocationManager", "IsLocationValid",
         "Bool", LegacyValueType::Bool,
-        {{"CheckedLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"CheckedLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -520,7 +520,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.LocationCanBeRegistered", "SLSF_Reloaded_LocationManager", "LocationCanBeRegistered",
         "Bool", LegacyValueType::Bool,
-        {{"LocationToRegister", LegacyValueType::String, false, false, 0, 0.0, ""}, {"ExternalRegister", LegacyValueType::Bool, true, false, 0, 0.0, "False"}},
+        {{"LocationToRegister", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"ExternalRegister", LegacyValueType::Bool, true, false, 0, 0.0, "False", "Bool"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -536,7 +536,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.FetchLocationName", "SLSF_Reloaded_LocationManager", "FetchLocationName",
         "String", LegacyValueType::String,
-        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "$NoneText",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -552,7 +552,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.GetLocalizedFameLocation", "SLSF_Reloaded_LocationManager", "GetLocalizedFameLocation",
         "String", LegacyValueType::String,
-        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "$NoneText",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -560,7 +560,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.GetFameLocation", "SLSF_Reloaded_LocationManager", "GetFameLocation",
         "String", LegacyValueType::String,
-        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "Null",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -568,7 +568,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.IsLocationExcluded", "SLSF_Reloaded_LocationManager", "IsLocationExcluded",
         "Bool", LegacyValueType::Bool,
-        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -584,7 +584,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.AddToLocationList", "SLSF_Reloaded_LocationManager", "AddToLocationList",
         "None", LegacyValueType::None,
-        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationRef", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -592,7 +592,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.RemoveFromLocationList", "SLSF_Reloaded_LocationManager", "RemoveFromLocationList",
         "None", LegacyValueType::None,
-        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"FameLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -600,7 +600,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.UnregisterCustomLocation", "SLSF_Reloaded_LocationManager", "UnregisterCustomLocation",
         "None", LegacyValueType::None,
-        {{"LocationIndexToUnregister", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"LocationIndexToUnregister", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -608,7 +608,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.RegisterCustomLocationExternal", "SLSF_Reloaded_LocationManager", "RegisterCustomLocationExternal",
         "None", LegacyValueType::None,
-        {{"LocationToRegister", LegacyValueType::String, false, false, 0, 0.0, ""}, {"LocationRefToRegister", LegacyValueType::Form, false, false, 0, 0.0, ""}},
+        {{"LocationToRegister", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"LocationRefToRegister", LegacyValueType::Form, false, false, 0, 0.0, "", "Location"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -616,7 +616,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_LocationManager.UnregisterCustomLocationExternal", "SLSF_Reloaded_LocationManager", "UnregisterCustomLocationExternal",
         "None", LegacyValueType::None,
-        {{"LocationToUnregister", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"LocationToUnregister", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -624,7 +624,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Logger.Log", "SLSF_Reloaded_Logger", "Log",
         "None", LegacyValueType::None,
-        {{"LogString", LegacyValueType::String, false, false, 0, 0.0, ""}, {"Severity", LegacyValueType::Int, true, false, 0, 0.0, "0"}},
+        {{"LogString", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"Severity", LegacyValueType::Int, true, false, 0, 0.0, "0", "Int"}},
         true, true, false, true, "public",
         "no-op",
         BindingKind::GlobalNative, {"", 0x0u}, "",
@@ -632,7 +632,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Logger.EnableLogging", "SLSF_Reloaded_Logger", "EnableLogging",
         "None", LegacyValueType::None,
-        {{"EnableLogging", LegacyValueType::Bool, false, false, 0, 0.0, ""}},
+        {{"EnableLogging", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}},
         true, true, false, true, "public",
         "no-op",
         BindingKind::GlobalNative, {"", 0x0u}, "",
@@ -640,7 +640,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_Logger.SetLogLevel", "SLSF_Reloaded_Logger", "SetLogLevel",
         "None", LegacyValueType::None,
-        {{"LogLevel", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"LogLevel", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         true, true, false, true, "public",
         "no-op",
         BindingKind::GlobalNative, {"", 0x0u}, "",
@@ -656,7 +656,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_MasterClock.HalfHourChecks", "SLSF_Reloaded_MasterClock", "HalfHourChecks",
         "None", LegacyValueType::None,
-        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x839u}, "SLSF_Reloaded_MasterClock",
@@ -664,7 +664,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_MasterClock.DecayHandler", "SLSF_Reloaded_MasterClock", "DecayHandler",
         "None", LegacyValueType::None,
-        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x839u}, "SLSF_Reloaded_MasterClock",
@@ -672,7 +672,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_MasterClock.SpreadHandler", "SLSF_Reloaded_MasterClock", "SpreadHandler",
         "None", LegacyValueType::None,
-        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x839u}, "SLSF_Reloaded_MasterClock",
@@ -680,7 +680,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_MasterClock.PeriodicFameUpdate", "SLSF_Reloaded_MasterClock", "PeriodicFameUpdate",
         "None", LegacyValueType::None,
-        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"Multiplier", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, false, "internal",
         "",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x839u}, "SLSF_Reloaded_MasterClock",
@@ -736,7 +736,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_ModIntegration.IsFMPregnant", "SLSF_Reloaded_ModIntegration", "IsFMPregnant",
         "Bool", LegacyValueType::Bool,
-        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, ""}},
+        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, "", "Actor"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -744,7 +744,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_ModIntegration.IsECPregnant", "SLSF_Reloaded_ModIntegration", "IsECPregnant",
         "Bool", LegacyValueType::Bool,
-        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, ""}},
+        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, "", "Actor"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -752,7 +752,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_ModIntegration.IsESPregnant", "SLSF_Reloaded_ModIntegration", "IsESPregnant",
         "Bool", LegacyValueType::Bool,
-        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, ""}},
+        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, "", "Actor"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -760,7 +760,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_ModIntegration.IsHentaiPregnant", "SLSF_Reloaded_ModIntegration", "IsHentaiPregnant",
         "Bool", LegacyValueType::Bool,
-        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, ""}},
+        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, "", "Actor"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -776,7 +776,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_ModIntegration.GetFHUInflation", "SLSF_Reloaded_ModIntegration", "GetFHUInflation",
         "Float", LegacyValueType::Float,
-        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, ""}},
+        {{"actorRef", LegacyValueType::Actor, false, false, 0, 0.0, "", "Actor"}},
         false, false, false, true, "public",
         "0.0",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -800,7 +800,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_SexAnimationAnalyzer.AnimationAnalyze", "SLSF_Reloaded_SexAnimationAnalyzer", "AnimationAnalyze",
         "None", LegacyValueType::None,
-        {{"threadID", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"threadID", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::ReferenceAlias, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -808,7 +808,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_SexAnimationAnalyzer.AnimationSubAnalyze", "SLSF_Reloaded_SexAnimationAnalyzer", "AnimationSubAnalyze",
         "None", LegacyValueType::None,
-        {{"Actors", LegacyValueType::ActorArray, false, false, 0, 0.0, ""}, {"PlayerController", LegacyValueType::Script, false, false, 0, 0.0, ""}, {"PlayerThread", LegacyValueType::Int, false, false, 0, 0.0, ""}, {"Foreplay", LegacyValueType::Bool, false, false, 0, 0.0, ""}, {"PlayerLocation", LegacyValueType::String, false, false, 0, 0.0, ""}, {"Friend", LegacyValueType::Bool, true, false, 0, 0.0, "False"}, {"Lover", LegacyValueType::Bool, true, false, 0, 0.0, "False"}},
+        {{"Actors", LegacyValueType::ActorArray, false, false, 0, 0.0, "", "Actor[]"}, {"PlayerController", LegacyValueType::Script, false, false, 0, 0.0, "", "sslThreadController"}, {"PlayerThread", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}, {"Foreplay", LegacyValueType::Bool, false, false, 0, 0.0, "", "Bool"}, {"PlayerLocation", LegacyValueType::String, false, false, 0, 0.0, "", "String"}, {"Friend", LegacyValueType::Bool, true, false, 0, 0.0, "False", "Bool"}, {"Lover", LegacyValueType::Bool, true, false, 0, 0.0, "False", "Bool"}},
         false, false, false, true, "public",
         "no-op",
         BindingKind::ReferenceAlias, {"SLSF Reloaded.esp", 0x808u}, "SLSF_Reloaded_Main",
@@ -864,7 +864,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_VisibilityManager.CountAppliedTattoos", "SLSF_Reloaded_VisibilityManager", "CountAppliedTattoos",
         "Int", LegacyValueType::Int,
-        {{"TattooArea", LegacyValueType::String, false, false, 0, 0.0, ""}},
+        {{"TattooArea", LegacyValueType::String, false, false, 0, 0.0, "", "String"}},
         false, false, false, true, "public",
         "0",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -912,7 +912,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_VisibilityManager.IsBodyTattooVisible", "SLSF_Reloaded_VisibilityManager", "IsBodyTattooVisible",
         "Bool", LegacyValueType::Bool,
-        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -920,7 +920,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_VisibilityManager.IsFaceTattooVisible", "SLSF_Reloaded_VisibilityManager", "IsFaceTattooVisible",
         "Bool", LegacyValueType::Bool,
-        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -928,7 +928,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_VisibilityManager.IsHandTattooVisible", "SLSF_Reloaded_VisibilityManager", "IsHandTattooVisible",
         "Bool", LegacyValueType::Bool,
-        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",
@@ -936,7 +936,7 @@ static const PapyrusFunction kTable[] = {
     {
         "SLSF_Reloaded_VisibilityManager.IsFootTattooVisible", "SLSF_Reloaded_VisibilityManager", "IsFootTattooVisible",
         "Bool", LegacyValueType::Bool,
-        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, ""}},
+        {{"SlotNumber", LegacyValueType::Int, false, false, 0, 0.0, "", "Int"}},
         false, false, false, true, "public",
         "False",
         BindingKind::Quest, {"SLSF Reloaded.esp", 0x80Au}, "SLSF_Reloaded_Managers",

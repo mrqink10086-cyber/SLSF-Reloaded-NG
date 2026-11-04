@@ -6,7 +6,7 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $root = "E:/st/steamapps/common/Skyrim Special Edition"
-$staging = "E:/source/repos/SLSF Reloaded NG/build/staging/SLSFReloadedNG"
+$staging = "E:/source/repos/SLSF Reloaded NG/build/staging/SLSFReloadedNG/Data"
 $dllSource = "E:/source/repos/SLSF Reloaded NG/build/windows/x64/releasedbg/SLSFReloadedNG.dll"
 $probePex = "E:/source/repos/SLSF Reloaded NG/build/papyrus/probe/SLSFR_FrozenProbe.pex"
 $logDir = "$env:USERPROFILE/Documents/My Games/Skyrim Special Edition/SKSE"
@@ -35,7 +35,9 @@ if (-not $SkipInstall) {
         Copy-Item $_.FullName "$root/Data/Scripts/$($_.Name)" -Force
     }
     Copy-Item "$staging/SLSF Reloaded.esp" "$root/Data/SLSF Reloaded.esp" -Force
-    Copy-Item "$staging/SKSE/Plugins/SLSFReloadedNG.json" "$root/Data/SKSE/Plugins/SLSFReloadedNG.json" -Force
+    if (-not (Test-Path -LiteralPath "$root/Data/SKSE/Plugins/SLSFReloadedNG.json")) {
+        Copy-Item -LiteralPath "$staging/SKSE/Plugins/SLSFReloadedNG.json" -Destination "$root/Data/SKSE/Plugins/SLSFReloadedNG.json"
+    }
 
     if (Test-Path $probePex) {
         Copy-Item $probePex "$root/Data/Scripts/SLSFR_FrozenProbe.pex" -Force
@@ -59,7 +61,7 @@ Remove-Item $pluginLog -Force -ErrorAction SilentlyContinue
 Remove-Item $skseLog -Force -ErrorAction SilentlyContinue
 
 $before = @(Get-Process SkyrimSE -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Id)
-$loader = Start-Process -FilePath "$root/skse64_loader.exe" -WorkingDirectory $root -PassThru
+$loader = Start-Process -FilePath "$root/skse64_loader.exe" -WorkingDirectory $root -PassThru -WindowStyle Hidden
 $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
 $markers = $false
 $probeCount = 0

@@ -90,4 +90,4 @@ private:
 
 [[nodiscard]] std::string UpdateMessage(ConfigurationUpdateResult result);
 
-} // namespace slsf::config
+}

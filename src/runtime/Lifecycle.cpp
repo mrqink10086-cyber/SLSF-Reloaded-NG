@@ -91,7 +91,7 @@ struct Lifecycle::Assets {
     Parameters parameters;
     DiffusionGraph graph;
     SceneSnapshot scene;
-    SessionRandom random{1};
+    std::shared_ptr<SessionRandom> random;
 };
 
 struct Lifecycle::Pending {
@@ -119,7 +119,44 @@ ConfigurationUpdateResult Lifecycle::ReloadConfiguration() {
             update.status = ConfigurationUpdateStatus::Invalid;
             update.message = "configuration source has no valid snapshot";
         } else {
-            update.message = UpdateMessage(update);
+            update = ApplyCurrentConfiguration();
+        }
+    }
+    message_ = update.message;
+    return update;
+}
+ConfigurationUpdateResult Lifecycle::ApplyCurrentConfiguration() {
+    const auto configuration = configuration_.Current();
+    ConfigurationUpdateResult update{ConfigurationUpdateStatus::Unchanged,
+                                      configuration.revision, "configuration unchanged"};
+    if (!configuration.HasData()) {
+        update.status = ConfigurationUpdateStatus::Invalid;
+        update.message = "configuration source has no valid snapshot";
+    } else if (active_ && active_->configuration.revision != configuration.revision) {
+        std::unique_ptr<Assets> candidate;
+        std::uint32_t droppedEdges = 0;
+        std::string error;
+        const SessionContext context{.scene = active_->scene, .randomSeed = 1};
+        if (BuildAssets(configuration, context, candidate, droppedEdges, error)) {
+            candidate->random = active_->random;
+            const RuntimeBindings bindings{
+                .graph = &candidate->graph, .parameters = &candidate->parameters,
+                .configuration = &candidate->rules, .regions = world_.regions,
+                .rng = candidate->random.get(), .settings = candidate->configuration.data};
+            const auto applied = dispatcher_.Reconfigure(bindings, configuration);
+            if (applied) {
+                active_ = std::move(candidate);
+                droppedEdges_ = droppedEdges;
+                update.status = ConfigurationUpdateStatus::Applied;
+                update.message = "configuration applied to active session";
+            } else {
+                error = applied.error().message;
+            }
+        }
+        if (!error.empty()) {
+            update.status = ConfigurationUpdateStatus::Invalid;
+            update.revision = active_->configuration.revision;
+            update.message = std::move(error);
         }
     }
     message_ = update.message;
@@ -145,14 +182,14 @@ bool Lifecycle::BuildAssets(const ConfigurationSnapshot& configuration,
     assets->configuration = configuration;
     assets->parameters = configuration.data->parameters;
     assets->scene = context.scene;
-    assets->random = SessionRandom(context.randomSeed);
+    assets->random = std::make_shared<SessionRandom>(context.randomSeed);
     assets->rules = MakeRuleConfiguration(*configuration.data);
 
     std::vector<EdgeDefinition> edges;
     const auto retention = std::isfinite(assets->parameters.spreadRetention)
                                ? std::clamp(assets->parameters.spreadRetention, 0.0, 1.0)
                                : kDefaultEdgeRetention;
-    const double edgeRetention = retention > 0.0 ? retention : kDefaultEdgeRetention;
+    const double edgeRetention = retention;
     for (const RegionConnectionSetting& connection : configuration.data->connections) {
         if (!connection.enabled) {
             continue;
@@ -271,7 +308,8 @@ bool Lifecycle::ActivatePrepared(bool hostSucceeded) {
         .parameters = &pending->assets->parameters,
         .configuration = &pending->assets->rules,
         .regions = world_.regions,
-        .rng = &pending->assets->random,
+        .rng = pending->assets->random.get(),
+        .settings = pending->assets->configuration.data,
     };
     if (!dispatcher_.Attach(pending->epoch, bindings, std::move(pending->state))) {
         RejectPreparation("dispatcher refused activation; business stays closed");
@@ -325,7 +363,8 @@ LifecycleStatus Lifecycle::Status() const {
     status.phase = phase_;
     status.kind = kind_;
     status.epoch = pending_ ? pending_->epoch : dispatcher_.CurrentEpoch();
-    status.configurationRevision = configuration_.Current().revision;
+    status.configurationRevision = active_ ? active_->configuration.revision
+        : pending_ ? pending_->assets->configuration.revision : configuration_.Current().revision;
     status.restoredAccounts = restoredAccounts_;
     status.unresolvedAccounts = unresolvedAccounts_;
     status.droppedConnectionEdges = droppedEdges_;

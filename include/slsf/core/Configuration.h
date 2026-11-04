@@ -85,9 +85,70 @@ struct MenuSettings {
     friend bool operator==(const MenuSettings&, const MenuSettings&) = default;
 };
 
+struct GameplaySettings {
+    bool anonymityEnabled{true};
+    bool allowCollarBoundFame{false};
+    bool allowSLSCursedCollarBoundFame{false};
+    bool thanesCantBeAnonymous{true};
+    bool allowForeplayFame{true};
+    bool npcNeedsLOS{true};
+    bool friendsBetrayFromHighFame{true};
+    bool loversBetrayFromHighFame{true};
+    bool disableNakedCommentsWhilePW{false};
+    bool submissiveDefault{false};
+    bool dominantDefault{false};
+    bool victimsAreMasochist{false};
+    bool allowLikeFameWhenRaped{false};
+    bool allowBestialityWhenRaped{false};
+    double dynamicAnonymityFameCutoff{50};
+    double fameChanceByEnemy{100};
+    double fameChanceByNeutral{75};
+    double fameChanceByFriend{50};
+    double fameChanceByLover{25};
+    double minimumNPCLOSDistance{160};
+    double sexFameChanceByFriend{50};
+    double sexFameChanceByLover{25};
+    double cumDumpFHUReq{2};
+    double commentFrequency{50};
+    double scanPeriodDays{0.041666666666666664};
+    friend bool operator==(const GameplaySettings&, const GameplaySettings&) = default;
+};
+struct GameplayBoolSetting { const char* name; bool GameplaySettings::*member; };
+struct GameplayNumberSetting { const char* name; double GameplaySettings::*member; double minimum; double maximum; };
+inline constexpr std::array<GameplayBoolSetting, 14> kGameplayBoolSettings{{
+    {"anonymityEnabled", &GameplaySettings::anonymityEnabled},
+    {"allowCollarBoundFame", &GameplaySettings::allowCollarBoundFame},
+    {"allowSLSCursedCollarBoundFame", &GameplaySettings::allowSLSCursedCollarBoundFame},
+    {"thanesCantBeAnonymous", &GameplaySettings::thanesCantBeAnonymous},
+    {"allowForeplayFame", &GameplaySettings::allowForeplayFame},
+    {"npcNeedsLOS", &GameplaySettings::npcNeedsLOS},
+    {"friendsBetrayFromHighFame", &GameplaySettings::friendsBetrayFromHighFame},
+    {"loversBetrayFromHighFame", &GameplaySettings::loversBetrayFromHighFame},
+    {"disableNakedCommentsWhilePW", &GameplaySettings::disableNakedCommentsWhilePW},
+    {"submissiveDefault", &GameplaySettings::submissiveDefault},
+    {"dominantDefault", &GameplaySettings::dominantDefault},
+    {"victimsAreMasochist", &GameplaySettings::victimsAreMasochist},
+    {"allowLikeFameWhenRaped", &GameplaySettings::allowLikeFameWhenRaped},
+    {"allowBestialityWhenRaped", &GameplaySettings::allowBestialityWhenRaped},
+}};
+inline constexpr std::array<GameplayNumberSetting, 11> kGameplayNumberSettings{{
+    {"dynamicAnonymityFameCutoff", &GameplaySettings::dynamicAnonymityFameCutoff, 0, 150},
+    {"fameChanceByEnemy", &GameplaySettings::fameChanceByEnemy, 0, 100},
+    {"fameChanceByNeutral", &GameplaySettings::fameChanceByNeutral, 0, 100},
+    {"fameChanceByFriend", &GameplaySettings::fameChanceByFriend, 0, 100},
+    {"fameChanceByLover", &GameplaySettings::fameChanceByLover, 0, 100},
+    {"minimumNPCLOSDistance", &GameplaySettings::minimumNPCLOSDistance, 0, 100000},
+    {"sexFameChanceByFriend", &GameplaySettings::sexFameChanceByFriend, 0, 100},
+    {"sexFameChanceByLover", &GameplaySettings::sexFameChanceByLover, 0, 100},
+    {"cumDumpFHUReq", &GameplaySettings::cumDumpFHUReq, 0, 100000},
+    {"commentFrequency", &GameplaySettings::commentFrequency, 0, 100},
+    {"scanPeriodDays", &GameplaySettings::scanPeriodDays, 0.000001, 365},
+}};
+
 struct ConfigurationData {
     std::uint32_t schemaVersion{kConfigurationSchemaVersion};
     FeatureSwitches features;
+    GameplaySettings gameplay;
     CategorySettings categories;
     RelationshipSettings relationships;
     TimingSettings timing;

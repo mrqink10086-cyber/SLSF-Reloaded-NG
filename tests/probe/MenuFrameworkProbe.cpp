@@ -28,7 +28,7 @@ std::size_t ExportNameCount() {
     return 20;
 }
 
-} // namespace
+}
 
 int main() {
     const HMODULE module = GetModuleHandleW(kFrameworkModule);

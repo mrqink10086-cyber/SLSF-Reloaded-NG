@@ -573,6 +573,7 @@ private:
     std::int32_t threadId_{-1};
 public:
     void SetThreadId(std::int32_t id) { std::lock_guard guard(mutex_); threadId_ = id; }
+    std::int32_t ThreadId() const { std::lock_guard guard(mutex_); return threadId_; }
 };
 
 SexLabPPlus::Impl::Impl(PapyrusCalls& calls, PPlusOptions options)
@@ -1170,6 +1171,7 @@ SexLabPPlus::SexLabPPlus(PapyrusCalls& calls, PPlusOptions options)
 SexLabPPlus::~SexLabPPlus() { impl_->Shutdown(); }
 
 void SexLabPPlus::SetThreadId(std::int32_t id) { const auto state = impl_; state->SetThreadId(id); }
+std::int32_t SexLabPPlus::ThreadId() const { const auto state = impl_; return state->ThreadId(); }
 
 RequestId SexLabPPlus::OnSceneNotification(std::string_view event, std::string_view threadId,
                                          const Epoch& epoch, std::int64_t nowMs,

@@ -344,6 +344,32 @@ TEST_CASE("failed load never opens the switch and the next session recovers") {
     CHECK(Fame(lifecycle, 0) == 0.0);
 }
 
+TEST_CASE("active configuration reload replaces rules without resetting the session", "[game-ready]") {
+    Fixture fixture;
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{.randomSeed = 1}));
+    REQUIRE(lifecycle.ActivatePrepared());
+    REQUIRE(lifecycle.Executor().Execute(SetCommand(0, 20.0)).status == Status::Ready);
+    const auto epoch = lifecycle.CurrentEpoch();
+    bool fired = false;
+    lifecycle.Executor().Schedule(0.0, slsf::time::ClockDomain::Active, [&] { fired = true; });
+    fixture.configuration.Publish([](ConfigurationData& data) {
+        data.categories.multipliers[static_cast<std::size_t>(FameCategory::Whore)] = 100.0;
+    });
+    REQUIRE(lifecycle.ReloadConfiguration().Succeeded());
+    REQUIRE(lifecycle.Executor().Snapshot());
+    CHECK(lifecycle.Executor().Snapshot()->configurationRevision == 2);
+    CHECK(lifecycle.Status().configurationRevision == ConfigurationRevision{2});
+    CHECK(lifecycle.CurrentEpoch() == epoch);
+    CHECK(Fame(lifecycle, 0) == 20.0);
+    const auto gain = lifecycle.Executor().GainFame(slsf::GameTime::FromDays(0.0),
+        RegionId{0}, FameCategory::Whore, slsf::GainFameInputs{});
+    REQUIRE(gain.status == Status::Ready);
+    CHECK(gain.gained >= 100);
+    lifecycle.Executor().Step();
+    CHECK(fired);
+}
+
 TEST_CASE("each new session reloads and adopts the current cross-save configuration") {
     Fixture fixture;
     auto& lifecycle = *fixture.lifecycle;

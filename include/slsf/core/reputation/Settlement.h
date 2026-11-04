@@ -27,6 +27,8 @@ std::shared_ptr<SettlementWorkspace> MakeSettlementWorkspace();
 // day; the spread threshold follows MinimumFameToSpread=30; uncalibrated
 // links use retention 0.6 and remote rows retreat at one value per day.
 Parameters LegacyDefaultParameters() noexcept;
+Result<void> ApplyDecayBatch(State& state, GameTime now, int multiplier,
+    const Configuration& configuration, const RegionSnapshot* regions, IRandom& rng);
 
 // Gain application (legacy GainFame entry).  Resolves multipliers, tier caps,
 // the night window and the protection duration from configuration, adds the

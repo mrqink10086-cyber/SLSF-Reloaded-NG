@@ -79,7 +79,7 @@ struct CloseCommitPorts {
     }
 };
 
-} // namespace
+}
 
 TEST_CASE("menu request queue merges duplicate requests posted in the same round",
           "[menu]") {

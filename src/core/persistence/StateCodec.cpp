@@ -184,15 +184,63 @@ bool ValidString(std::string_view value) {
 
 }
 
+Result<void> ValidateSaveMetadata(const PersistentState& state) {
+    if (state.codecVersion < 3 && (!state.namedProviders.empty() || !state.spreadChances.empty() || !state.recognition.empty())) {
+        return Fail(Error::Code::Unsupported, "older codec cannot carry named registrations");
+    }
+    if (state.namedProviders.size() > 256 || state.spreadChances.size() > kStateCodecMaxLocations || state.recognition.size() > kStateCodecMaxLocations) {
+        return Fail(Error::Code::OutOfRange, "too many save metadata entries");
+    }
+    std::set<std::string> names;
+    for (const auto& provider : state.namedProviders) {
+        if (provider.name.empty() || !ValidString(provider.name) ||
+            (provider.flags & ~0x3FFFFFFFu) != 0 || !names.insert(provider.name).second) {
+            return Fail(Error::Code::InvalidArgument, "invalid named provider");
+        }
+    }
+    std::set<StableRegionKey> keys;
+    std::set<std::string> customNames;
+    for (const auto& region : state.customRegions) {
+        if (region.name.empty() || !ValidString(region.name) || region.key.plugin.empty() ||
+            !ValidString(region.key.plugin) || !customNames.insert(region.name).second ||
+            !keys.insert(region.key).second) {
+            return Fail(Error::Code::InvalidArgument, "invalid custom region");
+        }
+    }
+    keys.clear();
+    for (const auto& spread : state.spreadChances) {
+        if (spread.key.plugin.empty() || !ValidString(spread.key.plugin) ||
+            spread.chance < 0 || spread.chance > 100 || !keys.insert(spread.key).second) {
+            return Fail(Error::Code::InvalidArgument, "invalid region spread chance");
+        }
+    }
+    keys.clear();
+    bool residentSeen = false;
+    for (const auto& memory : state.recognition) {
+        if (memory.resident && std::exchange(residentSeen, true)) return Fail(Error::Code::InvalidArgument, "multiple resident regions");
+        if (memory.key.plugin.empty() || !ValidString(memory.key.plugin) ||
+            !keys.insert(memory.key).second || !std::isfinite(memory.recognitionDays) ||
+            memory.recognitionDays < -0.125 || memory.recognitionDays > 365 ||
+            !std::isfinite(memory.lastEnter) || memory.lastEnter < 0 ||
+            !std::isfinite(memory.lastExit) || memory.lastExit < 0) {
+            return Fail(Error::Code::InvalidArgument, "invalid recognition memory");
+        }
+    }
+    return {};
+}
+
 Result<std::vector<std::byte>> EncodeState(const PersistentState& state) {
     if (state.schemaVersion != kPersistentStateSchemaVersion) {
         return Fail(Error::Code::Unsupported, "unsupported persistent state schema");
     }
     if (state.codecVersion != kStateCodecVersion &&
+        state.codecVersion != kPreviousPersistentStateCodecVersion &&
         state.codecVersion != kLegacyStateCodecVersion) {
         return Fail(Error::Code::Unsupported, "unsupported state codec version");
     }
     const bool legacy = state.codecVersion == kLegacyStateCodecVersion;
+    const auto metadata = ValidateSaveMetadata(state);
+    if (!metadata) return std::unexpected(metadata.error());
     if (legacy) {
         if (!state.contributions.empty()) {
             return Fail(Error::Code::InvalidArgument,
@@ -377,6 +425,29 @@ Result<std::vector<std::byte>> EncodeState(const PersistentState& state) {
         PutDouble(out, setting.value);
     }
 
+    if (state.codecVersion >= 3) {
+        PutU32(out, static_cast<std::uint32_t>(state.namedProviders.size()));
+        for (const auto& provider : state.namedProviders) {
+            PutString(out, provider.name);
+            PutU32(out, provider.flags);
+        }
+        PutU32(out, static_cast<std::uint32_t>(state.spreadChances.size()));
+        for (const auto& spread : state.spreadChances) {
+            PutKey(out, spread.key.plugin, spread.key.localFormId);
+            PutU32(out, static_cast<std::uint32_t>(spread.chance));
+        }
+        PutU32(out, static_cast<std::uint32_t>(state.recognition.size()));
+        for (const auto& memory : state.recognition) {
+            PutKey(out, memory.key.plugin, memory.key.localFormId);
+            PutDouble(out, memory.recognitionDays);
+            PutDouble(out, memory.lastEnter);
+            PutDouble(out, memory.lastExit);
+            out.push_back(static_cast<std::byte>(memory.localAnonymous ? 1 : 0));
+            out.push_back(static_cast<std::byte>(memory.startedAnonymous ? 1 : 0));
+            out.push_back(static_cast<std::byte>(memory.resident ? 1 : 0));
+        }
+    }
+
     return out;
 }
 
@@ -401,7 +472,8 @@ Result<PersistentState> DecodeState(std::span<const std::byte> bytes) {
     if (!reader.U16(codecVersion)) {
         return std::unexpected(reader.GetError());
     }
-    if (codecVersion != kStateCodecVersion && codecVersion != kLegacyStateCodecVersion) {
+    if (codecVersion != kStateCodecVersion && codecVersion != kPreviousPersistentStateCodecVersion &&
+        codecVersion != kLegacyStateCodecVersion) {
         return Fail(Error::Code::Unsupported, "unsupported state codec version");
     }
     const bool legacy = codecVersion == kLegacyStateCodecVersion;
@@ -570,6 +642,50 @@ Result<PersistentState> DecodeState(std::span<const std::byte> bytes) {
             return std::unexpected(reader.GetError());
         }
     }
+
+    if (codecVersion >= 3) {
+        std::uint32_t count = 0;
+        if (!reader.U32(count)) return std::unexpected(reader.GetError());
+        if (count > 256 || count > reader.Remaining() / 6) {
+            return Fail(Error::Code::OutOfRange, "invalid named provider count");
+        }
+        state.namedProviders.resize(count);
+        for (auto& provider : state.namedProviders) {
+            if (!reader.String(provider.name, kStateCodecMaxStringBytes) || !reader.U32(provider.flags)) {
+                return std::unexpected(reader.GetError());
+            }
+        }
+        if (!reader.U32(count)) return std::unexpected(reader.GetError());
+        if (count > kStateCodecMaxLocations || count > reader.Remaining() / 10) {
+            return Fail(Error::Code::OutOfRange, "invalid spread chance count");
+        }
+        state.spreadChances.resize(count);
+        for (auto& spread : state.spreadChances) {
+            std::uint32_t chance = 0;
+            if (!reader.Key(spread.key.plugin, spread.key.localFormId) || !reader.U32(chance)) {
+                return std::unexpected(reader.GetError());
+            }
+            if (chance > 100) return Fail(Error::Code::OutOfRange, "invalid spread chance");
+            spread.chance = static_cast<std::int32_t>(chance);
+        }
+        if (!reader.U32(count)) return std::unexpected(reader.GetError());
+        if (count > kStateCodecMaxLocations || count > reader.Remaining() / 32)
+            return Fail(Error::Code::OutOfRange, "invalid recognition count");
+        state.recognition.resize(count);
+        for (auto& memory : state.recognition) {
+            std::uint8_t local{}, started{}, resident{};
+            if (!reader.Key(memory.key.plugin, memory.key.localFormId) ||
+                !reader.Double(memory.recognitionDays) || !reader.Double(memory.lastEnter) ||
+                !reader.Double(memory.lastExit) || !reader.U8(local) || !reader.U8(started) || !reader.U8(resident))
+                return std::unexpected(reader.GetError());
+            if (local > 1 || started > 1 || resident > 1) return Fail(Error::Code::InvalidArgument, "invalid recognition flags");
+            memory.localAnonymous = local != 0;
+            memory.startedAnonymous = started != 0;
+            memory.resident = resident != 0;
+        }
+    }
+    const auto metadata = ValidateSaveMetadata(state);
+    if (!metadata) return std::unexpected(metadata.error());
 
     std::set<StableRegionKey> locationKeys;
     for (const auto& location : state.locations) {

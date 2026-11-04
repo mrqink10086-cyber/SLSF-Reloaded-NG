@@ -113,4 +113,4 @@ private:
     std::vector<std::string> legacyFiles_;
 };
 
-} // namespace slsf::ui
+}

@@ -305,6 +305,15 @@ std::vector<Tri> AnimationDeviousFacts::AcceptedLockables() const {
             TriOf(gag),        TriOf(gagPanel),     TriOf(suit),
             TriOf(corset),     TriOf(blindfold)};
 }
+AnimationResult AnimationClassifier::ClassifySubAnalyze(const AnimationFacts& facts, bool foreplay, bool friendOfPlayer, bool loverOfPlayer) const {
+    AnimationResult result;
+    result.foreplay = foreplay;
+    if (facts.status != Status::Ready || !SubAnalyzer(facts, friendOfPlayer, loverOfPlayer, result.categories).Run()) {
+        result.status = Status::NotReady; result.kind = AnimationResultKind::Deferred; result.categories.clear();
+    } else result.kind = AnimationResultKind::Analyzed;
+    return result;
+}
+
 AnimationResult AnimationClassifier::Classify(const AnimationFacts& facts, IRandom& rng) const {
     AnimationResult result;
     if (facts.status != Status::Ready) {

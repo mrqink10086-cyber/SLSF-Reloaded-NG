@@ -1,0 +1,14 @@
+behavior-probe.cpp
+config_update_success=1 notifications=2 initial_revision=1 store_revision=2 status_revision=2 published_revision=1
+import_before=20 applied=1 rejected=1 import_after=12
+  正在创建库 build\group11-review\number-probe.lib 和对象 build\group11-review\number-probe.exp
+LINK : warning LNK4217:符号“_errno”(在“ libucrt.lib(errno.obj)”中定义)已由“clang_rt.ubsan_standalone-x86_64.lib(sanitizer_symbolizer.cpp.obj)”(函数“"public: __cdecl __sanitizer::Symbolizer::SymbolizerScope::SymbolizerScope(class __sanitizer::Symbolizer const *)" (??0SymbolizerScope@Symbolizer@__sanitizer@@QEAA@PEBV12@@Z)”中)导入
+LINK : warning LNK4217:符号“_errno”(在“ libucrt.lib(errno.obj)”中定义)已由“clang_rt.ubsan_standalone-x86_64.lib(sanitizer_win.cpp.obj)”(函数“"void __cdecl __sanitizer::DumpProcessMap(void)" (?DumpProcessMap@__sanitizer@@YAXXZ)”中)导入
+LINK : warning LNK4217:符号“qsort”(在“ libucrt.lib(qsort.obj)”中定义)已由“clang_rt.ubsan_standalone-x86_64.lib(sanitizer_win.cpp.obj)”(函数“"void __cdecl __sanitizer::DumpProcessMap(void)" (?DumpProcessMap@__sanitizer@@YAXXZ)”中)导入
+LINK : warning LNK4217:符号“wcslen”(在“ libucrt.lib(strnlen.obj)”中定义)已由“clang_rt.ubsan_standalone-x86_64.lib(sanitizer_symbolizer_win.cpp.obj)”(函数“"void __cdecl __sanitizer::InitializeDbgHelpIfNeeded(void)" (?InitializeDbgHelpIfNeeded@__sanitizer@@YAXXZ)”中)导入
+LINK : warning LNK4217:符号“wcscat_s”(在“ libucrt.lib(wcscat_s.obj)”中定义)已由“clang_rt.ubsan_standalone-x86_64.lib(sanitizer_symbolizer_win.cpp.obj)”(函数“"void __cdecl __sanitizer::InitializeDbgHelpIfNeeded(void)" (?InitializeDbgHelpIfNeeded@__sanitizer@@YAXXZ)”中)导入
+parsed_number=1e+20
+integer=-9223372036854775808
+import_success=1 mods=0
+src\io\JsonTransfer.cpp:635:38: runtime error: 1e+20 is outside the range of representable values of type 'long long'
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src\io\JsonTransfer.cpp:635:38 

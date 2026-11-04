@@ -204,6 +204,11 @@ Dispatcher::~Dispatcher() {
     scheduler_.NewSession(retired);
 }
 
+std::shared_ptr<const ConfigurationData> Dispatcher::Settings() const {
+    std::lock_guard lock(mutex_);
+    return bindings_.settings;
+}
+
 bool Dispatcher::Attach(Epoch epoch, const RuntimeBindings& bindings, State state) {
     std::uint64_t generation;
     {
@@ -244,6 +249,53 @@ bool Dispatcher::Attach(Epoch epoch, const RuntimeBindings& bindings, State stat
     scheduler_.NewSession(retired);
     PublishLocked();
     return true;
+}
+
+Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
+                                     const ConfigurationSnapshot& configuration) {
+    if (!configuration.HasData() || !bindings.graph || !bindings.parameters ||
+        !bindings.configuration || !bindings.regions || !bindings.rng) {
+        return Fail(Error::Code::InvalidArgument, "incomplete configuration bindings");
+    }
+    State candidate;
+    std::uint64_t generation;
+    Revision revision;
+    {
+        std::lock_guard guard(mutex_);
+        if (!state_ || suspended_) {
+            return Fail(Error::Code::InvalidState, "no active session to reconfigure");
+        }
+        auto now = clocks_.Game();
+        if (lastAdvance_ && now.AsDays() < lastAdvance_->AsDays()) {
+            now = *lastAdvance_;
+        }
+        auto settled = AdvanceLocked(now);
+        if (!settled) return std::unexpected(settled.error());
+        PublishLocked();
+        candidate = *state_;
+        generation = lifecycleGeneration_;
+        revision = state_->revision;
+    }
+    auto bound = BindStateToRegions(candidate, *bindings.regions);
+    if (!bound) return std::unexpected(bound.error());
+    candidate.configurationRevision = configuration.revision.value;
+    RebuildDerivedSets(candidate, configuration.data.get());
+    ++candidate.revision.value;
+    auto prepared = PrepareSettlement(candidate, *bindings.graph,
+                                       *bindings.configuration, bindings.regions);
+    if (!prepared) return std::unexpected(prepared.error());
+    auto workspace = MakeSettlementWorkspace();
+    std::lock_guard guard(mutex_);
+    if (!state_ || suspended_ || lifecycleGeneration_ != generation ||
+        state_->revision != revision) {
+        return Fail(Error::Code::InvalidState, "session changed during configuration update");
+    }
+    state_ = std::move(candidate);
+    bindings_ = bindings;
+    prepared_ = std::move(*prepared);
+    workspace_ = std::move(workspace);
+    PublishLocked();
+    return {};
 }
 
 void Dispatcher::Detach() {
@@ -320,6 +372,39 @@ Result<PersistentState> Dispatcher::Capture() const {
     return CaptureState(*state_);
 }
 
+CommandResult Dispatcher::EditState(const std::function<Result<void>(State&)>& edit) {
+    State candidate;
+    std::uint64_t generation;
+    Revision revision;
+    {
+        std::lock_guard guard(mutex_);
+        if (!state_ || suspended_) {
+            return {Status::NotReady, {}, "no active session to edit"};
+        }
+        auto now = clocks_.Game();
+        if (lastAdvance_ && now.AsDays() < lastAdvance_->AsDays()) now = *lastAdvance_;
+        const auto advanced = AdvanceLocked(now);
+        if (!advanced) return {Status::Invalid, state_->revision, advanced.error().message};
+        PublishLocked();
+        candidate = *state_;
+        generation = lifecycleGeneration_;
+        revision = state_->revision;
+    }
+    const auto applied = edit(candidate);
+    if (!applied) return {Status::Invalid, revision, applied.error().message};
+    auto captured = CaptureState(candidate);
+    if (!captured) return {Status::Invalid, revision, captured.error().message};
+    candidate.revision.value = revision.value + 1;
+    std::lock_guard guard(mutex_);
+    if (!state_ || suspended_ || lifecycleGeneration_ != generation || state_->revision != revision) {
+        return {Status::Stale, revision, "session changed during edit"};
+    }
+    state_ = std::move(candidate);
+    prepared_.reset();
+    PublishLocked();
+    return {Status::Ready, state_->revision, {}};
+}
+
 CommandResult Dispatcher::Execute(const ExplicitCommand& command) {
     std::lock_guard<std::mutex> guard(mutex_);
     if (!state_) {
@@ -389,6 +474,18 @@ Dispatcher::GainOutcome Dispatcher::GainFame(GameTime now, RegionId account,
         PublishLocked();
     }
     return GainOutcome{Status::Ready, state_->revision, *result, ""};
+}
+
+CommandResult Dispatcher::DecayBatch(int multiplier) {
+    std::lock_guard<std::mutex> guard(mutex_);
+    if (!state_ || suspended_ || !bindings_.configuration || !bindings_.rng)
+        return {Status::NotReady, {}, "settlement inputs not bound"};
+    const auto now = FloorToLastAdvance(lastAdvance_, clocks_.Game());
+    const auto settled = AdvanceLocked(now);
+    if (!settled) return {Status::NotReady, state_->revision, settled.error().message};
+    const auto result = ApplyDecayBatch(*state_, now, multiplier, *bindings_.configuration, bindings_.regions, *bindings_.rng);
+    PublishLocked();
+    return {result ? Status::Ready : Status::Invalid, state_->revision, result ? "" : result.error().message};
 }
 
 Dispatcher::ApplyOutcome Dispatcher::ApplyManualSpread(RegionId source, RegionId target,

@@ -7,6 +7,7 @@
 #include "slsf/compat/LegacyOutputs.h"
 #include "slsf/compat/ModEventBridge.h"
 #include "slsf/runtime/Dispatcher.h"
+#include "slsf/io/JsonTransfer.h"
 
 #include <cstddef>
 #include <cstdint>
@@ -97,6 +98,19 @@ public:
     void SetExternalFlag(const std::string& modName, const std::string& flagName, bool flag);
     [[nodiscard]] bool GetModFlag(const std::string& modName, const std::string& flagName) const;
     [[nodiscard]] bool GetAggregatedFlag(const std::string& flagName) const;
+    [[nodiscard]] std::vector<std::string> RegisteredMods() const;
+    [[nodiscard]] CommandResult ImportLegacy(const io::LegacyImport& input);
+    [[nodiscard]] io::LegacyDocument ExportLegacy() const;
+    [[nodiscard]] bool RegisterCustomLocation(const std::string& name, const StableRegionKey& key);
+    [[nodiscard]] bool UnregisterCustomLocation(const std::string& name);
+    [[nodiscard]] std::vector<CustomRegionState> CustomLocations() const;
+    [[nodiscard]] std::string RegionName(RegionId region) const;
+    [[nodiscard]] int SpreadChance(const std::string& name) const;
+    [[nodiscard]] std::vector<std::string> RegisteredLocations() const;
+    using GameplayCall = std::function<bool(const std::string&, const std::vector<compat::ModEventValue>&, compat::ModEventValue&)>;
+    void SetGameplayCall(GameplayCall call);
+    bool CallGameplay(const std::string& name, const std::vector<compat::ModEventValue>& arguments, compat::ModEventValue& result) const;
+    [[nodiscard]] bool SetSpreadChance(const std::string& name, int chance);
 
     void SetCurrentLocation(const std::string& name);
     [[nodiscard]] std::string CurrentLocation() const;
@@ -106,6 +120,7 @@ public:
     [[nodiscard]] std::size_t PublishCurrentFameGlobals(compat::LegacyOutputSink& sink) const;
     [[nodiscard]] std::size_t PublishStorageUtilLists(compat::LegacyOutputSink& sink) const;
     [[nodiscard]] std::size_t PublishLegacyBridge(compat::LegacyOutputSink& sink) const;
+    [[nodiscard]] std::size_t PublishAllOutputs(compat::LegacyOutputSink& sink) const;
 
     void AttachToBridge(compat::ModEventBridge& bridge);
     void OnEvent(const compat::ModEvent& event);
@@ -115,11 +130,6 @@ public:
     void SetReplySender(ReplySender sender);
 
 private:
-    struct ModFlagState {
-        bool registered{};
-        std::map<std::string, bool> flags;
-    };
-
     bool SendReply(const std::string& eventName,
                   const std::vector<compat::ModEventValue>& values) const;
     static compat::ModEventValue MakeBool(bool v);
@@ -150,9 +160,6 @@ private:
     [[nodiscard]] static std::optional<FameCategory> CategoryFromFlagHandler(
         const std::string& handler);
 
-    mutable std::mutex modMutex_;
-    std::unordered_map<std::string, ModFlagState> mods_;
-
     mutable std::mutex formMutex_;
     FormRegionResolver formResolver_;
 
@@ -164,6 +171,8 @@ private:
 
     mutable std::mutex replyMutex_;
     ReplySender replySender_;
+    mutable std::mutex gameplayMutex_;
+    GameplayCall gameplayCall_;
 
     Dispatcher& executor_;
     const slsf::RegionSnapshot& regions_;

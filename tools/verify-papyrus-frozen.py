@@ -1,22 +1,4 @@
 #!/usr/bin/env python3
-"""Verify the compiled thin PEX surface against the frozen legacy oracle.
-
-The frozen surface is the compatibility contract: for every legacy script
-the replacement PEX must expose the same function list (names, parameter
-names/types/defaults, return types, global modifier) in contract order.
-Group 07 stored the declarations in contracts/legacy-api.json (validated by
-tools/verify-contracts.ps1); the compile output PEX is compared against the
-same declarations through their PapyrusAssembler disassemblies when the
-assembler is available, or via the thin PSC declarations directly when it
-is not.  Special cases recorded in the report: MercurialLibrary stubs
-(backed by VmNatives, no equivalent legacy PSC), and body-only compat files.
-
-Usage:
-  python tools/verify-papyrus-frozen.py [--legacy-repo <path>]
-
-Writes a compact mismatch report to stdout; exit 0 when every element
-matches, 1 otherwise.
-"""
 
 import argparse
 import os
@@ -87,7 +69,6 @@ def _lines(path):
 
 
 def _norm(item):
-    """Normalize one PSC parameter triple for comparison."""
     ptype, name, default = item
     if default.lower() == "false":
         default = "False"
@@ -175,7 +156,7 @@ def main():
     return 0 if not scores else 1
 
 
-import json  # noqa: E402  (imported after argparse; order documented above)
+import json  # noqa: E402
 
 if __name__ == "__main__":
     sys.exit(main())

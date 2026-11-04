@@ -1,0 +1,1 @@
+Scriptname SLSF_Configuration extends Quest

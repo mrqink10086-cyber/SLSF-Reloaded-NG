@@ -1,11 +1,11 @@
-Scriptname SLSF_Reloaded_Data_Exporter extends Quest
+ScriptName SLSF_Reloaded_Data_Exporter Extends Quest
 
-Quest Property LocationManager Auto
+slsf_reloaded_mcm Property Config Auto
 GlobalVariable Property CustomLocations Auto
-Quest Property FameManager Auto
-Quest Property config Auto
+slsf_reloaded_datamanager Property DataManager Auto
+slsf_reloaded_famemanager Property FameManager Auto
+slsf_reloaded_locationmanager Property LocationManager Auto
 String[] Property ModFlags Auto
-Quest Property DataManager Auto
 
 Function RunExport(String FileName) Native
 

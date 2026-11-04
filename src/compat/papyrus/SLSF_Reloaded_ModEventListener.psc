@@ -1,14 +1,13 @@
-Scriptname SLSF_Reloaded_ModEventListener extends Quest
+ScriptName SLSF_Reloaded_ModEventListener Extends Quest
 
-Quest Property VisibilityManager Auto
+slsf_reloaded_dynamicanonymity Property Anonymity Auto
+slsf_reloaded_datamanager Property Data Auto
+slsf_reloaded_famemanager Property FameManager Auto
+slsf_reloaded_locationmanager Property LocationManager Auto
+slsf_reloaded_logger Property Logger Auto
+slsf_reloaded_playerscript Property PlayerScript Auto
 GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
-Quest Property LocationManager Auto
-ReferenceAlias Property playerScript Auto
-Quest Property FameManager Auto
-Quest Property Anonymity Auto
-Quest Property DATA Auto
-Quest Property Logger Auto
-
+slsf_reloaded_visibilitymanager Property VisibilityManager Auto
 
 Event OnInit()
     RegisterExternalEvents()

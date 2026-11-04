@@ -420,6 +420,32 @@ Result<double> ApplyManualSpread(State& state, RegionId source, RegionId target,
     return rule->newValue;
 }
 
+Result<void> ApplyDecayBatch(State& state, GameTime now, int multiplier,
+    const Configuration& configuration, const RegionSnapshot*, IRandom& rng) {
+    if (multiplier < 1) return Fail(Error::Code::InvalidArgument, "invalid decay multiplier");
+    const auto rules = CompileFameRules(configuration);
+    bool changed = false;
+    for (std::size_t row = 0; row < state.accounts.size(); ++row) {
+        auto& account = state.accounts[row];
+        const auto oldPositive = account.positiveMask, oldLocal = account.localMask, oldFlagged = account.flaggedMask;
+        const bool custom = row < state.accountKeys.size() && std::any_of(state.customRegions.begin(), state.customRegions.end(),
+            [&](const auto& entry) { return entry.key == state.accountKeys[row]; });
+        for (std::size_t slot = 0; slot < kFameCategoryCount; ++slot) {
+            const auto category = static_cast<FameCategory>(slot);
+            const double previous = account.fame[category];
+            if (previous <= 0 || account.protectionUntilDay[slot] > now.days) continue;
+            const auto roll = RuleDecayRoll(previous, rules.categoryMultipliers[slot], rng, rules, custom);
+            const auto next = std::max(0.0, std::trunc(previous - std::max(1.0, static_cast<double>(roll.amount) * multiplier)));
+            account.local[category] = next;
+            account.remote[category] = std::min(account.remote[category], next);
+            changed = changed || next != previous;
+        }
+        RepublishAccount(state, row, oldPositive, oldLocal, oldFlagged);
+    }
+    if (changed) BumpRevision(state);
+    return {};
+}
+
 Result<double> ApplyManualDecay(State& state, RegionId target, FameCategory category,
                                 int minimum, int maximum,
                                 const Configuration& configuration,

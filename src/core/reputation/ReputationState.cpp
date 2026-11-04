@@ -1,4 +1,5 @@
 #include "slsf/core/reputation/ReputationState.h"
+#include "slsf/core/persistence/StateCodec.h"
 
 #include <algorithm>
 #include <cmath>
@@ -138,6 +139,7 @@ void UpdateRegionCounts(CategoryMask before, CategoryMask after,
 }
 
 void RebuildDerivedSets(State& state, const ConfigurationData* configuration) noexcept {
+    const auto previousForbidden = state.derived.relationshipForbidden;
     state.derived = DerivedCategorySets{};
     RefreshNumericSets(state);
     state.derived.providerActive = state.providers.ActiveCategories();
@@ -145,6 +147,8 @@ void RebuildDerivedSets(State& state, const ConfigurationData* configuration) no
         state.derived.relationshipForbidden =
             configuration->relationships.forbiddenByFriend |
             configuration->relationships.forbiddenByLover;
+    } else {
+        state.derived.relationshipForbidden = previousForbidden;
     }
 }
 
@@ -382,6 +386,11 @@ Result<PersistentState> CaptureState(const State& state) {
                                       contribution.categories});
     }
     capture.customRegions = state.customRegions;
+    capture.namedProviders = state.namedProviders;
+    capture.spreadChances = state.spreadChances;
+    capture.recognition = state.recognition;
+    const auto metadata = ValidateSaveMetadata(capture);
+    if (!metadata) return std::unexpected(metadata.error());
     return capture;
 }
 
@@ -392,6 +401,7 @@ Result<RestoreReport> RestoreState(State& state, const PersistentState& persiste
         return Fail(Error::Code::Unsupported, "unsupported persistent state schema");
     }
     if (persistent.codecVersion != kPersistentStateCodecVersion &&
+        persistent.codecVersion != kPreviousPersistentStateCodecVersion &&
         persistent.codecVersion != kLegacyPersistentStateCodecVersion) {
         return Fail(Error::Code::Unsupported, "unsupported persistent state codec version");
     }
@@ -432,6 +442,9 @@ Result<RestoreReport> RestoreState(State& state, const PersistentState& persiste
     restored.accountKeys = regions.regions;
     restored.locationAccounts = regions.locationOwners;
     restored.customRegions = persistent.customRegions;
+    restored.namedProviders = persistent.namedProviders;
+    restored.spreadChances = persistent.spreadChances;
+    restored.recognition = persistent.recognition;
 
     RestoreReport report;
     std::set<StableRegionKey> seen;
@@ -506,6 +519,9 @@ PublishedState MakePublishedState(const State& state) {
     output.revision = state.revision;
     output.epoch = state.epoch;
     output.configurationRevision = state.configurationRevision;
+    output.namedProviders = state.namedProviders;
+    output.spreadChances = state.spreadChances;
+    output.customRegions = state.customRegions;
     output.locationAccounts = state.locationAccounts;
     for (auto& owner : output.locationAccounts) {
         if (owner && owner.value >= state.accounts.size()) {

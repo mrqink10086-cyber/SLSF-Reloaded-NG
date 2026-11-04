@@ -1,4 +1,6 @@
-Scriptname SLSF_Reloaded_Logger extends Quest
+ScriptName SLSF_Reloaded_Logger Extends Quest
+
+
 
 Function Log(String LogString, Int Severity = 0) Global Native
 

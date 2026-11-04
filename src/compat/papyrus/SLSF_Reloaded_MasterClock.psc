@@ -1,10 +1,16 @@
-Scriptname SLSF_Reloaded_MasterClock extends Quest
+ScriptName SLSF_Reloaded_MasterClock Extends Quest
 
-Quest Property LegacyOverwrite Auto
-Quest Property FameManager Auto
-Quest Property config Auto
+slsf_reloaded_mcm Property Config Auto
+Int Property DaySync Auto hidden
+Int Property DecayTicker Auto hidden
+slsf_reloaded_famemanager Property FameManager Auto
+Int Property HalfHourSync Auto hidden
+Int Property HourSync Auto hidden
+Float Property LastTimeChecked Auto hidden
+slsf_reloaded_legacyoverwrite Property LegacyOverwrite Auto
+slsf_reloaded_logger Property Logger Auto
 GlobalVariable Property SLSF_Reloaded_Skooma Auto
-Quest Property Logger Auto
+Int Property SpreadTicker Auto hidden
 
 Function Startup()
 EndFunction

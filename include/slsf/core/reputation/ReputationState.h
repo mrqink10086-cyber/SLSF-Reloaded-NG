@@ -61,6 +61,9 @@ struct State {
     std::vector<RegionId> locationAccounts;
     std::vector<LocationPersistentState> unresolvedAccounts;
     std::vector<CustomRegionState> customRegions;
+    std::vector<NamedProviderState> namedProviders;
+    std::vector<RegionSpreadState> spreadChances;
+    std::vector<RegionRecognitionState> recognition;
     ProviderState providers;
     DerivedCategorySets derived;
     std::array<std::uint32_t, kFameCategoryCount> positiveRegionCounts{};
