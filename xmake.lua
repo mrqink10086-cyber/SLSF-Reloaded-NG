@@ -29,7 +29,13 @@ target("SLSFCore")
     add_files("src/persistence/**.cpp")
     add_files("src/integrations/**.cpp")
     add_files("src/api/**.cpp")
-    add_files("src/compat/**.cpp")
+    if #os.files("src/compat/**.cpp") > 0 then
+        add_files("src/compat/**.cpp")
+        remove_files("src/compat/VmNatives.cpp")
+    end
+    add_files("src/io/**.cpp")
+    add_files("src/config/**.cpp")
+    add_files("src/ui/**.cpp")
     add_headerfiles("include/**.h")
     add_includedirs("include", { public = true })
 
@@ -62,6 +68,20 @@ target("SLSFAppearanceProbe")
     add_includedirs("include")
     add_deps("SLSFCore")
 
+target("SLSFConfigProbe")
+    set_kind("binary")
+    add_cxflags("/utf-8")
+    add_files("tests/probe/ConfigProbe.cpp")
+    add_includedirs("include")
+    add_deps("SLSFCore")
+
+target("SLSFMenuFrameworkProbe")
+    set_kind("binary")
+    add_cxflags("/utf-8")
+    add_files("tests/probe/MenuFrameworkProbe.cpp")
+    add_includedirs("include")
+    add_deps("SLSFCore")
+
 target("SLSFReloadedNG")
     add_rules("commonlibsse-ng.plugin", {
         name = "SLSF Reloaded NG",
@@ -71,6 +91,12 @@ target("SLSFReloadedNG")
     add_files("src/main.cpp")
     if #os.files("src/boundary/**.cpp") > 0 then
         add_files("src/boundary/**.cpp")
+    end
+    if #os.files("src/compat/**.cpp") > 0 then
+        add_files("src/compat/**.cpp")
+    end
+    if #os.files("src/ui/**.cpp") > 0 then
+        add_files("src/ui/**.cpp")
     end
     add_headerfiles("src/**.h")
     add_includedirs("src")
@@ -97,7 +123,13 @@ target("SLSFCoreAsan")
     add_files("src/persistence/**.cpp")
     add_files("src/integrations/**.cpp")
     add_files("src/api/**.cpp")
-    add_files("src/compat/**.cpp")
+    if #os.files("src/compat/**.cpp") > 0 then
+        add_files("src/compat/**.cpp")
+        remove_files("src/compat/VmNatives.cpp")
+    end
+    add_files("src/io/**.cpp")
+    add_files("src/config/**.cpp")
+    add_files("src/ui/**.cpp")
     add_headerfiles("include/**.h")
     add_includedirs("include", { public = true })
     add_cxflags("/fsanitize=address", "/Od", "/Zi", "/D_DISABLE_STRING_ANNOTATION", "/D_DISABLE_VECTOR_ANNOTATION", { force = true })

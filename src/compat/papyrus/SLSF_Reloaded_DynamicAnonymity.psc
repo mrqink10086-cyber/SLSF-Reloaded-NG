@@ -1,28 +1,45 @@
-;SLSF_Reloaded_DynamicAnonymity.psc - thin Papyrus facade (group 07, task B06).
-;
-; Frozen downstream-client declarations.  Every function forwards
-; to the native SLSF Reloaded NG module; no business logic lives
-; in Papyrus.  Compiled to PEX from these declarations, the frozen
-; PEXs are the compatibility oracle against the original plugin.
-;
-; Original instance bindings (see contracts/legacy-api.json):
-;   CompareLocations -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   SetLastExitTime -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   SetLastEnterTime -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CheckRecognitionTimeIncrease -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CheckRecognitionTimeDecay -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   UpdateCurrentLocationAnonymity -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   GetAnonymity -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CheckAnonymityStatus -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   ThaneStatus -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;
+Scriptname SLSF_Reloaded_DynamicAnonymity extends Quest
 
-Public Function CompareLocations(Location OldLocation, Location NewLocation)
-Public Function SetLastExitTime(String FameLocation, Float GameTime)
-Public Function SetLastEnterTime(String FameLocation, Float GameTime)
-Public Function CheckRecognitionTimeIncrease(String FameLocation)
-Public Function CheckRecognitionTimeDecay(String FameLocation)
+Form Property DLC2StoneCleanse Auto
+Float[] Property DefaultLocationRecognitionTime Auto
+Quest Property LocationManager Auto
+Quest Property DataManager Auto
+GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
+Quest Property config Auto
+Form Property ThaneScript Auto
+Quest Property VisibilityManager Auto
+Form Property OrcFriends Auto
+Float[] Property CustomLocationLastExitTime Auto
+Float[] Property DefaultLocationVisitTime Auto
+Float[] Property DefaultLocationLastExitTime Auto
+Bool[] Property CustomLocationLocalAnonymityStartedAsTrue Auto
+Bool[] Property CustomLocationLocalAnonymityFlag Auto
+Bool[] Property DefaultLocationLocalAnonymityStartedAsTrue Auto
+Float[] Property CustomLocationVisitTime Auto
+Float[] Property CustomLocationRecognitionTime Auto
+Quest Property Logger Auto
+Float[] Property CustomLocationLastEnterTime Auto
+Float[] Property DefaultLocationLastEnterTime Auto
+ReferenceAlias Property playerScript Auto
+Int Property IsAnonymous Auto
+Bool[] Property DefaultLocationLocalAnonymityFlag Auto
+
+Function CompareLocations(Location OldLocation, Location NewLocation) Native
+
+Function SetLastExitTime(String FameLocation, Float GameTime) Native
+
+Function SetLastEnterTime(String FameLocation, Float GameTime) Native
+
+Function CheckRecognitionTimeIncrease(String FameLocation) Native
+
+Function CheckRecognitionTimeDecay(String FameLocation) Native
+
 Function UpdateCurrentLocationAnonymity(Int LocationIndex, Float GameTime, Bool IsDefaultLocation)
-Public Function GetAnonymity(Location LocationRef)
+EndFunction
+
+Function GetAnonymity(Location LocationRef) Native
+
 Function CheckAnonymityStatus(Int LocationIndex, Bool IsDefaultLocation)
-Public Bool Function ThaneStatus(String FameLocation)
+EndFunction
+
+Bool Function ThaneStatus(String FameLocation) Native

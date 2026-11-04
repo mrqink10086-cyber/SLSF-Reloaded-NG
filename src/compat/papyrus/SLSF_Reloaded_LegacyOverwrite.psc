@@ -1,12 +1,10 @@
-;SLSF_Reloaded_LegacyOverwrite.psc - thin Papyrus facade (group 07, task B06).
-;
-; Frozen downstream-client declarations.  Every function forwards
-; to the native SLSF Reloaded NG module; no business logic lives
-; in Papyrus.  Compiled to PEX from these declarations, the frozen
-; PEXs are the compatibility oracle against the original plugin.
-;
-; Original instance bindings (see contracts/legacy-api.json):
-;   OverwriteLegacyFame -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;
+Scriptname SLSF_Reloaded_LegacyOverwrite extends Quest
+
+Quest Property mods Auto
+Quest Property LocationManager Auto
+Quest Property config Auto
+Quest Property DATA Auto
+Quest Property Logger Auto
 
 Function OverwriteLegacyFame()
+EndFunction

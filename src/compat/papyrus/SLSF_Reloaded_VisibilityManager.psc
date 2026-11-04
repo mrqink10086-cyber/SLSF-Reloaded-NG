@@ -1,54 +1,76 @@
-;SLSF_Reloaded_VisibilityManager.psc - thin Papyrus facade (group 07, task B06).
-;
-; Frozen downstream-client declarations.  Every function forwards
-; to the native SLSF Reloaded NG module; no business logic lives
-; in Papyrus.  Compiled to PEX from these declarations, the frozen
-; PEXs are the compatibility oracle against the original plugin.
-;
-; Original instance bindings (see contracts/legacy-api.json):
-;   Startup -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   UpdateTattooSlots -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   FullUpdate -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsPlayerAnonymous -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CheckAppliedTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountAppliedTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountVisibleTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountBodyTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountHandTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountFaceTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountFootTattoos -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsBodyTattooVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsFaceTattooVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsHandTattooVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsFootTattooVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsAssCumVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountVisibleAssCum -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsVaginalCumVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountVisibleVaginalCum -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsOralCumVisible -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CountVisibleOralCum -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CheckBondage -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;
+Scriptname SLSF_Reloaded_VisibilityManager extends Quest
+
+GlobalVariable Property VaginalCumGlobal Auto
+Keyword Property SLSF_Reloaded_DoesNotHideIdentity Auto
+ObjectReference Property PlayerRef Auto
+Quest Property config Auto
+GlobalVariable Property IsBelted Auto
+Quest Property mods Auto
+Quest Property DynamicAnonymityScript Auto
+GlobalVariable Property IsCollared Auto
+Keyword Property SLSF_Reloaded_DoesNotCoverBack Auto
+Keyword Property SLSF_Reloaded_CoversFeet Auto
+GlobalVariable Property AnalCumCountGlobal Auto
+GlobalVariable Property VaginalCumCountGlobal Auto
+GlobalVariable Property TotalCumCountGlobal Auto
+Form Property SexLab Auto
+Keyword Property SLSF_Reloaded_DoesNotCoverHands Auto
+GlobalVariable Property IsVisiblyBound Auto
+Keyword Property SLSF_Reloaded_DoesNotCoverFeet Auto
+GlobalVariable Property OralCumGlobal Auto
+GlobalVariable Property OralCumCountGlobal Auto
+Keyword Property SLSF_Reloaded_HidesIdentity Auto
+Quest Property Logger Auto
+GlobalVariable Property IsLightlyBound Auto
+Keyword Property SLSF_Reloaded_CoversBack Auto
+GlobalVariable Property IsHeavilyBound Auto
+GlobalVariable Property AnalCumGlobal Auto
+Keyword Property SLSF_Reloaded_CoversHands Auto
 
 Function Startup()
+EndFunction
+
 Function UpdateTattooSlots()
+EndFunction
+
 Function FullUpdate()
-Public Bool Function IsPlayerAnonymous()
+EndFunction
+
+Bool Function IsPlayerAnonymous() Native
+
 Function CheckAppliedTattoos()
-Public Int Function CountAppliedTattoos(String TattooArea)
-Public Int Function CountVisibleTattoos()
-Public Int Function CountBodyTattoos()
-Public Int Function CountHandTattoos()
-Public Int Function CountFaceTattoos()
-Public Int Function CountFootTattoos()
-Public Bool Function IsBodyTattooVisible(Int SlotNumber)
-Public Bool Function IsFaceTattooVisible(Int SlotNumber)
-Public Bool Function IsHandTattooVisible(Int SlotNumber)
-Public Bool Function IsFootTattooVisible(Int SlotNumber)
-Public Bool Function IsAssCumVisible()
-Public Int Function CountVisibleAssCum()
-Public Bool Function IsVaginalCumVisible()
-Public Int Function CountVisibleVaginalCum()
-Public Bool Function IsOralCumVisible()
-Public Int Function CountVisibleOralCum()
-Public Function CheckBondage()
+EndFunction
+
+Int Function CountAppliedTattoos(String TattooArea) Native
+
+Int Function CountVisibleTattoos() Native
+
+Int Function CountBodyTattoos() Native
+
+Int Function CountHandTattoos() Native
+
+Int Function CountFaceTattoos() Native
+
+Int Function CountFootTattoos() Native
+
+Bool Function IsBodyTattooVisible(Int SlotNumber) Native
+
+Bool Function IsFaceTattooVisible(Int SlotNumber) Native
+
+Bool Function IsHandTattooVisible(Int SlotNumber) Native
+
+Bool Function IsFootTattooVisible(Int SlotNumber) Native
+
+Bool Function IsAssCumVisible() Native
+
+Int Function CountVisibleAssCum() Native
+
+Bool Function IsVaginalCumVisible() Native
+
+Int Function CountVisibleVaginalCum() Native
+
+Bool Function IsOralCumVisible() Native
+
+Int Function CountVisibleOralCum() Native
+
+Function CheckBondage() Native

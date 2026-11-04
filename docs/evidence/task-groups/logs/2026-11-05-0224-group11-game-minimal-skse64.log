@@ -1,0 +1,26 @@
+SKSE64 runtime: initialize (version = 2.2.6 01064920 01DD6C89CE2D8D91, os = 6.2 (9200))
+imagebase = 00007FF7A7980000
+reloc mgr imagebase = 00007FF7A7980000
+config path = E:\st\steamapps\common\Skyrim Special Edition\Data\SKSE\skse.ini
+plugin directory = E:\st\steamapps\common\Skyrim Special Edition\Data\SKSE\Plugins\
+scanning plugin directory E:\st\steamapps\common\Skyrim Special Edition\Data\SKSE\Plugins\
+checking plugin SLSFReloadedNG.dll
+loading plugin "SLSF Reloaded NG"
+registering plugin listener for SKSE at 1 of 3
+plugin SLSFReloadedNG.dll (00000001 SLSF Reloaded NG 00010000) loaded correctly (handle 1)
+dispatch message (0) to plugin listeners
+sending message type 0 to plugin 1
+registering plugin listener for JContainers64 at 1 of 2
+registering plugin listener for SlaveTatsNG at 1 of 2
+dispatched message.
+dispatch message (1) to plugin listeners
+sending message type 1 to plugin 1
+dispatched message.
+init complete
+hooked dinput
+dispatch message (6) to plugin listeners
+sending message type 6 to plugin 1
+dispatched message.
+dispatch message (8) to plugin listeners
+sending message type 8 to plugin 1
+dispatched message.

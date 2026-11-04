@@ -11,11 +11,22 @@
 #include "slsf/boundary/ProviderCollectors.h"
 #include "slsf/boundary/AppearanceProviders.h"
 
+#include <chrono>
+#include <thread>
+#include "slsf/compat/VmNatives.h"
+#include "slsf/compat/ModEventBridge.h"
+#include "slsf/config/ConfigurationStore.h"
+#include "slsf/ui/Menu.h"
+#include "slsf/api/PublicApi.h"
+#include "slsf/io/JsonTransfer.h"
+
 #include <Windows.h>
 
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <filesystem>
+#include <fstream>
 #include <limits>
 #include <map>
 #include <memory>
@@ -29,41 +40,6 @@ using slsf::ConfigurationRevision;
 using slsf::ConfigurationSnapshot;
 using slsf::ConfigurationUpdateResult;
 using slsf::ConfigurationUpdateStatus;
-
-class BootstrapConfigurationSource final : public slsf::IConfigurationSource {
-public:
-    BootstrapConfigurationSource() {
-        auto data = std::make_shared<slsf::ConfigurationData>();
-        data->parameters = slsf::LegacyDefaultParameters();
-        const ConfigurationRevision revision{1};
-        snapshot_.revision = revision;
-        snapshot_.data = std::move(data);
-        snapshot_.lastUpdate = ConfigurationUpdateResult{
-            .status = ConfigurationUpdateStatus::Unchanged,
-            .revision = revision,
-            .message = "bootstrap defaults; JSON adapter pending group 10",
-        };
-    }
-
-    ConfigurationSnapshot Current() const override { return snapshot_; }
-
-    ConfigurationUpdateResult Reload() override {
-        ++reloads_;
-        auto update = ConfigurationUpdateResult{
-            .status = ConfigurationUpdateStatus::Unchanged,
-            .revision = snapshot_.revision,
-            .message = "bootstrap source reloaded; JSON adapter pending group 10",
-        };
-        snapshot_.lastUpdate = update;
-        return update;
-    }
-
-    std::uint64_t Reloads() const { return reloads_; }
-
-private:
-    ConfigurationSnapshot snapshot_;
-    std::uint64_t reloads_{};
-};
 
 // Minimal ABI surface: DDNG publishes a C++ object through
 // DeviousDevices.dll!GetAPI; GetVersion() is the first virtual.
@@ -107,7 +83,7 @@ bool LogHostVersions(const SKSE::LoadInterface* a_skse) {
     return true;
 }
 
-std::unique_ptr<BootstrapConfigurationSource> g_configuration;
+std::unique_ptr<slsf::config::ConfigurationStore> g_configuration;
 std::unique_ptr<slsf::Lifecycle> g_lifecycle;
 std::unique_ptr<slsf::engine::EventBridge> g_events;
 std::unique_ptr<slsf::integrations::CapabilityRegistry> g_capabilities;
@@ -461,6 +437,197 @@ void OnSerializationRevert(SKSE::SerializationInterface* serialization) {
                         [&] { OnSerializationRevertBody(serialization); });
 }
 
+slsf::api::PublicApi& MenuPublicApi() {
+    static slsf::api::PublicApi api{g_lifecycle->Executor(), g_regions};
+    return api;
+}
+
+void WireCompatBridge() {
+    const auto* lifecycle = g_lifecycle.get();
+    auto* bridge = slsf::compat::VmNatives::Bridge();
+    if (bridge == nullptr) {
+        static std::unique_ptr<slsf::compat::ModEventBridge> compatBridge =
+            std::make_unique<slsf::compat::ModEventBridge>();
+        bridge = compatBridge.get();
+        slsf::compat::VmNatives::BindBridge(bridge);
+        slsf::compat::VmNatives::BindApiProvider([] {
+            return g_lifecycle ? &MenuPublicApi() : nullptr;
+        });
+        logs::info("compat: bridge created");
+    }
+    auto& api = MenuPublicApi();
+    api.AttachToBridge(*bridge);
+    bridge->SetReplySink([](const std::string& eventName,
+                            const std::vector<slsf::compat::ModEventValue>& values) {
+        slsf::compat::VmNatives::DeliverReply(eventName, values);
+    });
+    (void)lifecycle;
+}
+
+std::string OutcomeText(slsf::Status status, const std::string& message) {
+    std::string text(slsf::ToString(status));
+    if (!message.empty()) {
+        text += ": ";
+        text += message;
+    }
+    return text;
+}
+
+std::string OutcomeText(const slsf::CommandResult& result) {
+    return OutcomeText(result.status, result.message);
+}
+
+void InstallSlsfMenu() {
+    slsf::ui::Menu::Ports ports;
+    ports.snapshot = [] {
+        return g_configuration ? g_configuration->Current() : slsf::ConfigurationSnapshot{};
+    };
+    ports.reload = [] {
+        return g_configuration ? g_configuration->Reload() : slsf::ConfigurationUpdateResult{};
+    };
+    ports.commit = [](slsf::ConfigurationData edit) {
+        return g_configuration ? g_configuration->ApplyEdit(std::move(edit))
+                               : slsf::ConfigurationUpdateResult{};
+    };
+    ports.regions = [] { return &g_regions; };
+    ports.status = [] {
+        if (g_lifecycle != nullptr) {
+            const slsf::LifecycleStatus status = g_lifecycle->Status();
+            std::string label = "phase=";
+            label += status.phase == slsf::LifecyclePhase::Active
+                         ? "active"
+                         : (status.phase == slsf::LifecyclePhase::Preparing ? "preparing" : "detached");
+            return label;
+        }
+        return std::string("phase=detached");
+    };
+    ports.fameCommand = [](slsf::ui::Menu::FameCommand command, const std::string& location,
+                           const std::string& target, const std::string& category, int amount,
+                           int extra) {
+        if (g_lifecycle == nullptr) {
+            return std::string("executor not ready");
+        }
+        slsf::api::PublicApi& api = MenuPublicApi();
+        switch (command) {
+        case slsf::ui::Menu::FameCommand::SetFame:
+            return OutcomeText(api.SetFameValue(location, category, amount));
+        case slsf::ui::Menu::FameCommand::ClearFame:
+            return OutcomeText(api.ClearFame(location, category));
+        case slsf::ui::Menu::FameCommand::ClearAllFame:
+            return OutcomeText(api.ClearAllFame(location));
+        case slsf::ui::Menu::FameCommand::ManualSpread: {
+            const auto outcome = api.ManualSpread(location, target, category, amount);
+            return OutcomeText(outcome.status, outcome.message);
+        }
+        case slsf::ui::Menu::FameCommand::ManualDecay: {
+            const auto outcome =
+                api.ManualDecay(location, category, amount <= extra ? amount : extra,
+                                amount <= extra ? extra : amount);
+            return OutcomeText(outcome.status, outcome.message);
+        }
+        case slsf::ui::Menu::FameCommand::ManualGain: {
+            const auto outcome =
+                api.ManualGain(location, category, amount <= extra ? amount : extra,
+                               amount <= extra ? extra : amount);
+            return OutcomeText(outcome.status, outcome.message);
+        }
+        case slsf::ui::Menu::FameCommand::SpreadPulse:
+            return OutcomeText(api.SpreadPulse({location}));
+        }
+        return std::string("unknown command");
+    };
+    ports.legacyFiles = [] {
+        std::vector<std::string> files;
+        std::error_code ec;
+        std::filesystem::directory_iterator it(
+            "Data/SKSE/Plugins/StorageUtilData/SLSF_Reloaded", ec);
+        if (ec) {
+            return files;
+        }
+        for (const auto& entry : it) {
+            std::error_code fileError;
+            if (!entry.is_regular_file(fileError) || fileError) {
+                continue;
+            }
+            if (entry.path().extension() == ".json") {
+                files.push_back(entry.path().filename().string());
+            }
+        }
+        std::sort(files.begin(), files.end());
+        return files;
+    };
+    ports.legacyImport = [](const std::string& file) {
+        std::string path = "Data/SKSE/Plugins/StorageUtilData/SLSF_Reloaded/" + file;
+        if (path.size() < 5 || path.compare(path.size() - 5, 5, ".json") != 0) {
+            path += ".json";
+        }
+        std::ifstream stream(path, std::ios::binary);
+        if (!stream) {
+            return "legacy import: cannot open " + file;
+        }
+        const std::string bytes((std::istreambuf_iterator<char>(stream)),
+                                std::istreambuf_iterator<char>());
+        std::string parseError;
+        const slsf::io::JsonPtr parsed =
+            slsf::io::JsonValue::Parse(bytes, 4u << 20, &parseError);
+        if (parsed == nullptr) {
+            return "legacy import: invalid JSON in " + file + ": " + parseError;
+        }
+        const auto import =
+            slsf::io::ExtractLegacyImport(parsed, slsf::api::PublicApi::FlagNames());
+        if (!import.has_value()) {
+            return std::string("legacy import: ") + import.error().message;
+        }
+
+        if (g_lifecycle == nullptr) {
+            return std::string("legacy import: executor not ready");
+        }
+        slsf::api::PublicApi& api = MenuPublicApi();
+
+        std::size_t applied = 0;
+        std::size_t rejected = 0;
+        std::string firstError;
+        for (const auto& entry : import->fame) {
+            const slsf::CommandResult result = api.SetFameValue(
+                entry.location, std::string(slsf::ToString(entry.category)), entry.value);
+            if (result.status == slsf::Status::Ready) {
+                ++applied;
+            } else {
+                ++rejected;
+                if (firstError.empty()) {
+                    firstError = entry.location + " (" + result.message + ")";
+                }
+            }
+        }
+        std::size_t modsRegistered = 0;
+        std::size_t flagsImported = 0;
+        for (const auto& mod : import->modFlags) {
+            if (!api.RegisterMod(mod.mod)) {
+                continue;
+            }
+            ++modsRegistered;
+            for (const auto& [flag, enabled] : mod.flags) {
+                if (enabled) {
+                    api.SetExternalFlag(mod.mod, flag, true);
+                    ++flagsImported;
+                }
+            }
+        }
+        std::string summary = "legacy import '" + file + "': fame " +
+                              std::to_string(applied) + " applied, " +
+                              std::to_string(rejected) + " rejected";
+        summary += ", spread " + std::to_string(import->spread.size()) +
+                   " extracted, mods " + std::to_string(modsRegistered) + " registered, " +
+                   std::to_string(flagsImported) + " flags";
+        if (!firstError.empty()) {
+            summary += "; first rejection: " + firstError;
+        }
+        return summary;
+    };
+    const bool installed = slsf::ui::Menu::Instance().Install(std::move(ports));
+    logs::info("menu: framework binding installed={}", installed);
+}
+
 void OnMessageBody(SKSE::MessagingInterface::Message* message) {
     if (message == nullptr) {
         return;
@@ -508,10 +675,12 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
             EnsureLifecycle();
         }
         if (g_lifecycle) {
+            WireCompatBridge();
             const auto update = g_lifecycle->ReloadConfiguration();
             logs::info("lifecycle: startup configuration status={} message={}",
                        static_cast<int>(update.status), update.message);
         }
+        InstallSlsfMenu();
         if (g_capabilities) {
             g_capabilities->EnsureAll();
             LogCapabilities("dataloaded");
@@ -521,6 +690,24 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
         }, [](const slsf::Epoch& epoch) {
             return g_lifecycle && g_lifecycle->IsEpochCurrent(epoch);
         });
+        if (auto* tasks = SKSE::GetTaskInterface()) {
+            tasks->AddTask([] { slsf::compat::VmNatives::KickFrozenProbe(); });
+            std::thread delayed{[] {
+                std::this_thread::sleep_for(std::chrono::seconds(6));
+                if (auto* late = SKSE::GetTaskInterface()) {
+                    late->AddTask([] {
+                        const slsf::compat::VmNatives::Counters counters{
+                            slsf::compat::VmNatives::Stats()};
+                        logs::info("compat: counters+6s nativeCalls={} sinkEvents={} repliesScheduled={} repliesSent={} fallbacks={}",
+                                   counters.nativeCalls, counters.sinkEvents,
+                                   counters.repliesScheduled, counters.repliesSent,
+                                   counters.implFallbacks);
+                        slsf::compat::VmNatives::KickFrozenProbe();
+                    });
+                }
+            }};
+            delayed.detach();
+        }
         break;
     case SKSE::MessagingInterface::kSaveGame:
         break;
@@ -546,9 +733,18 @@ SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
     // for the first diffusion round and stays stable for this process.
     logs::info("lifecycle: baseline ISA check avx2={}", slsf::KernelSupportsAvx2());
 
-    g_configuration = std::make_unique<BootstrapConfigurationSource>();
+    g_configuration = slsf::config::ConfigurationStore::Open(
+        std::make_unique<slsf::config::DiskConfigurationFile>(
+            "Data/SKSE/Plugins/SLSFReloadedNG.json"));
+    if (g_configuration != nullptr) {
+        g_configuration->BindNotify([](const slsf::ConfigurationSnapshot& snapshot) {
+            logs::info("lifecycle: configuration published revision={} status={} message={}",
+                       snapshot.revision.value, static_cast<int>(snapshot.lastUpdate.status),
+                       snapshot.lastUpdate.message);
+        });
+    }
     auto* papyrus = SKSE::GetPapyrusInterface();
-    if (!papyrus || !papyrus->Register(slsf::boundary::RegisterProviderCollectors)) return false;
+    if (!papyrus || !papyrus->Register(slsf::boundary::RegisterProviderCollectors, slsf::compat::VmNatives::RegisterPapyrusNatives)) return false;
 
     auto capabilities = std::make_unique<slsf::integrations::CapabilityRegistry>(ProbeDDNG);
     const bool ddngRequired = capabilities->Require(slsf::integrations::CapabilityRequirement{

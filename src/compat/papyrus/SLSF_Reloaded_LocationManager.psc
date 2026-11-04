@@ -1,38 +1,54 @@
-;SLSF_Reloaded_LocationManager.psc - thin Papyrus facade (group 07, task B06).
-;
-; Frozen downstream-client declarations.  Every function forwards
-; to the native SLSF Reloaded NG module; no business logic lives
-; in Papyrus.  Compiled to PEX from these declarations, the frozen
-; PEXs are the compatibility oracle against the original plugin.
-;
-; Original instance bindings (see contracts/legacy-api.json):
-;   IsLocationValid -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   LocationCanBeRegistered -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   UpdateCustomLocationCount -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   FetchLocationName -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   CurrentLocationName -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   GetLocalizedFameLocation -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   GetFameLocation -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   IsLocationExcluded -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   RegisterCustomLocation -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   AddToLocationList -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   RemoveFromLocationList -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   UnregisterCustomLocation -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   RegisterCustomLocationExternal -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;   UnregisterCustomLocationExternal -> quest SLSF_Reloaded_Managers (SLSF Reloaded.esp, local 0x80A)
-;
+Scriptname SLSF_Reloaded_LocationManager extends Quest
 
-Public Bool Function IsLocationValid(String CheckedLocation)
-Public Bool Function LocationCanBeRegistered(String LocationToRegister, Bool ExternalRegister)
-Public Function UpdateCustomLocationCount()
-Public String Function FetchLocationName(Location LocationRef)
-Public String Function CurrentLocationName()
-Public String Function GetLocalizedFameLocation(Location LocationRef)
-Public String Function GetFameLocation(Location LocationRef)
-Public Bool Function IsLocationExcluded(Location LocationRef)
-Public Function RegisterCustomLocation()
-Public Function AddToLocationList(Location LocationRef)
-Public Function RemoveFromLocationList(String FameLocation)
-Public Function UnregisterCustomLocation(Int LocationIndexToUnregister)
-Public Function RegisterCustomLocationExternal(String LocationToRegister, Location LocationRefToRegister)
-Public Function UnregisterCustomLocationExternal(String LocationToUnregister)
+Int[] Property OverrideExcludedLocation Auto
+String[] Property WhiterunLocationList Auto
+Quest Property DataManager Auto
+GlobalVariable Property SLSF_Reloaded_CustomLocationCount Auto
+Int[] Property MinorLocations Auto
+Int[] Property ExcludedLocations Auto
+String[] Property CustomLocation Auto
+String[] Property RiftLocationList Auto
+String[] Property WinterholdLocationList Auto
+Quest Property DynamicAnonymityScript Auto
+String[] Property EastmarchLocationList Auto
+String[] Property HjaalmarchLocationList Auto
+String[] Property PaleLocationList Auto
+Form Property SolstheimLocation Auto
+Int[] Property MajorLocations Auto
+String[] Property HaafingarLocationList Auto
+String[] Property SolstheimLocationList Auto
+Int[] Property CustomLocationRef Auto
+String[] Property FalkreathLocationList Auto
+String[] Property DefaultLocation Auto
+Quest Property Logger Auto
+String[] Property UndefinedLocationList Auto
+String[] Property ReachLocationList Auto
+Quest Property FameManager Auto
+
+Bool Function IsLocationValid(String CheckedLocation) Native
+
+Bool Function LocationCanBeRegistered(String LocationToRegister, Bool ExternalRegister = false) Native
+
+Function UpdateCustomLocationCount() Native
+
+String Function FetchLocationName(Location LocationRef) Native
+
+String Function CurrentLocationName() Native
+
+String Function GetLocalizedFameLocation(Location LocationRef) Native
+
+String Function GetFameLocation(Location LocationRef) Native
+
+Bool Function IsLocationExcluded(Location LocationRef) Native
+
+Function RegisterCustomLocation() Native
+
+Function AddToLocationList(Location LocationRef) Native
+
+Function RemoveFromLocationList(String FameLocation) Native
+
+Function UnregisterCustomLocation(Int LocationIndexToUnregister) Native
+
+Function RegisterCustomLocationExternal(String LocationToRegister, Location LocationRefToRegister) Native
+
+Function UnregisterCustomLocationExternal(String LocationToUnregister) Native

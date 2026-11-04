@@ -1,0 +1,7 @@
+{"int": {"whiterun.whore": 12, "whiterun.slut": 3, "riften.whore": 7,
+  "whiterun.famespreadchance": 55, "modtotal": 2, "locationtotal": 1,
+  "example mod.esp.sex worker": 1},
+ "float": {"temp.float.value": 1.5},
+ "string": {"modindex[0]": "Example Mod.esp", "modindex[1]": "Second Mod.esl",
+  "location_string_0": "Favorite House"},
+ "form": {"location_form_0": "0x00085248|Skyrim.esm"}}

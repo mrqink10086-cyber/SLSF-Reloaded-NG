@@ -1,0 +1,27 @@
+[02:41:35.139] [43956] [I] SLSF Reloaded NG v0-1-0-0
+[02:41:35.139] [43956] [I] SLSF Reloaded NG lifecycle bootstrap
+[02:41:35.139] [43956] [I] host: runtime=1.6.1170.0 skse=2.2.6.0 commonlib=unknown
+[02:41:35.139] [43956] [I] lifecycle: baseline ISA check avx2=true
+[02:41:35.139] [43956] [I] lifecycle: serialization and messaging listeners registered
+[02:41:35.140] [43956] [E] Failed to register messaging listener for JContainers64
+[02:41:35.140] [43956] [E] Failed to register messaging listener for SlaveTatsNG
+[02:41:35.140] [43956] [I] appearance: PostLoad subscriptions JContainers64=false SlaveTatsNG=false
+[02:41:35.140] [43956] [I] [capability:postload] ddng state=Waiting version=0 api=0 reason=module not loaded yet business=equipment visibility and device facts
+[02:41:35.140] [43956] [I] [capability:postpostload] ddng state=Waiting version=0 api=0 reason=module not loaded yet business=equipment visibility and device facts
+[02:41:37.681] [31360] [I] compat: registered 135 papyrus bridge functions
+[02:41:39.287] [23328] [I] lifecycle: static table built locations=766 regions=766 ownershipRules=81
+[02:41:39.287] [23328] [I] compat: bridge created
+[02:41:39.287] [23328] [I] lifecycle: configuration published revision=1 status=0 message=configuration updated
+[02:41:39.287] [23328] [I] lifecycle: startup configuration status=0 message=configuration applied
+[02:41:39.287] [23328] [I] menu: framework binding installed=false
+[02:41:39.287] [23328] [I] [capability:dataloaded] ddng state=Missing version=0 api=0 reason=module not loaded business=equipment visibility and device facts
+[02:41:39.287] [23328] [I] appearance: JC bound=false SlaveTats capability=0
+[02:41:44.632] [43956] [I] compat: frozen probe dispatched
+[02:41:45.291] [43956] [I] compat: counters+6s nativeCalls=0 sinkEvents=0 repliesScheduled=0 repliesSent=0 fallbacks=51
+[02:41:45.291] [43956] [I] compat: frozen probe dispatched
+[02:42:23.471] [43956] [I] lifecycle: pre-load closed the business switch
+[02:42:23.472] [43956] [E] lifecycle: post-load activation failed: host load failed; prepared session discarded
+[02:42:24.923] [43956] [I] compat: registered 135 papyrus bridge functions
+[02:42:35.836] [43956] [I] lifecycle: pre-load closed the business switch
+[02:42:35.883] [43956] [I] lifecycle: revert closed the business switch
+[02:42:37.923] [43956] [E] lifecycle: post-load activation failed: no prepared session to activate

@@ -1,20 +1,22 @@
-;SLSF_Reloaded_MasterClock.psc - thin Papyrus facade (group 07, task B06).
-;
-; Frozen downstream-client declarations.  Every function forwards
-; to the native SLSF Reloaded NG module; no business logic lives
-; in Papyrus.  Compiled to PEX from these declarations, the frozen
-; PEXs are the compatibility oracle against the original plugin.
-;
-; Original instance bindings (see contracts/legacy-api.json):
-;   Startup -> quest SLSF_Reloaded_MasterClock (SLSF Reloaded.esp, local 0x839)
-;   HalfHourChecks -> quest SLSF_Reloaded_MasterClock (SLSF Reloaded.esp, local 0x839)
-;   DecayHandler -> quest SLSF_Reloaded_MasterClock (SLSF Reloaded.esp, local 0x839)
-;   SpreadHandler -> quest SLSF_Reloaded_MasterClock (SLSF Reloaded.esp, local 0x839)
-;   PeriodicFameUpdate -> quest SLSF_Reloaded_MasterClock (SLSF Reloaded.esp, local 0x839)
-;
+Scriptname SLSF_Reloaded_MasterClock extends Quest
+
+Quest Property LegacyOverwrite Auto
+Quest Property FameManager Auto
+Quest Property config Auto
+GlobalVariable Property SLSF_Reloaded_Skooma Auto
+Quest Property Logger Auto
 
 Function Startup()
+EndFunction
+
 Function HalfHourChecks(Int Multiplier)
+EndFunction
+
 Function DecayHandler(Int Multiplier)
+EndFunction
+
 Function SpreadHandler(Int Multiplier)
+EndFunction
+
 Function PeriodicFameUpdate(Int Multiplier)
+EndFunction

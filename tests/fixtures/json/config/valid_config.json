@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "features": {"reduceFameAtNight": true, "fameSpreadRestrictions": true,
+   "dynamicAnonymity": true},
+  "categories": {"multipliers": {"oral": 1.5, "anal": 0.5},
+   "minimumFameToSpread": 25, "maximumSpreadCategories": 4,
+   "maximumSpreadPercentage": 35},
+  "relationships": {"forbiddenByFriend": ["bound", "cum dump"],
+   "forbiddenByLover": [], "friendHighFameThreshold": 10,
+   "loverHighFameThreshold": 55, "friendBetrayChance": 45, "loverBetrayChance": 20},
+  "timing": {"decayPeriodDays": 0.75, "spreadPeriodDays": 1.5, "nightStart": 21.5,
+   "nightEnd": 5.5, "failedSpreadIncrease": 12, "successfulSpreadReduction": 8},
+  "parameters": {"decayPerDay": 2.0, "relaxationPerDay": 1.0,
+   "spreadThreshold": 28.0, "spreadRetention": 0.55, "maxFame": 140.0},
+  "connections": [{"from": {"plugin": "Whiterun.esp", "formId": 256},
+    "to": {"plugin": "Whiterun.esp", "formId": 512}, "enabled": true}],
+  "menu": {"notifications": {"fameIncrease": true, "fameDecay": false,
+    "fameSpread": true},
+   "selectedRegions": [{"plugin": "Whiterun.esp", "formId": 256}]}
+}

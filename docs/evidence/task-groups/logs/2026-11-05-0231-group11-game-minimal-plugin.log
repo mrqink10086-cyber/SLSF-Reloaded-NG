@@ -1,0 +1,21 @@
+[02:31:34.644] [43080] [I] SLSF Reloaded NG v0-1-0-0
+[02:31:34.644] [43080] [I] SLSF Reloaded NG lifecycle bootstrap
+[02:31:34.644] [43080] [I] host: runtime=1.6.1170.0 skse=2.2.6.0 commonlib=unknown
+[02:31:34.644] [43080] [I] lifecycle: baseline ISA check avx2=true
+[02:31:34.644] [43080] [I] lifecycle: serialization and messaging listeners registered
+[02:31:34.646] [43080] [E] Failed to register messaging listener for JContainers64
+[02:31:34.646] [43080] [E] Failed to register messaging listener for SlaveTatsNG
+[02:31:34.646] [43080] [I] appearance: PostLoad subscriptions JContainers64=false SlaveTatsNG=false
+[02:31:34.646] [43080] [I] [capability:postload] ddng state=Waiting version=0 api=0 reason=module not loaded yet business=equipment visibility and device facts
+[02:31:34.646] [43080] [I] [capability:postpostload] ddng state=Waiting version=0 api=0 reason=module not loaded yet business=equipment visibility and device facts
+[02:31:37.373] [34944] [I] compat: registered 135 papyrus bridge functions
+[02:31:39.042] [25808] [I] lifecycle: static table built locations=766 regions=766 ownershipRules=81
+[02:31:39.042] [25808] [I] compat: bridge created
+[02:31:39.043] [25808] [I] lifecycle: configuration published revision=1 status=0 message=configuration updated
+[02:31:39.043] [25808] [I] lifecycle: startup configuration status=0 message=configuration applied
+[02:31:39.043] [25808] [I] menu: framework binding installed=false
+[02:31:39.043] [25808] [I] [capability:dataloaded] ddng state=Missing version=0 api=0 reason=module not loaded business=equipment visibility and device facts
+[02:31:39.043] [25808] [I] appearance: JC bound=false SlaveTats capability=0
+[02:31:44.328] [43080] [I] compat: frozen probe dispatched
+[02:31:44.328] [43080] [I] compat: counters nativeCalls=0 sinkEvents=0 repliesScheduled=0 repliesSent=0 fallbacks=51
+[02:31:46.949] [43080] [I] lifecycle: new-game active epoch=1.0.0 configRevision=1 restored=0 unresolved=0 droppedEdges=0 business=true

@@ -185,6 +185,18 @@ function Invoke-OfflineWakeProbe {
     if ($LASTEXITCODE -ne 0) {
         throw "SLSFAppearanceProbe failed with exit code $LASTEXITCODE"
     }
+
+    Invoke-Xmake build -y SLSFMenuFrameworkProbe
+    $menuProbeResolve = "import('core.project.config'); import('core.project.project'); config.load(); print(path.absolute(project.target('SLSFMenuFrameworkProbe'):targetfile()))"
+    $menuProbe = (& xmake lua -c $menuProbeResolve | Select-Object -Last 1)
+    if ($LASTEXITCODE -ne 0) {
+        throw 'could not resolve executable for SLSFMenuFrameworkProbe'
+    }
+    Write-Host 'RUN SLSFMenuFrameworkProbe'
+    & $menuProbe.Trim() | Tee-Object -FilePath (Join-Path $resultsRoot 'menu-framework-probe.txt')
+    if ($LASTEXITCODE -ne 0) {
+        throw "SLSFMenuFrameworkProbe failed with exit code $LASTEXITCODE"
+    }
 }
 
 function Invoke-Asan {
@@ -224,7 +236,7 @@ function Invoke-Asan {
 
 function Invoke-Fuzz {
     $fuzzTarget = if ($Target) { $Target } else { 'StateCodecFuzz' }
-    if ($fuzzTarget -notin @('StateCodecFuzz', 'SerializationFuzz')) {
+    if ($fuzzTarget -notin @('StateCodecFuzz', 'SerializationFuzz', 'JsonTransferFuzz')) {
         throw "unsupported fuzz target '$fuzzTarget'"
     }
     Invoke-Xmake build -y $fuzzTarget
@@ -232,8 +244,23 @@ function Invoke-Fuzz {
     New-Item -ItemType Directory -Force -Path $corpus | Out-Null
     $artifacts = Join-Path $repoRoot "build/fuzz/$fuzzTarget-artifacts"
     New-Item -ItemType Directory -Force -Path $artifacts | Out-Null
-    $fixtureDir = if ($fuzzTarget -eq 'StateCodecFuzz') { 'v1' } else { 'envelope' }
-    Copy-Item -Path (Join-Path $repoRoot "tests/fixtures/serialization/$fixtureDir/*.bin") -Destination $corpus -Force
+    if ($fuzzTarget -eq 'StateCodecFuzz') {
+        $fixtureDir = 'v1'
+        $fixtureMask = '*.bin'
+    } elseif ($fuzzTarget -eq 'SerializationFuzz') {
+        $fixtureDir = 'envelope'
+        $fixtureMask = '*.bin'
+    } else {
+        $fixtureDir = 'json'
+        $fixtureMask = '*.json'
+    }
+    if ($fuzzTarget -eq 'JsonTransferFuzz') {
+        Copy-Item -Path (Join-Path $repoRoot 'tests/fixtures/json/legacy/*.json') -Destination $corpus -Force
+        Copy-Item -Path (Join-Path $repoRoot 'tests/fixtures/json/config/*.json') -Destination $corpus -Force
+        Copy-Item -Path (Join-Path $repoRoot 'tests/fixtures/serialization/v1/*.bin') -Destination $corpus -Force
+    } else {
+        Copy-Item -Path (Join-Path $repoRoot "tests/fixtures/serialization/$fixtureDir/$fixtureMask") -Destination $corpus -Force
+    }
     $fuzzer = Join-Path $repoRoot "build/fuzz/$fuzzTarget.exe"
     Write-Host ("RUN {0} -runs={1} -seed={2}" -f $fuzzTarget, $FuzzIterations, $Seed)
     $oldPath = $env:PATH

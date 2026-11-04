@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Generate the frozen Papyrus binding table and thin PSC facades.
+"""Generate the frozen Papyrus binding table, thin PSC facades and VM tables.
 
-Reads the frozen legacy API contract (contracts/legacy-api.json, group 01)
+Reads the frozen legacy contracts (contracts/legacy-api.json,
+contracts/legacy-records.json, contracts/legacy-events.json, group 01)
 and emits:
 
   1. src/compat/papyrus_function_table.inc
@@ -10,13 +11,23 @@ and emits:
        invalid-input results.  Included by src/compat/PapyrusBindings.cpp.
 
   2. src/compat/papyrus/<ScriptName>.psc
-       One thin PSC per original script: the original public/non-public
-       function declarations (names, PSC types, order), forwarding to the
-       native module.  This is the frozen downstream-client surface: the
-       PEXs compiled from these declarations are the compatibility oracle.
+       Compilable thin Pycron facades for the 16 bound scripts: the frozen
+       public surface is declared `native` and is backed by VmNatives, the
+       internal declarations get contract-informed default bodies, and
+       SLSF_Reloaded_ModEventListener owns the 52 RegisterForModEvent calls
+       plus forwarding event handlers.  VMAD-b-properties from legacy-records
+       are re-declared so the frozen ESP attaches cleanly.
 
-The JSON is the single source of truth; re-run this script only when the
-frozen contract changes (it is validated by tools/verify-contracts.ps1).
+  3. src/compat/papyrus/SLSFR_EventSink.psc
+       The native-passer bridge script: 52 global-native declarations with
+       the frozen handler names, backed by VmNatives.
+
+  4. src/compat/papyrus_vm_table.inc
+       C++ parameter/return descriptors per function, consumed by
+       VmNatives.cpp to build generic NativeFunctionBase bindings.
+
+The contracts are the single source of truth; re-run this script only when
+they change (they are validated by tools/verify-contracts.ps1).
 """
 
 import json
@@ -26,10 +37,11 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTRACT = os.path.join(REPO, "contracts", "legacy-api.json")
 RECORDS = os.path.join(REPO, "contracts", "legacy-records.json")
+EVENTS = os.path.join(REPO, "contracts", "legacy-events.json")
 INC_OUT = os.path.join(REPO, "src", "compat", "papyrus_function_table.inc")
+VM_INC_OUT = os.path.join(REPO, "src", "compat", "papyrus_vm_table.inc")
 PSC_DIR = os.path.join(REPO, "src", "compat", "papyrus")
 
-# PSC type name -> slsf::LegacyValueType
 TYPE_MAP = {
     "None": "None",
     "Bool": "Bool",
@@ -46,7 +58,6 @@ TYPE_MAP = {
     "Form[]": "FormArray",
     "Actor[]": "ActorArray",
 }
-# Everything else is a script-object type in PSC.
 SCRIPT_OBJECT_FALLBACK = "Script"
 
 BINDINGS = {
@@ -56,20 +67,160 @@ BINDINGS = {
     "reference-alias": "BindingKind::ReferenceAlias",
 }
 
+# Papyrus C++ signature element per LegacyValueType for the VM table.
+VM_CPP_TYPES = {
+    "None": "void",
+    "Bool": "bool",
+    "Int": "std::int32_t",
+    "Float": "float",
+    "String": "std::string",
+    "Form": "RE::TESForm*",
+    "Location": "RE::BGSLocation*",
+    "Actor": "RE::Actor*",
+    "Quest": "RE::TESQuest*",
+    "ReferenceAlias": "RE::BGSBaseAlias*",
+    "String[]": "std::vector<std::string>",
+    "Form[]": "std::vector<RE::TESForm*>",
+    "Actor[]": "RE::BSScript::reference_array<RE::Actor*>",
+    "Script": "RE::TESForm*",
+    "Unknown": "RE::TESForm*",
+}
 
-def cpp_string(s: str) -> str:
+RECORD_SIGNATURE_TYPES = {
+    "GLOB": "GlobalVariable",
+    "KYWD": "Keyword",
+    "SPEL": "Spell",
+    "MGEF": "MagicEffect",
+    "QUST": "Quest",
+    "SCPT": "Form",
+}
+
+EVENT_HANDLER_BRIDGE = "SLSFR_EventSink"
+BRIDGE_SCRIPT_BASE = "Form"
+
+
+def cpp_string(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-def map_type(psc_type: str) -> str:
+def map_type(psc_type):
     return TYPE_MAP.get(psc_type, SCRIPT_OBJECT_FALLBACK)
 
 
-def main() -> int:
+def psc_literal(psc_type, raw):
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    if psc_type == "String":
+        scaled = cpp_string(text)
+        # Contract literals keep their surrounding quotes only in some rows.
+        if scaled[1:-1] == text and (text.startswith('"') is False):
+            return '"%s"' % text.replace('"', '\\"')
+        return scaled
+    if psc_type == "Bool":
+        return "true" if text.lower() == "true" else "false"
+    if psc_type == "Int":
+        try:
+            return str(int(float(text)))
+        except ValueError:
+            return "0"
+    if psc_type == "Float":
+        try:
+            value = float(text)
+        except ValueError:
+            return "0.0"
+        if value == int(value):
+            return "%.1f" % value
+        return repr(value)
+    if psc_type in ("None", "Form", "Location", "Actor", "Quest", "ReferenceAlias"):
+        return "None"
+    return "None"
+
+
+def script_type_of(inst):
+    kind = inst.get("kind", "")
+    return {"quest-script": "Quest", "reference-alias": "ReferenceAlias"}.get(kind)
+
+
+def base_script_for_script_name(name):
+    if name in ("SLSF_Reloaded_PlayerScript", "SLSF_Reloaded_SexAnimationAnalyzer"):
+        return "ReferenceAlias"
+    return "Quest"
+
+
+def signature_records(records):
+    resolved = {}
+    for form_id, record in records.items():
+        resolved[form_id] = record
+    return resolved
+
+
+def property_type_for(record, value):
+    if not isinstance(value, dict):
+        return None
+    alias = value.get("alias")
+    form_id = value.get("formId")
+    if alias is not None and int(alias) >= 0:
+        return "ReferenceAlias"
+    if form_id == "0x00000014":
+        return "ObjectReference"
+    record = record.get(form_id)
+    if record is None:
+        return "Form"
+    t = record["signature"]
+    if t in RECORD_SIGNATURE_TYPES:
+        return RECORD_SIGNATURE_TYPES[t]
+    return "Form"
+
+
+def body_for(fn):
+    ret = fn["returnType"]
+    if ret == "None":
+        return ""
+    if ret == "Bool":
+        return "return false"
+    if ret == "Int":
+        return "return 0"
+    if ret == "Float":
+        return "return 0.0"
+    if ret == "String":
+        return "return None"
+    return "return None"
+
+
+def psc_params(fn):
+    parts = []
+    for p in fn.get("parameters", []):
+        text = "%s %s" % (p["type"], p["name"])
+        default = p.get("default")
+        if default is not None:
+            literal = psc_literal(p["type"], default)
+            if literal is not None:
+                text += " = " + literal
+        parts.append(text)
+    return ", ".join(parts)
+
+
+def event_psc_params(params):
+    parts = []
+    for p in params:
+        text = "%s %s" % (p["type"], p["name"])
+        default = p.get("default")
+        if default is not None:
+            literal = psc_literal(p["type"], default)
+            if literal is not None:
+                text += " = " + literal
+        parts.append(text)
+    return ", ".join(parts)
+
+
+def main():
     with open(CONTRACT, "r", encoding="utf-8") as f:
         doc = json.load(f)
     with open(RECORDS, "r", encoding="utf-8") as f:
         records = {r["formId"]: r for r in json.load(f)["records"]}
+    with open(EVENTS, "r", encoding="utf-8") as f:
+        events = json.load(f)
 
     def quest_key(inst):
         raw_id = inst.get("formId") or inst.get("questFormId")
@@ -94,7 +245,6 @@ def main() -> int:
     lines.append("")
     lines.append("namespace slsf::compat::detail {")
     lines.append("")
-    # Emit each function as a full aggregate with an inline parameter list.
     lines.append("static const PapyrusFunction kTable[] = {")
     for fn in functions:
         inst = fn.get("instance") or {}
@@ -159,7 +309,37 @@ def main() -> int:
         f.write("\n".join(lines))
     print("wrote %s (%d functions)" % (INC_OUT, len(functions)))
 
-    # ---- 2. Thin PSC facades ---------------------------------------------
+    # ---- 2. VM signature table --------------------------------------------
+    def cpp_type(psc_type):
+        return VM_CPP_TYPES.get(psc_type, "RE::TESForm*")
+
+    vm_lines = []
+    vm_lines.append("// GENERATED FILE - do not edit.")
+    vm_lines.append("// Source: contracts/legacy-api.json (frozen, group 01).")
+    vm_lines.append("// Regenerate with: python tools/gen-papyrus-bindings.py")
+    vm_lines.append("")
+    vm_lines.append(
+        "static const detail::VmSignatureTableEntry kVmSignatures[] = {")
+    for fn in functions:
+        inst = fn.get("instance") or {}
+        kind = inst.get("kind", "")
+        is_static = kind in ("global", "global-native") or fn["isGlobal"]
+        params = [{"name": p["name"], "type": cpp_type(p["type"])}
+                  for p in fn.get("parameters", [])]
+        vm_lines.append("    {")
+        vm_lines.append("        %s," % cpp_string(fn["id"]))
+        vm_lines.append("        %s, %s," % (
+            "true" if is_static else "false", cpp_type(fn["returnType"])))
+        vm_lines.append("        {%s}," % ", ".join(
+            "{%s, %s}" % (cpp_string(p["name"]), p["type"]) for p in params))
+        vm_lines.append("    },")
+    vm_lines.append("};")
+    vm_lines.append("")
+    with open(VM_INC_OUT, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(vm_lines))
+    print("wrote %s (%d signatures)" % (VM_INC_OUT, len(functions)))
+
+    # ---- 3. Compilable thin PSC facades ------------------------------------
     os.makedirs(PSC_DIR, exist_ok=True)
     by_script = {}
     for fn in functions:
@@ -167,45 +347,163 @@ def main() -> int:
 
     for script, fns in sorted(by_script.items()):
         out = []
-        out.append(";%s.psc - thin Papyrus facade (group 07, task B06)." % script)
-        out.append(";")
-        out.append("; Frozen downstream-client declarations.  Every function forwards")
-        out.append("; to the native SLSF Reloaded NG module; no business logic lives")
-        out.append("; in Papyrus.  Compiled to PEX from these declarations, the frozen")
-        out.append("; PEXs are the compatibility oracle against the original plugin.")
-        out.append(";")
-        out.append("; Original instance bindings (see contracts/legacy-api.json):")
+        base = base_script_for_script_name(script)
+        out.append("Scriptname %s extends %s" % (script, base))
+        out.append("")
+        vmad_props = vmad_properties_for(records, script)
+        for ptype, pname in vmad_props:
+            out.append("%s Property %s Auto" % (ptype, pname))
+        if vmad_props:
+            out.append("")
         for fn in fns:
-            inst = fn.get("instance") or {}
-            kind = inst.get("kind", "")
-            plugin, local_id = quest_key(inst)
-            if kind == "quest-script":
-                out.append(";   %s -> quest %s (%s, local 0x%X)" % (
-                    fn["name"], inst.get("editorId"), plugin, local_id))
-            elif kind == "reference-alias":
-                out.append(";   %s -> alias %s on quest %s (%s, local 0x%X)" % (
-                    fn["name"], inst.get("aliasName"), inst.get("questEditorId"),
-                    plugin, local_id))
+            params = psc_params(fn)
+            ret = "" if fn["returnType"] == "None" else fn["returnType"] + " "
+            mods = []
+            if fn["isGlobal"]:
+                mods.append("Global")
+            if fn["id"] in PAPYRUS_BODY_GLOBALS:
+                out.append("%sFunction %s(%s) Global" % (
+                    ret, fn["name"], params))
+                out.append(PAPYRUS_BODY_GLOBALS[fn["id"]])
+                out.append("EndFunction")
+                out.append("")
+                continue
+            if script == "SLSF_Reloaded_ModEventListener" and fn["name"] == "RegisterExternalEvents":
+                # Emitted once by ModEventListenerExtras below (OnInit body).
+                continue
+            if fn["isPublic"]:
+                mods.append("Native")
+                out.append("%sFunction %s(%s) %s" % (
+                    ret, fn["name"], params, " ".join(mods)))
             else:
-                out.append(";   %s -> %s" % (fn["name"], kind or "global"))
-        out.append(";")
-        out.append("")
-        # Group functions; keep contract order (it is the registration order).
-        for fn in fns:
-            ret = fn["returnType"]
-            ret_str = "" if ret == "None" else ret + " "
-            params = []
-            for p in fn.get("parameters", []):
-                params.append("%s %s" % (p["type"], p["name"]))
-            params_str = ", ".join(params)
-            pub = "Public " if fn["isPublic"] else ""
-            out.append("%s%sFunction %s(%s)" % (pub, ret_str, fn["name"], params_str))
-        out.append("")
+                body = body_for(fn)
+                if body:
+                    out.append("%sFunction %s(%s)" % (
+                        ret, fn["name"], params))
+                    out.append("    " + body)
+                    out.append("EndFunction")
+                else:
+                    out.append("%sFunction %s(%s)" % (
+                        ret, fn["name"], params))
+                    out.append("EndFunction")
+            out.append("")
+        if script == "SLSF_Reloaded_ModEventListener":
+            events_lines = ModEventListenerExtras(events, PAPYRUS_BODY_GLOBALS)
+            out.extend(events_lines)
         path = os.path.join(PSC_DIR, script + ".psc")
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(out))
     print("wrote %d thin PSC files to %s" % (len(by_script), PSC_DIR))
+
+    # ---- 4. SLSFR_EventSink bridge -----------------------------------------
+    sink = []
+    sink.append("Scriptname %s extends %s Hidden" % (EVENT_HANDLER_BRIDGE, BRIDGE_SCRIPT_BASE))
+    sink.append("")
+    for event in events["inputEvents"]:
+        params = event_psc_params(event["parameters"])
+        sink.append("Function %s(%s) Global Native" % (event["handler"], params))
+    sink.append("")
+    path = os.path.join(PSC_DIR, EVENT_HANDLER_BRIDGE + ".psc")
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(sink))
+    print("wrote %s (%d handlers)" % (path, len(events["inputEvents"])))
+
+    # ---- 5. Compile stubs ---------------------------------------------------
+    stub_dir = os.path.join(REPO, "build", "papyrus", "stubs")
+    os.makedirs(stub_dir, exist_ok=True)
+    for script_type in ("sr_InflateQuest", "PW_MainLoopScript", "SLSF_Configuration",
+                        "sslThreadController"):
+        path = os.path.join(stub_dir, script_type + ".psc")
+        base = "Form" if script_type != "sslThreadController" else "Quest"
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            f.write("Scriptname %s extends %s\n" % (script_type, base))
+    print("wrote compile stubs to %s" % stub_dir)
     return 0
+
+
+PAPYRUS_BODY_GLOBALS = {
+    "SLSF_Reloaded_ModIntegration.GetFHUData":
+        '    return Game.GetFormFromFile(0xD63, "sr_FillherUp.esp") as sr_InflateQuest',
+    "SLSF_Reloaded_ModIntegration.GetPWData":
+        '    return Game.GetFormFromFile(0xD63, "Public Whore.esp") as PW_MainLoopScript',
+    "SLSF_Reloaded_ModIntegration.GetLegacyConfig":
+        '    return Game.GetFormFromFile(0x00016AB9, "SexLab - Sexual Fame [SLSF].esm") as SLSF_Configuration',
+}
+
+
+def vmad_properties_for(records, script):
+    matched = None
+    for _, record in records.items():
+        if record["signature"] != "QUST":
+            continue
+        vmad = record.get("vmad")
+        if not vmad or not isinstance(vmad, dict):
+            continue
+        for entry in vmad.get("scripts", []):
+            if entry.get("name") == script and entry.get("properties"):
+                matched = entry
+                break
+        if matched:
+            break
+    if matched is None or not matched.get("properties"):
+        return []
+    out = []
+    for prop in matched["properties"]:
+        name = prop.get("name", "")
+        if not name:
+            continue
+        value = prop.get("value")
+        ptype = "Form"
+        if isinstance(value, list):
+            has_string = [v for v in value if isinstance(v, str)]
+            has_float = [v for v in value if isinstance(v, float)]
+            has_bool = [v for v in value if isinstance(v, bool)]
+            if has_string:
+                ptype = "String[]"
+            elif has_float:
+                ptype = "Float[]"
+            elif has_bool:
+                ptype = "Bool[]"
+            else:
+                ptype = "Int[]"
+        elif value is None:
+            ptype = "Int"
+        elif isinstance(value, int):
+            ptype = "Int"
+        elif isinstance(value, bool):
+            ptype = "Bool"
+        elif isinstance(value, float):
+            ptype = "Float"
+        elif isinstance(value, str):
+            ptype = "String"
+        elif isinstance(value, dict):
+            found = property_type_for(records, value)
+            if found:
+                ptype = found
+        out.append((ptype, name))
+    return out
+
+
+def ModEventListenerExtras(events, bodies):
+    lines = []
+    lines.append("")
+    lines.append("Event OnInit()")
+    lines.append("    RegisterExternalEvents()")
+    lines.append("EndEvent")
+    lines.append("")
+    lines.append("Function RegisterExternalEvents()")
+    for event in events["inputEvents"]:
+        lines.append('    RegisterForModEvent("%s", "%s")' % (
+            event["event"], event["handler"]))
+    lines.append("EndFunction")
+    lines.append("")
+    for event in events["inputEvents"]:
+        params = event_psc_params(event["parameters"])
+        lines.append("Event %s(%s)" % (event["handler"], params))
+        call_args = ", ".join((p["name"] for p in event["parameters"]))
+        lines.append("    %s.%s(%s)" % (EVENT_HANDLER_BRIDGE, event["handler"], call_args))
+        lines.append("EndEvent")
+    return lines
 
 
 if __name__ == "__main__":

@@ -18,5 +18,21 @@ target("SerializationFuzz")
     add_files("../../src/persistence/Serialization.cpp")
     add_files("../../src/core/persistence/StateCodec.cpp")
     add_includedirs("../../include")
-    add_cxflags("-fsanitize=fuzzer,address", "-g", "-O1", { force = true })
+    add_cxflags("-fsanitize=fuzzer,address", "-g", "-O1",
+                "-D_DISABLE_STRING_ANNOTATION", "-D_DISABLE_VECTOR_ANNOTATION",
+                { force = true })
+    add_ldflags("-fsanitize=fuzzer,address", { force = true })
+
+target("JsonTransferFuzz")
+    set_kind("binary")
+    set_targetdir("$(projectdir)/build/fuzz")
+    set_toolchains("clang")
+    set_runtimes("MT")
+    add_files("JsonTransferFuzz.cpp")
+    add_files("../../src/io/JsonTransfer.cpp")
+    add_files("../../src/config/Configuration.cpp")
+    add_includedirs("../../include")
+    add_cxflags("-fsanitize=fuzzer,address", "-g", "-O1",
+                "-D_DISABLE_STRING_ANNOTATION", "-D_DISABLE_VECTOR_ANNOTATION",
+                { force = true })
     add_ldflags("-fsanitize=fuzzer,address", { force = true })
