@@ -100,7 +100,7 @@ target("SLSFReloadedNG")
     end
     add_headerfiles("src/**.h")
     add_includedirs("src")
-    add_cxflags("/fp:precise")
+    add_cxflags("/fp:precise", "/utf-8")
     set_pcxxheader("src/pch.h")
     add_deps("SLSFCore", "SLSFEngine")
 

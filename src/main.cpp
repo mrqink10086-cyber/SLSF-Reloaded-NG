@@ -20,6 +20,7 @@
 #include "slsf/compat/ModEventBridge.h"
 #include "slsf/config/ConfigurationStore.h"
 #include "slsf/ui/Menu.h"
+#include "slsf/ui/MenuText.h"
 #include "slsf/api/PublicApi.h"
 #include "slsf/io/JsonTransfer.h"
 
@@ -507,10 +508,10 @@ void WireCompatBridge() {
 }
 
 std::string OutcomeText(slsf::Status status, const std::string& message) {
-    std::string text(slsf::ToString(status));
+    std::string text(slsf::ui::MenuStatusText(status));
     if (!message.empty()) {
         text += ": ";
-        text += message;
+        text += slsf::ui::MenuMessageText(message);
     }
     return text;
 }
@@ -535,19 +536,19 @@ void InstallSlsfMenu() {
     ports.status = [] {
         if (g_lifecycle != nullptr) {
             const slsf::LifecycleStatus status = g_lifecycle->Status();
-            std::string label = "phase=";
+            std::string label = "运行阶段：";
             label += status.phase == slsf::LifecyclePhase::Active
-                         ? "active"
-                         : (status.phase == slsf::LifecyclePhase::Preparing ? "preparing" : "detached");
+                         ? "运行中"
+                         : (status.phase == slsf::LifecyclePhase::Preparing ? "准备中" : "未载入存档");
             return label;
         }
-        return std::string("phase=detached");
+        return std::string("运行阶段：未载入存档");
     };
     ports.fameCommand = [](slsf::ui::Menu::FameCommand command, const std::string& location,
                            const std::string& target, const std::string& category, int amount,
                            int extra) {
         if (g_lifecycle == nullptr) {
-            return std::string("executor not ready");
+            return std::string("业务执行尚未就绪");
         }
         slsf::api::PublicApi& api = MenuPublicApi();
         switch (command) {
@@ -576,7 +577,7 @@ void InstallSlsfMenu() {
         case slsf::ui::Menu::FameCommand::SpreadPulse:
             return OutcomeText(api.SpreadPulse({location}));
         }
-        return std::string("unknown command");
+        return std::string("未知操作");
     };
     ports.legacyFiles = [] {
         std::vector<std::string> files;
@@ -605,7 +606,7 @@ void InstallSlsfMenu() {
         }
         std::ifstream stream(path, std::ios::binary);
         if (!stream) {
-            return "legacy import: cannot open " + file;
+            return "旧版数据导入：无法打开文件 " + file;
         }
         const std::string bytes((std::istreambuf_iterator<char>(stream)),
                                 std::istreambuf_iterator<char>());
@@ -613,23 +614,23 @@ void InstallSlsfMenu() {
         const slsf::io::JsonPtr parsed =
             slsf::io::JsonValue::Parse(bytes, 4u << 20, &parseError);
         if (parsed == nullptr) {
-            return "legacy import: invalid JSON in " + file + ": " + parseError;
+            return "旧版数据导入：JSON 格式无效，文件 " + file + "：" + slsf::ui::MenuMessageText(parseError);
         }
         const auto import =
             slsf::io::ExtractLegacyImport(parsed, slsf::api::PublicApi::FlagNames());
         if (!import.has_value()) {
-            return std::string("legacy import: ") + import.error().message;
+            return std::string("旧版数据导入：") + slsf::ui::MenuMessageText(import.error().message);
         }
 
         if (g_lifecycle == nullptr) {
-            return std::string("legacy import: executor not ready");
+            return std::string("旧版数据导入：业务执行尚未就绪");
         }
         slsf::api::PublicApi& api = MenuPublicApi();
 
         const auto result = api.ImportLegacy(*import);
         logs::info("legacy import: file={} status={} message={}", file,
                    static_cast<int>(result.status), result.message);
-        return std::string("legacy import '") + file + "': " + OutcomeText(result);
+        return std::string("旧版数据导入「") + file + "」：" + OutcomeText(result);
     };
     const bool installed = slsf::ui::Menu::Instance().Install(std::move(ports));
     logs::info("menu: framework binding installed={}", installed);

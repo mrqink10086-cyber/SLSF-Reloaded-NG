@@ -18,6 +18,19 @@ remove the previous NG DLL installation before selecting this version in the mod
 manager. Use the SKSE Menu Framework menu for settings and JSON operations. The
 same-name MCM script preserves attached properties and does not register a menu.
 
+本模组的 SKSE 菜单直接使用简体中文。打开菜单框架的字体设置，启用
+Chinese 并选择 `Futura Condensed (CN)`；也可在启动游戏前编辑
+`Data/SKSE/Plugins/SKSEMenuFramework.ini`：
+
+```ini
+[Fonts]
+PrimaryFont = Futura Condensed (CN)
+EnableChinese = true
+```
+
+中文字体由游戏的中文字体资源提供。如果显示方框，请检查上述选项和中文游戏字体。
+本包不覆盖菜单框架的全局配置。
+
 The package contains the frozen ESP/interface assets, one NG DLL, 25 SLSF PEX and
 their sources, defaults, licenses and a hash manifest. It contains no replacement
 SexLab, Public Whore, SLACS or FHU PEX. Compiler interface declarations are build
