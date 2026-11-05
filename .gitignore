@@ -21,6 +21,9 @@ compile_commands.json
 /*.lib
 /*.exe
 
+# root build/run logs (evidence logs belong under docs/evidence/)
+/*.log
+
 # local review binaries and accidental shell-expansion paths
 /.scratch/05-review/
 /%SystemDrive%/

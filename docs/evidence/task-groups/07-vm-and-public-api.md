@@ -40,6 +40,8 @@
 | `tools/run-native-tests.ps1 -Mode asan -Seed 1170` | 0 | 正/负探针符合预期（故意 OOB 触发 heap-buffer-overflow）；24/24 分片通过 | `build_g07_asan4.log` |
 | `tools/run-native-tests.ps1 -Mode fuzz -Seed 1170` | 0 | StateCodecFuzz 100000 runs 无崩溃（seed 1170） | `build_g07_fuzz1.log` |
 
+> 表中引用的 `build_g07_*.log` 已从仓库根目录归档到 `docs/evidence/task-groups/logs/`，文件名保持不变。
+
 JUnit：`build/test-results/core.xml`、`boundary.xml`、`core-asan.xml`、`boundary-asan.xml`。
 
 ## 失败输入与修正
