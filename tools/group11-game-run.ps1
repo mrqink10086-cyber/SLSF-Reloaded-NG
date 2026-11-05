@@ -6,7 +6,7 @@ param(
 )
 $ErrorActionPreference = "Stop"
 $root = "E:/st/steamapps/common/Skyrim Special Edition"
-$staging = "E:/source/repos/SLSF Reloaded NG/build/staging/SLSFReloadedNG/Data"
+$staging = "E:/source/repos/SLSF Reloaded NG/build/staging/SLSFReloadedNG"
 $dllSource = "E:/source/repos/SLSF Reloaded NG/build/windows/x64/releasedbg/SLSFReloadedNG.dll"
 $probePex = "E:/source/repos/SLSF Reloaded NG/build/papyrus/probe/SLSFR_FrozenProbe.pex"
 $logDir = "$env:USERPROFILE/Documents/My Games/Skyrim Special Edition/SKSE"

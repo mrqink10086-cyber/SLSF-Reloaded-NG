@@ -32,8 +32,8 @@ The plugin connects the engine-thread pump, automatic settlement, scene and
 optional-provider facts, compatibility output and SKSE settings menu. Native
 state survives saves; same-name Papyrus scripts retain quest/alias attachments
 and forward engine events. In-game acceptance remains user-run.
-See [package installation](docs/distribution/INSTALL.md) and
-[dependencies](docs/distribution/DEPENDENCIES.md).
+See [package installation](docs/distribution/安装说明.md) and
+[dependencies](docs/distribution/依赖与兼容说明.md).
 See the [development guide](README-Skyrim1170.md) for build setup and
 [test instructions](docs/superpowers/plans/2026-10-27-task-books/00-native-testing.md)
 for core and boundary checks.
