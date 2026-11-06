@@ -1,5 +1,6 @@
 #pragma once
 #include "slsf/core/Types.h"
+#include "slsf/integrations/ProviderCollectors.h"
 #include <functional>
 namespace RE::BSScript { class IVirtualMachine; }
 namespace SKSE { class SerializationInterface; }
@@ -10,7 +11,9 @@ void InitializeProviderCollectors(std::function<Epoch()> epoch,
 bool RegisterProviderCollectors(RE::BSScript::IVirtualMachine* vm);
 bool SaveProviderCollectorCalls(SKSE::SerializationInterface* serialization);
 bool LoadProviderCollectorCalls(SKSE::SerializationInterface* serialization,
-                                std::uint32_t version, std::uint32_t length);
+                                std::uint32_t version, std::uint32_t length,
+                                std::vector<integrations::CollectorContinuation>& calls);
+void RestoreProviderCollectorCalls(std::vector<integrations::CollectorContinuation> calls);
 void ResetProviderCollectorCalls();
 void ResumeProviderCollectorCalls(bool loaded);
 }

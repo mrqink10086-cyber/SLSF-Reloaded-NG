@@ -7,6 +7,7 @@
 #include "slsf/core/reputation/Settlement.h"
 #include "slsf/core/time/Scheduler.h"
 #include "slsf/runtime/ClockService.h"
+#include "slsf/runtime/SessionGate.h"
 
 #include <atomic>
 #include <coroutine>
@@ -120,7 +121,8 @@ public:
 
     Flow SpawnFlow(std::function<Flow()> body);
 
-    Dispatcher() = default;
+    explicit Dispatcher(std::shared_ptr<SessionGate> hostGate = {})
+        : hostGate_(std::move(hostGate)) {}
     ~Dispatcher();
     Dispatcher(const Dispatcher&) = delete;
     Dispatcher& operator=(const Dispatcher&) = delete;
@@ -222,6 +224,7 @@ private:
     double DomainNowLocked(ClockDomain domain);
     double DeadlineLocked(ClockDomain domain, double seconds);
     bool HasDueChangeLocked(GameTime now) const;
+    bool Blocked() const { return suspended_ || (hostGate_ && hostGate_->Closed()); }
 
     mutable std::mutex mutex_;
     Epoch epoch_{};
@@ -231,6 +234,7 @@ private:
     std::shared_ptr<const PreparedSettlement> prepared_{};
     std::shared_ptr<SettlementWorkspace> workspace_{};
     bool suspended_{false};
+    std::shared_ptr<SessionGate> hostGate_;
     std::optional<GameTime> lastAdvance_{};
 
     std::atomic<PublishedStatePtr> published_{};

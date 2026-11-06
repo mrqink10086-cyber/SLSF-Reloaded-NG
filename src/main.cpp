@@ -10,6 +10,7 @@
 #include "slsf/persistence/Serialization.h"
 #include "slsf/persistence/StableKeys.h"
 #include "slsf/runtime/Lifecycle.h"
+#include "slsf/runtime/ControlExecutor.h"
 #include "slsf/boundary/ProviderCollectors.h"
 #include "slsf/boundary/AppearanceProviders.h"
 #include "slsf/boundary/Gameplay.h"
@@ -89,6 +90,10 @@ bool LogHostVersions(const SKSE::LoadInterface* a_skse) {
 
 std::unique_ptr<slsf::config::ConfigurationStore> g_configuration;
 std::unique_ptr<slsf::Lifecycle> g_lifecycle;
+std::atomic<slsf::Lifecycle*> g_lifecycleView{nullptr};
+auto g_hostGate = std::make_shared<slsf::runtime::SessionGate>();
+slsf::runtime::ControlExecutor g_controls;
+std::mutex g_controlIngress;
 std::unique_ptr<slsf::engine::EventBridge> g_events;
 std::unique_ptr<slsf::boundary::Gameplay> g_gameplay;
 std::atomic<bool> g_pumpQueued{false};
@@ -98,6 +103,8 @@ slsf::RegionSnapshot g_regions;
 std::map<slsf::StableFormKey, slsf::RegionId> g_locationOwners;
 bool g_worldBuilt{false};
 bool g_dataLoaded{false};
+
+slsf::Lifecycle* Runtime() { return g_lifecycleView.load(); }
 
 slsf::SessionContext NewContext() {
     slsf::SessionContext context;
@@ -275,9 +282,10 @@ void EnsureLifecycle() {
     }
     if (!g_lifecycle) {
         g_lifecycle = std::make_unique<slsf::Lifecycle>(
-            slsf::StaticWorld{.regions = &g_regions}, *g_configuration);
-        slsf::compat::VmNatives::BindEpochProbe([] { return g_lifecycle->CurrentEpoch(); },
-            [](slsf::Epoch epoch) { return g_lifecycle->IsEpochCurrent(epoch); });
+            slsf::StaticWorld{.regions = &g_regions}, *g_configuration, g_hostGate);
+        g_lifecycleView.store(g_lifecycle.get());
+        slsf::compat::VmNatives::BindEpochProbe([] { return Runtime()->CurrentEpoch(); },
+            [](slsf::Epoch epoch) { return Runtime()->IsEpochCurrent(epoch); });
         g_events = std::make_unique<slsf::engine::EventBridge>(
             *g_lifecycle, [](const slsf::engine::AsyncMessage& message) {
                 logs::info("event: {} payload={} epoch={}.{}.{}", message.topic, message.payload,
@@ -289,12 +297,13 @@ void EnsureLifecycle() {
     }
 }
 
-bool Activate(const char* reason, bool hostSucceeded = true) {
+bool Activate(const char* reason, bool hostSucceeded = true,
+              std::optional<std::uint64_t> generation = {}) {
     if (!g_lifecycle) {
         logs::error("lifecycle: {} requested before composition root exists", reason);
         return false;
     }
-    if (!g_lifecycle->ActivatePrepared(hostSucceeded)) {
+    if (!g_lifecycle->ActivatePrepared(hostSucceeded, generation)) {
         const auto status = g_lifecycle->Status();
         logs::error("lifecycle: {} activation failed: {}", reason, status.message);
         return false;
@@ -322,15 +331,43 @@ void GuardedHostCallback(const char* where, Fn&& body) {
     }
 }
 
+std::uint64_t QueueControl(const char* name, bool closesBusiness,
+                           std::function<void(std::uint64_t)> body) {
+    logs::info("control: received name={} closesBusiness={} pid={} tid={}", name,
+               closesBusiness, GetCurrentProcessId(), GetCurrentThreadId());
+    std::uint64_t generation;
+    std::uint64_t sequence;
+    {
+        std::lock_guard guard(g_controlIngress);
+        generation = closesBusiness ? g_hostGate->Close() : g_hostGate->Generation();
+        sequence = g_controls.Post([name, generation, body = std::move(body)](std::uint64_t order) {
+            logs::info("control: started name={} order={} load={} pid={} tid={}", name,
+                       order, generation, GetCurrentProcessId(), GetCurrentThreadId());
+            GuardedHostCallback(name, [&] { body(generation); });
+            logs::info("control: completed name={} order={} load={} tid={}", name,
+                       order, generation, GetCurrentThreadId());
+        });
+    }
+    logs::info("control: enqueued name={} order={} load={} pid={} tid={}", name,
+               sequence, generation, GetCurrentProcessId(), GetCurrentThreadId());
+    SKSE::GetTaskInterface()->AddTask([] {
+        GuardedHostCallback("control drain", [] {
+            if (!g_controls.Drain()) logs::error("control: owner/reentry rejected tid={}", GetCurrentThreadId());
+        });
+    });
+    return generation;
+}
+
 void OnSerializationSaveBody(SKSE::SerializationInterface* serialization) {
-    if (serialization == nullptr || !g_lifecycle) {
+    auto* lifecycle = Runtime();
+    if (serialization == nullptr || !lifecycle) {
         return;
     }
     if (!slsf::boundary::SaveProviderCollectorCalls(serialization)) {
         logs::error("collectors: failed to save pending VM continuations");
         return;
     }
-    auto captured = g_lifecycle->Capture();
+    auto captured = lifecycle->Capture();
     if (!captured) {
         logs::warn("lifecycle: save skipped: {}", captured.error().message);
         return;
@@ -351,17 +388,20 @@ void OnSerializationSaveBody(SKSE::SerializationInterface* serialization) {
 }
 
 void OnSerializationSave(SKSE::SerializationInterface* serialization) {
+    logs::info("serialization: save received pid={} tid={}", GetCurrentProcessId(), GetCurrentThreadId());
     GuardedHostCallback("OnSerializationSave",
                         [&] { OnSerializationSaveBody(serialization); });
 }
 
 void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
-    if (serialization == nullptr || !g_lifecycle) {
-        return;
-    }
-    slsf::boundary::ResetProviderCollectorCalls();
-    g_lifecycle->ReturnToMenu();
+    const auto loadGeneration = QueueControl("serialization reset", true, [](auto) {
+        slsf::boundary::ResetProviderCollectorCalls();
+        if (g_lifecycle) g_lifecycle->ReturnToMenu();
+    });
+    if (serialization == nullptr) return;
     std::vector<std::byte> bytes;
+    std::vector<slsf::integrations::CollectorContinuation> calls;
+    bool foundCalls = false;
     bool found = false;
     bool malformed = false;
     std::uint32_t type = 0;
@@ -369,10 +409,11 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
     std::uint32_t length = 0;
     while (serialization->GetNextRecordInfo(type, version, length)) {
         if (type == slsf::boundary::kCollectorCallsRecord) {
-            if (!slsf::boundary::LoadProviderCollectorCalls(serialization, version, length)) {
+            if (foundCalls || !slsf::boundary::LoadProviderCollectorCalls(serialization, version, length, calls)) {
                 malformed = true;
                 break;
             }
+            foundCalls = true;
             continue;
         }
         if (type != slsf::persistence::kSaveRecordType) {
@@ -395,63 +436,53 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
         }
     }
 
-    if (malformed) {
-        g_lifecycle->RejectPreparation("save record is malformed or unsupported");
-        logs::error("lifecycle: load rejected before binding; business stays closed");
-        return;
+    std::string error;
+    std::optional<slsf::PersistentState> candidate;
+    if (malformed) error = "save record is malformed or unsupported";
+    else if (!found) error = "save has no SLSF native record";
+    else {
+        auto decoded = slsf::persistence::DecodeSaveRecord(bytes);
+        if (!decoded) error = "save record decode failed: " + decoded.error().message;
+        else candidate = std::move(*decoded);
     }
-    if (!found) {
-        // A save authored without our co-save record cannot be distinguished
-        // from a truncated/foreign save.  Do not synthesize state and open
-        // business on top of it; report the failure and stay closed.
-        g_lifecycle->RejectPreparation("save has no SLSF native record");
-        logs::error("lifecycle: save has no SLSF native record; business stays closed");
-        return;
-    }
-
-    auto decoded = slsf::persistence::DecodeSaveRecord(bytes);
-    if (!decoded) {
-        g_lifecycle->RejectPreparation("save record decode failed: " + decoded.error().message);
-        logs::error("lifecycle: load decode failed: {}; business stays closed",
-                    decoded.error().message);
-        return;
-    }
-    const auto inspected = slsf::persistence::InspectSaveRecord(bytes);
-    logs::info("lifecycle: save record decoded bytes={} codec={} locations={}",
-               bytes.size(), inspected ? inspected->codecVersion : 0,
-               decoded->locations.size());
-    slsf::persistence::NormalizeLightPluginKeys(*decoded, [](std::string_view plugin) {
-        auto* data = RE::TESDataHandler::GetSingleton();
-        const auto* file = data ? data->LookupModByName(plugin) : nullptr;
-        return file && file->IsLight();
-    });
-    if (!g_lifecycle->PrepareLoad(*decoded, NewContext())) {
-        logs::error("lifecycle: load bind failed: {}; business stays closed",
-                    g_lifecycle->Status().message);
-        return;
-    }
-    // Activation is deferred to kPostLoadGame so business handling cannot
-    // start before the load has completely bound its location ownership.
-    const auto status = g_lifecycle->Status();
-    logs::info("lifecycle: load prepared epoch={} restored={} unresolved={} business={}",
-               status.epoch.session, status.restoredAccounts, status.unresolvedAccounts,
-               status.businessOpen);
+    QueueControl("serialization stage", false,
+        [loadGeneration, candidate = std::move(candidate), calls = std::move(calls),
+         error = std::move(error)](auto generation) mutable {
+            if (!g_lifecycle || generation != loadGeneration) return;
+            if (!candidate) {
+                g_lifecycle->RejectPreparation(std::move(error));
+                return;
+            }
+            slsf::persistence::NormalizeLightPluginKeys(*candidate, [](std::string_view plugin) {
+                auto* data = RE::TESDataHandler::GetSingleton();
+                const auto* file = data ? data->LookupModByName(plugin) : nullptr;
+                return file && file->IsLight();
+            });
+            if (!g_lifecycle->PrepareLoad(*candidate, NewContext())) {
+                logs::error("lifecycle: load bind failed: {}", g_lifecycle->Status().message);
+                return;
+            }
+            slsf::boundary::RestoreProviderCollectorCalls(std::move(calls));
+            logs::info("lifecycle: load staged epoch={} tid={}",
+                       g_lifecycle->Status().epoch.session, GetCurrentThreadId());
+        });
 }
 
 void OnSerializationLoad(SKSE::SerializationInterface* serialization) {
+    logs::info("serialization: load received pid={} tid={}", GetCurrentProcessId(), GetCurrentThreadId());
     GuardedHostCallback("OnSerializationLoad",
                         [&] { OnSerializationLoadBody(serialization); });
 }
 
 void OnSerializationRevertBody(SKSE::SerializationInterface*) {
-    slsf::boundary::ResetProviderCollectorCalls();
-    if (g_lifecycle) {
-        g_lifecycle->ReturnToMenu();
-        logs::info("lifecycle: revert closed the business switch");
-    }
+    QueueControl("serialization revert", true, [](auto) {
+        slsf::boundary::ResetProviderCollectorCalls();
+        if (g_lifecycle) g_lifecycle->ReturnToMenu();
+    });
 }
 
 void OnSerializationRevert(SKSE::SerializationInterface* serialization) {
+    logs::info("serialization: revert received pid={} tid={}", GetCurrentProcessId(), GetCurrentThreadId());
     GuardedHostCallback("OnSerializationRevert",
                         [&] { OnSerializationRevertBody(serialization); });
 }
@@ -489,6 +520,7 @@ void WireCompatBridge() {
                 if (!g_pumpQueued.exchange(true)) {
                     SKSE::GetTaskInterface()->AddTask([] {
                         GuardedHostCallback("gameplay pump", [] {
+                            if (!g_controls.Drain()) return;
                             if (g_events) g_events->Flush();
                             if (g_gameplay) g_gameplay->Tick();
                         });
@@ -534,8 +566,8 @@ void InstallSlsfMenu() {
     };
     ports.regions = [] { return &g_regions; };
     ports.status = [] {
-        if (g_lifecycle != nullptr) {
-            const slsf::LifecycleStatus status = g_lifecycle->Status();
+        if (const auto* lifecycle = Runtime()) {
+            const slsf::LifecycleStatus status = lifecycle->Status();
             std::string label = "运行阶段：";
             label += status.phase == slsf::LifecyclePhase::Active
                          ? "运行中"
@@ -655,48 +687,55 @@ void OnMessageBody(SKSE::MessagingInterface::Message* message) {
         }
         break;
     case SKSE::MessagingInterface::kPreLoadGame:
-        slsf::boundary::ResetProviderCollectorCalls();
-        if (g_lifecycle) {
-            g_lifecycle->ReturnToMenu();
-            logs::info("lifecycle: pre-load closed the business switch");
-        }
+        QueueControl("pre-load", true, [](auto) {
+            slsf::boundary::ResetProviderCollectorCalls();
+            if (g_lifecycle) g_lifecycle->ReturnToMenu();
+        });
         break;
     case SKSE::MessagingInterface::kPostLoadGame:
         // SKSE encodes this bool in the pointer value, not in pointed-to data.
-        Activate("post-load", message->data != nullptr);
-        slsf::boundary::ResumeProviderCollectorCalls(message->data != nullptr);
+        QueueControl("post-load", false, [succeeded = message->data != nullptr](auto generation) {
+            const bool activated = Activate("post-load", succeeded, generation);
+            slsf::boundary::ResumeProviderCollectorCalls(activated && !g_hostGate->Closed());
+        });
         break;
     case SKSE::MessagingInterface::kNewGame:
-        if (g_lifecycle) {
+        QueueControl("new-game", true, [](auto generation) {
+            slsf::boundary::ResetProviderCollectorCalls();
+            if (!g_lifecycle) return;
             if (!g_lifecycle->PrepareNewGame(NewContext())) {
                 logs::error("lifecycle: new game preparation failed: {}",
                             g_lifecycle->Status().message);
-                break;
+                return;
             }
-            Activate("new-game");
-        }
+            Activate("new-game", true, generation);
+        });
         break;
     case SKSE::MessagingInterface::kDataLoaded:
-        g_dataLoaded = true;
-        if (!g_worldBuilt) {
-            g_worldBuilt = BuildStaticWorld();
-            EnsureLifecycle();
-        }
-        if (g_lifecycle) {
-            WireCompatBridge();
-            const auto update = g_lifecycle->ReloadConfiguration();
-            logs::info("lifecycle: startup configuration status={} message={}",
-                       static_cast<int>(update.status), update.message);
-        }
-        InstallSlsfMenu();
-        if (g_capabilities) {
-            g_capabilities->EnsureAll();
-            LogCapabilities("dataloaded");
-        }
-        slsf::boundary::InitializeProviderCollectors([] {
-            return g_lifecycle ? g_lifecycle->CurrentEpoch() : slsf::Epoch{};
-        }, [](const slsf::Epoch& epoch) {
-            return g_lifecycle && g_lifecycle->IsEpochCurrent(epoch);
+        QueueControl("data-loaded", false, [](auto) {
+            g_dataLoaded = true;
+            if (!g_worldBuilt) {
+                g_worldBuilt = BuildStaticWorld();
+                EnsureLifecycle();
+            }
+            if (g_lifecycle) {
+                WireCompatBridge();
+                const auto update = g_lifecycle->ReloadConfiguration();
+                logs::info("lifecycle: startup configuration status={} message={}",
+                           static_cast<int>(update.status), update.message);
+            }
+            InstallSlsfMenu();
+            if (g_capabilities) {
+                g_capabilities->EnsureAll();
+                LogCapabilities("dataloaded");
+            }
+            slsf::boundary::InitializeProviderCollectors([] {
+                const auto* lifecycle = Runtime();
+                return lifecycle ? lifecycle->CurrentEpoch() : slsf::Epoch{};
+            }, [](const slsf::Epoch& epoch) {
+                const auto* lifecycle = Runtime();
+                return lifecycle && lifecycle->IsEpochCurrent(epoch);
+            });
         });
         break;
     case SKSE::MessagingInterface::kSaveGame:
@@ -731,9 +770,11 @@ SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
             logs::info("lifecycle: configuration published revision={} status={} message={}",
                        snapshot.revision.value, static_cast<int>(snapshot.lastUpdate.status),
                        snapshot.lastUpdate.message);
-            if (g_lifecycle && g_lifecycle->BusinessOpen()) {
-                SKSE::GetTaskInterface()->AddTask([] {
-                    if (!g_lifecycle || !g_lifecycle->BusinessOpen()) return;
+            const auto* lifecycle = Runtime();
+            if (lifecycle && lifecycle->BusinessOpen()) {
+                const auto epoch = lifecycle->CurrentEpoch();
+                QueueControl("configuration apply", false, [epoch](auto) {
+                    if (!g_lifecycle || !g_lifecycle->IsEpochCurrent(epoch)) return;
                     const auto applied = g_lifecycle->ApplyCurrentConfiguration();
                     if (!applied.Succeeded()) logs::error("configuration apply failed: {}", applied.message);
                 });

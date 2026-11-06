@@ -105,8 +105,11 @@ struct Lifecycle::Pending {
     std::string message;
 };
 
-Lifecycle::Lifecycle(StaticWorld world, IConfigurationSource& configuration)
-    : world_(world), configuration_(configuration) {}
+Lifecycle::Lifecycle(StaticWorld world, IConfigurationSource& configuration,
+                     std::shared_ptr<runtime::SessionGate> hostGate)
+    : world_(world), configuration_(configuration), hostGate_(std::move(hostGate)), dispatcher_(hostGate_) {
+    PublishStatus();
+}
 
 Lifecycle::~Lifecycle() {
     dispatcher_.Detach();
@@ -123,6 +126,7 @@ ConfigurationUpdateResult Lifecycle::ReloadConfiguration() {
         }
     }
     message_ = update.message;
+    PublishStatus();
     return update;
 }
 ConfigurationUpdateResult Lifecycle::ApplyCurrentConfiguration() {
@@ -160,6 +164,7 @@ ConfigurationUpdateResult Lifecycle::ApplyCurrentConfiguration() {
         }
     }
     message_ = update.message;
+    PublishStatus();
     return update;
 }
 bool Lifecycle::BuildAssets(const ConfigurationSnapshot& configuration,
@@ -285,15 +290,21 @@ bool Lifecycle::Begin(SessionKind kind, const SessionContext& context,
     return true;
 }
 bool Lifecycle::PrepareNewGame(const SessionContext& context) {
-    return Begin(SessionKind::NewGame, context, nullptr);
+    const auto ready = Begin(SessionKind::NewGame, context, nullptr);
+    PublishStatus();
+    return ready;
 }
 bool Lifecycle::PrepareLoad(const PersistentState& candidate, const SessionContext& context) {
-    return Begin(SessionKind::Load, context, &candidate);
+    const auto ready = Begin(SessionKind::Load, context, &candidate);
+    PublishStatus();
+    return ready;
 }
 bool Lifecycle::PrepareRevert(const PersistentState& candidate, const SessionContext& context) {
-    return Begin(SessionKind::Revert, context, &candidate);
+    const auto ready = Begin(SessionKind::Revert, context, &candidate);
+    PublishStatus();
+    return ready;
 }
-bool Lifecycle::ActivatePrepared(bool hostSucceeded) {
+bool Lifecycle::ActivatePrepared(bool hostSucceeded, std::optional<std::uint64_t> hostGeneration) {
     if (!hostSucceeded) {
         RejectPreparation("host load failed; prepared session discarded");
         return false;
@@ -322,6 +333,8 @@ bool Lifecycle::ActivatePrepared(bool hostSucceeded) {
     unresolvedAccounts_ = pending->unresolvedAccounts;
     droppedEdges_ = pending->droppedEdges;
     message_ = "session active";
+    if (hostGate_ && hostGeneration) hostGate_->Open(*hostGeneration);
+    PublishStatus();
     return true;
 }
 void Lifecycle::DiscardPrepared() {
@@ -330,11 +343,13 @@ void Lifecycle::DiscardPrepared() {
     }
     pending_.reset();
     message_ = "prepared session discarded";
+    PublishStatus();
 }
 void Lifecycle::RejectPreparation(std::string reason) {
     ReturnToMenu();
     phase_ = LifecyclePhase::Failed;
     message_ = std::move(reason);
+    PublishStatus();
 }
 void Lifecycle::ReturnToMenu() {
     dispatcher_.Detach();
@@ -342,9 +357,10 @@ void Lifecycle::ReturnToMenu() {
     pending_.reset();
     phase_ = LifecyclePhase::Detached;
     message_ = "returned to menu";
+    PublishStatus();
 }
 Result<PersistentState> Lifecycle::Capture() const {
-    if (phase_ != LifecyclePhase::Active || !dispatcher_.Attached()) {
+    if (!BusinessOpen()) {
         return Fail(Error::Code::InvalidState, "no active session to capture");
     }
     return dispatcher_.Capture();
@@ -359,6 +375,9 @@ Epoch Lifecycle::CurrentEpoch() const {
     return dispatcher_.CurrentEpoch();
 }
 LifecycleStatus Lifecycle::Status() const {
+    return *publishedStatus_.load();
+}
+void Lifecycle::PublishStatus() {
     LifecycleStatus status;
     status.phase = phase_;
     status.kind = kind_;
@@ -370,6 +389,6 @@ LifecycleStatus Lifecycle::Status() const {
     status.droppedConnectionEdges = droppedEdges_;
     status.businessOpen = BusinessOpen();
     status.message = message_;
-    return status;
+    publishedStatus_.store(std::make_shared<const LifecycleStatus>(std::move(status)));
 }
 }

@@ -10,15 +10,18 @@
 #include "slsf/core/reputation/Settlement.h"
 #include "slsf/engine/EventBridge.h"
 #include "slsf/persistence/StableKeys.h"
+#include "slsf/runtime/ControlExecutor.h"
 #include "slsf/runtime/Lifecycle.h"
 
 #include <algorithm>
+#include <atomic>
 #include <cstddef>
 #include <cstdint>
 #include <functional>
 #include <memory>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -160,8 +163,8 @@ double Fame(const Lifecycle& lifecycle, std::uint32_t location) {
 }
 
 struct Fixture {
-    Fixture() : world(MakeWorld()) {
-        lifecycle = std::make_unique<Lifecycle>(StaticWorld{.regions = &world}, configuration);
+    explicit Fixture(std::shared_ptr<slsf::runtime::SessionGate> gate = {}) : world(MakeWorld()) {
+        lifecycle = std::make_unique<Lifecycle>(StaticWorld{.regions = &world}, configuration, std::move(gate));
     }
 
     RegionSnapshot world;
@@ -629,6 +632,149 @@ TEST_CASE("light key migration rejects custom region collisions before activatio
     CHECK_FALSE(fixture.lifecycle->BusinessOpen());
     CHECK_FALSE(fixture.lifecycle->Executor().Attached());
     CHECK_FALSE(fixture.lifecycle->Capture());
+}
+
+TEST_CASE("lifecycle controls keep worker and owner submissions in queue order", "[loading-owner]") {
+    slsf::runtime::ControlExecutor controls;
+    std::vector<std::uint64_t> order;
+    std::thread worker([&] { controls.Post([&](auto sequence) { order.push_back(sequence); }); });
+    worker.join();
+    bool nestedDrain = true;
+    controls.Post([&](auto sequence) {
+        order.push_back(sequence);
+        controls.Post([&](auto next) { order.push_back(next); });
+        nestedDrain = controls.Drain();
+    });
+    CHECK(order.empty());
+    REQUIRE(controls.Drain());
+    CHECK_FALSE(nestedDrain);
+    CHECK(order == std::vector<std::uint64_t>{1, 2, 3});
+    bool otherDrain = true;
+    controls.Post([&](auto sequence) { order.push_back(sequence); });
+    std::thread other([&] { otherDrain = controls.Drain(); });
+    other.join();
+    CHECK_FALSE(otherDrain);
+    CHECK(order.size() == 3);
+    REQUIRE(controls.Drain());
+    CHECK(order.back() == 4);
+}
+
+TEST_CASE("load gate closes immediately while reset and coroutine cancellation wait for owner", "[loading-owner]") {
+    auto gate = std::make_shared<slsf::runtime::SessionGate>();
+    Fixture fixture(gate);
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared());
+    const auto oldEpoch = lifecycle.CurrentEpoch();
+    const auto owner = std::this_thread::get_id();
+    std::thread::id resumed;
+    auto flow = lifecycle.Executor().SpawnFlow([&]() -> slsf::runtime::Dispatcher::Flow {
+        if (!(co_await slsf::runtime::Dispatcher::Delay{lifecycle.Executor(), 100, slsf::runtime::ClockDomain::Real})) {
+            resumed = std::this_thread::get_id();
+        }
+    });
+    slsf::runtime::ControlExecutor controls;
+    std::thread worker([&] {
+        gate->Close();
+        controls.Post([&](auto) { lifecycle.ReturnToMenu(); });
+    });
+    worker.join();
+    CHECK_FALSE(lifecycle.BusinessOpen());
+    CHECK_FALSE(lifecycle.IsEpochCurrent(oldEpoch));
+    CHECK_FALSE(lifecycle.Capture());
+    CHECK(lifecycle.Executor().Execute(SetCommand(0, 22)).status == Status::NotReady);
+    CHECK(resumed == std::thread::id{});
+    REQUIRE(controls.Drain());
+    CHECK(resumed == owner);
+    CHECK_FALSE(lifecycle.Executor().Attached());
+    CHECK(lifecycle.Status().phase == slsf::LifecyclePhase::Detached);
+}
+
+TEST_CASE("an older activation cannot reopen a newer pending load", "[loading-owner]") {
+    auto gate = std::make_shared<slsf::runtime::SessionGate>();
+    Fixture fixture(gate);
+    auto& lifecycle = *fixture.lifecycle;
+    slsf::runtime::ControlExecutor controls;
+    const auto first = gate->Close();
+    controls.Post([&](auto) { lifecycle.ReturnToMenu(); });
+    controls.Post([&, save = SaveWith(Key(1), 12)](auto) { REQUIRE(lifecycle.PrepareLoad(save, SessionContext{})); });
+    controls.Post([&](auto) {
+        REQUIRE(lifecycle.ActivatePrepared(true, first));
+        CHECK_FALSE(lifecycle.BusinessOpen());
+        CHECK_FALSE(lifecycle.Status().businessOpen);
+    });
+    const auto second = gate->Close();
+    controls.Post([&](auto) { lifecycle.ReturnToMenu(); });
+    controls.Post([&, save = SaveWith(Key(1), 45)](auto) { REQUIRE(lifecycle.PrepareLoad(save, SessionContext{})); });
+    controls.Post([&](auto) {
+        REQUIRE(lifecycle.ActivatePrepared(true, second));
+    });
+    REQUIRE(controls.Drain());
+    CHECK(lifecycle.BusinessOpen());
+    CHECK(lifecycle.Status().businessOpen);
+    CHECK(Fame(lifecycle, 0) == 45);
+}
+
+TEST_CASE("closing the host gate stops the remaining dispatcher work in a step", "[loading-owner]") {
+    auto gate = std::make_shared<slsf::runtime::SessionGate>();
+    Fixture fixture(gate);
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared());
+    const auto epoch = lifecycle.CurrentEpoch();
+    int executed = 0;
+    lifecycle.Executor().Post(epoch, [&] { ++executed; gate->Close(); });
+    lifecycle.Executor().Post(epoch, [&] { ++executed; });
+    lifecycle.Executor().Step();
+    CHECK(executed == 1);
+    lifecycle.ReturnToMenu();
+    CHECK(lifecycle.Executor().PendingEvents() == 0);
+}
+
+TEST_CASE("failed and missing co-save loads stay closed before a new game", "[loading-owner]") {
+    auto gate = std::make_shared<slsf::runtime::SessionGate>();
+    Fixture fixture(gate);
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared());
+    gate->Close();
+    lifecycle.ReturnToMenu();
+    SECTION("host failed after staging") {
+        REQUIRE(lifecycle.PrepareLoad(SaveWith(Key(1), 33), SessionContext{}));
+        CHECK_FALSE(lifecycle.ActivatePrepared(false));
+    }
+    SECTION("no serialization callback") { CHECK_FALSE(lifecycle.ActivatePrepared(true)); }
+    SECTION("malformed co-save") { lifecycle.RejectPreparation("malformed"); }
+    CHECK_FALSE(lifecycle.BusinessOpen());
+    CHECK_FALSE(lifecycle.Capture());
+    const auto generation = gate->Close();
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared(true, generation));
+    CHECK(lifecycle.BusinessOpen());
+    CHECK(Fame(lifecycle, 0) == 0);
+}
+
+TEST_CASE("published lifecycle status stays coherent during menu reads", "[loading-owner]") {
+    Fixture fixture;
+    auto& lifecycle = *fixture.lifecycle;
+    std::atomic<bool> done{false};
+    std::atomic<bool> invalid{false};
+    std::thread menu([&] {
+        while (!done.load()) {
+            const auto status = lifecycle.Status();
+            if (status.phase == slsf::LifecyclePhase::Active &&
+                (status.message != "session active" || status.epoch.session == 0)) invalid = true;
+        }
+    });
+    for (int i = 0; i < 50; ++i) {
+        lifecycle.PrepareNewGame(SessionContext{});
+        lifecycle.ActivatePrepared();
+        lifecycle.ReturnToMenu();
+    }
+    done = true;
+    menu.join();
+    CHECK_FALSE(invalid.load());
+    CHECK(lifecycle.Status().phase == slsf::LifecyclePhase::Detached);
 }
 
 }

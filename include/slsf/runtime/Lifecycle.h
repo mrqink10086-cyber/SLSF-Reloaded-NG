@@ -72,7 +72,8 @@ struct LifecycleStatus {
 
 class Lifecycle {
 public:
-    Lifecycle(StaticWorld world, IConfigurationSource& configuration);
+    Lifecycle(StaticWorld world, IConfigurationSource& configuration,
+              std::shared_ptr<runtime::SessionGate> hostGate = {});
     ~Lifecycle();
 
     Lifecycle(const Lifecycle&) = delete;
@@ -90,7 +91,8 @@ public:
 
     // Attaches exactly once after host success. Failure discards the candidate
     // and closes the dispatcher; diagnostics remain available in Status().
-    bool ActivatePrepared(bool hostSucceeded = true);
+    bool ActivatePrepared(bool hostSucceeded = true,
+                          std::optional<std::uint64_t> hostGeneration = {});
 
     // Drops the pending candidate (failed/cancelled load) without touching
     // the detached dispatcher's last publication.
@@ -126,9 +128,11 @@ private:
                      std::unique_ptr<Assets>& out, std::uint32_t& droppedEdges,
                      std::string& error) const;
     Epoch NextEpoch();
+    void PublishStatus();
 
     StaticWorld world_;
     IConfigurationSource& configuration_;
+    std::shared_ptr<runtime::SessionGate> hostGate_;
     Dispatcher dispatcher_;
     std::unique_ptr<Assets> active_;
     std::unique_ptr<Pending> pending_;
@@ -143,6 +147,7 @@ private:
     std::uint32_t unresolvedAccounts_{};
     std::uint32_t droppedEdges_{};
     std::string message_;
+    std::atomic<std::shared_ptr<const LifecycleStatus>> publishedStatus_;
 };
 
 }

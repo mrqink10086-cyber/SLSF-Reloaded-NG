@@ -25,7 +25,6 @@ std::map<std::uint64_t, Continuation> pending;
 std::vector<Continuation> restored;
 std::uint64_t nextCall{};
 using integrations::kMaxCollectorCalls;
-bool restoredRecord{};
 
 bool IsCurrent(const Epoch& epoch) {
     std::function<bool(const Epoch&)> probe;
@@ -237,30 +236,28 @@ bool SaveProviderCollectorCalls(SKSE::SerializationInterface* serialization) {
                                       static_cast<std::uint32_t>(words.size() * sizeof(std::uint32_t)));
 }
 bool LoadProviderCollectorCalls(SKSE::SerializationInterface* serialization,
-                               std::uint32_t version, std::uint32_t length) {
+                               std::uint32_t version, std::uint32_t length,
+                               std::vector<Continuation>& calls) {
     if (version != 1 || length < 4 || length > (1 + kMaxCollectorCalls * 2) * 4 || length % 4 != 0) return false;
     std::vector<std::uint32_t> words(length / 4);
     if (serialization->ReadRecordData(words.data(), length) != length) return false;
-    std::vector<Continuation> calls;
     if (!integrations::DecodeCollectorContinuations(words, calls)) return false;
-    std::lock_guard guard(providerMutex);
-    if (restoredRecord) return false;
-    restoredRecord = true;
-    restored = std::move(calls);
     return true;
+}
+void RestoreProviderCollectorCalls(std::vector<Continuation> calls) {
+    std::lock_guard guard(providerMutex);
+    restored = std::move(calls);
 }
 void ResetProviderCollectorCalls() {
     std::lock_guard guard(providerMutex);
     pending.clear();
     restored.clear();
-    restoredRecord = false;
 }
 void ResumeProviderCollectorCalls(bool loaded) {
     std::vector<Continuation> calls;
     {
         std::lock_guard guard(providerMutex);
         calls.swap(restored);
-        restoredRecord = false;
     }
     if (!loaded) return;
     auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();

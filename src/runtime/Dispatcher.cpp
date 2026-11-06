@@ -262,7 +262,7 @@ Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
     Revision revision;
     {
         std::lock_guard guard(mutex_);
-        if (!state_ || suspended_) {
+        if (!state_ || Blocked()) {
             return Fail(Error::Code::InvalidState, "no active session to reconfigure");
         }
         auto now = clocks_.Game();
@@ -286,7 +286,7 @@ Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
     if (!prepared) return std::unexpected(prepared.error());
     auto workspace = MakeSettlementWorkspace();
     std::lock_guard guard(mutex_);
-    if (!state_ || suspended_ || lifecycleGeneration_ != generation ||
+    if (!state_ || Blocked() || lifecycleGeneration_ != generation ||
         state_->revision != revision) {
         return Fail(Error::Code::InvalidState, "session changed during configuration update");
     }
@@ -361,12 +361,12 @@ void Dispatcher::Resume() {
 
 bool Dispatcher::Suspended() const {
     std::lock_guard<std::mutex> guard(mutex_);
-    return suspended_;
+    return Blocked();
 }
 
 Result<PersistentState> Dispatcher::Capture() const {
     std::lock_guard<std::mutex> guard(mutex_);
-    if (!state_) {
+    if (!state_ || Blocked()) {
         return Fail(Error::Code::InvalidState, "no attached session to capture");
     }
     return CaptureState(*state_);
@@ -378,7 +378,7 @@ CommandResult Dispatcher::EditState(const std::function<Result<void>(State&)>& e
     Revision revision;
     {
         std::lock_guard guard(mutex_);
-        if (!state_ || suspended_) {
+        if (!state_ || Blocked()) {
             return {Status::NotReady, {}, "no active session to edit"};
         }
         auto now = clocks_.Game();
@@ -396,7 +396,7 @@ CommandResult Dispatcher::EditState(const std::function<Result<void>(State&)>& e
     if (!captured) return {Status::Invalid, revision, captured.error().message};
     candidate.revision.value = revision.value + 1;
     std::lock_guard guard(mutex_);
-    if (!state_ || suspended_ || lifecycleGeneration_ != generation || state_->revision != revision) {
+    if (!state_ || Blocked() || lifecycleGeneration_ != generation || state_->revision != revision) {
         return {Status::Stale, revision, "session changed during edit"};
     }
     state_ = std::move(candidate);
@@ -410,7 +410,7 @@ CommandResult Dispatcher::Execute(const ExplicitCommand& command) {
     if (!state_) {
         return CommandResult{Status::Stale, Revision{}, "executor detached"};
     }
-    if (suspended_) {
+    if (Blocked()) {
         return CommandResult{Status::NotReady, state_->revision, "executor suspended"};
     }
     GameTime now = clocks_.Game();
@@ -451,7 +451,7 @@ Dispatcher::GainOutcome Dispatcher::GainFame(GameTime now, RegionId account,
     if (!state_) {
         return GainOutcome{Status::Stale, Revision{}, 0, "executor detached"};
     }
-    if (suspended_) {
+    if (Blocked()) {
         return GainOutcome{Status::NotReady, state_->revision, 0, "executor suspended"};
     }
     if (!bindings_.configuration || !bindings_.rng) {
@@ -478,7 +478,7 @@ Dispatcher::GainOutcome Dispatcher::GainFame(GameTime now, RegionId account,
 
 CommandResult Dispatcher::DecayBatch(int multiplier) {
     std::lock_guard<std::mutex> guard(mutex_);
-    if (!state_ || suspended_ || !bindings_.configuration || !bindings_.rng)
+    if (!state_ || Blocked() || !bindings_.configuration || !bindings_.rng)
         return {Status::NotReady, {}, "settlement inputs not bound"};
     const auto now = FloorToLastAdvance(lastAdvance_, clocks_.Game());
     const auto settled = AdvanceLocked(now);
@@ -495,7 +495,7 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualSpread(RegionId source, RegionId
     if (!state_) {
         return ApplyOutcome{Status::Stale, Revision{}, 0.0, "executor detached"};
     }
-    if (suspended_) {
+    if (Blocked()) {
         return ApplyOutcome{Status::NotReady, state_->revision, 0.0, "executor suspended"};
     }
     if (!bindings_.configuration) {
@@ -526,7 +526,7 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualDecay(RegionId target, FameCateg
     if (!state_) {
         return ApplyOutcome{Status::Stale, Revision{}, 0.0, "executor detached"};
     }
-    if (suspended_) {
+    if (Blocked()) {
         return ApplyOutcome{Status::NotReady, state_->revision, 0.0, "executor suspended"};
     }
     if (!bindings_.configuration || !bindings_.rng) {
@@ -556,7 +556,7 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualGain(RegionId target, FameCatego
     if (!state_) {
         return ApplyOutcome{Status::Stale, Revision{}, 0.0, "executor detached"};
     }
-    if (suspended_) {
+    if (Blocked()) {
         return ApplyOutcome{Status::NotReady, state_->revision, 0.0, "executor suspended"};
     }
     if (!bindings_.configuration || !bindings_.rng) {
@@ -586,7 +586,7 @@ CommandResult Dispatcher::ApplySpreadPulse(GameTime now,
     if (!state_) {
         return CommandResult{Status::Stale, Revision{}, "executor detached"};
     }
-    if (suspended_) {
+    if (Blocked()) {
         return CommandResult{Status::NotReady, state_->revision, "executor suspended"};
     }
     if (!bindings_.configuration || !bindings_.graph || !bindings_.parameters) {
@@ -655,7 +655,7 @@ Result<AdvanceResult> Dispatcher::AdvanceLocked(GameTime now) {
     if (!state_) {
         return std::unexpected(Error{Error::Code::InvalidState, "executor detached"});
     }
-    if (suspended_) {
+    if (Blocked()) {
         return std::unexpected(Error{Error::Code::InvalidState, "executor suspended"});
     }
     const double seconds = now.AsSeconds();
@@ -743,7 +743,7 @@ void Dispatcher::FireDirty(RegionId target, std::uint64_t generation) {
     DirtySink sink;
     {
         std::lock_guard<std::mutex> guard(mutex_);
-        if (!state_ || generation != lifecycleGeneration_) {
+        if (!state_ || Blocked() || generation != lifecycleGeneration_) {
             return;
         }
         auto node = dirty_.extract(target);
@@ -770,7 +770,7 @@ void Dispatcher::Step() {
     std::uint64_t schedulerSession;
     {
         std::lock_guard<std::mutex> guard(mutex_);
-        active = state_.has_value() && !suspended_;
+        active = state_.has_value() && !Blocked();
         generation = lifecycleGeneration_;
         schedulerSession = scheduler_.Session();
     }
@@ -793,14 +793,14 @@ void Dispatcher::Step() {
     auto runDue = [this, generation, schedulerSession](ClockDomain domain, double now) {
         {
             std::lock_guard<std::mutex> guard(mutex_);
-            if (!state_ || lifecycleGeneration_ != generation) {
+            if (!state_ || Blocked() || lifecycleGeneration_ != generation) {
                 return;
             }
         }
         for (auto& task : scheduler_.AcquireDue(domain, now)) {
             {
                 std::lock_guard<std::mutex> guard(mutex_);
-                if (!state_ || lifecycleGeneration_ != generation ||
+                if (!state_ || Blocked() || lifecycleGeneration_ != generation ||
                     task.session != schedulerSession || scheduler_.Session() != schedulerSession) {
                     return;
                 }
@@ -824,7 +824,7 @@ void Dispatcher::Step() {
         EngineEvent event;
         {
             std::lock_guard<std::mutex> guard(mutex_);
-            if (!state_ || lifecycleGeneration_ != generation || events_.empty()) {
+            if (!state_ || Blocked() || lifecycleGeneration_ != generation || events_.empty()) {
                 break;
             }
             event = std::move(events_.front());
@@ -833,7 +833,7 @@ void Dispatcher::Step() {
         bool valid = false;
         {
             std::lock_guard<std::mutex> guard(mutex_);
-            valid = state_.has_value() && event.epoch == epoch_;
+            valid = state_.has_value() && !Blocked() && event.epoch == epoch_;
         }
         if (!valid) {
             std::lock_guard<std::mutex> guard(mutex_);
