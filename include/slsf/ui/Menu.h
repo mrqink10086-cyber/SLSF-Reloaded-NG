@@ -80,6 +80,7 @@ private:
 
     static void __stdcall HandleFrameworkEvent(std::uint32_t type);
     enum class CommitOutcome : std::uint8_t { Nothing, Committed, Failed };
+    void Render();
     void RenderOverview();
     void RenderCategories();
     void RenderConnections();

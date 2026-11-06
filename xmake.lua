@@ -6,7 +6,7 @@ add_requireconfs("spdlog", { system = false })
 add_requires("catch2 3.8.1")
 
 set_project("SLSF Reloaded NG")
-set_version("0.1.2")
+set_version("0.1.3")
 set_license("GPL-3.0")
 set_languages("c++23")
 set_warnings("allextra")

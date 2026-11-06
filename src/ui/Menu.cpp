@@ -117,6 +117,7 @@ struct ImGuiApi {
     using SelectableFn = bool (*)(const char*, bool, int, Vec2);
     using PushIdFn = void (*)(const char*);
     using PopIdFn = void (*)();
+    using CollapsingHeaderFn = bool (*)(const char*, int);
 
     TextFn text{nullptr};
     TextUnformattedFn textUnformatted{nullptr};
@@ -132,13 +133,14 @@ struct ImGuiApi {
     SelectableFn selectable{nullptr};
     PushIdFn pushId{nullptr};
     PopIdFn popId{nullptr};
+    CollapsingHeaderFn collapsingHeader{nullptr};
 
     [[nodiscard]] bool Usable() const noexcept {
         return text != nullptr && textUnformatted != nullptr && button != nullptr &&
                smallButton != nullptr && checkbox != nullptr && sliderFloat != nullptr &&
                sliderScalar != nullptr && beginCombo != nullptr && endCombo != nullptr &&
                selectable != nullptr && pushId != nullptr && popId != nullptr &&
-               sameLine != nullptr && separator != nullptr;
+               sameLine != nullptr && separator != nullptr && collapsingHeader != nullptr;
     }
 
     [[nodiscard]] static const ImGuiApi& Fetch();
@@ -161,6 +163,7 @@ const ImGuiApi& ImGuiApi::Fetch() {
         api.selectable = FrameworkFunction<ImGuiApi::SelectableFn>("igSelectable_Bool");
         api.pushId = FrameworkFunction<ImGuiApi::PushIdFn>("igPushID_Str");
         api.popId = FrameworkFunction<ImGuiApi::PopIdFn>("igPopID");
+        api.collapsingHeader = FrameworkFunction<ImGuiApi::CollapsingHeaderFn>("igCollapsingHeader_TreeNodeFlags");
         return api;
     }();
     return cached;
@@ -278,6 +281,10 @@ void PopId() {
     if (api.popId != nullptr) {
         api.popId();
     }
+}
+
+bool Group(const char* label, bool open = true) {
+    return ImGuiApi::Fetch().collapsingHeader(label, open ? 1 << 5 : 0);
 }
 
 std::string FormatFormId(std::uint32_t value) {
@@ -434,20 +441,8 @@ bool Menu::Install(Ports ports) {
         return false;
     }
 
-    addSection((std::string(kSectionRoot) + "/总览").c_str(),
-               []() { Instance().RenderOverview(); });
-    addSection((std::string(kSectionRoot) + "/声望类别").c_str(),
-               []() { Instance().RenderCategories(); });
-    addSection((std::string(kSectionRoot) + "/地区连接").c_str(),
-               []() { Instance().RenderConnections(); });
-    addSection((std::string(kSectionRoot) + "/规则与平衡").c_str(),
-               []() { Instance().RenderBalance(); });
-    addSection((std::string(kSectionRoot) + "/声望操作").c_str(),
-               []() { Instance().RenderCommands(); });
-    addSection((std::string(kSectionRoot) + "/旧版数据").c_str(),
-               []() { Instance().RenderLegacy(); });
-    addSection((std::string(kSectionRoot) + "/运行状态").c_str(),
-               []() { Instance().RenderDiagnostics(); });
+    addSection((std::string(kSectionRoot) + "/设置").c_str(),
+               []() { Instance().Render(); });
 
     installed_ = true;
     return true;
@@ -551,7 +546,7 @@ std::string Menu::LastUpdateMessage() const {
     return cached_.lastUpdate.message;
 }
 
-void Menu::RenderOverview() {
+void Menu::Render() {
     if (!UiAvailable()) {
         TextUnformatted("菜单框架的界面功能不可用。");
         return;
@@ -561,18 +556,23 @@ void Menu::RenderOverview() {
         TextUnformatted("配置尚未就绪。");
         return;
     }
-    const ConfigurationSnapshot& snapshot = cached_;
-    Text(UpdateStatusLine(snapshot));
+    TextUnformatted("设置跨存档共用，点击“应用并保存”或关闭菜单后保存。");
+    if (Group("基础设置与通知")) RenderOverview();
+    if (Group("声望类别与传播限制")) RenderCategories();
+    if (Group("关系、时间与平衡")) RenderBalance();
+    if (Group("地区连接", false)) RenderConnections();
     Separator();
-
-    std::string counts = "地区连接数：" + std::to_string(draft_->connections.size());
-    counts += "，关注地区数：" + std::to_string(draft_->menu.selectedRegions.size());
-    if (const RegionSnapshot* regions = ports_.regions != nullptr ? ports_.regions() : nullptr) {
-        counts += "，世界地区数：" + std::to_string(regions->regions.size());
+    if (Button("应用并保存")) {
+        (void)ApplyDraft();
     }
-    Text(counts);
     Separator();
+    Text(MenuMessageText(LastUpdateMessage()));
+    if (Group("声望操作", false)) RenderCommands();
+    if (Group("旧版数据导入", false)) RenderLegacy();
+    if (Group("运行状态", false)) RenderDiagnostics();
+}
 
+void Menu::RenderOverview() {
     Checkbox("夜间减少声望增长", &draft_->features.reduceFameAtNight);
     Checkbox("启用声望传播限制", &draft_->features.fameSpreadRestrictions);
     Checkbox("动态匿名", &draft_->features.dynamicAnonymity);
@@ -585,22 +585,9 @@ void Menu::RenderOverview() {
     Checkbox("声望增长时通知", &draft_->menu.notifications.fameIncrease);
     Checkbox("声望衰减时通知", &draft_->menu.notifications.fameDecay);
     Checkbox("声望传播时通知", &draft_->menu.notifications.fameSpread);
-    Separator();
-    if (Button("应用设置")) {
-        (void)ApplyDraft();
-    }
 }
 
 void Menu::RenderCategories() {
-    if (!UiAvailable()) {
-        TextUnformatted("菜单框架的界面功能不可用。");
-        return;
-    }
-    RefreshDraft();
-    if (draft_ == std::nullopt) {
-        TextUnformatted("配置尚未就绪。");
-        return;
-    }
     for (std::size_t index = 0; index < kFameCategoryCount; ++index) {
         PushId(static_cast<int>(index));
         float multiplier = static_cast<float>(draft_->categories.multipliers[index]);
@@ -625,22 +612,9 @@ void Menu::RenderCategories() {
     if (SliderInt("传播百分比上限", &maximumPercentage, 0, 100)) {
         draft_->categories.maximumSpreadPercentage = static_cast<double>(maximumPercentage);
     }
-    Separator();
-    if (Button("应用设置")) {
-        (void)ApplyDraft();
-    }
 }
 
 void Menu::RenderConnections() {
-    if (!UiAvailable()) {
-        TextUnformatted("菜单框架的界面功能不可用。");
-        return;
-    }
-    RefreshDraft();
-    if (draft_ == std::nullopt) {
-        TextUnformatted("配置尚未就绪。");
-        return;
-    }
     const RegionSnapshot* regions =
         ports_.regions != nullptr ? ports_.regions() : nullptr;
 
@@ -719,22 +693,28 @@ void Menu::RenderConnections() {
             draft_->connections.push_back(std::move(setting));
         }
     }
-    Separator();
-    if (Button("应用设置")) {
-        (void)ApplyDraft();
-    }
 }
 
 void Menu::RenderBalance() {
-    if (!UiAvailable()) {
-        TextUnformatted("菜单框架的界面功能不可用。");
-        return;
+    TextUnformatted("按类别限制朋友和恋人的声望传播；泄密概率与高声望规则仍然生效。");
+    for (std::size_t index = 0; index < kFameCategoryCount; ++index) {
+        PushId(static_cast<int>(index));
+        const auto category = static_cast<FameCategory>(index);
+        TextUnformatted(kCategoryLabels[index]);
+        bool friendForbidden = draft_->relationships.forbiddenByFriend.Test(category);
+        if (Checkbox("朋友传播限制", &friendForbidden)) {
+            if (friendForbidden) (void)draft_->relationships.forbiddenByFriend.Set(category);
+            else (void)draft_->relationships.forbiddenByFriend.Reset(category);
+        }
+        SameLine();
+        bool loverForbidden = draft_->relationships.forbiddenByLover.Test(category);
+        if (Checkbox("恋人传播限制", &loverForbidden)) {
+            if (loverForbidden) (void)draft_->relationships.forbiddenByLover.Set(category);
+            else (void)draft_->relationships.forbiddenByLover.Reset(category);
+        }
+        PopId();
     }
-    RefreshDraft();
-    if (draft_ == std::nullopt) {
-        TextUnformatted("配置尚未就绪。");
-        return;
-    }
+    Separator();
     TextUnformatted("朋友与恋人规则");
     float friendThreshold =
         static_cast<float>(draft_->relationships.friendHighFameThreshold);
@@ -798,10 +778,6 @@ void Menu::RenderBalance() {
     if (SliderFloat("声望上限", &maxFame, 1.0f, static_cast<float>(kConfigMaxValue))) {
         draft_->parameters.maxFame = maxFame;
     }
-    Separator();
-    if (Button("应用设置")) {
-        (void)ApplyDraft();
-    }
 }
 
 void Menu::RenderCommands() {
@@ -863,7 +839,7 @@ void Menu::RenderCommands() {
     std::string targetPreview = validLocation(commandTargetIndex_)
                                     ? LocationLabel(locations[static_cast<std::size_t>(commandTargetIndex_)])
                                     : std::string("（未选择）");
-    if (BeginCombo("目标地区", targetPreview)) {
+    if (BeginCombo("传播目标地区", targetPreview)) {
         for (std::size_t index = 0; index < locations.size(); ++index) {
             if (Selectable(LocationLabel(locations[index]),
                            static_cast<std::size_t>(commandTargetIndex_) == index)) {
