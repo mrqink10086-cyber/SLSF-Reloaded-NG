@@ -1,0 +1,9 @@
+[0m[32;1m[  9%]:[0m [36;1m<SLSFReloadedNG>[0m compiling.releasedbg src\boundary\Gameplay.cpp[0m
+[0m[32;1m[ 93%]:[0m [36;1m<SLSFConfigProbe>[0m [36;1mlinking.releasedbg SLSFConfigProbe.exe[0m
+[0m[33;1msrc\boundary\Gameplay.cpp(656): warning C4456: “name”的声明隐藏了上一个本地声明
+src\boundary\Gameplay.cpp(634): note: 参见“name”的声明
+src\boundary\Gameplay.cpp(659): warning C4456: “name”的声明隐藏了上一个本地声明
+src\boundary\Gameplay.cpp(634): note: 参见“name”的声明
+src\boundary\Gameplay.cpp(838): warning C4244: “参数”: 从“int64_t”转换到“double”，可能丢失数据[0m
+[0m[32;1m[ 94%]:[0m [36;1m<SLSFReloadedNG>[0m [36;1mlinking.releasedbg SLSFReloadedNG.dll[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 4.313s[0m

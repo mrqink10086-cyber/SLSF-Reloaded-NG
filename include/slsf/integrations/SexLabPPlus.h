@@ -78,6 +78,7 @@ struct PPlusActorState {
     std::uint32_t interactionUnknown{};
     std::uint32_t roleUnknown{};
     std::optional<std::uint8_t> sexCode;
+    Fact playerInteraction;
 
     [[nodiscard]] gameplay::Tri InteractionState(PPlusInteraction value) const noexcept;
     [[nodiscard]] bool HasInteraction(PPlusInteraction value) const noexcept;

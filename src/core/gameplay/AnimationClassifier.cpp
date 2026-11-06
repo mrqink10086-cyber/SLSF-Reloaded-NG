@@ -21,12 +21,6 @@ namespace {
 [[nodiscard]] Tri TagTri(const std::vector<std::string>& tags, std::string_view tag) noexcept {
     return BoolTri(HasTag(tags, tag));
 }
-[[nodiscard]] Tri CountGreater(const ObservedNumber& number, int threshold) noexcept {
-    if (!number.IsKnown()) {
-        return Tri::Unknown;
-    }
-    return BoolTri(number.value > threshold);
-}
 // (Friend == false && Lover == false) || (Friend == true && !forbiddenFriend)
 // || (Lover == true && !forbiddenLover).  The masks are configuration, never
 // runtime facts, so this gate is always two-valued.
@@ -180,15 +174,10 @@ public:
             gainedSadist_ = Tri::False;
         }
 
-        const Tri likesWomenCond = TriOr(
-            TriAnd(female, CountGreater(facts_.femaleCount, 1)),
-            TriAnd(TriNot(female), CountGreater(facts_.femaleCount, 0)));
-        AddVictimOnly(likesWomenCond, facts_.allowLikeFameWhenRaped, FameCategory::LikesWomen);
-
-        const Tri likesMenCond = TriOr(
-            TriAnd(female, CountGreater(facts_.maleCount, 0)),
-            TriAnd(TriNot(female), CountGreater(facts_.maleCount, 1)));
-        AddVictimOnly(likesMenCond, facts_.allowLikeFameWhenRaped, FameCategory::LikesMen);
+        AddVictimOnly(TriOf(facts_.femalePartnerInteraction), facts_.allowLikeFameWhenRaped,
+                      FameCategory::LikesWomen);
+        AddVictimOnly(TriOf(facts_.malePartnerInteraction), facts_.allowLikeFameWhenRaped,
+                      FameCategory::LikesMen);
 
         AddVictimOnly(TriOr(TagTri(facts_.tags, "Creature"), TagTri(facts_.tags, "Bestiality")),
                       facts_.allowBestialityWhenRaped, FameCategory::Bestiality);

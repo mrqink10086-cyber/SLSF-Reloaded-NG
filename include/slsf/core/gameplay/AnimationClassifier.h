@@ -75,6 +75,8 @@ struct AnimationFacts {
     Fact playerIsFemale{FactState::Unknown};
     ObservedNumber maleCount;
     ObservedNumber femaleCount;
+    Fact malePartnerInteraction{FactState::Unknown};
+    Fact femalePartnerInteraction{FactState::Unknown};
 
     Fact aggressor{FactState::Unknown};
     Fact victim{FactState::Unknown};

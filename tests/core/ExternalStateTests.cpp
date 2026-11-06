@@ -6,6 +6,7 @@
 #include "slsf/interfaces/VmPort.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <algorithm>
 #include <atomic>
@@ -207,7 +208,7 @@ TEST_CASE("Group08 propagates unknown P+ interactions into classification", "[g0
     REQUIRE(ParsePPlusSceneWire(PPlusWire(), {1,2,3}, scene, error));
     scene.tags.clear();
     scene.leadIn = Fact::Known(false);
-    for (auto& actor : scene.actors) { actor.interactions = 0; actor.interactionUnknown = 0; }
+    for (auto& actor : scene.actors) { actor.interactions = 0; actor.interactionUnknown = 0; actor.playerInteraction = Fact::Known(false); }
     auto classify = [&] {
         AnimationFacts facts;
         for (auto* field : {&facts.anonymous, &facts.sceneEnded, &facts.bodySearch,
@@ -297,7 +298,7 @@ TEST_CASE("Group08 keeps victim roles and stage tags separate from legacy catego
     scene.actors[0].submissive = false;
     scene.actors[0].female = false;
     bool submissiveDefault = true;
-    for (auto& actor : scene.actors) { actor.interactions = 0; actor.interactionUnknown = 0; }
+    for (auto& actor : scene.actors) { actor.interactions = 0; actor.interactionUnknown = 0; actor.playerInteraction = Fact::Known(false); }
     auto classify = [&] {
         AnimationFacts facts;
         for (auto* field : {&facts.anonymous, &facts.sceneEnded, &facts.bodySearch,
@@ -328,6 +329,77 @@ TEST_CASE("Group08 keeps victim roles and stage tags separate from legacy catego
     REQUIRE(classify().categories != baseline.categories);
     scene.tags.push_back({"BodySearch", PPlusTagScope::Scene});
     REQUIRE(classify().kind == AnimationResultKind::Skipped);
+}
+
+TEST_CASE("P+ preference follows player partner contacts in mixed scenes", "[partner-interaction][pplus]") {
+    using slsf::Fact;
+    using slsf::FameCategory;
+    using namespace slsf::gameplay;
+    using namespace slsf::integrations;
+    struct Random final : slsf::IRandom { std::int32_t UniformInt(std::int32_t lo, std::int32_t) override { return lo; } } rng;
+    const bool femalePlayer = GENERATE(false, true);
+    const bool sameSexContact = GENERATE(false, true);
+    const auto wire = std::string("SLSFPP1\nversion\t1\navailability\tAvailable\nprovider\tSexLabPPlus\t2.18.1\t1\nepoch\t1\t2\t3\nactive\ttrue\nstage\t0\t1\nscene\tscene\tstage\tfalse\n") +
+        "actor\tSkyrim.esm\t14\tPlayer\tother\t" + (femalePlayer ? "81" : "80") + "\t0\t0\t0\t" + (femalePlayer ? "1" : "0") + "\tfalse\n" +
+        "actor\tSkyrim.esm\t15\tSame\tother\t" + (femalePlayer ? "1" : "0") + "\t0\t0\t0\t" + (femalePlayer ? "1" : "0") + "\t" + (sameSexContact ? "true" : "false") + "\n" +
+        "actor\tSkyrim.esm\t16\tOpposite\tother\t" + (femalePlayer ? "0" : "1") + "\t0\t0\t0\t" + (femalePlayer ? "0" : "1") + "\ttrue\n";
+    PPlusSceneState scene;
+    std::string error;
+    REQUIRE(ParsePPlusSceneWire(wire, {1,2,3}, scene, error));
+    auto classify = [&] {
+        AnimationFacts facts;
+        for (auto* field : {&facts.anonymous, &facts.sceneEnded, &facts.bodySearch,
+             &facts.allowForeplayFame, &facts.sexWorker, &facts.publicWhore,
+             &facts.submissiveDefault, &facts.dominantDefault, &facts.canGainBoundFame,
+             &facts.victimsAreMasochist, &facts.allowLikeFameWhenRaped,
+             &facts.allowBestialityWhenRaped, &facts.deviousDevicesInstalled}) *field = Fact::Known(false);
+        facts.validLocation = Fact::Known(true);
+        facts.startGraceElapsed = Fact::Known(true);
+        REQUIRE(ApplyPPlusToAnimation(scene, facts).applied);
+        for (auto& actor : facts.actors) { actor.relationshipKnown = Fact::Known(true); actor.relationshipRank = 0; }
+        return AnimationClassifier{}.Classify(facts, rng);
+    };
+    const auto result = classify();
+    REQUIRE(result.IsReady());
+    const auto has = [&](FameCategory category) { return std::find(result.categories.begin(), result.categories.end(), category) != result.categories.end(); };
+    REQUIRE(has(femalePlayer ? FameCategory::LikesWomen : FameCategory::LikesMen) == sameSexContact);
+    REQUIRE(has(femalePlayer ? FameCategory::LikesMen : FameCategory::LikesWomen));
+    scene.actors[1].playerInteraction = Fact{};
+    REQUIRE_FALSE(classify().IsReady());
+    scene.actors[1].playerInteraction = Fact::Known(false);
+    scene.actors[1].roleUnknown |= 1;
+    REQUIRE(classify().IsReady());
+    scene.actors[1].playerInteraction = Fact::Known(true);
+    REQUIRE_FALSE(classify().IsReady());
+}
+
+TEST_CASE("P+ legacy and invalid partner contact data never infer contacts", "[partner-interaction][pplus]") {
+    using namespace slsf::integrations;
+    using namespace slsf::gameplay;
+    PPlusSceneState scene;
+    std::string error;
+    REQUIRE(ParsePPlusSceneWire(PPlusWire(), {1,2,3}, scene, error));
+    AnimationFacts facts;
+    REQUIRE(ApplyPPlusToAnimation(scene, facts).applied);
+    REQUIRE(TriOf(facts.malePartnerInteraction) == Tri::Unknown);
+    REQUIRE(facts.femalePartnerInteraction.IsKnownFalse());
+    for (const auto contact : {"unknown", "false", "true", "bad"}) {
+        auto wire = PPlusWire();
+        const auto pos = wire.find("\t1000\t0\n");
+        wire.replace(pos, 8, std::string("\t1000\t0\t0\t0\t") + contact + "\n");
+        if (std::string_view(contact) == "bad") {
+            REQUIRE_FALSE(ParsePPlusSceneWire(wire, {1,2,3}, scene, error));
+            REQUIRE(error == "actor player interaction is invalid");
+        } else {
+            REQUIRE(ParsePPlusSceneWire(wire, {1,2,3}, scene, error));
+            REQUIRE(ApplyPPlusToAnimation(scene, facts).applied);
+            REQUIRE(TriOf(facts.malePartnerInteraction) == (std::string_view(contact) == "unknown" ? Tri::Unknown : std::string_view(contact) == "true" ? Tri::True : Tri::False));
+        }
+    }
+    scene.active = false;
+    REQUIRE_FALSE(ApplyPPlusToAnimation(scene, facts).applied);
+    REQUIRE_FALSE(facts.malePartnerInteraction.Value().has_value());
+    REQUIRE_FALSE(facts.femalePartnerInteraction.Value().has_value());
 }
 
 TEST_CASE("Group08 notification selects a real thread and preserves wide epoch arguments", "[g08-fixes]") {

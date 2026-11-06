@@ -82,7 +82,7 @@ bool ParseScope(std::string_view text, PPlusTagScope& out) noexcept {
 
 bool ParseActor(std::vector<std::string>& fields, PPlusActorState& out,
                 std::string& error) {
-    if (fields.size() < 8 || fields.size() > 10) {
+    if (fields.size() < 8 || fields.size() > 11) {
         error = "actor line has the wrong field count";
         return false;
     }
@@ -114,15 +114,23 @@ bool ParseActor(std::vector<std::string>& fields, PPlusActorState& out,
         error = "actor role unknown mask is invalid";
         return false;
     }
-    if (fields.size() == 10 && fields[9] != "unknown") {
+    if (fields.size() >= 10 && fields[9] != "unknown") {
         std::uint32_t sex{};
         if (!ParseUint32(fields[9], sex) || sex > 4) {
             error = "actor sex code is invalid";
             return false;
         }
         out.sexCode = static_cast<std::uint8_t>(sex);
-    } else if (fields.size() == 10) {
+    } else if (fields.size() >= 10) {
         out.roleUnknown |= 1;
+    }
+    if (fields.size() == 11 && fields[10] != "unknown") {
+        bool interaction{};
+        if (!ParseBool(fields[10], interaction)) {
+            error = "actor player interaction is invalid";
+            return false;
+        }
+        out.playerInteraction = Fact::Known(interaction);
     }
     if (!ParseHex32(fields[6], out.interactions)) {
         error = "interaction mask is invalid";
@@ -416,6 +424,8 @@ PPlusApplyResult ApplyPPlusToAnimation(const PPlusSceneState& state,
     facts.tags.clear();
     facts.maleCount = {};
     facts.femaleCount = {};
+    facts.malePartnerInteraction = {};
+    facts.femalePartnerInteraction = {};
     facts.leadIn = state.leadIn;
     if (state.availability != ExternalAvailability::Available) {
         return {false, "provider is not available"};
@@ -442,6 +452,8 @@ PPlusApplyResult ApplyPPlusToAnimation(const PPlusSceneState& state,
     bool sexesKnown = true;
     gameplay::Tri oral = gameplay::Tri::False;
     gameplay::Tri anal = gameplay::Tri::False;
+    gameplay::Tri malePartner = gameplay::Tri::False;
+    gameplay::Tri femalePartner = gameplay::Tri::False;
     bool facial = false;
     for (const PPlusActorState& source : state.actors) {
         gameplay::AnimationActorFacts actor;
@@ -450,6 +462,15 @@ PPlusApplyResult ApplyPPlusToAnimation(const PPlusSceneState& state,
         actors.push_back(actor);
         if (source.isPlayer) {
             player = &source;
+        } else {
+            const auto sexKnown = (source.roleUnknown & 1) == 0;
+            const auto male = !sexKnown ? gameplay::Tri::Unknown :
+                (source.sexCode ? *source.sexCode == 0 : !source.female) ? gameplay::Tri::True : gameplay::Tri::False;
+            const auto female = !sexKnown ? gameplay::Tri::Unknown :
+                (source.sexCode ? *source.sexCode == 1 : source.female) ? gameplay::Tri::True : gameplay::Tri::False;
+            const auto contact = gameplay::TriOf(source.playerInteraction);
+            malePartner = gameplay::TriOr(malePartner, gameplay::TriAnd(male, contact));
+            femalePartner = gameplay::TriOr(femalePartner, gameplay::TriAnd(female, contact));
         }
         sexesKnown = sexesKnown && (source.roleUnknown & 1) == 0;
         if (source.sexCode) {
@@ -480,6 +501,8 @@ PPlusApplyResult ApplyPPlusToAnimation(const PPlusSceneState& state,
     const auto interactionFact = [](gameplay::Tri value) {
         return value == gameplay::Tri::Unknown ? Fact{} : Fact::Known(value == gameplay::Tri::True);
     };
+    facts.malePartnerInteraction = interactionFact(malePartner);
+    facts.femalePartnerInteraction = interactionFact(femalePartner);
     facts.oralInteraction = interactionFact(oral);
     facts.analInteraction = interactionFact(anal);
     if (oral == gameplay::Tri::True && std::find(facts.tags.begin(), facts.tags.end(), "Oral") ==

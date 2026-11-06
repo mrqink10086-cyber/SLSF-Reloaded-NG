@@ -100,7 +100,22 @@ String Function CollectScene(Int threadId, String session, String indexGeneratio
                 bit += 1
             EndWhile
         EndIf
-        result += "actor\t" + identity + "\t" + SLSF_Reloaded_ProbeNative.Escape(participant.GetDisplayName()) + "\t" + SLSF_Reloaded_ProbeNative.ActorRace(participant) + "\t" + SLSF_Reloaded_ProbeNative.Hex(flags) + "\t" + SLSF_Reloaded_ProbeNative.Hex(mask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(unknownMask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(roleUnknown) + "\t" + sexCode + "\n"
+        String playerInteraction = "unknown"
+        If physics
+            playerInteraction = "false"
+            If participant != Game.GetPlayer()
+                Int collisionType = 1
+                While collisionType <= 13 && playerInteraction == "false"
+                    If collisionType != 12
+                        If thread.HasInteractionType(collisionType, Game.GetPlayer(), participant) || thread.HasInteractionType(collisionType, participant, Game.GetPlayer())
+                            playerInteraction = "true"
+                        EndIf
+                    EndIf
+                    collisionType += 1
+                EndWhile
+            EndIf
+        EndIf
+        result += "actor\t" + identity + "\t" + SLSF_Reloaded_ProbeNative.Escape(participant.GetDisplayName()) + "\t" + SLSF_Reloaded_ProbeNative.ActorRace(participant) + "\t" + SLSF_Reloaded_ProbeNative.Hex(flags) + "\t" + SLSF_Reloaded_ProbeNative.Hex(mask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(unknownMask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(roleUnknown) + "\t" + sexCode + "\t" + playerInteraction + "\n"
         i += 1
     EndWhile
     If thread.GetThreadID() != threadId || thread.GetStatus() != 3 || thread.GetActiveScene() != sceneId || thread.GetActiveStage() != stage || thread.IsInteractionRegistered() != physics

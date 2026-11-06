@@ -155,6 +155,8 @@ AnimationFacts AnimationFixture() {
     facts.playerIsFemale = B(false);
     facts.maleCount = ObservedNumber::Known(0);
     facts.femaleCount = ObservedNumber::Known(0);
+    facts.malePartnerInteraction = B(false);
+    facts.femalePartnerInteraction = B(false);
     facts.aggressor = B(false);
     facts.victim = B(false);
     facts.usingStrapon = B(false);
@@ -1114,6 +1116,21 @@ TEST_CASE("candidate selection preserves order and masks every selected category
     REQUIRE(rng.ranges[0] == std::pair<std::int32_t, std::int32_t>{1, 3});
     REQUIRE(rng.ranges[1] == std::pair<std::int32_t, std::int32_t>{0, 2});
 }
+TEST_CASE("FFM does not infer female preference from another woman's presence", "[partner-interaction][animation]") {
+    auto facts = AnimationFixture();
+    facts.playerIsFemale = B(true);
+    facts.femaleCount = ObservedNumber::Known(2);
+    facts.maleCount = ObservedNumber::Known(1);
+    facts.actors.push_back(Partner(0));
+    facts.actors.push_back(Partner(0));
+    facts.malePartnerInteraction = B(true);
+    ScriptedRandom rng({1});
+    const auto result = AnimationClassifier{}.Classify(facts, rng);
+    REQUIRE(result.IsReady());
+    REQUIRE(std::find(result.categories.begin(), result.categories.end(), FameCategory::LikesWomen) == result.categories.end());
+    REQUIRE(std::find(result.categories.begin(), result.categories.end(), FameCategory::LikesMen) != result.categories.end());
+}
+
 TEST_CASE("direct SubAnalyze preserves explicit flags without grace or relationship rolls", "[game-ready][animation]") {
     auto facts = AnimationFixture();
     facts.startGraceElapsed = B(false);
