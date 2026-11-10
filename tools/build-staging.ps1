@@ -49,14 +49,14 @@ $files = @(Get-ChildItem -LiteralPath $resolvedStage -Recurse -File | Sort-Objec
 $sourceCommit = (& git rev-parse HEAD).Trim()
 $commonLibCommit = (& git -C lib/commonlibsse-ng rev-parse HEAD).Trim()
 $manifest = [ordered]@{
-    package = "SLSFReloadedNG"; version = "0.1.3"; runtime = "1.6.1170"; skse = "2.2.6";
+    package = "SLSFReloadedNG"; version = "0.1.4"; runtime = "1.6.1170"; skse = "2.2.6";
     sourceCommit = $sourceCommit; sourceDirty = [bool](& git status --porcelain); commonLibCommit = $commonLibCommit;
     build = "xmake mode.releasedbg windows x64 MSVC C++23"; layout = "MO2-Data-root";
     papyrus = $compileManifest; fileCount = $files.Count; files = $files
 }
 [IO.File]::WriteAllText((Join-Path $resolvedStage "$documentPath/文件清单.json"), ($manifest | ConvertTo-Json -Depth 12), [Text.UTF8Encoding]::new($false))
 $files | ForEach-Object { "$($_.sha256)  $($_.path)" } | Set-Content -LiteralPath (Join-Path $resolvedStage "$documentPath/SHA256校验.txt") -Encoding UTF8
-$archive = Join-Path $stageRoot "SLSF声望重制NG-0.1.3-中文测试版-MO2.zip"
+$archive = Join-Path $stageRoot "SLSF声望重制NG-0.1.4-中文测试版-MO2.zip"
 $python = (Get-Command python -ErrorAction SilentlyContinue).Source
 if (-not $python) { throw "python is required to build the archive with UTF-8 entry names" }
 & $python "tools/make-zip.py" $resolvedStage $archive

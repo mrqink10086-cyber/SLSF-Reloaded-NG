@@ -1,0 +1,239 @@
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.156s[0m
+RUN SLSFCoreTests cases=437 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9575 assertions in 55 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5722 assertions in 55 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7867 assertions in 55 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60494 assertions in 55 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44765 assertions in 55 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2502 assertions in 54 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (18179 assertions in 54 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1259 assertions in 54 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core.xml; elapsed=0.667s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.062s[0m
+RUN SLSFBoundaryTests cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary.xml; elapsed=0.089s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.14s[0m
+RUN SLSFAsanProbe (index 7, expected exit 0)
+probe=42 index=7
+RUN SLSFAsanProbe oob (index 8, expected heap-buffer-overflow)
+[0m[1;31;1merror: [0mexecv(E:\source\repos\SLSF Reloaded NG\build\asan\SLSFAsanProbe.exe oob) failed(1), unknown reason[0m
+
+=================================================================
+==13780==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x121e012a0030 at pc 0x7ff7cd2c1189 bp 0x006613aff860 sp 0x006613aff8a8
+WRITE of size 4 at 0x121e012a0030 thread T0
+    #0 0x7ff7cd2c1188 in main E:\source\repos\SLSF Reloaded NG\tests\asan\AsanProbe.cpp:15
+    #1 0x7ff7cd2c1d8f in invoke_main D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:78
+    #2 0x7ff7cd2c1d8f in __scrt_common_main_seh D:\a\_work\1\s\src\vctools\crt\vcstartup\src\startup\exe_common.inl:288
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.125s[0m
+RUN SLSFCoreTestsAsan cases=437 jobs=8 seed=1170
+SHARD 1/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (9575 assertions in 55 test cases)
+SHARD 2/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5722 assertions in 55 test cases)
+SHARD 3/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (7867 assertions in 55 test cases)
+SHARD 4/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (60494 assertions in 55 test cases)
+SHARD 5/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (44765 assertions in 55 test cases)
+SHARD 6/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (2502 assertions in 54 test cases)
+SHARD 7/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (18179 assertions in 54 test cases)
+SHARD 8/8
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1259 assertions in 54 test cases)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\core-asan.xml; elapsed=6.732s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.047s[0m
+RUN SLSFBoundaryTestsAsan cases=4 jobs=4 seed=1170
+SHARD 1/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+SHARD 2/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 3/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+SHARD 4/4
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\boundary-asan.xml; elapsed=0.087s
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.062s[0m
+RUN StateCodecFuzz -runs=100000 -seed=1170
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1170
+INFO: Loaded 1 modules   (2214 inline 8-bit counters): 2214 [00007FF6084C4408, 00007FF6084C4CAE), 
+INFO: Loaded 1 PC tables (2214 PCs): 2214 [00007FF60847E9E0,00007FF608487440), 
+INFO:     1204 files found in E:\source\repos\SLSF Reloaded NG\build\fuzz\StateCodecFuzz-corpus
+INFO: seed corpus: files: 1204 min: 1b max: 1673b total: 479413b rss: 38Mb
+#1205	INITED cov: 1147 ft: 2971 corp: 360/130Kb exec/s: 0 rss: 53Mb
+#10989	REDUCE cov: 1147 ft: 2971 corp: 360/130Kb lim: 1435 exec/s: 0 rss: 72Mb L: 315/1335 MS: 4 CrossOver-ChangeBit-ShuffleBytes-EraseBytes-
+#11306	NEW    cov: 1147 ft: 2973 corp: 361/130Kb lim: 1435 exec/s: 0 rss: 73Mb L: 155/1335 MS: 2 ChangeByte-ChangeBit-
+#12887	NEW    cov: 1148 ft: 2987 corp: 362/130Kb lim: 1445 exec/s: 0 rss: 75Mb L: 246/1335 MS: 1 CrossOver-
+#17805	NEW    cov: 1152 ft: 2992 corp: 363/130Kb lim: 1485 exec/s: 0 rss: 83Mb L: 237/1335 MS: 3 CopyPart-ShuffleBytes-InsertByte-
+#18216	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1485 exec/s: 0 rss: 84Mb L: 103/1335 MS: 1 EraseBytes-
+#18823	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1485 exec/s: 0 rss: 85Mb L: 146/1335 MS: 2 CrossOver-EraseBytes-
+#21404	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1505 exec/s: 0 rss: 89Mb L: 133/1335 MS: 1 EraseBytes-
+#25537	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1545 exec/s: 0 rss: 97Mb L: 195/1335 MS: 3 ShuffleBytes-ChangeByte-EraseBytes-
+#34264	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1625 exec/s: 0 rss: 112Mb L: 82/1335 MS: 2 ChangeASCIIInt-EraseBytes-
+#36320	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1645 exec/s: 0 rss: 116Mb L: 135/1335 MS: 1 EraseBytes-
+#39529	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1675 exec/s: 0 rss: 121Mb L: 958/1335 MS: 4 CopyPart-EraseBytes-ChangeBit-InsertRepeatedBytes-
+#42285	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1695 exec/s: 0 rss: 126Mb L: 198/1335 MS: 1 EraseBytes-
+#47208	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1735 exec/s: 0 rss: 134Mb L: 602/1335 MS: 3 ShuffleBytes-InsertRepeatedBytes-EraseBytes-
+#50939	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1765 exec/s: 50939 rss: 140Mb L: 160/1335 MS: 1 EraseBytes-
+#57911	REDUCE cov: 1152 ft: 2992 corp: 363/130Kb lim: 1825 exec/s: 57911 rss: 152Mb L: 158/1335 MS: 2 ChangeBinInt-EraseBytes-
+#58202	NEW    cov: 1153 ft: 2995 corp: 364/130Kb lim: 1825 exec/s: 58202 rss: 152Mb L: 246/1335 MS: 1 ChangeByte-
+#65717	REDUCE cov: 1153 ft: 2995 corp: 364/130Kb lim: 1895 exec/s: 65717 rss: 165Mb L: 190/1335 MS: 5 ChangeBit-ShuffleBytes-ChangeByte-CrossOver-EraseBytes-
+#76230	REDUCE cov: 1153 ft: 2995 corp: 364/130Kb lim: 1995 exec/s: 76230 rss: 185Mb L: 42/1335 MS: 1 EraseBytes-
+#77656	REDUCE cov: 1153 ft: 2995 corp: 364/130Kb lim: 2005 exec/s: 77656 rss: 187Mb L: 44/1335 MS: 1 EraseBytes-
+#82737	REDUCE cov: 1153 ft: 2995 corp: 364/130Kb lim: 2055 exec/s: 82737 rss: 196Mb L: 221/1335 MS: 1 EraseBytes-
+#87593	REDUCE cov: 1153 ft: 2995 corp: 364/130Kb lim: 2099 exec/s: 87593 rss: 204Mb L: 71/1335 MS: 1 EraseBytes-
+#89534	REDUCE cov: 1153 ft: 2995 corp: 364/130Kb lim: 2110 exec/s: 89534 rss: 207Mb L: 219/1335 MS: 1 EraseBytes-
+#90920	REDUCE cov: 1153 ft: 2996 corp: 365/130Kb lim: 2121 exec/s: 90920 rss: 210Mb L: 190/1335 MS: 1 CMP- DE: "~\377\377\367"-
+#99429	REDUCE cov: 1153 ft: 2996 corp: 365/130Kb lim: 2198 exec/s: 99429 rss: 224Mb L: 90/1335 MS: 4 EraseBytes-ChangeBinInt-CopyPart-ChangeBinInt-
+#100000	DONE   cov: 1153 ft: 2996 corp: 365/130Kb lim: 2198 exec/s: 100000 rss: 226Mb
+###### Recommended dictionary. ######
+"~\377\377\367" # Uses: 824
+###### End of recommended dictionary. ######
+Done 100000 runs in 1 second(s)
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.157s[0m
+RUN SLSFCoreTests cases=11 jobs=8 seed=1170
+SHARD 1/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1400 assertions in 2 test cases)
+SHARD 2/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1805 assertions in 2 test cases)
+SHARD 3/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (407 assertions in 2 test cases)
+SHARD 4/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (842 assertions in 1 test case)
+SHARD 5/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (1397 assertions in 1 test case)
+SHARD 6/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (13740 assertions in 1 test case)
+SHARD 7/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+SHARD 8/8
+Filters: [differential]
+Randomness seeded to: 1170
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+JUNIT E:\source\repos\SLSF Reloaded NG\build\test-results\differential.xml; elapsed=0.200s
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFBench>[0m [36;1mlinking.releasedbg SLSFBench.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.188s[0m
+RUN SLSFBench -> E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+BENCH seed=1170 avx2=yes
+BENCH incoming accounts=21 edges=63 iters=20000 scalar=29.08ms (69.2ns/row) avx2=7.19ms (17.1ns/row, 4.04x) relax_scalar=3.09ms (7.4ns/row)
+BENCH incoming accounts=64 edges=192 iters=4000 scalar=18.41ms (71.9ns/row) avx2=4.46ms (17.4ns/row, 4.13x) relax_scalar=1.83ms (7.2ns/row)
+BENCH incoming accounts=128 edges=384 iters=1500 scalar=14.31ms (74.5ns/row) avx2=3.88ms (20.2ns/row, 3.69x) relax_scalar=1.44ms (7.5ns/row)
+BENCH settlement accounts=21 batches=2000 advance+publish=3.3µs/batch total=0.007s
+BENCH settlement accounts=64 batches=800 advance+publish=10.6µs/batch total=0.008s
+BENCH report: E:\source\repos\SLSF Reloaded NG\build\test-results\bench.txt
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFDispatcherOfflineProbe>[0m [36;1mlinking.releasedbg SLSFDispatcherOfflineProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.203s[0m
+RUN SLSFDispatcherOfflineProbe
+heartbeat=3600 frames=3600 simulated_seconds=60 max_pump_us=5.9 long_wait_seconds=1000000 completions=3 stale_callbacks=0
+OFFLINE_WAKE_PROBE=PASS
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFAppearanceProbe>[0m [36;1mlinking.releasedbg SLSFAppearanceProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 0.156s[0m
+RUN SLSFAppearanceProbe
+probe_target_runtime=1.6.1170:providers-pending(racemenu,skee,slavetatsng,jcontainers)
+probe_racemenu_exchange=ready:overlay_version=2:counts=3,1,0,2:records=3
+probe_slavetats_batch=body:3,hands:1,face:0,feet:0;slotfacts=slot0=true,slot1=false,slot2=true
+probe_slavetats_jc_ownership=balanced:creates=4:releases=4:retains=0
+probe_racemenu_pending=dispatch:0x9E3779B9,data=InterfaceExchangeMessage{void*interfaceMap:8B},sender='SKEE',phase=kPostPostLoad
+probe_racemenu_pending=query:'Overlay'->GetVersion()==2,GetOverlayCount(type=Normal=0,location=0..3)->u32,vtable slots 1/11
+probe_slavetats_pending=listener:messageType==1,data=AddressesTable*{8B},version==1,confirmed prefix=15 pointers
+probe_slavetats_pending=query:get_applied_tattoos_by_area at slot 14(offset 120),batch(target,body,face,hands,feet)
+probe_jc_pending=bindings:JFormDB::getObj(target,'.SlaveTats.applied')->array handle;per-entry mapGetStr('name')/mapGetInt('slot');temp arrays via RAII retain/release
+probe_result=OFFLINE_PASS
+[0m[32;1m[  3%]:[0m [36;1m<SLSFMenuFrameworkProbe>[0m compiling.releasedbg tests\probe\MenuFrameworkProbe.cpp[0m
+[0m[32;1m[ 91%]:[0m [36;1m<SLSFMenuFrameworkProbe>[0m [36;1mlinking.releasedbg SLSFMenuFrameworkProbe.exe[0m
+[0m[32;1m[100%]:[0m [32;1mbuild ok, spent 1.734s[0m
+RUN SLSFMenuFrameworkProbe
+module_loaded=0
+source_facts=menu framework 3.8f self-reported version, API version 1
+runtime_note=SKSEMenuFramework.dll is not loaded in this process; probe validates the plugin-side guard path only
+install_without_module=0
+MENU_FRAMEWORK_PROBE=PASS
+PASS native tests: mode=all seed=1170

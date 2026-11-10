@@ -9,6 +9,7 @@
 #include "slsf/runtime/Dispatcher.h"
 #include "slsf/io/JsonTransfer.h"
 
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <functional>
@@ -33,6 +34,15 @@ using slsf::RegionId;
 using slsf::Revision;
 using slsf::Status;
 
+struct RegionalFameView {
+    Epoch epoch;
+    Revision revision;
+    std::string location;
+    std::string currentLocation;
+    std::vector<std::string> locations;
+    std::optional<std::array<int, kFameCategoryCount>> values;
+};
+
 class PublicApi {
 public:
     PublicApi(Dispatcher& executor, const slsf::RegionSnapshot& regions);
@@ -48,6 +58,7 @@ public:
         return executor_.Snapshot();
     }
     [[nodiscard]] Revision LastPublishedRevision() const;
+    [[nodiscard]] RegionalFameView ReadRegionalFame(const std::string& location) const;
 
     [[nodiscard]] std::optional<RegionId> ResolveRegionByName(const std::string& name) const;
     [[nodiscard]] static std::optional<FameCategory> ResolveCategory(const std::string& name);
@@ -130,6 +141,8 @@ public:
     void SetReplySender(ReplySender sender);
 
 private:
+    [[nodiscard]] std::optional<RegionId> ResolveRegionByName(
+        const std::string& name, const PublishedStatePtr& snapshot) const;
     bool SendReply(const std::string& eventName,
                   const std::vector<compat::ModEventValue>& values) const;
     static compat::ModEventValue MakeBool(bool v);

@@ -2,6 +2,7 @@
 
 #include "slsf/config/ConfigurationStore.h"
 #include "slsf/core/Snapshots.h"
+#include "slsf/ui/FameMenu.h"
 
 #include <cstdint>
 #include <functional>
@@ -33,15 +34,7 @@ private:
 
 class Menu final {
 public:
-    enum class FameCommand : std::uint8_t {
-        SetFame,
-        ClearFame,
-        ClearAllFame,
-        ManualSpread,
-        ManualDecay,
-        ManualGain,
-        SpreadPulse,
-    };
+    using FameCommand = ui::FameCommand;
 
     struct Ports {
         std::function<ConfigurationSnapshot()> snapshot;
@@ -49,6 +42,7 @@ public:
         std::function<ConfigurationUpdateResult(ConfigurationData)> commit;
         std::function<const RegionSnapshot*()> regions;
         std::function<std::string()> status;
+        std::function<FameReadout(const std::string& location)> fameReadout;
         std::function<std::string(FameCommand command, const std::string& location,
                                   const std::string& target, const std::string& category,
                                   int amount, int extra)>
@@ -83,6 +77,7 @@ private:
     void Render();
     void RenderOverview();
     void RenderCategories();
+    void RenderFame();
     void RenderConnections();
     void RenderBalance();
     void RenderCommands();
@@ -102,6 +97,7 @@ private:
     std::uint64_t draftRevision_{0};
     std::string lastAction_;
     std::string lastCommandResult_;
+    std::string fameLocation_;
     int sourceIndex_{-1};
     int targetIndex_{-1};
     int commandLocationIndex_{-1};

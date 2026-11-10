@@ -565,6 +565,9 @@ void InstallSlsfMenu() {
                                : slsf::ConfigurationUpdateResult{};
     };
     ports.regions = [] { return &g_regions; };
+    ports.fameReadout = [](const std::string& location) {
+        return Runtime() ? slsf::ui::ReadFameMenu(MenuPublicApi(), location) : slsf::ui::FameReadout{};
+    };
     ports.status = [] {
         if (const auto* lifecycle = Runtime()) {
             const slsf::LifecycleStatus status = lifecycle->Status();
@@ -579,37 +582,25 @@ void InstallSlsfMenu() {
     ports.fameCommand = [](slsf::ui::Menu::FameCommand command, const std::string& location,
                            const std::string& target, const std::string& category, int amount,
                            int extra) {
-        if (g_lifecycle == nullptr) {
+        if (Runtime() == nullptr) {
             return std::string("业务执行尚未就绪");
         }
         slsf::api::PublicApi& api = MenuPublicApi();
-        switch (command) {
-        case slsf::ui::Menu::FameCommand::SetFame:
-            return OutcomeText(api.SetFameValue(location, category, amount));
-        case slsf::ui::Menu::FameCommand::ClearFame:
-            return OutcomeText(api.ClearFame(location, category));
-        case slsf::ui::Menu::FameCommand::ClearAllFame:
-            return OutcomeText(api.ClearAllFame(location));
-        case slsf::ui::Menu::FameCommand::ManualSpread: {
-            const auto outcome = api.ManualSpread(location, target, category, amount);
-            return OutcomeText(outcome.status, outcome.message);
+        const auto epoch = api.CurrentEpoch();
+        const auto result = slsf::ui::ExecuteFameCommand(api, command, location, target, category,
+            amount, extra, [epoch] {
+                SKSE::GetTaskInterface()->AddTask([epoch] {
+                    if (const auto* runtime = Runtime(); runtime && runtime->IsEpochCurrent(epoch)) {
+                        slsf::compat::VmNatives::PublishOutputs();
+                    }
+                });
+            });
+        auto message = OutcomeText(result);
+        if (result.status == slsf::Status::Ready) {
+            const auto& readLocation = command == slsf::ui::FameCommand::ManualSpread ? target : location;
+            if (const auto value = api.GetFameValue(readLocation, category)) message += "；回读声望：" + std::to_string(*value);
         }
-        case slsf::ui::Menu::FameCommand::ManualDecay: {
-            const auto outcome =
-                api.ManualDecay(location, category, amount <= extra ? amount : extra,
-                                amount <= extra ? extra : amount);
-            return OutcomeText(outcome.status, outcome.message);
-        }
-        case slsf::ui::Menu::FameCommand::ManualGain: {
-            const auto outcome =
-                api.ManualGain(location, category, amount <= extra ? amount : extra,
-                               amount <= extra ? extra : amount);
-            return OutcomeText(outcome.status, outcome.message);
-        }
-        case slsf::ui::Menu::FameCommand::SpreadPulse:
-            return OutcomeText(api.SpreadPulse({location}));
-        }
-        return std::string("未知操作");
+        return message;
     };
     ports.legacyFiles = [] {
         std::vector<std::string> files;

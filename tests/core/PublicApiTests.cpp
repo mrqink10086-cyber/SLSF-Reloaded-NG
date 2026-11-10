@@ -7,6 +7,7 @@
 #include <slsf/core/reputation/ReputationState.h>
 #include <slsf/core/reputation/Settlement.h>
 #include <slsf/runtime/Dispatcher.h>
+#include <slsf/ui/FameMenu.h>
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -66,9 +67,9 @@ struct ApiFixture {
     slsf::RegionSnapshot regions = MakeRegions();
     slsf::api::PublicApi api;
 
-    ApiFixture()
+    ApiFixture(std::shared_ptr<slsf::runtime::SessionGate> hostGate = {})
         : bindings(MakeBindings())
-        , dispatcher()
+        , dispatcher(std::move(hostGate))
         , api(dispatcher, regions) {
         static DeterministicQueue queue;
         bindings.rng = &queue;
@@ -139,6 +140,77 @@ struct RecordingSink : slsf::compat::LegacyOutputSink {
         bridge.emplace_back(formId, value);
     }
 };
+
+TEST_CASE("menu writes publish compatibility values while active time is paused", "[menu-fame]") {
+    ApiFixture fx;
+    fx.api.SetCurrentLocation("Whiterun");
+    fx.dispatcher.Clocks().SetMenuOpen(true);
+    RecordingSink sink;
+    int publications = 0;
+    const auto result = slsf::ui::ExecuteFameCommand(fx.api, slsf::ui::FameCommand::SetFame,
+        "Whiterun", "", "Cum Dump", 100, 100, [&] {
+            ++publications;
+            (void)fx.api.PublishAllOutputs(sink);
+        });
+    REQUIRE(result.status == slsf::Status::Ready);
+    REQUIRE(fx.api.GetFameValue("Whiterun", "Cum Dump") == 100);
+    REQUIRE(publications == 1);
+    const auto key = slsf::compat::LegacyOutputs::CurrentFameGlobalKey(FameCategory::CumDump);
+    REQUIRE(std::find(sink.globals.begin(), sink.globals.end(), std::pair{key, 100}) != sink.globals.end());
+}
+
+TEST_CASE("menu readout follows committed regional fame independently of multipliers", "[menu-fame]") {
+    ApiFixture fx;
+    fx.api.SetCurrentLocation("Winterhold");
+    REQUIRE(fx.api.SetFameValue("Whiterun", "Cum Dump", 100).status == slsf::Status::Ready);
+    REQUIRE(fx.api.SetFameValue("Winterhold", "Whore", 37).status == slsf::Status::Ready);
+    const auto selected = slsf::ui::ReadFameMenu(fx.api, "Whiterun");
+    REQUIRE(selected.values);
+    CHECK((*selected.values)[slsf::FameCategoryIndex(FameCategory::CumDump)] == 100);
+    CHECK(selected.currentLocation == "Winterhold");
+    const auto current = slsf::ui::ReadFameMenu(fx.api, "");
+    REQUIRE(current.values);
+    CHECK((*current.values)[slsf::FameCategoryIndex(FameCategory::Whore)] == 37);
+    CHECK_FALSE(slsf::ui::ReadFameMenu(fx.api, "Unknown").values);
+    int publications = 0;
+    const auto invalid = slsf::ui::ExecuteFameCommand(fx.api, slsf::ui::FameCommand::SetFame,
+        "Unknown", "", "Whore", 100, 0, [&] { ++publications; });
+    CHECK(invalid.status == slsf::Status::Invalid);
+    CHECK(publications == 0);
+    const auto gain = slsf::ui::ExecuteFameCommand(fx.api, slsf::ui::FameCommand::ManualGain,
+        "Whiterun", "", "Whore", 3, 3, [&] { ++publications; });
+    REQUIRE(gain.status == slsf::Status::Ready);
+    CHECK(gain.revision == fx.api.LastPublishedRevision());
+    CHECK(publications == 1);
+    fx.dispatcher.Detach();
+    CHECK_FALSE(slsf::ui::ReadFameMenu(fx.api, "Whiterun").values);
+}
+
+TEST_CASE("menu readout rounds public values and hides suspended sessions", "[menu-fame]") {
+    auto gate = std::make_shared<slsf::runtime::SessionGate>();
+    ApiFixture fx(gate);
+    REQUIRE(fx.api.SetFameValueRegion(RegionId{0}, FameCategory::Whore, 37.6).status == slsf::Status::Ready);
+    REQUIRE(fx.api.RegisterCustomLocation("Favorite House", Key(1)));
+    REQUIRE(fx.api.SetFameValue("Favorite House", "Whore", 19).status == slsf::Status::Ready);
+    const auto view = slsf::ui::ReadFameMenu(fx.api, "Whiterun");
+    REQUIRE(view.values);
+    CHECK((*view.values)[slsf::FameCategoryIndex(FameCategory::Whore)] == 38);
+    CHECK((*view.values)[slsf::FameCategoryIndex(FameCategory::Whore)] == *fx.api.GetFameValue("Whiterun", "Whore"));
+    CHECK(view.revision == fx.api.LastPublishedRevision());
+    const auto custom = slsf::ui::ReadFameMenu(fx.api, "Favorite House");
+    REQUIRE(custom.values);
+    CHECK((*custom.values)[slsf::FameCategoryIndex(FameCategory::Whore)] == 19);
+    REQUIRE(fx.api.UnregisterCustomLocation("Favorite House"));
+    CHECK_FALSE(slsf::ui::ReadFameMenu(fx.api, "Favorite House").values);
+    CHECK(std::find(view.locations.begin(), view.locations.end(), "Favorite House") != view.locations.end());
+    fx.dispatcher.Suspend();
+    CHECK_FALSE(slsf::ui::ReadFameMenu(fx.api, "Whiterun").values);
+    fx.dispatcher.Resume();
+    REQUIRE(slsf::ui::ReadFameMenu(fx.api, "Whiterun").values);
+    gate->Close();
+    CHECK(fx.dispatcher.Attached());
+    CHECK_FALSE(slsf::ui::ReadFameMenu(fx.api, "Whiterun").values);
+}
 
 TEST_CASE("PublicApi synchronous set commits before return",
          "[slsf][api][public-api]") {

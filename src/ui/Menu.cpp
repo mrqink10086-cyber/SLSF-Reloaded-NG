@@ -556,9 +556,10 @@ void Menu::Render() {
         TextUnformatted("配置尚未就绪。");
         return;
     }
-    TextUnformatted("设置跨存档共用，点击“应用并保存”或关闭菜单后保存。");
+    TextUnformatted("设置跨存档共用；“应用并保存”保存设置。声望数值随当前存档保存。");
+    if (Group("实时声望")) RenderFame();
     if (Group("基础设置与通知")) RenderOverview();
-    if (Group("声望类别与传播限制")) RenderCategories();
+    if (Group("声望增长倍率与传播限制")) RenderCategories();
     if (Group("关系、时间与平衡")) RenderBalance();
     if (Group("地区连接", false)) RenderConnections();
     Separator();
@@ -588,6 +589,7 @@ void Menu::RenderOverview() {
 }
 
 void Menu::RenderCategories() {
+    TextUnformatted("以下为增长倍率，不是当前声望；1.00 为默认倍率，调高可增加每次符合条件的增长量。");
     for (std::size_t index = 0; index < kFameCategoryCount; ++index) {
         PushId(static_cast<int>(index));
         float multiplier = static_cast<float>(draft_->categories.multipliers[index]);
@@ -780,6 +782,33 @@ void Menu::RenderBalance() {
     }
 }
 
+void Menu::RenderFame() {
+    if (!ports_.fameReadout) {
+        TextUnformatted("实时声望尚未就绪。");
+        return;
+    }
+    const auto readout = ports_.fameReadout(fameLocation_);
+    const auto current = readout.currentLocation.empty() ? std::string("无声望地区") : LocationLabel(readout.currentLocation);
+    Text("玩家当前地区：" + current);
+    const auto preview = fameLocation_.empty() ? std::string("跟随玩家当前地区") : LocationLabel(fameLocation_);
+    if (BeginCombo("查看地区", preview)) {
+        if (Selectable("跟随玩家当前地区", fameLocation_.empty())) fameLocation_.clear();
+        for (const auto& location : readout.locations) {
+            if (Selectable(LocationLabel(location), fameLocation_ == location)) fameLocation_ = location;
+        }
+        EndCombo();
+    }
+    TextUnformatted("读取当前存档的已提交数值，自动刷新；修改请使用下方“声望操作”。");
+    if (!readout.values) {
+        TextUnformatted("该地区暂无可用声望；请载入存档并进入声望地区，或选择其他地区。");
+        return;
+    }
+    Text("显示地区：" + LocationLabel(readout.location));
+    for (std::size_t i = 0; i < kFameCategoryCount; ++i) {
+        Text(std::string(kCategoryLabels[i]) + "：" + std::to_string((*readout.values)[i]));
+    }
+}
+
 void Menu::RenderCommands() {
     if (!UiAvailable()) {
         TextUnformatted("菜单框架的界面功能不可用。");
@@ -867,6 +896,13 @@ void Menu::RenderCommands() {
         commandCategoryIndex_ >= 0 && commandCategoryIndex_ < static_cast<int>(kFameCategoryCount)
             ? std::string(kFameCategoryNames[static_cast<std::size_t>(commandCategoryIndex_)])
             : std::string();
+    if (ports_.fameReadout && !location.empty() && !category.empty()) {
+        const auto readout = ports_.fameReadout(location);
+        if (readout.values) Text("所选地区当前声望：" + std::to_string((*readout.values)[static_cast<std::size_t>(commandCategoryIndex_)]));
+        if (category == "Cum Dump" || category == "Cuck" || category == "Unfaithful" || category == "Airhead") {
+            TextUnformatted("此类别需要对应来源模组或外部启用；全部来源缺失时，周期规则会清理一次。");
+        }
+    }
     const std::string target =
         validLocation(commandTargetIndex_) && commandTargetIndex_ != commandLocationIndex_
             ? locations[static_cast<std::size_t>(commandTargetIndex_)]

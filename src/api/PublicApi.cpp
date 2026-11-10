@@ -99,7 +99,11 @@ Revision PublicApi::LastPublishedRevision() const {
     return snapshot ? snapshot->revision : Revision{};
 }
 std::optional<RegionId> PublicApi::ResolveRegionByName(const std::string& name) const {
-    if (const auto snapshot = Snapshot()) {
+    return ResolveRegionByName(name, Snapshot());
+}
+std::optional<RegionId> PublicApi::ResolveRegionByName(
+    const std::string& name, const PublishedStatePtr& snapshot) const {
+    if (snapshot) {
         for (const auto& custom : snapshot->customRegions) {
             if (EqualNormalized(custom.name, name)) return FindRegion(regions_, custom.key);
         }
@@ -113,6 +117,35 @@ std::optional<RegionId> PublicApi::ResolveRegionByName(const std::string& name) 
         return std::nullopt;
     }
     return slsf::FindRegion(regions_, order[apiIndex->value]);
+}
+RegionalFameView PublicApi::ReadRegionalFame(const std::string& location) const {
+    if (!BusinessOpen() || executor_.Suspended()) return {};
+    const auto snapshot = Snapshot();
+    if (!snapshot) return {};
+    RegionalFameView view;
+    view.epoch = snapshot->epoch;
+    view.revision = snapshot->revision;
+    view.currentLocation = CurrentLocation();
+    view.location = location.empty() ? view.currentLocation : location;
+    for (std::size_t i = 0; i < compat::LegacyOutputs::kLegacyLocationIndexCount; ++i) {
+        const auto name = compat::LegacyOutputs::LegacyLocationName(i);
+        if (name && ResolveRegionByName(*name, snapshot)) view.locations.push_back(*name);
+    }
+    for (const auto& custom : snapshot->customRegions) view.locations.push_back(custom.name);
+    if (const auto region = ResolveRegionByName(view.location, snapshot)) {
+        const auto row = std::find(snapshot->regionIds.begin(), snapshot->regionIds.end(), *region);
+        if (row != snapshot->regionIds.end()) {
+            const auto offset = static_cast<std::size_t>(row - snapshot->regionIds.begin()) * kFameSlotCount;
+            if (offset + kFameCategoryCount <= snapshot->fame.size()) {
+                view.values.emplace();
+                for (std::size_t i = 0; i < kFameCategoryCount; ++i) {
+                    (*view.values)[i] = static_cast<int>(std::lround(snapshot->fame[offset + i]));
+                }
+            }
+        }
+    }
+    if (!BusinessOpen() || executor_.Suspended() || CurrentEpoch() != snapshot->epoch) return {};
+    return view;
 }
 std::optional<FameCategory> PublicApi::ResolveCategory(const std::string& name) {
     return slsf::ParseFameCategory(name);
