@@ -10,10 +10,10 @@ extern "C" int LLVMFuzzerTestOneInput(const std::uint8_t* data, std::size_t size
     const auto decoded = slsf::persistence::DecodeSaveRecord(bytes);
     const auto inspected = slsf::persistence::InspectSaveRecord(bytes);
     if (!decoded) {
-        // Header-only inspection is a second parser entry point and must also
-        // stay total on arbitrary buffers.
-        (void)inspected;
         return 0;
+    }
+    if (!inspected || inspected->codecVersion != decoded->codecVersion) {
+        std::abort();
     }
 
     const auto encoded = slsf::persistence::EncodeSaveRecord(*decoded);

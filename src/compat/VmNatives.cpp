@@ -111,6 +111,17 @@ ModEventValue NoneResult() {
     return out;
 }
 
+ModEventValue ActorArgument(RE::Actor* actor) {
+    ModEventValue out;
+    out.type = ModEventType::Form;
+    if (actor) {
+        if (actor->IsDynamicForm()) out.transientActorHandle = actor->CreateRefHandle().native_handle();
+        else out.formValue = engine::LoadedRecordKey(actor);
+        out.hasForm = out.transientActorHandle != 0 || !out.formValue.plugin.empty();
+    }
+    return out;
+}
+
 RE::TESForm* ResolveLoadedForm(const StableFormKey& key) {
     return slsf::engine::LookupLoadedRecord<RE::TESForm>(
         RE::TESDataHandler::GetSingleton(), key);
@@ -140,110 +151,59 @@ class NoopCallback final : public RE::BSScript::IStackCallbackFunctor {public:
     void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
 };
 
-class ReplyCreateCallback final : public RE::BSScript::IStackCallbackFunctor {
+std::string EpochToken(Epoch epoch) {
+    static const auto process = [] {
+        FILETIME start{}, end{}, kernel{}, user{};
+        if (GetProcessTimes(GetCurrentProcess(), &start, &end, &kernel, &user)) {
+            return (std::uint64_t{start.dwHighDateTime} << 32) | start.dwLowDateTime;
+        }
+        return static_cast<std::uint64_t>(GetTickCount64());
+    }();
+    return std::to_string(process) + ":" + std::to_string(epoch.session) + ":" + std::to_string(epoch.index) + ":" + std::to_string(epoch.scene);
+}
+
+bool ReplyTokenCurrent(RE::StaticFunctionTag*, std::string token) {
+    const auto epoch = ReplyEpoch();
+    return token == EpochToken(epoch) && ReplyCurrent(epoch);
+}
+
+class ReplyCompletion final : public RE::BSScript::IStackCallbackFunctor {
 public:
-    ReplyCreateCallback(std::string eventName, std::vector<ModEventValue> values,
-                        Epoch epoch, std::int32_t handle = 0, std::size_t next = 0)
-        : eventName_(std::move(eventName)), values_(std::move(values)),
-          epoch_(epoch), handle_(handle), next_(next) {}
+    ReplyCompletion(std::string name, Epoch epoch) : name_(std::move(name)), epoch_(epoch) {}
 
     void operator()(RE::BSScript::Variable result) override {
-        auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
-        if (!vm) {
+        if (result.IsBool() && result.GetBool()) {
+            ++countersImpl.repliesSent;
+        } else if (ReplyCurrent(epoch_)) {
             ++countersImpl.implFallbacks;
-            return;
-        }
-        if (handle_ == 0) {
-            if (!result.IsInt() || result.GetSInt() == 0) {
-                logs::error("compat: ModEvent.Create failed for {}", eventName_);
-                ++countersImpl.implFallbacks;
-                return;
-            }
-            handle_ = result.GetSInt();
-        }
-        if (next_ > values_.size()) {
-            if (result.IsBool() && result.GetBool()) ++countersImpl.repliesSent;
-            else logs::error("compat: ModEvent.Send failed for {}", eventName_);
-            return;
-        }
-        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> none{new NoopCallback()};
-        if (!ReplyCurrent(epoch_)) {
-            vm->DispatchStaticCall("ModEvent", "Release",
-                RE::MakeFunctionArguments(std::int32_t(handle_)), none);
-            return;
-        }
-        RE::BSScript::IFunctionArguments* args = nullptr;
-        const char* methodName = "Send";
-        if (next_ == values_.size()) {
-            args = RE::MakeFunctionArguments(std::int32_t(handle_));
-        } else {
-            const auto& value = values_[next_];
-            switch (value.type) {
-            case ModEventType::String:
-                methodName = "PushString";
-                args = RE::MakeFunctionArguments(std::int32_t(handle_), std::string(value.stringValue));
-                break;
-            case ModEventType::Int: {
-                methodName = "PushInt";
-                const std::int32_t pushed = static_cast<std::int32_t>(value.intValue);
-                args = RE::MakeFunctionArguments(std::int32_t(handle_), std::int32_t(pushed));
-                break;
-            }
-            case ModEventType::Float: {
-                methodName = "PushFloat";
-                const float pushed = static_cast<float>(value.floatValue);
-                args = RE::MakeFunctionArguments(std::int32_t(handle_), float(pushed));
-                break;
-            }
-            case ModEventType::Bool: {
-                methodName = "PushBool";
-                const bool pushed = value.boolValue;
-                args = RE::MakeFunctionArguments(std::int32_t(handle_), bool(pushed));
-                break;
-            }
-            case ModEventType::Form:
-                methodName = "PushForm";
-                args = RE::MakeFunctionArguments(std::int32_t(handle_),
-                    static_cast<RE::TESForm*>(value.hasForm ? ResolveLoadedForm(value.formValue) : nullptr));
-                break;
-            default:
-                methodName = nullptr;
-                break;
-            }
-        }
-        RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> continuation{
-            new ReplyCreateCallback(eventName_, values_, epoch_, handle_, next_ + 1)};
-        if (!methodName || !args || !vm->DispatchStaticCall("ModEvent", methodName, args, continuation)) {
-            ++countersImpl.implFallbacks;
-            logs::error("compat: reply {} failed at argument {}", eventName_, next_);
-            vm->DispatchStaticCall("ModEvent", "Release",
-                RE::MakeFunctionArguments(std::int32_t(handle_)), none);
+            logs::error("compat: ModEvent reply failed for {}", name_);
         }
     }
 
     void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
-
 private:
-    std::string eventName_;
-    std::vector<ModEventValue> values_;
+    std::string name_;
     Epoch epoch_;
-    std::int32_t handle_{};
-    std::size_t next_{};
 };
 
 class EngineGlobalsOutputSink final : public LegacyOutputSink {
     class Completion final : public RE::BSScript::IStackCallbackFunctor {
     public:
-        explicit Completion(std::uint64_t request) : request_(request) {}
-        void operator()(RE::BSScript::Variable) override {
-            if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([request = request_] {
-                { std::lock_guard lock(outputMutex); outputQueue.Complete(request); }
+        explicit Completion(const StorageOutput& output)
+            : request_(output.request), epoch_(output.epoch), key_(output.key) {}
+        void operator()(RE::BSScript::Variable result) override {
+            const bool written = result.IsBool() && result.GetBool();
+            if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([request = request_, epoch = epoch_, key = key_, written] {
+                { std::lock_guard lock(outputMutex); outputQueue.Complete(request, written); }
+                if (!written && ReplyCurrent(epoch)) logs::error("compat: StorageUtil write failed key={}", key);
                 Pump();
             });
         }
         void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
     private:
         std::uint64_t request_;
+        Epoch epoch_;
+        std::string key_;
     };
 public:
     void Flush() {
@@ -251,18 +211,19 @@ public:
         auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
         if (!api || !vm) return;
         const auto epoch = api->CurrentEpoch();
-        const auto token = std::to_string(epoch.session) + ":" + std::to_string(epoch.index) + ":" + std::to_string(epoch.scene) + ":" + std::to_string(api->LastPublishedRevision().value);
         std::vector<StorageOutput> batch;
         for (auto& [key, values] : lists_) {
-            batch.push_back({epoch, token, key, std::move(values)});
+            batch.push_back({epoch, key, std::move(values)});
         }
         { std::lock_guard lock(outputMutex); outputQueue.Submit(std::move(batch)); }
         Pump();
     }
     static bool OutputCurrent(RE::StaticFunctionTag*, std::string token) {
-        std::lock_guard lock(outputMutex);
         const auto epoch = ReplyEpoch();
-        return outputQueue.Current(token, epoch) && ReplyCurrent(epoch);
+        const auto prefix = EpochToken(epoch) + ":";
+        if (!token.starts_with(prefix) || !ReplyCurrent(epoch)) return false;
+        std::lock_guard lock(outputMutex);
+        return outputQueue.Current(std::string_view(token).substr(prefix.size()), epoch);
     }
     static void Pump() {
         for (;;) {
@@ -271,11 +232,12 @@ public:
             if (!next) return;
             auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
             if (vm && ReplyCurrent(next->epoch)) {
-                RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callback{new Completion(next->request)};
-                if (vm->DispatchStaticCall("SLSFR_GameplayNative", "PublishStorage", RE::MakeFunctionArguments(std::string(next->token), std::string(next->key), std::vector<std::int32_t>(next->values)), callback)) return;
-                logs::error("compat: StorageUtil dispatch failed key={} token={}", next->key, next->token);
+                RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callback{new Completion(*next)};
+                auto token = EpochToken(next->epoch) + ":" + std::to_string(next->request);
+                if (vm->DispatchStaticCall("SLSFR_GameplayNative", "PublishStorage", RE::MakeFunctionArguments(std::move(token), std::move(next->key), std::move(next->values)), callback)) return;
+                logs::error("compat: StorageUtil dispatch failed request={}", next->request);
             }
-            { std::lock_guard lock(outputMutex); outputQueue.Complete(next->request); }
+            { std::lock_guard lock(outputMutex); outputQueue.Complete(next->request, false); }
         }
     }
     void SetCurrentFameGlobal(const StableFormKey& key, int value) override {
@@ -302,6 +264,48 @@ private:
 
 using ImplBody = std::function<void(std::vector<ModEventValue>&, ModEventValue&)>;
 
+using ScriptVM = RE::BSScript::Internal::VirtualMachine;
+
+struct LatentOwner {
+    enum class State { Dropped, NotParked, Waiting };
+
+    State Status() const {
+        if (vm != ScriptVM::GetSingleton()) return State::Dropped;
+        RE::BSSpinLockGuard lock(vm->runningStacksLock);
+        const auto live = vm->allRunningStacks.find(id);
+        if (live == vm->allRunningStacks.end() || live->second.get() != stack.get()) return State::Dropped;
+        const auto waiting = vm->waitingLatentReturns.find(id);
+        if (waiting == vm->waitingLatentReturns.end()) return State::NotParked;
+        return waiting->second.get() == stack.get() && stack->top == frame ? State::Waiting : State::Dropped;
+    }
+
+    ScriptVM* vm;
+    RE::VMStackID id;
+    RE::BSTSmartPointer<RE::BSScript::Stack> stack;
+    const RE::BSScript::StackFrame* frame;
+};
+
+struct PendingLatent {
+    LatentOwner owner;
+    std::function<void(const LatentOwner&)> complete;
+};
+
+std::mutex latentMutex;
+std::vector<PendingLatent> latentPending;
+
+void ParkCompletion(PendingLatent pending) {
+    std::lock_guard lock(latentMutex);
+    latentPending.push_back(std::move(pending));
+}
+
+void TryComplete(PendingLatent pending) {
+    switch (pending.owner.Status()) {
+    case LatentOwner::State::Dropped: return;
+    case LatentOwner::State::NotParked: ParkCompletion(std::move(pending)); return;
+    case LatentOwner::State::Waiting: pending.complete(pending.owner); return;
+    }
+}
+
 class BridgeFunction final : public RE::BSScript::NF_util::NativeFunctionBase {
 public:
     BridgeFunction(RE::BSScript::Internal::VirtualMachine& vm,
@@ -327,45 +331,58 @@ public:
                              RE::VMStackID stack,
                              RE::BSScript::Variable& a_resultValue,
                              const RE::BSScript::StackFrame& a_frame) const override {
-        std::vector<ModEventValue> args;
-        args.reserve(spec_.parameters.size());
-        const auto page = a_frame.GetPageForFrame();
-        for (std::size_t i = 0; i < spec_.parameters.size(); ++i) {
-            const auto& variable = a_frame.GetStackFrameVariable(
-                static_cast<std::uint32_t>(i), page);
-            args.push_back(ConvertArg(variable, spec_.parameters[i].type));
-        }
         if (!_isStatic && (!base.IsObject() || !base.GetObject())) return RE::BSScript::kFailed;
         auto* tasks = SKSE::GetTaskInterface();
-        if (!tasks || !body_) return RE::BSScript::kFailed;
+        if (!tasks || !body_ || !a_frame.parent) return RE::BSScript::kFailed;
         const auto epoch = ReplyEpoch();
+        std::vector<ModEventValue> args;
+        if (ReplyCurrent(epoch)) {
+            const bool immediateActor = spec_.script == "SLSF_Reloaded_ModIntegration" &&
+                (spec_.name == "IsFMPregnant" || spec_.name == "IsECPregnant" ||
+                 spec_.name == "IsESPregnant" || spec_.name == "IsHentaiPregnant");
+            args.reserve(spec_.parameters.size());
+            const auto page = a_frame.GetPageForFrame();
+            for (std::size_t i = 0; i < spec_.parameters.size(); ++i) {
+                const auto& variable = a_frame.GetStackFrameVariable(static_cast<std::uint32_t>(i), page);
+                args.push_back(immediateActor && spec_.parameters[i].type == LegacyValueType::Actor ?
+                    ActorArgument(variable.Unpack<RE::Actor*>()) : ConvertArg(variable, spec_.parameters[i].type));
+            }
+        }
         const auto self = base.IsObject() && base.GetObject() ? base.GetObject()->GetHandle() : RE::VMHandle{};
-        tasks->AddTask([this, args = std::move(args), epoch, self, vm = &vm, stack]() mutable {
-            if (!ReplyCurrent(epoch)) return;
+        PendingLatent pending{
+            {&vm, stack, RE::BSTSmartPointer<RE::BSScript::Stack>(a_frame.parent), &a_frame},
+            [function = a_frame.owningFunction, this, args = std::move(args), epoch, self](const LatentOwner& owner) mutable {
+            if (function.get() != this) return;
             ModEventValue result = NoneResult();
-            bool validSelf = _isStatic;
-            if (!_isStatic) {
-                auto* quest = engine::LookupLoadedRecord<RE::TESQuest>(RE::TESDataHandler::GetSingleton(), spec_.quest);
-                if (quest) {
-                    auto* policy = vm->GetObjectHandlePolicy();
-                    if (spec_.aliasIndex < 0) validSelf = self == policy->GetHandleForObject(RE::FormType::Quest, quest);
-                    else for (auto* alias : quest->aliases) if (alias && alias->aliasID == static_cast<std::uint32_t>(spec_.aliasIndex)) validSelf = self == policy->GetHandleForObject(alias->GetVMTypeID(), alias);
+            if (ReplyCurrent(epoch)) {
+                try {
+                    bool validSelf = _isStatic;
+                    if (!_isStatic) {
+                        auto* quest = engine::LookupLoadedRecord<RE::TESQuest>(RE::TESDataHandler::GetSingleton(), spec_.quest);
+                        if (quest) {
+                            auto* policy = owner.vm->GetObjectHandlePolicy();
+                            if (spec_.aliasIndex < 0) validSelf = self == policy->GetHandleForObject(RE::FormType::Quest, quest);
+                            else for (auto* alias : quest->aliases) if (alias && alias->aliasID == static_cast<std::uint32_t>(spec_.aliasIndex)) validSelf = self == policy->GetHandleForObject(alias->GetVMTypeID(), alias);
+                        }
+                    }
+                    if (validSelf) {
+                        body_(args, result);
+                        ++countersImpl.nativeCalls;
+                        if (nativeKindTrace.exchange(false, std::memory_order_relaxed)) {
+                            logs::info("compat: native hit {} with {} args", spec_.id, args.size());
+                        }
+                    }
+                } catch (...) {
+                    result = NoneResult();
+                    logs::error("compat: native impl crashed for {}", spec_.id);
                 }
-            }
-            if (validSelf) {
-            try {
-                body_(args, result);
-                ++countersImpl.nativeCalls;
-                if (nativeKindTrace.exchange(false, std::memory_order_relaxed)) {
-                    logs::info("compat: native hit {} with {} args", spec_.id, args.size());
-                }
-            } catch (...) {
-                logs::error("compat: native impl crashed for {}", spec_.id);
-            }
             }
             RE::BSScript::Variable packed;
-            PackResult(packed, result, spec_.returnType);
-            vm->ReturnFromLatent(stack, packed);
+            PackResult(packed, ReplyCurrent(epoch) ? result : NoneResult(), spec_.returnType);
+            if (owner.Status() == LatentOwner::State::Waiting) owner.vm->ReturnFromLatent(owner.id, packed);
+        }};
+        tasks->AddTask([pending = std::move(pending)]() mutable {
+            TryComplete(std::move(pending));
         });
         a_resultValue.SetNone();
         return RE::BSScript::kStarted;
@@ -826,17 +843,41 @@ ImplBody EventSinkImpl(const ModEventContract& contract) {
 void DeliverNowInternal(const std::string& eventName,
                         const std::vector<ModEventValue>& values) {
     auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
-    if (!vm) {
+    const auto epoch = ReplyEpoch();
+    if (!vm || !ReplyCurrent(epoch)) return;
+    static constexpr std::string_view prefix = "SLSF_Reloaded_";
+    const auto* bridge = VmNatives::Bridge();
+    const auto* contract = bridge ? bridge->FindReply(eventName) : nullptr;
+    if (!contract || !eventName.starts_with(prefix) || contract->parameters.size() != values.size()) {
         ++countersImpl.implFallbacks;
         return;
     }
-    RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> create{
-        new ReplyCreateCallback(eventName, values, ReplyEpoch())};
-    const std::string createName = eventName;
-    auto* createArgs = RE::MakeFunctionArguments(std::string(eventName));
-    if (!vm->DispatchStaticCall("ModEvent", "Create", createArgs, create)) {
+    std::string signature;
+    for (std::size_t i = 0; i < values.size(); ++i) {
+        const auto type = values[i].type;
+        if (type != contract->parameters[i].type) return;
+        switch (type) {
+        case ModEventType::String: signature += 'S'; break;
+        case ModEventType::Int: signature += 'I'; break;
+        case ModEventType::Float: signature += 'F'; break;
+        case ModEventType::Bool: signature += 'B'; break;
+        default: return;
+        }
+    }
+    RE::BSScript::IFunctionArguments* args = nullptr;
+    const auto string = [&](std::size_t i) { return std::string(ArgString(values[i])); };
+    const auto boolean = [&](std::size_t i) { return ArgBool(values[i]); };
+    if (signature == "S") args = RE::MakeFunctionArguments(EpochToken(epoch), string(0));
+    else if (signature == "F") args = RE::MakeFunctionArguments(EpochToken(epoch), static_cast<float>(ArgFloat(values[0])));
+    else if (signature == "SSI") args = RE::MakeFunctionArguments(EpochToken(epoch), string(0), string(1), ArgInt(values[2]));
+    else if (signature == "B") args = RE::MakeFunctionArguments(EpochToken(epoch), boolean(0));
+    else if (signature == "SSB") args = RE::MakeFunctionArguments(EpochToken(epoch), string(0), string(1), boolean(2));
+    else if (signature == "SBSSB") args = RE::MakeFunctionArguments(EpochToken(epoch), string(0), boolean(1), string(2), string(3), boolean(4));
+    else if (signature == "SB") args = RE::MakeFunctionArguments(EpochToken(epoch), string(0), boolean(1));
+    RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> complete{new ReplyCompletion(eventName, epoch)};
+    if (!args || !vm->DispatchStaticCall("SLSFR_GameplayNative", eventName.c_str() + prefix.size(), args, complete)) {
         ++countersImpl.implFallbacks;
-        return;
+        logs::error("compat: ModEvent reply dispatch failed for {}", eventName);
     }
 }
 
@@ -844,6 +885,12 @@ void DeliverNowInternal(const std::string& eventName,
 
 const VmNatives::Counters& VmNatives::Stats() noexcept {
     return countersImpl;
+}
+
+void VmNatives::PumpLatentCompletions() {
+    std::vector<PendingLatent> pending;
+    { std::lock_guard lock(latentMutex); pending.swap(latentPending); }
+    for (auto& call : pending) TryComplete(std::move(call));
 }
 
 void VmNatives::PublishOutputs() {
@@ -931,6 +978,7 @@ bool VmNatives::RegisterPapyrusNatives(RE::BSScript::Internal::VirtualMachine* v
     const auto bindHelper = [&](const char* name, const char* script, auto callback) { return vm->BindNativeMethod(new RE::NativeFunction(name, script, callback)); };
     const auto checked = [&](bool success, const char* name) { if (!success) logs::error("compat: helper binding failed for SLSFR_GameplayNative.{}", name); helpers = success && helpers; };
     checked(bindHelper("OutputCurrent", "SLSFR_GameplayNative", EngineGlobalsOutputSink::OutputCurrent), "OutputCurrent");
+    checked(bindHelper("ReplyCurrent", "SLSFR_GameplayNative", ReplyTokenCurrent), "ReplyCurrent");
     checked(bindHelper("Equipped", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, RE::TESForm* form) {
         const auto* file = form ? form->GetFile(0) : nullptr;
         if (!file) return;
@@ -948,24 +996,24 @@ bool VmNatives::RegisterPapyrusNatives(RE::BSScript::Internal::VirtualMachine* v
             if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) { ModEventValue result; api->CallGameplay(source, {}, result); }
         });
     }), "Refresh");
-    checked(bindHelper("SceneEvent", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, std::string topic, std::int32_t thread) {
+    checked(bindHelper("SceneEvent", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, std::string topic, std::int32_t thread, std::string observedStart) {
         const auto epoch = ReplyEpoch();
-        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, topic = std::move(topic), thread] {
+        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, topic = std::move(topic), thread, observedStart = std::move(observedStart)] {
             if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) {
                 ModEventValue t; t.type = ModEventType::String; t.stringValue = topic;
                 ModEventValue id; id.type = ModEventType::Int; id.intValue = thread;
-                ModEventValue result; api->CallGameplay("SceneEvent", {t, id}, result);
+                ModEventValue stamp; stamp.type = ModEventType::String; stamp.stringValue = observedStart;
+                ModEventValue result; api->CallGameplay("SceneEvent", {t, id, stamp}, result);
             }
         });
     }), "SceneEvent");
     checked(bindHelper("ObserveNpc", "SLSFR_GameplayNative", +[](RE::StaticFunctionTag*, RE::Actor* actor) {
-        if (!actor) return;
-        const auto epoch = ReplyEpoch(); const auto* file = actor->GetFile(0);
-        if (!file) return;
-        const StableFormKey key{std::string(file->GetFilename()), actor->GetLocalFormID()};
-        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, key] {
+        const auto epoch = ReplyEpoch();
+        if (!ReplyCurrent(epoch)) return;
+        auto arg = ActorArgument(actor);
+        if (!arg.hasForm) return;
+        if (auto* tasks = SKSE::GetTaskInterface()) tasks->AddTask([epoch, arg = std::move(arg)] {
             if (ReplyCurrent(epoch)) if (auto* api = CurrentApi()) {
-                ModEventValue arg; arg.type = ModEventType::Form; arg.hasForm = true; arg.formValue = key;
                 ModEventValue result; api->CallGameplay("ObserveNpc", {arg}, result);
             }
         });

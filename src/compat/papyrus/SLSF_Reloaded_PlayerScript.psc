@@ -42,36 +42,39 @@ EndEvent
 
 Event OnPlayerLoadGame()
     Startup()
+    If Listener
+        Listener.RegisterExternalEvents()
+    EndIf
 EndEvent
 
-Event OnAnimationStart(Int ThreadID, Bool HasPlayer)
-    If HasPlayer
-        SLSFR_GameplayNative.SceneEvent("HookAnimationStart", ThreadID)
+Function ForwardSceneEvent(String eventName, Int ThreadID, Bool HasPlayer, Bool Ending = False)
+    If !HasPlayer
+        Return
     EndIf
+    String observed = SLSF_Reloaded_PPlusProbe.ObserveStart(ThreadID, Ending)
+    If observed != ""
+        SLSFR_GameplayNative.SceneEvent(eventName, ThreadID, observed)
+    EndIf
+EndFunction
+
+Event OnAnimationStart(Int ThreadID, Bool HasPlayer)
+    ForwardSceneEvent("HookAnimationStart", ThreadID, HasPlayer)
 EndEvent
 
 Event OnLeadInEnd(Int ThreadID, Bool HasPlayer)
-    If HasPlayer
-        SLSFR_GameplayNative.SceneEvent("HookLeadInEnd", ThreadID)
-    EndIf
+    ForwardSceneEvent("HookLeadInEnd", ThreadID, HasPlayer)
 EndEvent
 
 Event OnAnimationEnd(Int ThreadID, Bool HasPlayer)
-    If HasPlayer
-        SLSFR_GameplayNative.SceneEvent("HookAnimationEnd", ThreadID)
-    EndIf
+    ForwardSceneEvent("HookAnimationEnd", ThreadID, HasPlayer, True)
 EndEvent
 
 Event OnStageStart(Int ThreadID, Bool HasPlayer)
-    If HasPlayer
-        SLSFR_GameplayNative.SceneEvent("HookStageStart", ThreadID)
-    EndIf
+    ForwardSceneEvent("HookStageStart", ThreadID, HasPlayer)
 EndEvent
 
 Event OnStageChange(Int ThreadID, Bool HasPlayer)
-    If HasPlayer
-        SLSFR_GameplayNative.SceneEvent("HookStageChange", ThreadID)
-    EndIf
+    ForwardSceneEvent("HookStageChange", ThreadID, HasPlayer)
 EndEvent
 
 Function RunNPCDetect() Native

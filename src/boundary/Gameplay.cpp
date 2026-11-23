@@ -3,6 +3,7 @@
 #include "slsf/boundary/GameplayState.h"
 #include "slsf/boundary/EngineVm.h"
 #include "slsf/boundary/AppearanceProviders.h"
+#include "slsf/boundary/ProviderCollectors.h"
 #include "slsf/compat/PapyrusBindings.h"
 #include "slsf/compat/VmNatives.h"
 #include "slsf/core/gameplay/Anonymity.h"
@@ -16,6 +17,7 @@
 #include "slsf/integrations/ExternalMods.h"
 #include "slsf/integrations/SexLabPPlus.h"
 #include <chrono>
+#include <charconv>
 #include <random>
 #include <sstream>
 #include <cctype>
@@ -36,6 +38,25 @@ StableFormKey Key(RE::TESForm* form) {
 }
 template<class T> T* Form(const StableFormKey& key) {
     return engine::LookupLoadedRecord<T>(RE::TESDataHandler::GetSingleton(), key);
+}
+RE::NiPointer<RE::Actor> ActorArgument(const std::vector<Value>& args) {
+    if (args.empty()) return {};
+    const auto& value = args.front();
+    if (value.transientActorHandle) {
+        const auto reference = RE::TESObjectREFR::LookupByHandle(value.transientActorHandle);
+        return RE::NiPointer<RE::Actor>{reference ? reference->As<RE::Actor>() : nullptr};
+    }
+    return RE::NiPointer<RE::Actor>{value.hasForm ? Form<RE::Actor>(value.formValue) : nullptr};
+}
+RE::NiPointer<RE::Actor> SceneActor(const integrations::PPlusActorState& participant) {
+    if (!participant.transientHandle) return RE::NiPointer<RE::Actor>{Form<RE::Actor>(participant.actor)};
+    const auto reference = RE::TESObjectREFR::LookupByHandle(participant.transientHandle);
+    auto* actor = reference ? reference->As<RE::Actor>() : nullptr;
+    if (!actor || !actor->IsDynamicForm()) return {};
+    const RE::ActorHandle handle{actor};
+    if (!participant.MatchesActor({}, handle.native_handle(), actor->GetFormID())) return {};
+    const auto resolved = handle.get();
+    return resolved.get() == actor ? resolved : RE::NiPointer<RE::Actor>{};
 }
 RE::BSTSmartPointer<RE::BSScript::Object> Object(std::string_view script) {
     static const compat::PapyrusBindings bindings;
@@ -74,6 +95,12 @@ bool WornKeyword(RE::Actor* actor, const char* keyword) {
         if (armor && armor->HasKeywordString(keyword)) return true;
     }
     return false;
+}
+Fact DeviousWornKeyword(RE::Actor* actor, const std::optional<std::vector<RE::TESObjectARMO*>>& devices,
+                       const char* keyword) {
+    return Fact::Known((devices && std::ranges::any_of(*devices, [keyword](const auto* armor) {
+        return armor->HasKeywordString(keyword);
+    })) || WornKeyword(actor, keyword));
 }
 void Global(std::string_view script, const char* name, double value) {
     const auto object = Object(script);
@@ -123,7 +150,10 @@ struct Gameplay::Impl {
     double nextScan{};
     double nextComment{};
     std::int64_t sceneStarted{};
+    std::optional<RegionId> sceneRegion;
+    std::optional<std::int64_t> sceneEndedAt;
     bool analyzePending{};
+    bool graceSampleRequested{};
     std::string consumedStage;
     std::shared_ptr<const ConfigurationData> settings;
     std::optional<std::array<int, 3>> cumCounts;
@@ -243,6 +273,7 @@ struct Gameplay::Impl {
         const auto* quest = mainQuest ? mainQuest->Unpack<RE::TESQuest*>() : nullptr;
         stopped = quest && quest->IsStopped(); nextScan = nextComment = 0;
         scene.Reset(); external.Reset(); analyzePending = false; consumedStage.clear(); cumCounts.reset(); cumPending = false; ++cumGeneration; nextGameScan = 0;
+        sceneRegion.reset(); sceneEndedAt.reset(); graceSampleRequested = false;
         lastSkoomaDay = api.CurrentGameTime().days; missingCleared.fill(false);
         const auto capture = api.Executor().Capture();
         if (capture) RestoreRecognition(anonymity, current, capture->recognition, regions);
@@ -322,19 +353,21 @@ struct Gameplay::Impl {
             item.deviousBelt = keyword("zad_DeviousBelt"); item.deviousHarness = keyword("zad_DeviousHarness");
         }
         const auto worn = [player](const char* key) { return Fact::Known(WornKeyword(player, key)); };
+        const auto devices = f.mods.deviousDevices.IsKnownTrue() ? QueryDdngWornDevices(player, api.CurrentEpoch()) : std::nullopt;
+        const auto devious = [&](const char* key) { return DeviousWornKeyword(player, devices, key); };
         f.worn.hidesIdentity = worn("SLSF_Reloaded_HidesIdentity");
         f.worn.coversBack = worn("SLSF_Reloaded_CoversBack"); f.worn.coversHands = worn("SLSF_Reloaded_CoversHands");
-        f.worn.coversFeet = worn("SLSF_Reloaded_CoversFeet"); f.worn.deviousHood = worn("zad_DeviousHood");
-        f.worn.deviousHeavyBondage = worn("zad_DeviousHeavyBondage"); f.worn.deviousLockable = worn("zad_Lockable");
-        f.worn.deviousBeltWorn = worn("zad_DeviousBelt"); f.worn.deviousCollarWorn = worn("zad_DeviousCollar");
+        f.worn.coversFeet = worn("SLSF_Reloaded_CoversFeet"); f.worn.deviousHood = devious("zad_DeviousHood");
+        f.worn.deviousHeavyBondage = devious("zad_DeviousHeavyBondage"); f.worn.deviousLockable = devious("zad_Lockable");
+        f.worn.deviousBeltWorn = devious("zad_DeviousBelt"); f.worn.deviousCollarWorn = devious("zad_DeviousCollar");
         f.worn.slsCollarCurse = worn("_SLS_CollarCurse");
-        f.worn.devious.hood = worn("zad_DeviousHood"); f.worn.devious.gag = worn("zad_DeviousGag");
-        f.worn.devious.gagPanel = worn("zad_DeviousGagPanel"); f.worn.devious.armCuffs = worn("zad_DeviousArmCuffs");
-        f.worn.devious.armCuffsFront = worn("zad_DeviousArmbinderFront"); f.worn.devious.armbinder = worn("zad_DeviousArmbinder");
-        f.worn.devious.armbinderElbow = worn("zad_DeviousArmbinderElbow"); f.worn.devious.gloves = worn("zad_DeviousGloves");
-        f.worn.devious.legCuffs = worn("zad_DeviousLegCuffs"); f.worn.devious.boots = worn("zad_DeviousBoots");
-        f.worn.devious.suit = worn("zad_DeviousSuit"); f.worn.devious.corset = worn("zad_DeviousCorset");
-        f.worn.devious.blindfold = worn("zad_DeviousBlindfold");
+        f.worn.devious.hood = f.worn.deviousHood; f.worn.devious.gag = devious("zad_DeviousGag");
+        f.worn.devious.gagPanel = devious("zad_DeviousGagPanel"); f.worn.devious.armCuffs = devious("zad_DeviousArmCuffs");
+        f.worn.devious.armCuffsFront = devious("zad_DeviousCuffsFront"); f.worn.devious.armbinder = devious("zad_DeviousArmbinder");
+        f.worn.devious.armbinderElbow = devious("zad_DeviousArmbinderElbow"); f.worn.devious.gloves = devious("zad_DeviousGloves");
+        f.worn.devious.legCuffs = devious("zad_DeviousLegCuffs"); f.worn.devious.boots = devious("zad_DeviousBoots");
+        f.worn.devious.suit = devious("zad_DeviousSuit"); f.worn.devious.corset = devious("zad_DeviousCorset");
+        f.worn.devious.blindfold = devious("zad_DeviousBlindfold");
         f.andRanks.installed = Fact::Known(Installed("Advanced Nudity Detection.esp"));
         const std::array<std::uint32_t, 5> ranks{2095, 2096, 2100, 2101, 2094};
         for (std::size_t i = 0; i < ranks.size(); ++i) {
@@ -480,7 +513,8 @@ struct Gameplay::Impl {
             switch (category) {
             case FameCategory::Whore: eligible = TriOr(eligible, TriOf(integrations::ExternalPublicWhoreFact(state))); break;
             case FameCategory::Slut: {
-                const bool exposed = hasAnd ? nipple ? rank(AndLocation::Chest) && fame < 50 : genital && rank(AndLocation::Genitals) && fame < 75 : dd && naked && (nipple || genital || vaginalPlug);
+                const bool exposed = PiercingSlutEligible({dd, hasAnd, naked, nipple, genital, vaginalPlug,
+                                                          rank(AndLocation::Chest), rank(AndLocation::Genitals)}, fame);
                 eligible = TriOr(eligible, exposed ? Tri::True : vaginal.IsReady() ? (threshold(vaginal.value) ? Tri::True : Tri::False) : Tri::Unknown); break;
             }
             case FameCategory::Exhibitionist: {
@@ -506,8 +540,12 @@ struct Gameplay::Impl {
                     (total > 2 || tats[0] == 2) && fame < 50 || total > 0 && fame < 25;
                 eligible = TriOr(eligible, f.tattoos.body.appliedCountKnown.IsKnownTrue() ? (can ? Tri::True : Tri::False) : Tri::Unknown); break;
             }
-            case FameCategory::CumDump: eligible = TriOr(eligible, actor && actor->inflationKnown ?
-                (actor->inflation >= Setting("CumDumpFHUReq", 5) ? Tri::True : Tri::False) : Tri::Unknown); break;
+            case FameCategory::CumDump: {
+                const auto installed = integrations::ExternalModFact(state, integrations::ExternalMod::FillHerUp);
+                const auto inflation = actor && actor->inflationKnown ? std::optional{actor->inflation} : std::nullopt;
+                eligible = TriOr(eligible, TriOf(InflationCumDumpEligible(installed, inflation, Setting("CumDumpFHUReq", 5))));
+                break;
+            }
             default: break;
             }
             input.eligible[i] = eligible == Tri::Unknown ? Fact{FactState::Unknown} : Fact::Known(eligible == Tri::True);
@@ -521,19 +559,29 @@ struct Gameplay::Impl {
     }
     void Scan(RE::Actor* target = nullptr, double multiplier = 1) {
         auto* player = RE::PlayerCharacter::GetSingleton();
-        if (!player || !current) return;
+        auto* location = player ? player->GetCurrentLocation() : nullptr;
+        const auto region = Excluded(location) ? std::nullopt : Resolve(location);
+        if (!region) return;
         std::vector<RE::Actor*> actors;
         if (target) actors.push_back(target);
         else if (auto* processes = RE::ProcessLists::GetSingleton()) for (const auto& handle : processes->highActorHandles) {
             auto actor = handle.get(); if (actor && actor.get() != player) actors.push_back(actor.get());
         }
         std::vector<NpcScanTargetFacts> rows;
+        const auto snapshot = scene.Snapshot();
+        const bool active = scene.Active() && api.IsEpochCurrent(snapshot.epoch);
         for (auto* actor : actors) {
             NpcScanTargetFacts row;
-            row.actor = Key(actor); row.validLocation = Fact::Known(!Excluded(actor->GetCurrentLocation()));
+            const bool transient = actor->IsDynamicForm();
+            row.actor = transient ? StableFormKey{} : Key(actor);
+            row.validLocation = Fact::Known(true);
             row.dead = Fact::Known(actor->IsDead()); row.inCombat = Fact::Known(actor->IsInCombat());
-            const auto snapshot = scene.Snapshot();
-            row.sexLabActive = Fact::Known(scene.Active() && std::ranges::any_of(snapshot.actors, [&](const auto& entry) { return entry.actor == row.actor; }));
+            const auto handle = active && transient ? RE::ActorHandle{actor} : RE::ActorHandle{};
+            const auto resolved = handle ? handle.get() : RE::NiPointer<RE::Actor>{};
+            row.sexLabActive = Fact::Known(active && (!transient || resolved.get() == actor) &&
+                std::ranges::any_of(snapshot.actors, [&](const auto& entry) {
+                    return entry.MatchesActor(row.actor, handle.native_handle(), actor->GetFormID());
+                }));
             bool unused{}; row.lineOfSight = Fact::Known(actor->HasLineOfSight(player, unused));
             row.distance = ObservedDouble::Known(actor->GetDistance(player));
             row.playerDetected = Fact::Known(player->RequestDetectionLevel(actor, RE::DETECTION_PRIORITY::kNormal) > 0);
@@ -545,11 +593,46 @@ struct Gameplay::Impl {
         const auto result = scanner.Run(rows);
         if (const auto* entry = result.SuccessEntry()) {
             Global("SLSF_Reloaded_PlayerScript", "SLSF_Reloaded_NPCScanSucess", 1);
-            Roll(api.RegionName(*current), entry->friendOfPlayer, entry->loverOfPlayer, false, multiplier);
+            Roll(api.RegionName(*region), entry->friendOfPlayer, entry->loverOfPlayer, false, multiplier);
         }
     }
-    bool Analyze(const std::vector<Value>* supplied = nullptr) {
-        const auto snapshot = scene.Snapshot();
+    void SceneEvent(std::string_view topic, std::string_view thread, std::uint32_t observedStart) {
+        if (stopped) return;
+        const auto now = Milliseconds();
+        bool accepted = false;
+        scene.OnSceneNotification(topic, thread, epoch, now, {}, observedStart, &accepted,
+            [this](const integrations::PPlusSceneState& finished) { ConsumeEndedScene(&finished); });
+        if (!accepted) return;
+        if (topic == "HookAnimationEnd") {
+            sceneEndedAt = now;
+        } else if (topic == "HookAnimationStart" || topic == "HookLeadInEnd") {
+            auto* player = RE::PlayerCharacter::GetSingleton();
+            auto* location = player ? player->GetCurrentLocation() : nullptr;
+            sceneRegion = Excluded(location) ? std::nullopt : Resolve(location);
+            sceneStarted = now;
+            sceneEndedAt.reset();
+            consumedStage.clear();
+            graceSampleRequested = false;
+            analyzePending = true;
+        }
+    }
+
+    void ConsumeEndedScene(const integrations::PPlusSceneState* finished) {
+        if (finished && sceneEndedAt && graceSampleRequested && api.IsEpochCurrent(finished->epoch)) {
+            auto* player = RE::PlayerCharacter::GetSingleton();
+            auto* location = player ? player->GetCurrentLocation() : nullptr;
+            const auto region = Excluded(location) ? std::nullopt : Resolve(location);
+            if (region && region == sceneRegion) Analyze(nullptr, finished);
+        }
+        analyzePending = false;
+        sceneEndedAt.reset();
+    }
+
+    bool Analyze(const std::vector<Value>* supplied = nullptr,
+                 const integrations::PPlusSceneState* finished = nullptr) {
+        if (!analyzePending || (!finished && !scene.Active()) || sceneRegion != current) return false;
+        const auto snapshot = finished ? *finished : scene.Snapshot();
+        if (!api.IsEpochCurrent(snapshot.epoch)) return false;
         AnimationFacts input;
         if (!integrations::ApplyPPlusToAnimation(snapshot, input).applied) return false;
         auto destination = current;
@@ -562,22 +645,28 @@ struct Gameplay::Impl {
             if (!thread || !thread->IsInt() || thread->GetSInt() != (*supplied)[2].intValue) return false;
             const auto& actors = (*supplied)[0].formArray;
             if (actors.size() != snapshot.actors.size()) return false;
-            for (std::size_t i = 0; i < actors.size(); ++i) if (actors[i] != snapshot.actors[i].actor) return false;
+            for (std::size_t i = 0; i < actors.size(); ++i) if (!snapshot.actors[i].MatchesActor(actors[i])) return false;
             destination = api.ResolveRegionByName((*supplied)[4].stringValue);
             if (!destination) return false;
         }
-        if (!supplied && !consumedStage.empty() && consumedStage == snapshot.sceneId) { analyzePending = false; return true; }
+        if (!consumedStage.empty() && consumedStage == snapshot.sceneId) { analyzePending = false; return true; }
+        const bool ddInstalled = Installed("Devious Devices - Integration.esm");
         for (std::size_t i = 0; i < input.actors.size() && i < snapshot.actors.size(); ++i) {
-            auto* actor = Form<RE::Actor>(snapshot.actors[i].actor);
-            if (!actor) continue;
+            const auto& participant = snapshot.actors[i];
+            const auto actor = SceneActor(participant);
+            if (!actor) {
+                if (participant.transientHandle) return false;
+                continue;
+            }
             auto& target = input.actors[i];
             auto* relation = RE::BGSRelationship::GetRelationship(RE::PlayerCharacter::GetSingleton()->GetActorBase(), actor->GetActorBase());
             target.relationshipKnown = Fact::Known(true); target.relationshipRank = relation ? 4 - static_cast<int>(relation->level.underlying()) : 0;
-            const auto worn = [actor](const char* key) { return Fact::Known(WornKeyword(actor, key)); };
+            const auto devices = ddInstalled ? QueryDdngWornDevices(actor.get(), api.CurrentEpoch()) : std::nullopt;
+            const auto worn = [&](const char* key) { return DeviousWornKeyword(actor.get(), devices, key); };
             target.devious.lockable = worn("zad_Lockable"); target.devious.hood = worn("zad_DeviousHood");
             target.devious.harness = worn("zad_DeviousHarness"); target.devious.belt = worn("zad_DeviousBelt");
             target.devious.bra = worn("zad_DeviousBra"); target.devious.heavyBondage = worn("zad_DeviousHeavyBondage");
-            target.devious.armCuffs = worn("zad_DeviousArmCuffs"); target.devious.armCuffsFront = worn("zad_DeviousArmbinderFront");
+            target.devious.armCuffs = worn("zad_DeviousArmCuffs"); target.devious.armCuffsFront = worn("zad_DeviousCuffsFront");
             target.devious.armbinder = worn("zad_DeviousArmbinder"); target.devious.armbinderElbow = worn("zad_DeviousArmbinderElbow");
             target.devious.gloves = worn("zad_DeviousGloves"); target.devious.legCuffs = worn("zad_DeviousLegCuffs");
             target.devious.boots = worn("zad_DeviousBoots"); target.devious.gag = worn("zad_DeviousGag"); target.devious.gagPanel = worn("zad_DeviousGagPanel");
@@ -586,8 +675,8 @@ struct Gameplay::Impl {
         auto facts = Facts(); const auto anon = Anonymous(facts);
         input.anonymous = anon.IsReady() ? Fact::Known(anon.value) : Fact{FactState::Unknown};
         input.validLocation = Fact::Known(current.has_value());
-        input.startGraceElapsed = Fact::Known(Milliseconds() - sceneStarted >= 10000);
-        input.sceneEnded = Fact::Known(!scene.Active());
+        input.startGraceElapsed = Fact::Known((finished ? *sceneEndedAt : Milliseconds()) - sceneStarted >= 10000);
+        input.sceneEnded = Fact::Known(!snapshot.active);
         input.allowForeplayFame = Fact::Known(Setting("AllowForeplayFame", 1) != 0);
         input.bodySearch = Fact::Known(false);
         input.sexWorker = Fact::Known(api.GetAggregatedFlag("Sex Worker"));
@@ -620,6 +709,19 @@ Gameplay::Gameplay(api::PublicApi& api, const RegionSnapshot& regions, std::map<
     : impl_(std::make_unique<Impl>(api, regions, std::move(owners))) {}
 Gameplay::~Gameplay() = default;
 
+void Gameplay::OnCustomLocationRemoved(const StableRegionKey& key) {
+    auto& x = *impl_;
+    if (!x.api.BusinessOpen() || x.epoch != x.api.CurrentEpoch()) return;
+    const auto removed = FindRegion(x.regions, key);
+    if (!removed || !ForgetRecognition(x.anonymity, x.current, *removed)) return;
+    auto* player = RE::PlayerCharacter::GetSingleton();
+    auto* location = player ? player->GetCurrentLocation() : nullptr;
+    const auto next = x.Excluded(location) ? std::nullopt : x.Resolve(location);
+    TransitionRecognition(x.anonymity, x.current, next, x.api.CurrentGameTime());
+    x.api.SetCurrentLocation(x.current ? x.api.RegionName(*x.current) : "");
+    x.Persist();
+}
+
 std::optional<RegionId> Gameplay::ResolveForm(const StableFormKey& key) const {
     auto* location = Form<RE::BGSLocation>(key);
     return impl_->Excluded(location) ? std::nullopt : impl_->Resolve(location);
@@ -638,7 +740,14 @@ bool Gameplay::Invoke(const std::string& fullName, const std::vector<Value>& arg
     const auto number = [&args](std::size_t i) { return i < args.size() ? args[i].floatValue : 0.0; };
     const auto location = [&args](std::size_t i) { return i < args.size() && args[i].hasForm ? Form<RE::BGSLocation>(args[i].formValue) : nullptr; };
     auto* player = RE::PlayerCharacter::GetSingleton();
-    if (name == "SceneEvent") { OnEvent(text(0), std::to_string(integer(1))); return true; }
+    if (name == "SceneEvent") {
+        const auto stamp = text(2);
+        std::uint32_t observedStart{};
+        const auto [end, error] = std::from_chars(stamp.data(), stamp.data() + stamp.size(), observedStart);
+        if (error != std::errc{} || end != stamp.data() + stamp.size()) return false;
+        x.SceneEvent(text(0), std::to_string(integer(1)), observedStart);
+        return true;
+    }
     if (name == "Equipped") {
         auto* form = args.empty() || !args[0].hasForm ? nullptr : Form<RE::TESForm>(args[0].formValue);
         const std::string item = form ? form->GetName() : "";
@@ -721,7 +830,7 @@ bool Gameplay::Invoke(const std::string& fullName, const std::vector<Value>& arg
     }
     if (name == "ThaneStatus") { out = Boolean(x.Thane(text(0))); return true; }
     if (name == "IsFMPregnant" || name == "IsECPregnant" || name == "IsESPregnant" || name == "IsHentaiPregnant") {
-        auto* target = !args.empty() && args[0].hasForm ? Form<RE::Actor>(args[0].formValue) : nullptr;
+        const auto target = ActorArgument(args);
         if (!target || !target->GetActorBase()) { out = Boolean(false); return true; }
         const char* plugin = name == "IsFMPregnant" ? "Fertility Mode 3 Fixes and Updates.esp" : name == "IsECPregnant" ? "EstrusChaurus.esp" : name == "IsESPregnant" ? "EstrusSpider.esp" : "HentaiPregnancy.esm";
         const std::uint32_t id = name == "IsFMPregnant" ? 0x862 : name == "IsECPregnant" ? 0x160A9 : name == "IsESPregnant" ? 0x4E258 : 0x12085;
@@ -746,7 +855,12 @@ bool Gameplay::Invoke(const std::string& fullName, const std::vector<Value>& arg
         }
         return true;
     }
-    if (name == "RunNPCDetect" || name == "ObserveNpc") { x.Scan(!args.empty() && args[0].hasForm ? Form<RE::Actor>(args[0].formValue) : nullptr); return true; }
+    if (name == "RunNPCDetect") { x.Scan(); return true; }
+    if (name == "ObserveNpc") {
+        const auto target = ActorArgument(args);
+        if (target) x.Scan(target.get());
+        return true;
+    }
     if (name == "UpdateFame") {
         (void)x.api.Executor().AdvanceTime(GameTime{RE::Calendar::GetSingleton()->GetCurrentGameTime()});
         x.CleanupMissingCategories();
@@ -759,9 +873,8 @@ bool Gameplay::Invoke(const std::string& fullName, const std::vector<Value>& arg
     }
     if (name == "AnimationSubAnalyze") return x.Analyze(&args);
     if (name == "AnimationAnalyze") {
-        x.scene.SetThreadId(integer(0));
-        x.sceneStarted = Milliseconds(); x.analyzePending = true;
-        x.scene.RequestScene(x.api.CurrentEpoch(), Milliseconds()); return true;
+        if (!x.scene.Active() || x.scene.ThreadId() != integer(0)) return false;
+        x.scene.RequestScene(x.epoch, Milliseconds()); return true;
     }
     auto facts = x.Facts();
     if (name == "GetAnonymity") {
@@ -841,19 +954,10 @@ bool Gameplay::Invoke(const std::string& fullName, const std::vector<Value>& arg
     return false;
 }
 
-void Gameplay::OnEvent(std::string_view topic, std::string_view payload) {
+void Gameplay::OnEvent(std::string_view topic, std::string_view) {
     auto& x = *impl_;
     if (!x.api.BusinessOpen() || x.stopped) return;
     x.external.OnModEvent(topic, Milliseconds());
-    x.scene.OnSceneNotification(topic, payload, x.api.CurrentEpoch(), Milliseconds());
-    if (topic.ends_with("AnimationEnd") || topic.ends_with("SceneEnd")) {
-        if (!x.scene.Active()) x.analyzePending = false;
-        return;
-    }
-    if (topic.ends_with("AnimationStart") || topic.ends_with("SceneStart") || topic.ends_with("LeadInEnd")) {
-        x.sceneStarted = Milliseconds(); x.consumedStage.clear();
-        if (x.scene.Active()) x.analyzePending = true;
-    }
 }
 
 void Gameplay::Tick() {
@@ -878,6 +982,7 @@ void Gameplay::Tick() {
     if (region != x.current) {
         TransitionRecognition(x.anonymity, x.current, region, now); x.Persist();
     }
+    if (x.analyzePending && region != x.sceneRegion) x.analyzePending = false;
     x.api.SetCurrentLocation(region ? x.api.RegionName(*region) : "");
     if (region) { x.anonymity.AdvanceHourly(*region, now); x.Persist(); }
     const auto real = dispatcher.Clocks().Active().value;
@@ -889,7 +994,7 @@ void Gameplay::Tick() {
         Value unused; Invoke("FullUpdate", {}, unused);
         compat::VmNatives::PublishOutputs();
     }
-    if (now.days >= x.nextGameScan) { x.nextGameScan = now.days + x.Setting("ScanPeriodDays", 1.0 / 24); x.CleanupMissingCategories(); x.Scan(); }
+    if (now.days >= x.nextGameScan) { x.nextGameScan = now.days + x.Setting("ScanPeriodDays", GameplaySettings::kDefaultScanPeriodDays); x.CleanupMissingCategories(); x.Scan(); }
     if (now.days - x.lastSkoomaDay >= 1.0 / 48) {
         const auto elapsed = std::floor((now.days - x.lastSkoomaDay) * 48);
         const auto object = Object("SLSF_Reloaded_PlayerScript"); const auto* property = Property(object, "SLSF_Reloaded_Skooma");
@@ -897,7 +1002,19 @@ void Gameplay::Tick() {
         if (global) global->value = static_cast<float>((std::max)(0.0, global->value - elapsed));
         x.lastSkoomaDay += elapsed / 48;
     }
-    if (x.analyzePending) x.Analyze();
+    if (x.sceneEndedAt) {
+        const auto finished = x.scene.TakeEndedSnapshot();
+        if (finished || !x.scene.Draining()) {
+            x.ConsumeEndedScene(finished ? &*finished : nullptr);
+        }
+    } else if (x.analyzePending && x.scene.Active() && Milliseconds() - x.sceneStarted >= 10000) {
+        if (!x.graceSampleRequested) {
+            x.graceSampleRequested = true;
+            x.scene.MarkDirty();
+            x.scene.RequestScene(x.epoch, Milliseconds());
+        }
+        x.Analyze();
+    }
     if (real >= x.nextComment) {
         CommentFacts input; const auto anon = x.Anonymous(x.Facts());
         input.anonymous = anon.IsReady() ? Fact::Known(anon.value) : Fact{FactState::Unknown};

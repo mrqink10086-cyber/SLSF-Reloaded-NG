@@ -130,6 +130,7 @@ ConfigurationUpdateResult Lifecycle::ReloadConfiguration() {
     return update;
 }
 ConfigurationUpdateResult Lifecycle::ApplyCurrentConfiguration() {
+    configurationRetryPending_ = false;
     const auto configuration = configuration_.Current();
     ConfigurationUpdateResult update{ConfigurationUpdateStatus::Unchanged,
                                       configuration.revision, "configuration unchanged"};
@@ -141,26 +142,29 @@ ConfigurationUpdateResult Lifecycle::ApplyCurrentConfiguration() {
         std::uint32_t droppedEdges = 0;
         std::string error;
         const SessionContext context{.scene = active_->scene, .randomSeed = 1};
-        if (BuildAssets(configuration, context, candidate, droppedEdges, error)) {
+        auto applied = Result<slsf::Status>{slsf::Status::NotReady};
+        if (BusinessOpen() && BuildAssets(configuration, context, candidate, droppedEdges, error)) {
             candidate->random = active_->random;
             const RuntimeBindings bindings{
                 .graph = &candidate->graph, .parameters = &candidate->parameters,
                 .configuration = &candidate->rules, .regions = world_.regions,
                 .rng = candidate->random.get(), .settings = candidate->configuration.data};
-            const auto applied = dispatcher_.Reconfigure(bindings, configuration);
-            if (applied) {
-                active_ = std::move(candidate);
-                droppedEdges_ = droppedEdges;
-                update.status = ConfigurationUpdateStatus::Applied;
-                update.message = "configuration applied to active session";
-            } else {
-                error = applied.error().message;
-            }
+            applied = dispatcher_.Reconfigure(bindings, configuration);
         }
+        if (!applied) error = applied.error().message;
         if (!error.empty()) {
             update.status = ConfigurationUpdateStatus::Invalid;
             update.revision = active_->configuration.revision;
             update.message = std::move(error);
+        } else if (*applied == Status::Ready) {
+            active_ = std::move(candidate);
+            droppedEdges_ = droppedEdges;
+            update.status = ConfigurationUpdateStatus::Applied;
+            update.message = "configuration applied to active session";
+        } else {
+            configurationRetryPending_ = true;
+            update.revision = active_->configuration.revision;
+            update.message = "configuration activation deferred";
         }
     }
     message_ = update.message;
@@ -314,6 +318,22 @@ bool Lifecycle::ActivatePrepared(bool hostSucceeded, std::optional<std::uint64_t
         return false;
     }
     auto pending = std::move(pending_);
+    const auto configuration = configuration_.Current();
+    if (configuration.revision != pending->assets->configuration.revision) {
+        std::unique_ptr<Assets> assets;
+        std::uint32_t droppedEdges = 0;
+        std::string error;
+        if (!BuildAssets(configuration, SessionContext{.scene = pending->assets->scene},
+                         assets, droppedEdges, error)) {
+            RejectPreparation(std::move(error));
+            return false;
+        }
+        assets->random = pending->assets->random;
+        pending->assets = std::move(assets);
+        pending->droppedEdges = droppedEdges;
+        pending->state.configurationRevision = configuration.revision.value;
+        RebuildDerivedSets(pending->state, configuration.data.get());
+    }
     const RuntimeBindings bindings{
         .graph = &pending->assets->graph,
         .parameters = &pending->assets->parameters,
@@ -355,6 +375,7 @@ void Lifecycle::ReturnToMenu() {
     dispatcher_.Detach();
     active_.reset();
     pending_.reset();
+    configurationRetryPending_ = false;
     phase_ = LifecyclePhase::Detached;
     message_ = "returned to menu";
     PublishStatus();
@@ -366,22 +387,27 @@ Result<PersistentState> Lifecycle::Capture() const {
     return dispatcher_.Capture();
 }
 bool Lifecycle::BusinessOpen() const {
-    return phase_ == LifecyclePhase::Active && dispatcher_.Attached() && !dispatcher_.Suspended();
+    return phase_ == LifecyclePhase::Active && dispatcher_.BusinessOpen();
 }
 bool Lifecycle::IsEpochCurrent(Epoch epoch) const {
-    return BusinessOpen() && dispatcher_.CurrentEpoch() == epoch;
+    return epoch != Epoch{} && epoch == CurrentEpoch();
 }
 Epoch Lifecycle::CurrentEpoch() const {
-    return dispatcher_.CurrentEpoch();
+    return phase_ == LifecyclePhase::Active ? dispatcher_.CurrentEpoch() : Epoch{};
 }
 LifecycleStatus Lifecycle::Status() const {
-    return *publishedStatus_.load();
+    auto status = *publishedStatus_.load();
+    if (status.phase == LifecyclePhase::Active) {
+        status.businessOpen = !dispatcher_.Suspended();
+        if (!status.businessOpen) status.epoch = {};
+    }
+    return status;
 }
 void Lifecycle::PublishStatus() {
     LifecycleStatus status;
     status.phase = phase_;
     status.kind = kind_;
-    status.epoch = pending_ ? pending_->epoch : dispatcher_.CurrentEpoch();
+    status.epoch = pending_ ? pending_->epoch : status.phase == LifecyclePhase::Active ? epoch_ : Epoch{};
     status.configurationRevision = active_ ? active_->configuration.revision
         : pending_ ? pending_->assets->configuration.revision : configuration_.Current().revision;
     status.restoredAccounts = restoredAccounts_;

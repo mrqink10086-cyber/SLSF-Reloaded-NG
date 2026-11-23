@@ -3,6 +3,7 @@
 
 #include "slsf/core/Commands.h"
 #include "slsf/core/Types.h"
+#include "slsf/core/reputation/ReputationState.h"
 #include "slsf/core/reputation/Settlement.h"
 
 #include <catch2/catch_approx.hpp>
@@ -116,7 +117,10 @@ TEST_CASE("dispatcher attach prepares and publishes the settlement snapshot") {
 
     dispatcher.Detach();
     REQUIRE_FALSE(dispatcher.Attached());
-    REQUIRE(dispatcher.Snapshot() != nullptr);
+    CHECK_FALSE(dispatcher.Snapshot());
+    CHECK_FALSE(dispatcher.Query(QueryRequest{}));
+    CHECK(dispatcher.CurrentEpoch() == Epoch{});
+    CHECK(snapshot->epoch == epoch);
     CHECK(dispatcher.Execute(ExplicitCommand{}).status == Status::Stale);
 }
 TEST_CASE("dispatcher sync command commits and publishes before returning") {
@@ -195,6 +199,162 @@ TEST_CASE("dispatcher scheduled changes settle once at their game day") {
     CHECK(rewound.error().code == slsf::Error::Code::InvalidArgument);
     CHECK(dispatcher.Snapshot()->revision.value > 0);
 }
+TEST_CASE("dispatcher rejects invalid manual decay before consuming scheduled work") {
+    Dispatcher dispatcher;
+    const auto graph = TwoSourceGraph();
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    REQUIRE(dispatcher.Attach(Epoch{3, 0, 0}, MakeBindings(graph, parameters, configuration),
+                              MakeState()));
+
+    const ExplicitCommand setCommand{.kind = ExplicitCommandKind::Set, .target = RegionId{0},
+                                     .category = kCat0, .value = 20.0};
+    const auto when = slsf::GameTime::FromDays(3.0);
+    dispatcher.ScheduleChange(ScheduledChange{when, setCommand});
+    dispatcher.Clocks().RecordGameTime(when);
+    const auto before = dispatcher.Snapshot();
+    REQUIRE(before);
+
+    CHECK(dispatcher.ApplyManualDecay(RegionId{0}, kCat0, 0, 0).status == Status::Invalid);
+    CHECK(dispatcher.ApplyManualDecay(RegionId{}, kCat0, 1, 1).status == Status::Invalid);
+    CHECK(dispatcher.ApplyManualDecay(RegionId{0}, static_cast<FameCategory>(99), 1, 1).status == Status::Invalid);
+    CHECK(dispatcher.PendingChanges() == 1);
+    CHECK(dispatcher.Snapshot()->revision == before->revision);
+    const auto captured = dispatcher.Capture();
+    REQUIRE(captured);
+    CHECK(captured->locations.at(0).local[slsf::FameCategoryIndex(kCat0)] == 0.0);
+
+    const auto applied = dispatcher.ApplyManualDecay(RegionId{0}, kCat0, 2, 2);
+    REQUIRE(applied.status == Status::Ready);
+    CHECK(dispatcher.PendingChanges() == 0);
+    CHECK(dispatcher.Snapshot()->revision == applied.revision);
+    CHECK(dispatcher.Snapshot()->fame.at(0) == Approx(18.0));
+}
+TEST_CASE("ordinary fame gain notifications cool down in real time including menus", "[fame-notifications]") {
+    Dispatcher dispatcher;
+    double wall = 100.0;
+    dispatcher.Clocks().SetWallSource([&] { return wall; });
+    const auto graph = TwoSourceGraph();
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    auto bindings = MakeBindings(graph, parameters, configuration);
+    auto settings = std::make_shared<slsf::ConfigurationData>();
+    settings->menu.notifications.fameIncrease = true;
+    bindings.settings = settings;
+    const auto now = slsf::GameTime::FromDays(1.0);
+    const auto gain = [&](double cap = 150.0) {
+        return dispatcher.GainFame(now, RegionId{0}, kCat0, {.maxFameValue = cap});
+    };
+    using Notice = Dispatcher::FameNotice;
+    REQUIRE(dispatcher.Attach(Epoch{4, 0, 0}, bindings, MakeState()));
+
+    REQUIRE(gain().status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Increase});
+    dispatcher.Clocks().SetMenuOpen(true);
+    wall += 29.9;
+    REQUIRE(gain().status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices().empty());
+    wall += 0.1;
+    REQUIRE(gain(2.0).status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices().empty());
+    REQUIRE(gain().status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Increase});
+
+    wall += 30;
+    REQUIRE(gain().status == Status::Ready);
+    dispatcher.Detach();
+    CHECK(dispatcher.TakeFameNotices().empty());
+    REQUIRE(dispatcher.Attach(Epoch{5, 0, 0}, bindings, MakeState()));
+    REQUIRE(gain().status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Increase});
+}
+
+TEST_CASE("decay only notifies for batches that deduct fame", "[fame-notifications]") {
+    Dispatcher dispatcher;
+    const DiffusionGraph graph;
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    auto bindings = MakeBindings(graph, parameters, configuration);
+    auto settings = std::make_shared<slsf::ConfigurationData>();
+    bindings.settings = settings;
+    auto state = MakeState();
+    state.accounts[0].local[kCat0] = 1.0;
+    state.accounts[1].local[kCat0] = 1.0;
+    state.accounts[2].local[kCat0] = 1.0;
+    state.accounts[2].protectionUntilDay[slsf::FameCategoryIndex(kCat0)] = 1.0;
+    slsf::RebuildDerivedSets(state);
+    using Notice = Dispatcher::FameNotice;
+    REQUIRE(dispatcher.Attach(Epoch{4, 0, 0}, bindings, std::move(state)));
+
+    REQUIRE(dispatcher.DecayBatch(0).status == Status::Invalid);
+    CHECK(dispatcher.TakeFameNotices().empty());
+    REQUIRE(dispatcher.DecayBatch(1).status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Decay});
+    REQUIRE(dispatcher.DecayBatch(1).status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices().empty());
+    REQUIRE(dispatcher.AdvanceTime(slsf::GameTime::FromDays(1.5)));
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Decay});
+    REQUIRE(dispatcher.AdvanceTime(slsf::GameTime::FromDays(2.0)));
+    CHECK(dispatcher.TakeFameNotices().empty());
+}
+
+TEST_CASE("automatic spread batches notify but manual spread does not", "[fame-notifications]") {
+    Dispatcher dispatcher;
+    auto graph = TwoSourceGraph();
+    graph.edges.push_back(EdgeDefinition{Key(0), Key(1), 0.8});
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    auto bindings = MakeBindings(graph, parameters, configuration);
+    bindings.settings = std::make_shared<slsf::ConfigurationData>();
+    auto state = MakeState();
+    state.accounts[0].local[kCat0] = 100.0;
+    slsf::RebuildDerivedSets(state);
+    const auto now = slsf::GameTime::FromDays(0.0);
+    const std::array sources{RegionId{0}};
+    using Notice = Dispatcher::FameNotice;
+    REQUIRE(dispatcher.Attach(Epoch{4, 0, 0}, bindings, state));
+
+    REQUIRE(dispatcher.ApplyManualSpread(RegionId{0}, RegionId{1}, kCat0, 30).status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices().empty());
+    REQUIRE(dispatcher.ApplySpreadPulse(now, sources).status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Spread});
+    REQUIRE(dispatcher.ApplySpreadPulse(now, sources).status == Status::Ready);
+    CHECK(dispatcher.TakeFameNotices().empty());
+
+    dispatcher.Detach();
+    REQUIRE(dispatcher.Attach(Epoch{5, 0, 0}, bindings, std::move(state)));
+    REQUIRE(dispatcher.AdvanceTime(slsf::GameTime::FromDays(0.25)));
+    CHECK(dispatcher.TakeFameNotices() == std::vector{Notice::Spread});
+    REQUIRE(dispatcher.AdvanceTime(slsf::GameTime::FromDays(0.25)));
+    CHECK(dispatcher.TakeFameNotices().empty());
+}
+
+TEST_CASE("disabled fame notifications do not suppress settlement", "[fame-notifications]") {
+    Dispatcher dispatcher;
+    const auto graph = TwoSourceGraph();
+    const auto parameters = slsf::LegacyDefaultParameters();
+    const Configuration configuration{};
+    auto bindings = MakeBindings(graph, parameters, configuration);
+    auto settings = std::make_shared<slsf::ConfigurationData>();
+    settings->menu.notifications = {false, false, false};
+    bindings.settings = settings;
+    auto state = MakeState();
+    state.accounts[0].local[kCat0] = 100.0;
+    slsf::RebuildDerivedSets(state);
+    REQUIRE(dispatcher.Attach(Epoch{4, 0, 0}, bindings, std::move(state)));
+    const auto now = slsf::GameTime::FromDays(0.0);
+    const std::array sources{RegionId{0}};
+    const auto gain = dispatcher.GainFame(now, RegionId{1}, kCat0, {});
+    REQUIRE(gain.status == Status::Ready);
+    const auto spread = dispatcher.ApplySpreadPulse(now, sources);
+    REQUIRE(spread.status == Status::Ready);
+    CHECK(spread.revision > gain.revision);
+    const auto decay = dispatcher.DecayBatch(1);
+    REQUIRE(decay.status == Status::Ready);
+    CHECK(decay.revision > spread.revision);
+    CHECK(dispatcher.TakeFameNotices().empty());
+}
+
 TEST_CASE("dispatcher executor rounds run due timers in stable domain order") {
     Dispatcher dispatcher;
     const auto graph = TwoSourceGraph();
@@ -660,10 +820,21 @@ TEST_CASE("dispatcher reattach publishes a clean session snapshot") {
     setCommand.category = kCat0;
     setCommand.value = 41.0;
     REQUIRE(dispatcher.Execute(setCommand).status == Status::Ready);
-    REQUIRE(dispatcher.Snapshot()->fame.at(0) == Approx(41.0));
+    const auto previous = dispatcher.Snapshot();
+    REQUIRE(previous);
+    REQUIRE(previous->fame.at(0) == Approx(41.0));
+
+    dispatcher.Suspend();
+    CHECK_FALSE(dispatcher.BusinessOpen());
+    CHECK_FALSE(dispatcher.Snapshot());
+    CHECK_FALSE(dispatcher.Query(QueryRequest{QueryRequest::Kind::Fame, Loc(0), kCat0}));
+    CHECK(dispatcher.CurrentEpoch() == Epoch{});
+    dispatcher.Resume();
+    CHECK(dispatcher.Snapshot() == previous);
 
     dispatcher.Detach();
-    REQUIRE(dispatcher.Snapshot() != nullptr);
+    CHECK_FALSE(dispatcher.Snapshot());
+    CHECK(previous->fame.at(0) == Approx(41.0));
 
     REQUIRE(dispatcher.Attach(Epoch{27, 0, 0}, MakeBindings(graph, parameters, configuration),
                               MakeState()));

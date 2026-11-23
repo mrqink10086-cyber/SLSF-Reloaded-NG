@@ -1,6 +1,8 @@
 #include "slsf/api/PublicApi.h"
 
+#include "slsf/core/location/DefaultRegions.h"
 #include "slsf/core/location/RegionRegistry.h"
+#include "slsf/core/persistence/StateCodec.h"
 
 #include <algorithm>
 #include <cctype>
@@ -36,6 +38,12 @@ std::string NormalizeName(const std::string& name) {
 }
 bool EqualNormalized(const std::string& lhs, const std::string& rhs) {
     return NormalizeName(lhs) == NormalizeName(rhs);
+}
+bool IsBuiltInRegion(const RegionSnapshot& regions, const StableRegionKey& key) {
+    return std::ranges::any_of(regions.apiAliases, [&](const auto& alias) { return alias.target == key; }) ||
+           std::ranges::any_of(kDefaultRegions, [&](const auto& region) {
+               return region.form == key.localFormId && region.plugin == key.plugin;
+           });
 }
 compat::ModEventValue BoolValue(bool v) {
     compat::ModEventValue out;
@@ -119,7 +127,7 @@ std::optional<RegionId> PublicApi::ResolveRegionByName(
     return slsf::FindRegion(regions_, order[apiIndex->value]);
 }
 RegionalFameView PublicApi::ReadRegionalFame(const std::string& location) const {
-    if (!BusinessOpen() || executor_.Suspended()) return {};
+    if (!BusinessOpen()) return {};
     const auto snapshot = Snapshot();
     if (!snapshot) return {};
     RegionalFameView view;
@@ -144,7 +152,7 @@ RegionalFameView PublicApi::ReadRegionalFame(const std::string& location) const 
             }
         }
     }
-    if (!BusinessOpen() || executor_.Suspended() || CurrentEpoch() != snapshot->epoch) return {};
+    if (!IsEpochCurrent(snapshot->epoch)) return {};
     return view;
 }
 std::optional<FameCategory> PublicApi::ResolveCategory(const std::string& name) {
@@ -170,7 +178,7 @@ std::optional<RegionId> PublicApi::ResolveParamLocation(const compat::ModEvent& 
     if (const auto* form = event.FormValue(paramName)) {
         return ResolveForm(*form);
     }
-    return ResolveRegionByName(event.StringValue(paramName));
+    return ResolveRegionByName(ResolveParamLocationName(event, paramName));
 }
 CommandResult PublicApi::SetFameValueRegion(RegionId region, FameCategory category,
                                            double value) {
@@ -276,7 +284,7 @@ Dispatcher::GainOutcome PublicApi::GainFame(const std::string& locationName,
     RegionId region{};
     FameCategory category{FameCategory::Count};
     Dispatcher::GainOutcome outcome;
-    if (!Resolve(locationName, categoryName, region, category)) {
+    if (!Resolve(ResolveCurrentLocationName(locationName), categoryName, region, category)) {
         outcome.status = Status::Invalid;
         outcome.message = "unresolvable location or category";
         return outcome;
@@ -293,8 +301,9 @@ Dispatcher::ApplyOutcome PublicApi::ManualSpread(const std::string& fromName,
                                                  int percent) {
     Dispatcher::ApplyOutcome outcome;
     const auto category = ResolveCategory(categoryName);
-    const auto from = ResolveRegionByName(fromName);
-    const auto to = ResolveRegionByName(toName);
+    const auto current = CurrentLocation();
+    const auto from = ResolveRegionByName(fromName == "Current" ? current : fromName);
+    const auto to = ResolveRegionByName(toName == "Current" ? current : toName);
     if (!category || !from || !to) {
         outcome.status = Status::Invalid;
         outcome.message = "unresolvable location or category";
@@ -308,7 +317,7 @@ Dispatcher::ApplyOutcome PublicApi::ManualDecay(const std::string& locationName,
     Dispatcher::ApplyOutcome outcome;
     RegionId region{};
     FameCategory category{FameCategory::Count};
-    if (!Resolve(locationName, categoryName, region, category)) {
+    if (!Resolve(ResolveCurrentLocationName(locationName), categoryName, region, category)) {
         outcome.status = Status::Invalid;
         outcome.message = "unresolvable location or category";
         return outcome;
@@ -321,7 +330,7 @@ Dispatcher::ApplyOutcome PublicApi::ManualGain(const std::string& locationName,
     Dispatcher::ApplyOutcome outcome;
     RegionId region{};
     FameCategory category{FameCategory::Count};
-    if (!Resolve(locationName, categoryName, region, category)) {
+    if (!Resolve(ResolveCurrentLocationName(locationName), categoryName, region, category)) {
         outcome.status = Status::Invalid;
         outcome.message = "unresolvable location or category";
         return outcome;
@@ -465,12 +474,45 @@ bool PublicApi::RegisterCustomLocation(const std::string& name, const StableRegi
 }
 
 bool PublicApi::UnregisterCustomLocation(const std::string& name) {
-    const auto custom = CustomLocations();
-    if (std::none_of(custom.begin(), custom.end(), [&](const auto& entry) { return EqualNormalized(entry.name, name); })) return false;
-    return executor_.EditState([&](State& state) -> Result<void> {
-        std::erase_if(state.customRegions, [&](const auto& entry) { return EqualNormalized(entry.name, name); });
+    std::optional<StableRegionKey> removed;
+    const auto result = executor_.EditState([&](State& state) -> Result<void> {
+        const auto location = std::find_if(state.customRegions.begin(), state.customRegions.end(),
+            [&](const auto& entry) { return EqualNormalized(entry.name, name); });
+        if (location == state.customRegions.end()) {
+            return Fail(Error::Code::InvalidArgument, "unknown custom location");
+        }
+        const auto& key = location->key;
+        if (!IsBuiltInRegion(regions_, key)) {
+            const auto found = std::find(state.accountKeys.begin(), state.accountKeys.end(), key);
+            if (found != state.accountKeys.end()) {
+                auto& account = state.accounts[static_cast<std::size_t>(found - state.accountKeys.begin())];
+                const auto settledAt = account.settledAt;
+                const auto remoteSettledAt = account.remoteSettledAt;
+                account = AccountState{};
+                account.settledAt = settledAt;
+                account.remoteSettledAt = remoteSettledAt;
+                RebuildDerivedSets(state);
+            }
+            std::erase_if(state.unresolvedAccounts, [&](const auto& entry) { return entry.key == key; });
+            std::erase_if(state.spreadChances, [&](const auto& entry) { return entry.key == key; });
+            std::erase_if(state.recognition, [&](const auto& entry) { return entry.key == key; });
+            removed = key;
+        }
+        state.customRegions.erase(location);
         return {};
-    }).status == Status::Ready;
+    });
+    if (result.status != Status::Ready) return false;
+    if (removed) {
+        CustomLocationRemoved callback;
+        { std::lock_guard lock(gameplayMutex_); callback = customLocationRemoved_; }
+        if (callback) callback(*removed);
+    }
+    return true;
+}
+
+void PublicApi::SetCustomLocationRemoved(CustomLocationRemoved callback) {
+    std::lock_guard lock(gameplayMutex_);
+    customLocationRemoved_ = std::move(callback);
 }
 
 std::string PublicApi::RegionName(RegionId region) const {
@@ -505,11 +547,13 @@ CommandResult PublicApi::ImportLegacy(const io::LegacyImport& input) {
     return executor_.EditState([&](State& state) -> Result<void> {
         for (const auto& custom : input.customRegions) {
             if (custom.name.empty() || !FindRegion(regions_, custom.key)) return Fail(Error::Code::InvalidArgument, "unknown imported location form");
+            if (IsBuiltInRegion(regions_, custom.key)) return Fail(Error::Code::InvalidArgument, "custom location form is built in");
             const auto named = std::find_if(state.customRegions.begin(), state.customRegions.end(), [&](const auto& entry) { return EqualNormalized(entry.name, custom.name); });
             if (named != state.customRegions.end()) {
                 if (named->key != custom.key) return Fail(Error::Code::InvalidArgument, "custom location name conflict");
             } else {
                 if (std::any_of(state.customRegions.begin(), state.customRegions.end(), [&](const auto& entry) { return entry.key == custom.key; })) return Fail(Error::Code::InvalidArgument, "custom location form conflict");
+                if (state.customRegions.size() >= kStateCodecMaxCustomRegions) return Fail(Error::Code::OutOfRange, "too many custom locations");
                 state.customRegions.push_back(custom);
             }
         }
@@ -675,6 +719,7 @@ bool PublicApi::CallGameplay(const std::string& name, const std::vector<compat::
     return call && call(name, arguments, result);
 }
 void PublicApi::OnEvent(const compat::ModEvent& event) {
+    if (!BusinessOpen()) return;
     const auto& handler = event.handler;
     if (handler == "OnExternalFameGainRoll" || handler == "OnExternalFameGain") {
         HandleGain(event);
@@ -719,13 +764,10 @@ void PublicApi::OnEvent(const compat::ModEvent& event) {
         HandleEnableFameType(event);
         return;
     }
-    if (handler.rfind("OnExternal", 0) == 0 && handler.size() > 4 &&
-         handler.compare(handler.size() - 4, 4, "Flag") == 0) {
-        if (const auto category = CategoryFromFlagHandler(handler)) {
-            HandleFlag(event,
-                       std::string(slsf::kFameCategoryNames[static_cast<std::size_t>(*category)]));
-            return;
-        }
+    if (const auto category = CategoryFromFlagHandler(handler)) {
+        HandleFlag(event,
+                   std::string(slsf::kFameCategoryNames[static_cast<std::size_t>(*category)]));
+        return;
     }
     if (handler == "OnRequestLocation") {
         HandleRequestLocation(event);
@@ -757,14 +799,13 @@ void PublicApi::OnEvent(const compat::ModEvent& event) {
     }
 }
 std::optional<FameCategory> PublicApi::CategoryFromFlagHandler(const std::string& handler) {
-    constexpr const char* kPrefix = "OnExternal";
-    constexpr std::size_t kPrefixLen = 12;
-    constexpr std::size_t kSuffixLen = 4;
-    if (handler.rfind(kPrefix, 0) != 0 || handler.size() <= kPrefixLen + kSuffixLen) {
+    constexpr std::string_view prefix = "OnExternal";
+    constexpr std::string_view suffix = "Flag";
+    if (!handler.starts_with(prefix) || !handler.ends_with(suffix) ||
+        handler.size() <= prefix.size() + suffix.size()) {
         return std::nullopt;
     }
-    const std::string suffix =
-        handler.substr(kPrefixLen, handler.size() - kPrefixLen - kSuffixLen);
+    const auto categoryName = handler.substr(prefix.size(), handler.size() - prefix.size() - suffix.size());
     static const std::unordered_map<std::string, FameCategory> table = {
         {"Slut", FameCategory::Slut},
         {"Whore", FameCategory::Whore},
@@ -792,7 +833,7 @@ std::optional<FameCategory> PublicApi::CategoryFromFlagHandler(const std::string
         {"Cuck", FameCategory::Cuck},
         {"Airhead", FameCategory::Airhead},
     };
-    const auto it = table.find(suffix);
+    const auto it = table.find(categoryName);
     if (it == table.end()) {
         return std::nullopt;
     }
@@ -800,8 +841,11 @@ std::optional<FameCategory> PublicApi::CategoryFromFlagHandler(const std::string
 }
 void PublicApi::HandleGain(const compat::ModEvent& event) {
     if (event.handler == "OnExternalFameGainRoll") {
+        const auto location = ResolveParamLocationName(event, "EventLocation");
+        if (!ResolveRegionByName(location)) return;
         compat::ModEventValue result;
-        (void)CallGameplay("FameGainRoll", event.values, result);
+        (void)CallGameplay("FameGainRoll",
+                           {MakeString(location), MakeBool(true), MakeBool(false), MakeBool(false)}, result);
         return;
     }
     const auto category = ResolveCategory(event.StringValue("Category"));
@@ -826,12 +870,7 @@ void PublicApi::HandleManualGain(const compat::ModEvent& event) {
         return;
     }
 
-    std::optional<RegionId> region;
-    if (const auto location = ResolveParamLocation(event, "EventLocation")) {
-        region = location;
-    } else if (event.handler == "OnExternalManualFameGainAll") {
-        region = ResolveRegionByName(CurrentLocation());
-    }
+    const auto region = ResolveParamLocation(event, "EventLocation");
     if (!region) {
         return;
     }
@@ -858,14 +897,22 @@ void PublicApi::HandleDecay(const compat::ModEvent& event) {
     }
     const int min = static_cast<int>(event.IntValue("MinDecay", 0));
     const int max = static_cast<int>(event.IntValue("MaxDecay", 0));
-    std::vector<std::string> names;
-    if (event.handler == "OnExternalManualFameDecayAll") names = RegisteredLocations();
-    else if (const auto region = ResolveParamLocation(event, "EventLocation")) names.push_back(RegionName(*region));
-    for (const auto& name : names) {
-        if (event.handler == "OnExternalManualFameDecay")
-            (void)ManualDecay(name, event.StringValue("Category"), min, max);
-        else for (const auto category : slsf::kFameCategoryNames)
-            (void)ManualDecay(name, std::string(category), min, max);
+    if (event.handler == "OnExternalManualFameDecayAll") {
+        for (const auto& name : RegisteredLocations())
+            for (const auto category : slsf::kFameCategoryNames)
+                (void)ManualDecay(name, std::string(category), min, max);
+        return;
+    }
+    const auto region = ResolveParamLocation(event, "EventLocation");
+    if (!region) return;
+    if (event.handler == "OnExternalManualFameDecay") {
+        if (const auto category = ResolveCategory(event.StringValue("Category"))) {
+            executor_.ApplyManualDecay(*region, *category, min, max);
+        }
+        return;
+    }
+    for (std::size_t i = 0; i < slsf::kFameCategoryCount; ++i) {
+        executor_.ApplyManualDecay(*region, slsf::FameCategoryFromIndex(i), min, max);
     }
 }
 void PublicApi::HandleSpread(const compat::ModEvent& event) {
@@ -932,13 +979,12 @@ void PublicApi::HandleRequestLocation(const compat::ModEvent& event) {
     }
     SendReply("SLSF_Reloaded_ReturnRequestedLocation", {MakeString(CurrentLocation())});
 }
+std::string PublicApi::ResolveCurrentLocationName(const std::string& name) const {
+    return name == "Current" ? CurrentLocation() : name;
+}
 std::string PublicApi::ResolveParamLocationName(const compat::ModEvent& event,
-                                                const char* param) const {
-    std::string name = event.StringValue(param);
-    if (name == "Current") {
-        name = CurrentLocation();
-    }
-    return name;
+                                                const std::string& param) const {
+    return ResolveCurrentLocationName(event.StringValue(param));
 }
 void PublicApi::HandleRequestRecognitionTime(const compat::ModEvent& event) {
     const auto locationName = ResolveParamLocationName(event, "FameLocation");

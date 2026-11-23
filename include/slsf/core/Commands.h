@@ -90,6 +90,8 @@ struct AdvanceResult {
     Status status{Status::Ready};
     Revision revision;
     GameTime advancedTo;
+    bool decayedFame{};
+    bool spreadFame{};
 };
 
 CommandResult ApplyExplicit(State& state, const ExplicitCommand& command, const RuleContext& context);

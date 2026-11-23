@@ -10,6 +10,7 @@ public:
              std::map<StableFormKey, RegionId> owners);
     ~Gameplay();
     void Tick();
+    void OnCustomLocationRemoved(const StableRegionKey& key);
     std::optional<RegionId> ResolveForm(const StableFormKey& key) const;
     void OnEvent(std::string_view topic, std::string_view payload);
     bool Invoke(const std::string& name, const std::vector<compat::ModEventValue>& arguments,

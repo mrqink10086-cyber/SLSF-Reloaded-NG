@@ -86,6 +86,7 @@ struct MenuSettings {
 };
 
 struct GameplaySettings {
+    static constexpr double kDefaultScanPeriodDays = 0.5 / 24.0;
     bool anonymityEnabled{true};
     bool allowCollarBoundFame{false};
     bool allowSLSCursedCollarBoundFame{false};
@@ -110,7 +111,7 @@ struct GameplaySettings {
     double sexFameChanceByLover{25};
     double cumDumpFHUReq{2};
     double commentFrequency{50};
-    double scanPeriodDays{0.041666666666666664};
+    double scanPeriodDays{kDefaultScanPeriodDays};
     friend bool operator==(const GameplaySettings&, const GameplaySettings&) = default;
 };
 struct GameplayBoolSetting { const char* name; bool GameplaySettings::*member; };

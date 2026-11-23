@@ -13,6 +13,17 @@ enum class FameCommand : std::uint8_t {
 
 using FameReadout = api::RegionalFameView;
 
+struct FameCommandLocations {
+    [[nodiscard]] static bool Contains(const FameReadout& readout, const std::string& name);
+    void Refresh(const FameReadout& readout);
+
+    std::string source;
+    std::string target;
+
+private:
+    Epoch epoch_{};
+};
+
 CommandResult ExecuteFameCommand(api::PublicApi& api, FameCommand command,
     const std::string& location, const std::string& target, const std::string& category,
     int amount, int extra, const std::function<void()>& publish);

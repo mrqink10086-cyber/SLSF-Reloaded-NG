@@ -7,6 +7,7 @@
 #include <string>
 
 using slsf::ConfigurationData;
+using slsf::ConfigurationRevision;
 using slsf::ConfigurationSnapshot;
 using slsf::ConfigurationUpdateResult;
 using slsf::ui::Menu;
@@ -36,7 +37,7 @@ struct PortCounters {
             ++reloadCalls;
             return nextReload;
         };
-        ports.commit = [this](ConfigurationData edit) {
+        ports.commit = [this](ConfigurationData edit, ConfigurationRevision) {
             ++commitCalls;
             committed = std::move(edit);
             return nextCommit;
@@ -65,7 +66,8 @@ struct CloseCommitPorts {
                 slsf::ConfigurationUpdateStatus::Applied,
                 slsf::ConfigurationRevision{2}, "reloaded from disk"};
         };
-        ports.commit = [this](ConfigurationData) {
+        ports.commit = [this](ConfigurationData, ConfigurationRevision expectedRevision) {
+            CHECK(expectedRevision.value == 1);
             ++commitCalls;
             return commitFails
                        ? ConfigurationUpdateResult{
@@ -179,17 +181,88 @@ TEST_CASE("close merge sends an edited draft once and keeps the failure visible"
     REQUIRE(Menu::Instance().LastUpdateMessage() ==
             "configuration write failed: injected");
 
+    Menu::Instance().Queue().Post(MenuRequestQueue::Kind::Configure);
+    Menu::Instance().Frame();
+    REQUIRE(ports.reloadCalls == 2);
+    REQUIRE(Menu::Instance().LastUpdateMessage() ==
+            "configuration write failed: injected");
+
     ports.commitFails = false;
     Menu::Instance().Queue().Post(MenuRequestQueue::Kind::CloseCommit);
     Menu::Instance().Frame();
     REQUIRE(ports.commitCalls == 2);
-    REQUIRE(ports.reloadCalls == 1);
+    REQUIRE(ports.reloadCalls == 2);
     REQUIRE(Menu::Instance().LastUpdateMessage() == "configuration updated");
 
     Menu::Instance().Queue().Post(MenuRequestQueue::Kind::CloseCommit);
     Menu::Instance().Frame();
     REQUIRE(ports.commitCalls == 2);
-    REQUIRE(ports.reloadCalls == 2);
+    REQUIRE(ports.reloadCalls == 3);
+}
+
+TEST_CASE("menu close retains a dirty draft when the disk config cannot be replaced", "[menu]") {
+    Menu::ResetForTest();
+    auto file = std::make_unique<slsf::config::MemoryConfigurationFile>(std::string{});
+    auto* backingFile = file.get();
+    auto config = slsf::config::ConfigurationStore::Open(std::move(file));
+    REQUIRE(config->Reload().Succeeded());
+    int commits = 0;
+    Menu::Ports ports;
+    ports.snapshot = [&] { return config->Current(); };
+    ports.reload = [&] { return config->Reload(); };
+    ports.commit = [&](ConfigurationData edit, ConfigurationRevision expectedRevision) {
+        ++commits;
+        CHECK(expectedRevision.value == 1);
+        return config->ApplyEdit(std::move(edit), expectedRevision);
+    };
+    auto& menu = Menu::Instance();
+    menu.Bind(std::move(ports));
+    menu.Queue().Post(MenuRequestQueue::Kind::CloseCommit);
+    menu.Frame();
+    REQUIRE(menu.EditDraftForTest([](ConfigurationData& draft) { draft.menu.notifications.fameDecay = false; }));
+
+    const auto close = [&] {
+        menu.Queue().Post(MenuRequestQueue::Kind::CloseCommit);
+        menu.Frame();
+    };
+    const std::string external = R"({"menu":{"notifications":{"fameIncrease":false}}})";
+    SECTION("external configuration was already reloaded") {
+        backingFile->OverwriteExternally(external);
+        menu.Queue().Post(MenuRequestQueue::Kind::Configure);
+        close();
+        CHECK(commits == 0);
+        CHECK(backingFile->Bytes() == external);
+        CHECK_FALSE(config->Current().data->menu.notifications.fameIncrease);
+    }
+    SECTION("external configuration was not reloaded") {
+        backingFile->OverwriteExternally(external);
+        close();
+        CHECK(commits == 1);
+        CHECK(menu.LastUpdateMessage() == "configuration changed since the draft was opened");
+        CHECK(backingFile->Bytes() == external);
+        CHECK_FALSE(config->Current().data->menu.notifications.fameIncrease);
+    }
+    SECTION("external configuration is invalid") {
+        const std::string invalid = "{";
+        backingFile->OverwriteExternally(invalid);
+        close();
+        CHECK(commits == 1);
+        CHECK(menu.LastUpdateMessage().starts_with("configuration JSON is invalid"));
+        CHECK(backingFile->Bytes() == invalid);
+        CHECK(config->Current().revision.value == 1);
+    }
+    SECTION("external configuration is missing") {
+        backingFile->OverwriteExternally({});
+        close();
+        CHECK(commits == 1);
+        CHECK(menu.LastUpdateMessage() == "configuration file is missing");
+        CHECK(backingFile->Bytes().empty());
+        CHECK(config->Current().revision.value == 1);
+    }
+
+    CHECK_FALSE(menu.LastUpdateMessage().empty());
+    CHECK(config->Current().data->menu.notifications.fameDecay);
+    REQUIRE(menu.EditDraftForTest([](ConfigurationData& draft) { CHECK_FALSE(draft.menu.notifications.fameDecay); }));
 }
 
 TEST_CASE("menu frame refreshes the cached snapshot before draining", "[menu]") {

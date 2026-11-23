@@ -79,6 +79,14 @@ struct PPlusActorState {
     std::uint32_t roleUnknown{};
     std::optional<std::uint8_t> sexCode;
     Fact playerInteraction;
+    std::uint32_t transientHandle{};
+    std::uint32_t transientFormId{};
+
+    [[nodiscard]] bool MatchesActor(const StableFormKey& stable, std::uint32_t handle = 0,
+                                    std::uint32_t currentFormId = 0) const noexcept {
+        if (transientHandle) return stable.plugin.empty() && handle == transientHandle && currentFormId == transientFormId;
+        return !handle && !stable.plugin.empty() && actor == stable;
+    }
 
     [[nodiscard]] gameplay::Tri InteractionState(PPlusInteraction value) const noexcept;
     [[nodiscard]] bool HasInteraction(PPlusInteraction value) const noexcept;
@@ -94,6 +102,7 @@ struct PPlusSceneState {
     std::string sceneId;
     std::string stageId;
     Fact leadIn;
+    std::optional<std::uint32_t> observedStart;
     StableFormKey animation;
     std::string animationName;
     std::vector<PPlusTag> tags;
@@ -124,6 +133,7 @@ struct PPlusOptions {
 class SexLabPPlus {
 public:
     using Completion = std::function<void(const PPlusSceneState&, ExternalGate)>;
+    using EndedCaptureConsumer = std::function<void(const PPlusSceneState&)>;
 
     SexLabPPlus(PapyrusCalls& calls, PPlusOptions options = {});
     ~SexLabPPlus();
@@ -135,11 +145,13 @@ public:
                            Completion completion = {});
     RequestId RequestScene(const Epoch& epoch, std::int64_t nowMs,
                            Completion completion = {});
-    void SetThreadId(std::int32_t threadId);
     [[nodiscard]] std::int32_t ThreadId() const;
     RequestId OnSceneNotification(std::string_view event, std::string_view threadId,
                                   const Epoch& epoch, std::int64_t nowMs,
-                                  Completion completion = {});
+                                  Completion completion = {},
+                                  std::optional<std::uint32_t> observedStart = {},
+                                  bool* accepted = nullptr,
+                                  EndedCaptureConsumer consumeEnded = {});
     void Advance(std::int64_t nowMs);
     void OnSceneEnded(const Epoch& epoch);
     void MarkDirty();
@@ -147,6 +159,8 @@ public:
     [[nodiscard]] ExternalGate Gate() const;
     [[nodiscard]] PPlusSceneState Snapshot() const;
     [[nodiscard]] bool Active() const;
+    [[nodiscard]] bool Draining() const;
+    [[nodiscard]] std::optional<PPlusSceneState> TakeEndedSnapshot();
     [[nodiscard]] std::uint32_t Attempts() const;
 
     void Cancel();

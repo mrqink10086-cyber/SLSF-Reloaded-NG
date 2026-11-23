@@ -25,6 +25,8 @@
 #include "slsf/api/PublicApi.h"
 #include "slsf/io/JsonTransfer.h"
 
+#include <RE/S/SendHUDMessage.h>
+#include <SKSE/Translation.h>
 #include <Windows.h>
 
 #include <algorithm>
@@ -363,10 +365,6 @@ void OnSerializationSaveBody(SKSE::SerializationInterface* serialization) {
     if (serialization == nullptr || !lifecycle) {
         return;
     }
-    if (!slsf::boundary::SaveProviderCollectorCalls(serialization)) {
-        logs::error("collectors: failed to save pending VM continuations");
-        return;
-    }
     auto captured = lifecycle->Capture();
     if (!captured) {
         logs::warn("lifecycle: save skipped: {}", captured.error().message);
@@ -391,6 +389,11 @@ void OnSerializationSave(SKSE::SerializationInterface* serialization) {
     logs::info("serialization: save received pid={} tid={}", GetCurrentProcessId(), GetCurrentThreadId());
     GuardedHostCallback("OnSerializationSave",
                         [&] { OnSerializationSaveBody(serialization); });
+    GuardedHostCallback("collector continuation save", [&] {
+        if (serialization && Runtime() && !slsf::boundary::SaveProviderCollectorCalls(serialization)) {
+            logs::error("collectors: failed to save pending VM continuations");
+        }
+    });
 }
 
 void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
@@ -402,6 +405,7 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
     std::vector<std::byte> bytes;
     std::vector<slsf::integrations::CollectorContinuation> calls;
     bool foundCalls = false;
+    bool malformedCalls = false;
     bool found = false;
     bool malformed = false;
     std::uint32_t type = 0;
@@ -409,9 +413,13 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
     std::uint32_t length = 0;
     while (serialization->GetNextRecordInfo(type, version, length)) {
         if (type == slsf::boundary::kCollectorCallsRecord) {
-            if (foundCalls || !slsf::boundary::LoadProviderCollectorCalls(serialization, version, length, calls)) {
-                malformed = true;
-                break;
+            if (foundCalls) {
+                malformedCalls = true;
+            } else {
+                malformedCalls = true;
+                GuardedHostCallback("collector continuation load", [&] {
+                    malformedCalls = !slsf::boundary::LoadProviderCollectorCalls(serialization, version, length, calls);
+                });
             }
             foundCalls = true;
             continue;
@@ -434,6 +442,10 @@ void OnSerializationLoadBody(SKSE::SerializationInterface* serialization) {
             malformed = true;
             break;
         }
+    }
+    if (malformedCalls) {
+        logs::warn("collectors: ignoring malformed, unsupported or duplicate continuation record");
+        calls.clear();
     }
 
     std::string error;
@@ -492,6 +504,23 @@ slsf::api::PublicApi& MenuPublicApi() {
     return api;
 }
 
+void ShowFameNotices() {
+    using Notice = slsf::runtime::Dispatcher::FameNotice;
+    const auto show = [](const char* key, const char* fallback) {
+        std::string translated;
+        const bool localized = SKSE::Translation::Translate(key, translated) &&
+                               !translated.empty() && translated != key;
+        RE::SendHUDMessage::ShowHUDMessage(localized ? translated.c_str() : fallback, nullptr, false);
+    };
+    for (const auto notice : g_lifecycle->Executor().TakeFameNotices()) {
+        switch (notice) {
+        case Notice::Increase: show("$FameIncreaseMSG", "SLSF Reloaded - Your fame has increased"); break;
+        case Notice::Decay: show("$FameDecayMSG", "SLSF Reloaded - Your fame has decayed"); break;
+        case Notice::Spread: show("$FameSpreadMSG", "SLSF Reloaded - Your fame has spread"); break;
+        }
+    }
+}
+
 void WireCompatBridge() {
     const auto* lifecycle = g_lifecycle.get();
     auto* bridge = slsf::compat::VmNatives::Bridge();
@@ -510,6 +539,7 @@ void WireCompatBridge() {
         g_gameplay = std::make_unique<slsf::boundary::Gameplay>(api, g_regions, g_locationOwners);
         api.SetGameplayCall([](const auto& name, const auto& args, auto& out) { return g_gameplay->Invoke(name, args, out); });
         api.SetFormRegionResolver([](const auto& key) { return g_gameplay->ResolveForm(key); });
+        api.SetCustomLocationRemoved([](const auto& key) { g_gameplay->OnCustomLocationRemoved(key); });
         api.SetStrictLocationResolver([]() -> std::optional<std::string> {
             auto* player = RE::PlayerCharacter::GetSingleton();
             auto* location = player ? player->GetCurrentLocation() : nullptr;
@@ -520,9 +550,15 @@ void WireCompatBridge() {
                 if (!g_pumpQueued.exchange(true)) {
                     SKSE::GetTaskInterface()->AddTask([] {
                         GuardedHostCallback("gameplay pump", [] {
+                            slsf::compat::VmNatives::PumpLatentCompletions();
                             if (!g_controls.Drain()) return;
+                            if (g_lifecycle && g_lifecycle->ConfigurationRetryPending() && g_lifecycle->BusinessOpen()) {
+                                const auto applied = g_lifecycle->ApplyCurrentConfiguration();
+                                if (!applied.Succeeded()) logs::error("configuration apply failed: {}", applied.message);
+                            }
                             if (g_events) g_events->Flush();
                             if (g_gameplay) g_gameplay->Tick();
+                            if (g_lifecycle) ShowFameNotices();
                         });
                         g_pumpQueued.store(false);
                     });
@@ -560,8 +596,8 @@ void InstallSlsfMenu() {
     ports.reload = [] {
         return g_configuration ? g_configuration->Reload() : slsf::ConfigurationUpdateResult{};
     };
-    ports.commit = [](slsf::ConfigurationData edit) {
-        return g_configuration ? g_configuration->ApplyEdit(std::move(edit))
+    ports.commit = [](slsf::ConfigurationData edit, slsf::ConfigurationRevision expectedRevision) {
+        return g_configuration ? g_configuration->ApplyEdit(std::move(edit), expectedRevision)
                                : slsf::ConfigurationUpdateResult{};
     };
     ports.regions = [] { return &g_regions; };
@@ -761,15 +797,11 @@ SKSE_PLUGIN_LOAD(const SKSE::LoadInterface* a_skse)
             logs::info("lifecycle: configuration published revision={} status={} message={}",
                        snapshot.revision.value, static_cast<int>(snapshot.lastUpdate.status),
                        snapshot.lastUpdate.message);
-            const auto* lifecycle = Runtime();
-            if (lifecycle && lifecycle->BusinessOpen()) {
-                const auto epoch = lifecycle->CurrentEpoch();
-                QueueControl("configuration apply", false, [epoch](auto) {
-                    if (!g_lifecycle || !g_lifecycle->IsEpochCurrent(epoch)) return;
-                    const auto applied = g_lifecycle->ApplyCurrentConfiguration();
-                    if (!applied.Succeeded()) logs::error("configuration apply failed: {}", applied.message);
-                });
-            }
+            QueueControl("configuration apply", false, [](auto) {
+                if (!g_lifecycle) return;
+                const auto applied = g_lifecycle->ApplyCurrentConfiguration();
+                if (!applied.Succeeded()) logs::error("configuration apply failed: {}", applied.message);
+            });
         });
     }
     auto* papyrus = SKSE::GetPapyrusInterface();

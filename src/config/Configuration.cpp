@@ -824,7 +824,8 @@ ConfigurationUpdateResult ConfigurationStore::Reload() {
     return result;
 }
 
-ConfigurationUpdateResult ConfigurationStore::ApplyEdit(ConfigurationData edit) {
+ConfigurationUpdateResult ConfigurationStore::ApplyEdit(ConfigurationData edit,
+                                                        ConfigurationRevision expectedRevision) {
     ConfigurationSnapshot notify;
     ConfigurationUpdateResult result;
     {
@@ -836,15 +837,20 @@ ConfigurationUpdateResult ConfigurationStore::ApplyEdit(ConfigurationData edit) 
         if (!ValidateData(edit, &error)) {
             result = FinishWithCurrentLocked(ConfigurationUpdateStatus::Invalid,
                                              "configuration edit rejected: " + error);
-        } else {
-            const std::string text = io::JsonValue::Write(*Encode(edit), 2);
-            const auto written = file_->Write(text);
-            if (!written.has_value()) {
-                result = FinishWithCurrentLocked(ConfigurationUpdateStatus::IoError,
-                                                 "configuration write failed: " +
-                                                     written.error().message);
+        } else if (result = ReloadLocked(&notify, false); result.Succeeded()) {
+            if (!expectedRevision || expectedRevision != snapshot_.revision) {
+                result = FinishWithCurrentLocked(ConfigurationUpdateStatus::Invalid,
+                                                 "configuration changed since the draft was opened");
             } else {
-                result = ReloadLocked(&notify);
+                const std::string text = io::JsonValue::Write(*Encode(edit), 2);
+                const auto written = file_->Write(text);
+                if (!written.has_value()) {
+                    result = FinishWithCurrentLocked(ConfigurationUpdateStatus::IoError,
+                                                     "configuration write failed: " +
+                                                         written.error().message);
+                } else {
+                    result = ReloadLocked(&notify);
+                }
             }
         }
     }
@@ -878,9 +884,10 @@ ConfigurationUpdateResult ConfigurationStore::FinishWithCurrentLocked(
     return snapshot_.lastUpdate;
 }
 
-ConfigurationUpdateResult ConfigurationStore::ReloadLocked(ConfigurationSnapshot* notify) {
+ConfigurationUpdateResult ConfigurationStore::ReloadLocked(ConfigurationSnapshot* notify,
+                                                           bool initializeMissing) {
     if (!file_->Exists()) {
-        if (!synced_) {
+        if (!synced_ && initializeMissing) {
             auto data = std::make_shared<const ConfigurationData>(LegacyDefaults());
             const std::string text = io::JsonValue::Write(*Encode(*data), 2);
             const auto written = file_->Write(text);

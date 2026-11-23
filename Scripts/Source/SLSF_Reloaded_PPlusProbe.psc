@@ -10,7 +10,39 @@ String Function Tags(String[] values, String scope) Global
     Return result
 EndFunction
 
-String Function CollectScene(Int threadId, String session, String indexGeneration, String sceneGeneration) Global
+String Function ObserveStart(Int threadId, Bool ending) Global
+    If threadId < 0 || Game.GetModByName("SexLab.esm") == 255
+        Return ""
+    EndIf
+    Int[] version = SexLabUtil.GetVersionPack()
+    If version.Length < 2 || version[0] != 2 || version[1] < 18
+        Return ""
+    EndIf
+    SexLabFramework api = SexLabUtil.GetAPI()
+    If !api
+        Return ""
+    EndIf
+    SexLabThread thread = api.GetThread(threadId)
+    sslThreadModel model = thread as sslThreadModel
+    If !model || thread.GetThreadID() != threadId
+        Return ""
+    EndIf
+    Int status = thread.GetStatus()
+    Float startedAt = model.GetTime()
+    If ending
+        If status != 4 && status != 1
+            Return ""
+        EndIf
+    ElseIf status != 3 || api.GetThreadByActor(Game.GetPlayer()) != thread || !thread.HasActor(Game.GetPlayer())
+        Return ""
+    EndIf
+    If thread.GetStatus() != status || model.GetTime() != startedAt
+        Return ""
+    EndIf
+    Return SLSF_Reloaded_ProbeNative.SceneStamp(startedAt)
+EndFunction
+
+String Function CollectScene(Int threadId, String session, String indexGeneration, String sceneGeneration, String expectedStart) Global
     String prefix = "SLSFPP1\nversion\t1\nepoch\t" + session + "\t" + indexGeneration + "\t" + sceneGeneration + "\nactive\tfalse\nstage\t0\t0\n"
     If Game.GetModByName("SexLab.esm") == 255
         Return prefix + "availability\tMissing\n"
@@ -23,42 +55,50 @@ String Function CollectScene(Int threadId, String session, String indexGeneratio
         Return prefix + "availability\tIncompatible\n"
     EndIf
     SexLabFramework api = SexLabUtil.GetAPI()
-    If !api || threadId < 0
+    If !api || threadId < 0 || expectedStart == ""
         Return prefix + "availability\tUnknown\n"
     EndIf
     SexLabThread thread = api.GetThread(threadId)
-    If !thread || thread.GetThreadID() != threadId || thread.GetStatus() != 3
+    sslThreadModel model = thread as sslThreadModel
+    Actor player = Game.GetPlayer()
+    If !model || thread.GetThreadID() != threadId || thread.GetStatus() != 3 || api.GetThreadByActor(player) != thread
+        Return prefix + "availability\tUnknown\n"
+    EndIf
+    Float startedAt = model.GetTime()
+    String observedStart = SLSF_Reloaded_ProbeNative.SceneStamp(startedAt)
+    If observedStart != expectedStart
         Return prefix + "availability\tUnknown\n"
     EndIf
     String sceneId = thread.GetActiveScene()
     String stage = thread.GetActiveStage()
+    String[] history = model.GetStageHistory()
+    Bool leadIn = model.IsLeadIn()
+    Bool physics = thread.IsInteractionRegistered()
+    Actor[] positions = thread.GetPositions()
     String[] stages = SexlabRegistry.GetAllStages(sceneId)
     Int stageIndex = stages.Find(stage)
-    sslThreadModel model = thread as sslThreadModel
-    If sceneId == "" || stage == "" || stageIndex < 0 || !model
+    If sceneId == "" || stage == "" || stageIndex < 0 || positions.Length == 0 || positions.Length > 64 || positions.Find(player) < 0
         Return prefix + "availability\tUnknown\n"
     EndIf
-    Bool physics = thread.IsInteractionRegistered()
-    String result = "SLSFPP1\nversion\t1\navailability\tAvailable\nprovider\tSexLabPPlus\t" + SexLabUtil.GetStringVer() + "\t1\nepoch\t" + session + "\t" + indexGeneration + "\t" + sceneGeneration + "\nactive\ttrue\nstage\t" + stageIndex + "\t" + stages.Length + "\nscene\t" + SLSF_Reloaded_ProbeNative.Escape(sceneId) + "\t" + SLSF_Reloaded_ProbeNative.Escape(stage) + "\t" + model.IsLeadIn() + "\n"
+    String result = "SLSFPP1\nversion\t1\navailability\tAvailable\nprovider\tSexLabPPlus\t" + SexLabUtil.GetStringVer() + "\t1\nepoch\t" + session + "\t" + indexGeneration + "\t" + sceneGeneration + "\nobservedStart\t" + observedStart + "\nactive\ttrue\nstage\t" + stageIndex + "\t" + stages.Length + "\nscene\t" + SLSF_Reloaded_ProbeNative.Escape(sceneId) + "\t" + SLSF_Reloaded_ProbeNative.Escape(stage) + "\t" + leadIn + "\n"
     result += Tags(SexlabRegistry.GetSceneTags(sceneId), "scene")
     result += Tags(SexlabRegistry.GetSceneAnnotations(sceneId), "scene")
     result += Tags(SexlabRegistry.GetStageTags(sceneId, stage), "stage")
-    Actor[] actors = thread.GetPositions()
-    If actors.Length == 0 || actors.Length > 64
-        Return prefix + "availability\tUnknown\n"
-    EndIf
+    Actor[] sampled = New Actor[64]
+    Int actorCount = positions.Length
     Int i = 0
-    While i < actors.Length
-        Actor participant = actors[i]
+    While i < actorCount
+        Actor participant = positions[i]
+        sampled[i] = participant
         If !participant || !thread.HasActor(participant)
             Return prefix + "availability\tUnknown\n"
         EndIf
-        String identity = SLSF_Reloaded_ProbeNative.Identity(participant)
+        String identity = SLSF_Reloaded_ProbeNative.PPlusActorIdentity(participant)
         If identity == ""
             Return prefix + "availability\tUnknown\n"
         EndIf
         Int flags = 0
-        If participant == Game.GetPlayer()
+        If participant == player
             flags += 128
         EndIf
         Int roleUnknown = 80
@@ -103,11 +143,11 @@ String Function CollectScene(Int threadId, String session, String indexGeneratio
         String playerInteraction = "unknown"
         If physics
             playerInteraction = "false"
-            If participant != Game.GetPlayer()
+            If participant != player
                 Int collisionType = 1
                 While collisionType <= 13 && playerInteraction == "false"
                     If collisionType != 12
-                        If thread.HasInteractionType(collisionType, Game.GetPlayer(), participant) || thread.HasInteractionType(collisionType, participant, Game.GetPlayer())
+                        If thread.HasInteractionType(collisionType, player, participant) || thread.HasInteractionType(collisionType, participant, player)
                             playerInteraction = "true"
                         EndIf
                     EndIf
@@ -115,10 +155,29 @@ String Function CollectScene(Int threadId, String session, String indexGeneratio
                 EndWhile
             EndIf
         EndIf
-        result += "actor\t" + identity + "\t" + SLSF_Reloaded_ProbeNative.Escape(participant.GetDisplayName()) + "\t" + SLSF_Reloaded_ProbeNative.ActorRace(participant) + "\t" + SLSF_Reloaded_ProbeNative.Hex(flags) + "\t" + SLSF_Reloaded_ProbeNative.Hex(mask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(unknownMask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(roleUnknown) + "\t" + sexCode + "\t" + playerInteraction + "\n"
+        result += identity + "\t" + SLSF_Reloaded_ProbeNative.Escape(participant.GetDisplayName()) + "\t" + SLSF_Reloaded_ProbeNative.ActorRace(participant) + "\t" + SLSF_Reloaded_ProbeNative.Hex(flags) + "\t" + SLSF_Reloaded_ProbeNative.Hex(mask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(unknownMask) + "\t" + SLSF_Reloaded_ProbeNative.Hex(roleUnknown) + "\t" + sexCode + "\t" + playerInteraction + "\n"
         i += 1
     EndWhile
-    If thread.GetThreadID() != threadId || thread.GetStatus() != 3 || thread.GetActiveScene() != sceneId || thread.GetActiveStage() != stage || thread.IsInteractionRegistered() != physics
+    Actor[] newPositions = thread.GetPositions()
+    String[] newHistory = model.GetStageHistory()
+    If newPositions.Length != actorCount || newHistory.Length != history.Length
+        Return prefix + "availability\tUnknown\n"
+    EndIf
+    i = 0
+    While i < actorCount
+        If sampled[i] != newPositions[i] || !thread.HasActor(sampled[i])
+            Return prefix + "availability\tUnknown\n"
+        EndIf
+        i += 1
+    EndWhile
+    i = 0
+    While i < history.Length
+        If history[i] != newHistory[i]
+            Return prefix + "availability\tUnknown\n"
+        EndIf
+        i += 1
+    EndWhile
+    If thread.GetThreadID() != threadId || api.GetThreadByActor(player) != thread || thread.GetActiveScene() != sceneId || thread.GetActiveStage() != stage || thread.IsInteractionRegistered() != physics || model.IsLeadIn() != leadIn || thread.GetStatus() != 3 || model.GetTime() != startedAt
         Return prefix + "availability\tUnknown\n"
     EndIf
     Return result

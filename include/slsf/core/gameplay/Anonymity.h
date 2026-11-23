@@ -62,6 +62,7 @@ public:
     const AnonymityMemory* Find(RegionId region) const;
     const AnonymityState& State() const noexcept { return state_; }
     void Clear() noexcept { state_ = {}; }
+    void Forget(RegionId region) { state_.regions.erase(region); }
     void Restore(AnonymityState state) { state_ = std::move(state); }
     AnonymityMemory& Memory(RegionId region) { return state_.regions[region]; }
     void CalculateStoredIncrease(RegionId region) { Leave(region, state_.regions[region].lastExit); }

@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 import sys
+import tempfile
 import zipfile
 
 
@@ -35,24 +36,29 @@ def main() -> int:
             entries.append((rel, full))
     entries.sort(key=lambda item: item[0])
 
-    os.makedirs(os.path.dirname(archive) or ".", exist_ok=True)
-    if os.path.exists(archive):
-        os.remove(archive)
+    destination = os.path.dirname(archive)
+    os.makedirs(destination, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=destination) as work:
+        candidate = os.path.join(work, "package.zip")
+        with zipfile.ZipFile(candidate, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
+            for rel, full in entries:
+                info = zipfile.ZipInfo.from_file(full, rel)
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.external_attr = (0o644 << 16) | 0x20
+                with open(full, "rb") as handle:
+                    zf.writestr(info, handle.read())
 
-    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-        for rel, full in entries:
-            info = zipfile.ZipInfo.from_file(full, rel)
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.external_attr = (0o644 << 16) | 0x20
-            with open(full, "rb") as handle:
-                zf.writestr(info, handle.read())
-
-    with zipfile.ZipFile(archive) as check:
-        bad = [i.filename for i in check.infolist()
-               if not i.filename.isascii() and not (i.flag_bits & 0x800)]
-        if bad:
-            print(f"entries missing the UTF-8 flag: {len(bad)}", file=sys.stderr)
-            return 1
+        with zipfile.ZipFile(candidate) as check:
+            bad = [i.filename for i in check.infolist()
+                   if not i.filename.isascii() and not (i.flag_bits & 0x800)]
+            if bad:
+                print(f"entries missing the UTF-8 flag: {len(bad)}", file=sys.stderr)
+                return 1
+            corrupted = check.testzip()
+            if corrupted:
+                print(f"archive entry failed CRC: {corrupted}", file=sys.stderr)
+                return 1
+        os.replace(candidate, archive)
     print(f"ZIP_ENTRIES={len(entries)}")
     return 0
 

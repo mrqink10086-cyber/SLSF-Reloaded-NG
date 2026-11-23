@@ -48,7 +48,7 @@ public:
     PublicApi(Dispatcher& executor, const slsf::RegionSnapshot& regions);
 
     [[nodiscard]] Dispatcher& Executor() const noexcept { return executor_; }
-    [[nodiscard]] bool BusinessOpen() const { return executor_.Attached(); }
+    [[nodiscard]] bool BusinessOpen() const { return executor_.BusinessOpen(); }
     [[nodiscard]] Epoch CurrentEpoch() const { return executor_.CurrentEpoch(); }
     [[nodiscard]] bool IsEpochCurrent(Epoch epoch) const {
         return BusinessOpen() && epoch == executor_.CurrentEpoch();
@@ -114,6 +114,8 @@ public:
     [[nodiscard]] io::LegacyDocument ExportLegacy() const;
     [[nodiscard]] bool RegisterCustomLocation(const std::string& name, const StableRegionKey& key);
     [[nodiscard]] bool UnregisterCustomLocation(const std::string& name);
+    using CustomLocationRemoved = std::function<void(const StableRegionKey&)>;
+    void SetCustomLocationRemoved(CustomLocationRemoved callback);
     [[nodiscard]] std::vector<CustomRegionState> CustomLocations() const;
     [[nodiscard]] std::string RegionName(RegionId region) const;
     [[nodiscard]] int SpreadChance(const std::string& name) const;
@@ -150,8 +152,9 @@ private:
     static compat::ModEventValue MakeFloat(double v);
     static compat::ModEventValue MakeString(const std::string& v);
 
+    [[nodiscard]] std::string ResolveCurrentLocationName(const std::string& name) const;
     std::string ResolveParamLocationName(const compat::ModEvent& event,
-                                         const char* param) const;
+                                         const std::string& param) const;
 
     bool Resolve(const std::string& locationName, const std::string& categoryName,
                 RegionId& region, FameCategory& category) const;
@@ -186,6 +189,7 @@ private:
     ReplySender replySender_;
     mutable std::mutex gameplayMutex_;
     GameplayCall gameplayCall_;
+    CustomLocationRemoved customLocationRemoved_;
 
     Dispatcher& executor_;
     const slsf::RegionSnapshot& regions_;

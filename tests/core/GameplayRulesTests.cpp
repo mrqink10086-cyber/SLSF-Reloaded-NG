@@ -7,6 +7,7 @@
 #include "slsf/core/gameplay/Common.h"
 #include "slsf/core/gameplay/Visibility.h"
 #include "slsf/core/gameplay/Witness.h"
+#include "slsf/integrations/ExternalMods.h"
 
 #include <algorithm>
 #include <array>
@@ -897,6 +898,53 @@ TEST_CASE("NPC scan applies the exact line-of-sight and detection gates",
     REQUIRE(unknownDistance.Run({noDistance}).status == Status::NotReady);
     REQUIRE(unknownDistanceRng.calls == 0);
 }
+TEST_CASE("custom piercing checks independently qualify without Devious Devices", "[gameplay][witness]") {
+    PiercingFacts facts{.advancedNudityDetection = true, .nipple = true, .genital = true, .genitalsExposed = true};
+    CHECK(PiercingSlutEligible(facts, 49));
+    facts.chestExposed = true;
+    CHECK(PiercingSlutEligible(facts, 50));
+    CHECK_FALSE(PiercingSlutEligible(facts, 75));
+
+    facts.deviousDevices = true;
+    CHECK(PiercingSlutEligible(facts, 49));
+    CHECK_FALSE(PiercingSlutEligible(facts, 50));
+    facts.chestExposed = false;
+    CHECK_FALSE(PiercingSlutEligible(facts, 49));
+    facts.nipple = false;
+    CHECK(PiercingSlutEligible(facts, 74));
+}
+
+TEST_CASE("a missing Fill Her Up installation does not block witnessed fame", "[gameplay][witness]") {
+    using namespace slsf::integrations;
+    ExternalSceneSnapshot snapshot;
+    snapshot.availability = ExternalAvailability::Available;
+    snapshot.mods.push_back({ExternalMod::FillHerUp, ExternalAvailability::Missing, {}});
+
+    FameGainRollFacts facts;
+    facts.validLocation = B(true);
+    facts.anonymous = B(false);
+    SetAllEligible(facts, false);
+    facts.eligible[static_cast<std::size_t>(FameCategory::Anal)] = B(true);
+    const auto evaluate = [&](std::optional<double> inflation = std::nullopt) {
+        return InflationCumDumpEligible(ExternalModFact(snapshot, ExternalMod::FillHerUp), inflation, 5);
+    };
+
+    auto& cumDump = facts.eligible[static_cast<std::size_t>(FameCategory::CumDump)];
+    cumDump = evaluate();
+    CHECK(cumDump.IsKnownFalse());
+    ScriptedRandom absentRng({1, 1});
+    const auto absent = FameGainRoller(absentRng).Run(facts);
+    REQUIRE(absent.IsReady());
+    CHECK(absent.selection.selected == std::vector{FameCategory::Anal});
+
+    snapshot.mods.front().availability = ExternalAvailability::Available;
+    cumDump = evaluate();
+    ScriptedRandom unavailableRng({1, 1});
+    CHECK(FameGainRoller(unavailableRng).Run(facts).status == Status::NotReady);
+    CHECK(evaluate(5).IsKnownTrue());
+    CHECK(evaluate(4.9).IsKnownFalse());
+}
+
 TEST_CASE("fame gain roll always pays the betray draw and preserves canonical order",
           "[gameplay][witness]") {
     SECTION("invalid location and anonymity skip before any RNG") {
@@ -1372,6 +1420,28 @@ TEST_CASE("comments schedule and roll exactly like CommentManager", "[gameplay][
         REQUIRE_FALSE(result.rolled);
         REQUIRE(result.nextDelaySeconds == 5.0);
         REQUIRE(rng.calls == 0);
+    }
+
+    SECTION("anonymity and combat veto comments while naked-comment settings are unresolved") {
+        auto facts = CommentFixture();
+        facts.publicWhore = U();
+        facts.disableNakedCommentsWhilePW = B(true);
+        facts.anonymous = B(true);
+        ScriptedRandom rng({1});
+        const auto hidden = rules.Evaluate(facts, rng);
+        CHECK(hidden.status == Status::Ready);
+        CHECK_FALSE(hidden.allowed);
+        CHECK(hidden.nextDelaySeconds == kCommentAnonymousDelaySeconds);
+        CHECK(hidden.naked.status == Status::NotReady);
+
+        facts.anonymous = U();
+        facts.combatState = ObservedNumber::Known(1);
+        const auto fighting = rules.Evaluate(facts, rng);
+        CHECK(fighting.status == Status::Ready);
+        CHECK_FALSE(fighting.allowed);
+        CHECK(fighting.nextDelaySeconds == kCommentNormalDelaySeconds);
+        CHECK(fighting.naked.status == Status::NotReady);
+        CHECK(rng.calls == 0);
     }
 
     SECTION("normal ticks roll 1..100 against the integer frequency") {

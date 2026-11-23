@@ -67,14 +67,16 @@ public:
 
     [[nodiscard]] ConfigurationSnapshot Current() const override;
     [[nodiscard]] ConfigurationUpdateResult Reload() override;
-    [[nodiscard]] ConfigurationUpdateResult ApplyEdit(ConfigurationData edit);
+    [[nodiscard]] ConfigurationUpdateResult ApplyEdit(ConfigurationData edit,
+                                                      ConfigurationRevision expectedRevision);
 
     [[nodiscard]] std::size_t NotifyCount() const noexcept { return notifyCount_.load(std::memory_order_relaxed); }
 
 private:
     explicit ConfigurationStore(std::unique_ptr<ConfigurationFile> file);
 
-    [[nodiscard]] ConfigurationUpdateResult ReloadLocked(ConfigurationSnapshot* notify);
+    [[nodiscard]] ConfigurationUpdateResult ReloadLocked(ConfigurationSnapshot* notify,
+                                                         bool initializeMissing = true);
     void EmitNotification(const ConfigurationSnapshot& snapshot);
     [[nodiscard]] ConfigurationUpdateResult FinishWithCurrentLocked(ConfigurationUpdateStatus status,
                                                                    std::string message);

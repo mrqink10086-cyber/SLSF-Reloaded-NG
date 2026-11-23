@@ -23,6 +23,7 @@ std::string MenuMessageText(std::string_view message) {
         {"configuration file is missing", "配置文件不存在"},
         {"configuration file read failed", "读取配置文件失败"},
         {"configuration JSON is invalid", "配置 JSON 格式无效"},
+        {"configuration changed since the draft was opened", "磁盘上的配置已更改"},
         {"configuration edit rejected", "配置修改被拒绝"},
         {"configuration write failed", "写入配置失败"},
         {"configuration invalid", "配置无效"},

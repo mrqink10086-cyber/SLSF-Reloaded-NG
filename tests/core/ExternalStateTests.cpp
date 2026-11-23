@@ -424,6 +424,227 @@ TEST_CASE("Group08 notification selects a real thread and preserves wide epoch a
     REQUIRE(port.At(1)->arguments[1].stringValue == "4294967300");
 }
 
+TEST_CASE("P+ a new Start reopens a closed slot within the same save", "[pplus-timing]") {
+    TestPort port;
+    EpochBox box;
+    PapyrusCalls calls(port, Probe(box), {});
+    slsf::integrations::SexLabPPlus adapter(calls);
+    const auto next = GENERATE("12", "13");
+    REQUIRE(adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 0, {}, 100));
+    adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 1, {}, 100);
+    REQUIRE_FALSE(adapter.Active());
+    REQUIRE_FALSE(adapter.RequestScene(box.current, 2));
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookStageStart", "12", box.current, 3));
+    REQUIRE(adapter.OnSceneNotification("HookAnimationStart", next, box.current, 4, {}, 200));
+    REQUIRE(adapter.Active());
+    REQUIRE(port.Count() == 2);
+}
+
+TEST_CASE("P+ classifies transient participants without conflating their identities", "[pplus-transient]") {
+    using namespace slsf::integrations;
+    const std::string wire = PPlusWire() + "observedStart\t100\n"
+        "actorTransient\t102030\tFF000809\tVisitor\torc\t0\t0\t0\t0\t0\ttrue\n"
+        "actorTransient\t102031\tFF000810\tCompanion\tother\t1\t0\t0\t0\t1\tfalse\n";
+    PPlusSceneState scene;
+    std::string error;
+    REQUIRE(ParsePPlusSceneWire(wire, {1,2,3}, scene, error));
+    slsf::gameplay::AnimationFacts facts;
+    REQUIRE(ApplyPPlusToAnimation(scene, facts).applied);
+    REQUIRE(facts.actors.size() == 4);
+    REQUIRE(facts.actors[2].race == slsf::gameplay::AnimationRace::Orc);
+    REQUIRE(scene.actors[2].actor == StableFormKey{});
+    REQUIRE(scene.actors[2].MatchesActor({}, 0x102030, 0xFF000809));
+    REQUIRE_FALSE(scene.actors[2].MatchesActor({}, 0x102031, 0xFF000810));
+    REQUIRE_FALSE(scene.actors[2].MatchesActor({}, 0x102030, 0xFF000810));
+    REQUIRE_FALSE(scene.actors[2].MatchesActor({}));
+    REQUIRE(scene.actors[1].MatchesActor(kNpc));
+    REQUIRE_FALSE(scene.actors[1].MatchesActor({}, 0x102030, 0xFF000809));
+
+    using slsf::Fact;
+    using slsf::FameCategory;
+    using namespace slsf::gameplay;
+    struct Random final : slsf::IRandom {
+        std::int32_t UniformInt(std::int32_t lo, std::int32_t) override { return lo; }
+    } random;
+    scene.tags.clear();
+    scene.leadIn = Fact::Known(false);
+    scene.actors[0].interactions = scene.actors[0].interactionUnknown = 0;
+    scene.actors[1].interactions = scene.actors[1].interactionUnknown = 0;
+    scene.actors[1].playerInteraction = Fact::Known(false);
+    REQUIRE(ApplyPPlusToAnimation(scene, facts).applied);
+    for (auto* field : {&facts.anonymous, &facts.sceneEnded, &facts.bodySearch,
+            &facts.sexWorker, &facts.publicWhore, &facts.submissiveDefault, &facts.dominantDefault,
+            &facts.canGainBoundFame, &facts.victimsAreMasochist, &facts.deviousDevicesInstalled}) {
+        *field = Fact::Known(false);
+    }
+    facts.validLocation = facts.startGraceElapsed = Fact::Known(true);
+    facts.actors[1].relationshipKnown = Fact::Known(true);
+    facts.actors[1].relationshipRank = 1;
+    facts.actors[2].relationshipKnown = Fact::Known(true);
+    const auto classified = AnimationClassifier{}.Classify(facts, random);
+    REQUIRE(classified.kind == AnimationResultKind::Analyzed);
+    REQUIRE(std::ranges::find(classified.categories, FameCategory::LikesOrc) != classified.categories.end());
+    REQUIRE(std::ranges::find(classified.categories, FameCategory::Group) != classified.categories.end());
+}
+
+TEST_CASE("P+ rejects ambiguous or invalid transient actor identities", "[pplus-transient]") {
+    using namespace slsf::integrations;
+    const auto row = GENERATE(
+        "actorTransient\t0\tFF000809\tVisitor\torc\t0\t0\t0\n",
+        "actorTransient\t102030\t00000809\tVisitor\torc\t0\t0\t0\n",
+        "actorTransient\t102030\tFF000809\tVisitor\torc\t80\t0\t0\n",
+        "actorTransient\t102030\tFF000809\tVisitor\torc\t0\t0\t0\n"
+        "actorTransient\t102030\tFF000810\tVisitor\torc\t0\t0\t0\n",
+        "actorTransient\t102030\tFF000809\tVisitor\torc\t0\t0\t0\n"
+        "actorTransient\t102031\tFF000809\tVisitor\torc\t0\t0\t0\n");
+    PPlusSceneState scene;
+    std::string error;
+    REQUIRE_FALSE(ParsePPlusSceneWire(PPlusWire() + "observedStart\t100\n" + row, {1,2,3}, scene, error));
+}
+
+TEST_CASE("P+ only admits transient actors for the matching observed scene", "[pplus-transient]") {
+    using namespace slsf::integrations;
+    const std::string wire = PPlusWire() + "actorTransient\t102030\tFF000809\tVisitor\torc\t0\t0\t0\n";
+    PPlusSceneState scene;
+    std::string error;
+    REQUIRE_FALSE(ParsePPlusSceneWire(wire, {1,2,3}, scene, error));
+    const auto start = GENERATE(std::optional<std::uint32_t>{}, std::optional<std::uint32_t>{100},
+                                std::optional<std::uint32_t>{200});
+    TestPort port;
+    EpochBox box;
+    PapyrusCalls calls(port, Probe(box), {});
+    SexLabPPlus adapter(calls);
+    const auto request = adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 0, {}, start);
+    REQUIRE(request);
+    port.Complete(request, Status::Ready, {StringVm(wire + "observedStart\t100\n")});
+    REQUIRE((adapter.Gate() == ExternalGate::Ready) == (start == 100));
+    adapter.Reset();
+    REQUIRE(adapter.Snapshot().actors.empty());
+}
+
+TEST_CASE("P+ End drains only a verified capture without reopening the scene", "[pplus-timing]") {
+    using namespace slsf::integrations;
+    TestPort port;
+    EpochBox box;
+    PapyrusCalls calls(port, Probe(box), {});
+    SexLabPPlus adapter(calls);
+    const auto stamp = GENERATE("", "100", "200");
+    const auto id = adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 0, {}, 100);
+    REQUIRE(id);
+    REQUIRE(port.At(0)->arguments[4].stringValue == "100");
+    adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 1, {}, 100);
+    REQUIRE(adapter.Draining());
+    REQUIRE_FALSE(adapter.Active());
+    REQUIRE_FALSE(adapter.RequestScene(box.current, 2));
+    auto wire = PPlusWire();
+    if (*stamp) wire += std::string("observedStart\t") + stamp + "\n";
+    port.Complete(id, Status::Ready, {StringVm(wire)});
+    REQUIRE_FALSE(adapter.Draining());
+    REQUIRE(adapter.Gate() == ExternalGate::Closed);
+    REQUIRE_FALSE(adapter.Snapshot().active);
+    const auto ended = adapter.TakeEndedSnapshot();
+    REQUIRE(ended.has_value() == (std::string_view(stamp) == "100"));
+    REQUIRE_FALSE(adapter.TakeEndedSnapshot());
+    adapter.Advance(10000);
+    REQUIRE(port.Count() == 1);
+}
+
+TEST_CASE("P+ hands off only a completed ended capture before collecting the next scene", "[pplus-timing]") {
+    using namespace slsf::integrations;
+    TestPort port;
+    EpochBox box;
+    PapyrusCalls calls(port, Probe(box), {});
+    SexLabPPlus adapter(calls);
+    const auto initial = adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 0, {}, 100);
+    REQUIRE(initial);
+    port.Complete(initial, Status::Ready, {StringVm(PPlusWire() + "observedStart\t100\n")});
+    adapter.MarkDirty();
+    const auto afterGrace = adapter.RequestScene(box.current, 10000);
+    REQUIRE(afterGrace);
+    enum class CaptureTiming { BeforeEnd, BeforeNextStart, AfterNextStart, WrongStamp };
+    const auto timing = GENERATE(CaptureTiming::BeforeEnd, CaptureTiming::BeforeNextStart,
+                                 CaptureTiming::AfterNextStart, CaptureTiming::WrongStamp);
+    const auto completeCapture = [&](std::string_view stamp) {
+        port.Complete(afterGrace, Status::Ready, {StringVm(PPlusWire() + "observedStart\t" + std::string(stamp) + "\n")});
+    };
+    if (timing == CaptureTiming::BeforeEnd) {
+        completeCapture("100");
+        REQUIRE(adapter.Gate() == ExternalGate::Ready);
+    }
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 10001, {}, 100));
+    if (timing == CaptureTiming::BeforeNextStart) completeCapture("100");
+    if (timing == CaptureTiming::WrongStamp) completeCapture("200");
+
+    int consumed = 0;
+    const auto consume = [&](const PPlusSceneState& ended) {
+        ++consumed;
+        REQUIRE(port.Count() == 2);
+        REQUIRE(ended.active);
+        REQUIRE(ended.epoch == box.current);
+        REQUIRE(ended.observedStart == 100);
+    };
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 10002, {}, 100, nullptr, consume));
+    REQUIRE(consumed == 0);
+    const auto next = adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 10003, {}, 200, nullptr, consume);
+    REQUIRE(next);
+    const int expected = timing == CaptureTiming::BeforeEnd || timing == CaptureTiming::BeforeNextStart ? 1 : 0;
+    REQUIRE(consumed == expected);
+    if (timing == CaptureTiming::AfterNextStart) completeCapture("100");
+    REQUIRE_FALSE(adapter.TakeEndedSnapshot());
+    REQUIRE(adapter.Gate() == ExternalGate::Waiting);
+    port.Complete(next, Status::Ready, {StringVm(PPlusWire() + "observedStart\t200\n")});
+    REQUIRE(adapter.Gate() == ExternalGate::Ready);
+    REQUIRE(adapter.Snapshot().observedStart == 200);
+    REQUIRE(consumed == expected);
+}
+
+TEST_CASE("P+ reused slot discards the old capture and ignores identified old hooks", "[pplus-timing]") {
+    using namespace slsf::integrations;
+    TestPort port;
+    EpochBox box;
+    PapyrusCalls calls(port, Probe(box), {});
+    SexLabPPlus adapter(calls);
+    const auto oldId = adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 0, {}, 100);
+    REQUIRE(oldId);
+    adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 1, {}, 100);
+    const auto newId = adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 2, {}, 200);
+    REQUIRE(newId);
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 3, {}, 200));
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookLeadInEnd", "12", box.current, 4, {}, 100));
+    adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 4, {}, 100);
+    port.Complete(oldId, Status::Ready, {StringVm(PPlusWire() + "observedStart\t100\n")});
+    REQUIRE(adapter.Active());
+    REQUIRE(adapter.Gate() == ExternalGate::Waiting);
+    REQUIRE_FALSE(adapter.TakeEndedSnapshot());
+    port.Complete(newId, Status::Ready, {StringVm(PPlusWire() + "observedStart\t200\n")});
+    REQUIRE(adapter.Gate() == ExternalGate::Ready);
+    REQUIRE(adapter.Snapshot().observedStart == 200);
+    REQUIRE(port.Count() == 2);
+}
+
+TEST_CASE("P+ notification admission is independent of VM submission", "[pplus-timing]") {
+    class RejectingPort final : public IVmPort {
+    public:
+        RequestId Submit(VmRequest, VmCompletion) override { return {}; }
+        void RequestCancellation(RequestId) override {}
+    } port;
+    EpochBox box;
+    PapyrusCalls calls(port, Probe(box), {});
+    slsf::integrations::SexLabPPlus adapter(calls);
+    bool accepted = false;
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookAnimationStart", "12", box.current, 0, {}, 100, &accepted));
+    REQUIRE(accepted);
+    REQUIRE(adapter.Active());
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 1, {}, 200, &accepted));
+    REQUIRE_FALSE(accepted);
+    REQUIRE_FALSE(adapter.OnSceneNotification("HookAnimationEnd", "12", box.current, 2, {}, 100, &accepted));
+    REQUIRE(accepted);
+    REQUIRE_FALSE(adapter.Active());
+    adapter.Advance(10000);
+    REQUIRE_FALSE(adapter.Draining());
+    REQUIRE_FALSE(adapter.TakeEndedSnapshot());
+}
+
 TEST_CASE("Group08 retains P+ sex codes without folding other sexes into male counts", "[g08-fixes]") {
     using namespace slsf::integrations;
     auto wire = PPlusWire();
@@ -575,7 +796,7 @@ TEST_CASE("P+ adapter retries within the bounded policy and gates readiness") {
                                               });
     REQUIRE(id.value != 0);
     REQUIRE(adapter.Gate() == slsf::integrations::ExternalGate::Waiting);
-    REQUIRE(port.At(0)->arguments.size() == 4);
+    REQUIRE(port.At(0)->arguments.size() == 5);
     REQUIRE(port.At(0)->arguments[0].intValue == -1);
     REQUIRE(port.At(0)->arguments[1].stringValue == "1");
     REQUIRE(port.At(0)->script == "SLSF_Reloaded_PPlusProbe");
@@ -1557,6 +1778,9 @@ TEST_CASE("P+ LeadInEnd does not read the previous scene as ready") {
     port.Complete(RequestId{3}, Status::Ready, {StringVm(main)});
     REQUIRE(adapter.Gate() == slsf::integrations::ExternalGate::Ready);
     REQUIRE(adapter.Snapshot().stage == 3);
+    REQUIRE_FALSE(adapter.OnSceneEvent("SexLabLeadInEnd", Epoch{1, 2, 3}, 300, {}));
+    REQUIRE(port.Count() == 3);
+    REQUIRE(adapter.Gate() == slsf::integrations::ExternalGate::Ready);
 }
 
 TEST_CASE("P+ unknown availability retries within the bounded policy") {

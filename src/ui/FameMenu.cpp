@@ -5,6 +5,17 @@
 
 namespace slsf::ui {
 
+bool FameCommandLocations::Contains(const FameReadout& readout, const std::string& name) {
+    return !name.empty() && std::find(readout.locations.begin(), readout.locations.end(), name) != readout.locations.end();
+}
+
+void FameCommandLocations::Refresh(const FameReadout& readout) {
+    const bool newSession = epoch_.session != readout.epoch.session;
+    epoch_ = readout.epoch;
+    if (newSession || !Contains(readout, source)) source.clear();
+    if (newSession || !Contains(readout, target)) target.clear();
+}
+
 CommandResult ExecuteFameCommand(api::PublicApi& api, FameCommand command,
     const std::string& location, const std::string& target, const std::string& category,
     int amount, int extra, const std::function<void()>& publish) {

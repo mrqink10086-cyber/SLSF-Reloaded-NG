@@ -6,6 +6,7 @@
 
 #include <array>
 #include <cstddef>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -164,6 +165,20 @@ struct FameGainRollFacts {
     std::array<FameValue, kFameCategoryCount> currentFame{};
     WitnessSettings settings;
 };
+
+struct PiercingFacts {
+    bool deviousDevices{};
+    bool advancedNudityDetection{};
+    bool naked{};
+    bool nipple{};
+    bool genital{};
+    bool vaginalPlug{};
+    bool chestExposed{};
+    bool genitalsExposed{};
+};
+
+bool PiercingSlutEligible(const PiercingFacts& facts, int fame);
+Fact InflationCumDumpEligible(Fact installed, std::optional<double> inflation, double threshold);
 
 struct FameGainRollResult {
     Status status{Status::Ready};

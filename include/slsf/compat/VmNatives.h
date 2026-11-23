@@ -42,6 +42,7 @@ public:
                                 const std::vector<ModEventValue>& values);
     static void KickFrozenProbe();
     static void PublishOutputs();
+    static void PumpLatentCompletions();
     static slsf::api::PublicApi* Api();
     static ModEventBridge* Bridge();
 

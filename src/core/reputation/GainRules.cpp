@@ -202,20 +202,13 @@ Result<ManualSpreadResult> RuleManualSpreadFame(double sourceValue,
         return Fail(Error::Code::InvalidArgument, "manual spread requires a source of at least "
                                          + std::to_string(static_cast<int>(kLegacyManualSpreadMinSource)));
     }
-    const double doublePercent = static_cast<double>(percent);
-    if (!std::isfinite(doublePercent)) {
-        return Fail(Error::Code::InvalidArgument, "spread inputs are not finite");
-    }
-
+    const double clampedPercent = std::clamp(static_cast<double>(percent),
+                                             kLegacyManualSpreadMinPercent,
+                                             kLegacyManualSpreadMaxPercent);
+    const double contribution = (sourceValue * clampedPercent) / 100.0;
     ManualSpreadResult result;
-    result.percentClamped =
-        doublePercent < kLegacyManualSpreadMinPercent || doublePercent > kLegacyManualSpreadMaxPercent;
-    const double clampedPercent = std::min(kLegacyManualSpreadMaxPercent,
-                                           std::max(kLegacyManualSpreadMinPercent, doublePercent));
-
-    const double contribution = sourceValue * (clampedPercent / 100.0);
-    const double sum = std::max(0.0, targetValue + contribution);
-    result.newValue = std::min(maxFameValue, std::floor(sum));
+    result.percentClamped = clampedPercent != percent;
+    result.newValue = std::min(maxFameValue, std::trunc(targetValue + contribution));
     return result;
 }
 

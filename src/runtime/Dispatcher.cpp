@@ -206,7 +206,7 @@ Dispatcher::~Dispatcher() {
 
 std::shared_ptr<const ConfigurationData> Dispatcher::Settings() const {
     std::lock_guard lock(mutex_);
-    return bindings_.settings;
+    return Blocked() ? nullptr : bindings_.settings;
 }
 
 bool Dispatcher::Attach(Epoch epoch, const RuntimeBindings& bindings, State state) {
@@ -251,8 +251,8 @@ bool Dispatcher::Attach(Epoch epoch, const RuntimeBindings& bindings, State stat
     return true;
 }
 
-Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
-                                     const ConfigurationSnapshot& configuration) {
+Result<Status> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
+                                       const ConfigurationSnapshot& configuration) {
     if (!configuration.HasData() || !bindings.graph || !bindings.parameters ||
         !bindings.configuration || !bindings.regions || !bindings.rng) {
         return Fail(Error::Code::InvalidArgument, "incomplete configuration bindings");
@@ -260,10 +260,11 @@ Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
     State candidate;
     std::uint64_t generation;
     Revision revision;
+    std::optional<GameTime> advancedAt;
     {
         std::lock_guard guard(mutex_);
         if (!state_ || Blocked()) {
-            return Fail(Error::Code::InvalidState, "no active session to reconfigure");
+            return Status::NotReady;
         }
         auto now = clocks_.Game();
         if (lastAdvance_ && now.AsDays() < lastAdvance_->AsDays()) {
@@ -275,6 +276,7 @@ Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
         candidate = *state_;
         generation = lifecycleGeneration_;
         revision = state_->revision;
+        advancedAt = lastAdvance_;
     }
     auto bound = BindStateToRegions(candidate, *bindings.regions);
     if (!bound) return std::unexpected(bound.error());
@@ -286,16 +288,18 @@ Result<void> Dispatcher::Reconfigure(const RuntimeBindings& bindings,
     if (!prepared) return std::unexpected(prepared.error());
     auto workspace = MakeSettlementWorkspace();
     std::lock_guard guard(mutex_);
-    if (!state_ || Blocked() || lifecycleGeneration_ != generation ||
-        state_->revision != revision) {
-        return Fail(Error::Code::InvalidState, "session changed during configuration update");
+    if (!state_ || Blocked() || lifecycleGeneration_ != generation) {
+        return Status::NotReady;
+    }
+    if (state_->revision != revision || lastAdvance_ != advancedAt) {
+        return Status::Stale;
     }
     state_ = std::move(candidate);
     bindings_ = bindings;
     prepared_ = std::move(*prepared);
     workspace_ = std::move(workspace);
     PublishLocked();
-    return {};
+    return Status::Ready;
 }
 
 void Dispatcher::Detach() {
@@ -306,6 +310,10 @@ void Dispatcher::Detach() {
         std::lock_guard<std::mutex> guard(mutex_);
         ++lifecycleGeneration_;
         state_.reset();
+        epoch_ = {};
+        published_.reset();
+        nextFameIncreaseNotice_.reset();
+        fameNotices_.clear();
         prepared_.reset();
         workspace_.reset();
         bindings_ = RuntimeBindings{};
@@ -344,14 +352,20 @@ bool Dispatcher::Attached() const {
     return state_.has_value();
 }
 
+bool Dispatcher::BusinessOpen() const {
+    std::lock_guard lock(mutex_);
+    return state_.has_value() && !Blocked();
+}
+
 Epoch Dispatcher::CurrentEpoch() const {
     std::lock_guard<std::mutex> guard(mutex_);
-    return epoch_;
+    return Blocked() ? Epoch{} : epoch_;
 }
 
 void Dispatcher::Suspend() {
     std::lock_guard<std::mutex> guard(mutex_);
     suspended_ = true;
+    fameNotices_.clear();
 }
 
 void Dispatcher::Resume() {
@@ -447,6 +461,7 @@ slsf::GameTime FloorToLastAdvance(const std::optional<slsf::GameTime>& lastAdvan
 Dispatcher::GainOutcome Dispatcher::GainFame(GameTime now, RegionId account,
                                              FameCategory category,
                                              const GainFameInputs& ruleInputs) {
+    clocks_.Tick();
     std::lock_guard<std::mutex> guard(mutex_);
     if (!state_) {
         return GainOutcome{Status::Stale, Revision{}, 0, "executor detached"};
@@ -465,13 +480,19 @@ Dispatcher::GainOutcome Dispatcher::GainFame(GameTime now, RegionId account,
         return GainOutcome{Status::NotReady, state_->revision, 0,
                            settled.error().message};
     }
+    const bool validSlot = account && account.value < state_->accounts.size() &&
+                           IsValidFameCategory(category);
+    const double previous = validSlot ? state_->accounts[account.value].fame[category] : 0.0;
     auto result = slsf::ApplyGainFame(*state_, now, account, category, ruleInputs,
                                       *bindings_.configuration, *bindings_.rng);
+    if (state_->revision != before) {
+        PublishLocked();
+    }
     if (!result) {
         return GainOutcome{Status::Invalid, state_->revision, 0, result.error().message};
     }
-    if (state_->revision != before) {
-        PublishLocked();
+    if (validSlot && state_->accounts[account.value].fame[category] > previous) {
+        QueueFameNoticeLocked(FameNotice::Increase);
     }
     return GainOutcome{Status::Ready, state_->revision, *result, ""};
 }
@@ -484,6 +505,7 @@ CommandResult Dispatcher::DecayBatch(int multiplier) {
     const auto settled = AdvanceLocked(now);
     if (!settled) return {Status::NotReady, state_->revision, settled.error().message};
     const auto result = ApplyDecayBatch(*state_, now, multiplier, *bindings_.configuration, bindings_.regions, *bindings_.rng);
+    if (result && *result) QueueFameNoticeLocked(FameNotice::Decay);
     PublishLocked();
     return {result ? Status::Ready : Status::Invalid, state_->revision, result ? "" : result.error().message};
 }
@@ -511,11 +533,11 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualSpread(RegionId source, RegionId
     auto result =
         slsf::ApplyManualSpread(*state_, source, target, category, percent,
                                 *bindings_.configuration);
-    if (!result) {
-        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
-    }
     if (state_->revision != before) {
         PublishLocked();
+    }
+    if (!result) {
+        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
     }
     return ApplyOutcome{Status::Ready, state_->revision, *result, ""};
 }
@@ -533,6 +555,15 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualDecay(RegionId target, FameCateg
         return ApplyOutcome{Status::NotReady, state_->revision, 0.0,
                             "settlement inputs not bound"};
     }
+    if (!IsValidFameCategory(category)) {
+        return {Status::Invalid, state_->revision, 0.0, "invalid fame category"};
+    }
+    if (!target || target.value >= state_->accounts.size()) {
+        return {Status::Invalid, state_->revision, 0.0, "invalid target region"};
+    }
+    if (minimum == 0 && maximum == 0) {
+        return {Status::Invalid, state_->revision, 0.0, "manual decay has no range"};
+    }
     const Revision before = state_->revision;
     const auto settled = AdvanceLocked(FloorToLastAdvance(lastAdvance_, clocks_.Game()));
     if (!settled) {
@@ -541,11 +572,11 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualDecay(RegionId target, FameCateg
     }
     auto result = slsf::ApplyManualDecay(*state_, target, category, minimum, maximum,
                                          *bindings_.configuration, *bindings_.rng);
-    if (!result) {
-        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
-    }
     if (state_->revision != before) {
         PublishLocked();
+    }
+    if (!result) {
+        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
     }
     return ApplyOutcome{Status::Ready, state_->revision, *result, ""};
 }
@@ -571,11 +602,11 @@ Dispatcher::ApplyOutcome Dispatcher::ApplyManualGain(RegionId target, FameCatego
     }
     auto result = slsf::ApplyManualGain(*state_, target, category, minimum, maximum,
                                         *bindings_.configuration, *bindings_.rng);
-    if (!result) {
-        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
-    }
     if (state_->revision != before) {
         PublishLocked();
+    }
+    if (!result) {
+        return ApplyOutcome{Status::Invalid, state_->revision, 0.0, result.error().message};
     }
     return ApplyOutcome{Status::Ready, state_->revision, *result, ""};
 }
@@ -602,19 +633,55 @@ CommandResult Dispatcher::ApplySpreadPulse(GameTime now,
     auto result = slsf::ApplySpreadPulse(*state_, now, sources, *bindings_.graph,
                                          *bindings_.parameters,
                                          *bindings_.configuration);
-    if (!result) {
-        return CommandResult{Status::Invalid, state_->revision, result.error().message};
-    }
     if (state_->revision != before) {
         PublishLocked();
     }
+    if (!result) {
+        return CommandResult{Status::Invalid, state_->revision, result.error().message};
+    }
+    if (result->increasedFame) QueueFameNoticeLocked(FameNotice::Spread);
     return CommandResult{Status::Ready, state_->revision, ""};
+}
+
+std::vector<Dispatcher::FameNotice> Dispatcher::TakeFameNotices() {
+    std::lock_guard lock(mutex_);
+    if (Blocked()) {
+        fameNotices_.clear();
+        return {};
+    }
+    return std::exchange(fameNotices_, {});
+}
+
+void Dispatcher::QueueFameNoticeLocked(FameNotice notice) {
+    if (!bindings_.settings) return;
+    const auto& settings = bindings_.settings->menu.notifications;
+    switch (notice) {
+    case FameNotice::Increase: {
+        if (!settings.fameIncrease) return;
+        const double now = clocks_.Real().value;
+        if (nextFameIncreaseNotice_ && now < *nextFameIncreaseNotice_) return;
+        nextFameIncreaseNotice_ = now + 30.0;
+        break;
+    }
+    case FameNotice::Decay:
+        if (!settings.fameDecay) return;
+        break;
+    case FameNotice::Spread:
+        if (!settings.fameSpread) return;
+        break;
+    }
+    fameNotices_.push_back(notice);
+}
+
+PublishedStatePtr Dispatcher::Snapshot() const noexcept {
+    std::lock_guard lock(mutex_);
+    return Blocked() ? nullptr : published_;
 }
 
 Result<PublicView> Dispatcher::Query(const QueryRequest& request) const {
     auto snapshot = Snapshot();
     if (!snapshot) {
-        return std::unexpected(Error{Error::Code::InvalidState, "no published snapshot yet"});
+        return Fail(Error::Code::InvalidState, "no active session to query");
     }
     return slsf::Query(*snapshot, request);
 }
@@ -681,6 +748,8 @@ Result<AdvanceResult> Dispatcher::AdvanceLocked(GameTime now) {
     changes_ = std::move(inputs.scheduledChanges);
     if (result) {
         lastAdvance_ = now;
+        if (result->decayedFame) QueueFameNoticeLocked(FameNotice::Decay);
+        if (result->spreadFame) QueueFameNoticeLocked(FameNotice::Spread);
     }
     return result;
 }
@@ -871,8 +940,7 @@ TimerToken Dispatcher::Schedule(double seconds, ClockDomain domain, time::TaskBo
 
 void Dispatcher::PublishLocked() {
     PublishedState view = MakePublishedState(*state_);
-    published_.store(std::make_shared<const PublishedState>(std::move(view)),
-                     std::memory_order_release);
+    published_ = std::make_shared<const PublishedState>(std::move(view));
     ++stats_.published;
 }
 

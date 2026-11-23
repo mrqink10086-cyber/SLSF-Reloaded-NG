@@ -71,37 +71,19 @@ Result<std::span<const std::byte>> PayloadOf(std::span<const std::byte> bytes) {
 }
 }
 Result<SaveRecordInfo> InspectSaveRecord(std::span<const std::byte> bytes) {
-    if (bytes.size() < kSaveEnvelopeHeaderBytes) {
-        return Fail(Error::Code::InvalidArgument, "save record is shorter than its header");
+    const auto payload = PayloadOf(bytes);
+    if (!payload) {
+        return std::unexpected(payload.error());
     }
-    if (bytes.size() > kSaveRecordMaxBytes) {
-        return Fail(Error::Code::OutOfRange, "save record exceeds the configured maximum");
-    }
-    if (GetU32(bytes, 0) != kSaveEnvelopeMagic) {
-        return Fail(Error::Code::InvalidArgument, "bad save envelope magic");
-    }
-    if (GetU32(bytes, 4) != kSaveRecordType) {
-        return Fail(Error::Code::InvalidArgument, "unexpected save record type");
-    }
-    if (GetU16(bytes, 8) != kSaveRecordVersion) {
-        return Fail(Error::Code::Unsupported, "unsupported save record version");
-    }
-    if (GetU16(bytes, 10) != kSaveEnvelopeVersion) {
-        return Fail(Error::Code::Unsupported, "unsupported save envelope version");
-    }
-    const std::uint32_t payloadBytes = GetU32(bytes, 12);
-    if (payloadBytes != bytes.size() - kSaveEnvelopeHeaderBytes) {
-        return Fail(Error::Code::InvalidArgument, "save envelope payload length mismatch");
-    }
-    const auto payload = bytes.subspan(kSaveEnvelopeHeaderBytes);
-    if (payload.size() < 6) {
+    if (payload->size() < 6) {
         return Fail(Error::Code::InvalidArgument, "state payload is shorter than its header");
     }
-    if (GetU32(payload, 0) != kStateCodecMagic) {
+    if (GetU32(*payload, 0) != kStateCodecMagic) {
         return Fail(Error::Code::InvalidArgument, "bad state magic");
     }
-    const std::uint16_t codecVersion = GetU16(payload, 4);
+    const std::uint16_t codecVersion = GetU16(*payload, 4);
     if (codecVersion != kPersistentStateCodecVersion &&
+        codecVersion != kPreviousPersistentStateCodecVersion &&
         codecVersion != kLegacyPersistentStateCodecVersion) {
         return Fail(Error::Code::Unsupported, "unsupported state codec version");
     }
@@ -109,7 +91,7 @@ Result<SaveRecordInfo> InspectSaveRecord(std::span<const std::byte> bytes) {
         .recordType = kSaveRecordType,
         .recordVersion = kSaveRecordVersion,
         .codecVersion = codecVersion,
-        .payloadBytes = payloadBytes,
+        .payloadBytes = GetU32(bytes, 12),
         .checksum = GetU32(bytes, 16),
     };
 }

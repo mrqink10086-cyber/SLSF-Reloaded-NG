@@ -257,7 +257,8 @@ bool NeedsTime(const State& state, double now, double decayPerDay) {
 
 bool SettleSegment(State& work, double now, const Parameters& parameters,
                    const PreparedSettlement& prepared, IRandom& rng,
-                   DiffusionBackend backend, SettlementWorkspace& workspace) {
+                   DiffusionBackend backend, SettlementWorkspace& workspace,
+                   bool& decayedFame, bool& spreadFame) {
     const auto count = work.accounts.size();
     workspace.local.resize(count);
     workspace.remote.resize(count);
@@ -275,6 +276,7 @@ bool SettleSegment(State& work, double now, const Parameters& parameters,
         workspace.local[index] = work.accounts[index].local;
         workspace.remote[index] = work.accounts[index].remote;
         workspace.changed[index] = localChanged ? 1 : 0;
+        decayedFame = decayedFame || localChanged;
         consumed = consumed || timeConsumed;
     }
     if (!consumed) {
@@ -300,6 +302,9 @@ bool SettleSegment(State& work, double now, const Parameters& parameters,
         }
         auto& account = work.accounts[index];
         if (remote != account.remote) {
+            for (std::size_t slot = 0; !spreadFame && slot < kFameCategoryCount; ++slot) {
+                spreadFame = remote[slot] > std::max(account.local[slot], account.remote[slot]);
+            }
             account.remote = remote;
             workspace.changed[index] = 1;
         }
@@ -420,7 +425,7 @@ Result<double> ApplyManualSpread(State& state, RegionId source, RegionId target,
     return rule->newValue;
 }
 
-Result<void> ApplyDecayBatch(State& state, GameTime now, int multiplier,
+Result<bool> ApplyDecayBatch(State& state, GameTime now, int multiplier,
     const Configuration& configuration, const RegionSnapshot*, IRandom& rng) {
     if (multiplier < 1) return Fail(Error::Code::InvalidArgument, "invalid decay multiplier");
     const auto rules = CompileFameRules(configuration);
@@ -443,7 +448,7 @@ Result<void> ApplyDecayBatch(State& state, GameTime now, int multiplier,
         RepublishAccount(state, row, oldPositive, oldLocal, oldFlagged);
     }
     if (changed) BumpRevision(state);
-    return {};
+    return changed;
 }
 
 Result<double> ApplyManualDecay(State& state, RegionId target, FameCategory category,
@@ -575,6 +580,7 @@ Result<SpreadPulseResult> ApplySpreadPulse(State& state, GameTime now,
     auto& changed = workspace.changed;
     std::size_t appliedTargets = 0;
     bool anyChanged = false;
+    bool increasedFame = false;
     for (std::size_t index = 0; index < state.accounts.size(); ++index) {
         auto& account = state.accounts[index];
         auto& remoteRow = account.remote;
@@ -589,6 +595,7 @@ Result<SpreadPulseResult> ApplySpreadPulse(State& state, GameTime now,
             const double bounded =
                 std::min(parameters.maxFame, std::max(0.0, candidate));
             if (bounded > remoteRow[slot]) {
+                increasedFame = increasedFame || bounded > account.fame[slot];
                 remoteRow[slot] = bounded;
                 increased = true;
             }
@@ -622,7 +629,7 @@ Result<SpreadPulseResult> ApplySpreadPulse(State& state, GameTime now,
     if (anyChanged) {
         BumpRevision(state);
     }
-    return SpreadPulseResult{appliedTargets};
+    return SpreadPulseResult{appliedTargets, increasedFame};
 }
 
 Result<AdvanceResult> Advance(State& state, GameTime now, AdvanceInputs& inputs) {
@@ -721,11 +728,13 @@ Result<AdvanceResult> Advance(State& state, GameTime now, AdvanceInputs& inputs)
     }
     bool anyCommand = false;
     bool numericChanged = false;
+    bool decayedFame = false;
+    bool spreadFame = false;
     for (std::size_t index = 0; index < dueCount; ++index) {
         const auto& change = ordered[index];
         const double boundary = std::max(boundaryFloor, change.at.days);
         numericChanged = SettleSegment(work, boundary, parameters, *prepared,
-            *inputs.rng, inputs.backend, workspace) || numericChanged;
+            *inputs.rng, inputs.backend, workspace, decayedFame, spreadFame) || numericChanged;
         boundaryFloor = boundary;
         context.clock = GameTime{boundary};
         const auto result = ApplyExplicit(work, change.command, context);
@@ -740,7 +749,7 @@ Result<AdvanceResult> Advance(State& state, GameTime now, AdvanceInputs& inputs)
         }
     }
     numericChanged = SettleSegment(work, now.days, parameters, *prepared,
-        *inputs.rng, inputs.backend, workspace) || numericChanged;
+        *inputs.rng, inputs.backend, workspace, decayedFame, spreadFame) || numericChanged;
     state.accounts.swap(work.accounts);
     if (touchesUnresolved) {
         state.unresolvedAccounts.swap(work.unresolvedAccounts);
@@ -755,7 +764,7 @@ Result<AdvanceResult> Advance(State& state, GameTime now, AdvanceInputs& inputs)
     std::erase_if(scheduled, [now](const ScheduledChange& change) {
         return change.at.days <= now.days;
     });
-    return AdvanceResult{Status::Ready, state.revision, now};
+    return AdvanceResult{Status::Ready, state.revision, now, decayedFame, spreadFame};
 }
 
 }

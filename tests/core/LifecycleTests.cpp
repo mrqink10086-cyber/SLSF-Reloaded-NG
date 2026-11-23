@@ -413,6 +413,54 @@ TEST_CASE("each new session reloads and adopts the current cross-save configurat
     REQUIRE(lifecycle.ActivatePrepared());
 }
 
+TEST_CASE("load activation uses configuration committed after the save was prepared", "[loading-owner]") {
+    auto gate = std::make_shared<slsf::runtime::SessionGate>();
+    Fixture fixture(gate);
+    auto& lifecycle = *fixture.lifecycle;
+    const auto generation = gate->Close();
+    REQUIRE(lifecycle.PrepareLoad(SaveWith(Key(1), 20.0), SessionContext{.randomSeed = 1}));
+    REQUIRE(lifecycle.Status().configurationRevision == ConfigurationRevision{1});
+
+    fixture.configuration.Publish([](ConfigurationData& data) {
+        data.categories.multipliers[static_cast<std::size_t>(FameCategory::Whore)] = 100.0;
+    });
+    REQUIRE(lifecycle.ActivatePrepared(true, generation));
+
+    CHECK(lifecycle.Status().configurationRevision == ConfigurationRevision{2});
+    REQUIRE(lifecycle.Executor().Snapshot());
+    CHECK(lifecycle.Executor().Snapshot()->configurationRevision == 2);
+    CHECK(Fame(lifecycle, 0) == 20.0);
+    const auto gain = lifecycle.Executor().GainFame(slsf::GameTime::FromDays(0.0),
+        RegionId{0}, FameCategory::Whore, slsf::GainFameInputs{});
+    REQUIRE(gain.status == Status::Ready);
+    CHECK(gain.gained >= 100);
+}
+
+TEST_CASE("configuration committed while suspended is applied after resume", "[loading-owner]") {
+    Fixture fixture;
+    auto& lifecycle = *fixture.lifecycle;
+    REQUIRE(lifecycle.PrepareNewGame(SessionContext{}));
+    REQUIRE(lifecycle.ActivatePrepared());
+    const auto epoch = lifecycle.CurrentEpoch();
+
+    lifecycle.Executor().Suspend();
+    fixture.configuration.Publish([](ConfigurationData& data) { data.parameters.decayPerDay = 4.0; });
+    CHECK(lifecycle.ApplyCurrentConfiguration().Succeeded());
+    CHECK(lifecycle.ConfigurationRetryPending());
+    const auto suspended = lifecycle.Status();
+    CHECK_FALSE(suspended.businessOpen);
+    CHECK(suspended.epoch == slsf::Epoch{});
+    CHECK(suspended.configurationRevision == ConfigurationRevision{1});
+
+    lifecycle.Executor().Resume();
+    CHECK(lifecycle.Status().businessOpen);
+    CHECK(lifecycle.ApplyCurrentConfiguration().status == ConfigurationUpdateStatus::Applied);
+    CHECK_FALSE(lifecycle.ConfigurationRetryPending());
+    REQUIRE(lifecycle.Executor().Snapshot());
+    CHECK(lifecycle.Executor().Snapshot()->configurationRevision == 2);
+    CHECK(lifecycle.CurrentEpoch() == epoch);
+}
+
 TEST_CASE("async messages are committed only while their epoch is current") {
     Fixture fixture;
     auto& lifecycle = *fixture.lifecycle;
@@ -681,6 +729,9 @@ TEST_CASE("load gate closes immediately while reset and coroutine cancellation w
     worker.join();
     CHECK_FALSE(lifecycle.BusinessOpen());
     CHECK_FALSE(lifecycle.IsEpochCurrent(oldEpoch));
+    CHECK(lifecycle.CurrentEpoch() == slsf::Epoch{});
+    CHECK_FALSE(lifecycle.Executor().Snapshot());
+    CHECK_FALSE(lifecycle.Executor().Query(slsf::QueryRequest{}));
     CHECK_FALSE(lifecycle.Capture());
     CHECK(lifecycle.Executor().Execute(SetCommand(0, 22)).status == Status::NotReady);
     CHECK(resumed == std::thread::id{});

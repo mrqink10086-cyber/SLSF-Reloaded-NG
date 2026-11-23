@@ -27,7 +27,7 @@ std::shared_ptr<SettlementWorkspace> MakeSettlementWorkspace();
 // day; the spread threshold follows MinimumFameToSpread=30; uncalibrated
 // links use retention 0.6 and remote rows retreat at one value per day.
 Parameters LegacyDefaultParameters() noexcept;
-Result<void> ApplyDecayBatch(State& state, GameTime now, int multiplier,
+Result<bool> ApplyDecayBatch(State& state, GameTime now, int multiplier,
     const Configuration& configuration, const RegionSnapshot* regions, IRandom& rng);
 
 // Gain application (legacy GainFame entry).  Resolves multipliers, tier caps,
@@ -81,6 +81,7 @@ Result<double> ApplyManualGain(State& state,
 
 struct SpreadPulseResult {
     std::size_t appliedTargets{};
+    bool increasedFame{};
 };
 
 // One-hop spread pulse (legacy Spread/SpreadRoll): ONE deferred hop

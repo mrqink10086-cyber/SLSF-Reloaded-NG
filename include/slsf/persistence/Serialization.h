@@ -37,8 +37,6 @@ Result<std::vector<std::byte>> EncodeSaveRecord(const PersistentState& state);
 // StateCodec payload.  Every failure is returned; no partial state escapes.
 Result<PersistentState> DecodeSaveRecord(std::span<const std::byte> bytes);
 
-// Header-only inspection used for diagnostics and version gates.  It does not
-// validate the payload checksum beyond the header's declared length.
 Result<SaveRecordInfo> InspectSaveRecord(std::span<const std::byte> bytes);
 
 }

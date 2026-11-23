@@ -9,7 +9,6 @@
 #include "slsf/runtime/ClockService.h"
 #include "slsf/runtime/SessionGate.h"
 
-#include <atomic>
 #include <coroutine>
 #include <cstdint>
 #include <deque>
@@ -128,10 +127,11 @@ public:
     Dispatcher& operator=(const Dispatcher&) = delete;
 
     bool Attach(Epoch epoch, const RuntimeBindings& bindings, State state);
-    Result<void> Reconfigure(const RuntimeBindings& bindings,
-                             const ConfigurationSnapshot& configuration);
+    Result<Status> Reconfigure(const RuntimeBindings& bindings,
+                               const ConfigurationSnapshot& configuration);
     void Detach();
     bool Attached() const;
+    bool BusinessOpen() const;
     Epoch CurrentEpoch() const;
 
     void Suspend();
@@ -164,10 +164,10 @@ public:
                                  int minimum, int maximum);
     CommandResult ApplySpreadPulse(GameTime now, std::span<const RegionId> sources);
 
-    PublishedStatePtr Snapshot() const noexcept
-    {
-        return published_.load(std::memory_order_acquire);
-    }
+    enum class FameNotice { Increase, Decay, Spread };
+    std::vector<FameNotice> TakeFameNotices();
+
+    PublishedStatePtr Snapshot() const noexcept;
     Result<PersistentState> Capture() const;
     std::shared_ptr<const ConfigurationData> Settings() const;
     Result<PublicView> Query(const QueryRequest& request) const;
@@ -220,6 +220,7 @@ private:
     void FireDirty(RegionId target, std::uint64_t generation);
 
     void PublishLocked();
+    void QueueFameNoticeLocked(FameNotice notice);
     Result<AdvanceResult> AdvanceLocked(GameTime now);
     double DomainNowLocked(ClockDomain domain);
     double DeadlineLocked(ClockDomain domain, double seconds);
@@ -236,8 +237,10 @@ private:
     bool suspended_{false};
     std::shared_ptr<SessionGate> hostGate_;
     std::optional<GameTime> lastAdvance_{};
+    std::optional<double> nextFameIncreaseNotice_;
+    std::vector<FameNotice> fameNotices_;
 
-    std::atomic<PublishedStatePtr> published_{};
+    PublishedStatePtr published_{};
 
     std::deque<EngineEvent> events_;
     std::vector<ScheduledChange> changes_;

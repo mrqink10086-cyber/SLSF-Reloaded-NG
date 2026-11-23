@@ -39,7 +39,7 @@ public:
     struct Ports {
         std::function<ConfigurationSnapshot()> snapshot;
         std::function<ConfigurationUpdateResult()> reload;
-        std::function<ConfigurationUpdateResult(ConfigurationData)> commit;
+        std::function<ConfigurationUpdateResult(ConfigurationData, ConfigurationRevision)> commit;
         std::function<const RegionSnapshot*()> regions;
         std::function<std::string()> status;
         std::function<FameReadout(const std::string& location)> fameReadout;
@@ -85,6 +85,7 @@ private:
     void RenderDiagnostics();
 
     [[nodiscard]] const ConfigurationData* CurrentData() const;
+    [[nodiscard]] bool DraftDirty() const;
     void RefreshDraft();
     [[nodiscard]] CommitOutcome ApplyDraft();
 
@@ -94,20 +95,23 @@ private:
     MenuRequestQueue queue_{};
     ConfigurationSnapshot cached_{};
     std::optional<ConfigurationData> draft_;
-    std::uint64_t draftRevision_{0};
+    std::shared_ptr<const ConfigurationData> draftBase_;
+    ConfigurationRevision draftRevision_;
     std::string lastAction_;
+    std::optional<std::string> rejectedDraft_;
     std::string lastCommandResult_;
     std::string fameLocation_;
     int sourceIndex_{-1};
     int targetIndex_{-1};
-    int commandLocationIndex_{-1};
-    int commandTargetIndex_{-1};
+    FameCommandLocations commandLocations_;
+    int commandIndex_{0};
     int commandCategoryIndex_{0};
     int commandValue_{30};
     int commandMinimum_{0};
     int commandMaximum_{50};
     int commandPercent_{30};
-    std::vector<std::string> legacyFiles_;
+    std::optional<std::string> legacyImportFile_;
+    std::string lastImportResult_;
 };
 
 }

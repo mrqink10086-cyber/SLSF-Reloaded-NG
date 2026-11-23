@@ -60,6 +60,19 @@ TEST_CASE("configuration store generates defaults for a missing file", "[configu
     REQUIRE(file->Bytes().find("\"schemaVersion\": 1") != std::string::npos);
 }
 
+TEST_CASE("witness polling defaults to thirty game minutes without overriding a saved interval", "[configuration]") {
+    const auto defaults = ConfigurationStore::LegacyDefaults();
+    REQUIRE(defaults.gameplay.scanPeriodDays == 0.5 / 24.0);
+
+    std::string error;
+    const auto parsed = slsf::io::JsonValue::Parse(
+        R"({"schemaVersion":1,"gameplay":{"scanPeriodDays":0.041666666666666664}})", 1u << 20, &error);
+    REQUIRE(parsed != nullptr);
+    const auto decoded = ConfigurationStore::Decode(parsed, defaults);
+    REQUIRE(decoded.has_value());
+    CHECK(decoded->gameplay.scanPeriodDays == 1.0 / 24.0);
+}
+
 TEST_CASE("configuration store keeps revision and suppresses notify on unchanged reload",
           "[configuration]") {
     const auto store = MakeStore();
@@ -128,7 +141,7 @@ TEST_CASE("configuration store keeps state and reports io errors on write failur
     ConfigurationData edit = *before.data;
     edit.categories.multipliers[0] = 2.5;
     file->FailNextWrite();
-    const auto update = store->ApplyEdit(edit);
+    const auto update = store->ApplyEdit(edit, before.revision);
     REQUIRE(update.status == ConfigurationUpdateStatus::IoError);
     REQUIRE(update.message.find("configuration write failed") != std::string::npos);
     REQUIRE(*store->Current().data == *before.data);
@@ -142,17 +155,18 @@ TEST_CASE("configuration store validates edits before touching the file", "[conf
     const auto store = MakeStore(&file);
     REQUIRE(store->Reload().Succeeded());
     const std::string previousBytes = file->Bytes();
+    const auto revision = store->Current().revision;
 
     ConfigurationData invalid = *store->Current().data;
     invalid.categories.multipliers[2] = -0.5;
-    const auto rejected = store->ApplyEdit(invalid);
+    const auto rejected = store->ApplyEdit(invalid, revision);
     REQUIRE(rejected.status == ConfigurationUpdateStatus::Invalid);
     REQUIRE(rejected.message.find("configuration edit rejected") != std::string::npos);
     REQUIRE(file->Bytes() == previousBytes);
 
     ConfigurationData overRange = *store->Current().data;
     overRange.parameters.maxFame = 1e9;
-    const auto bounded = store->ApplyEdit(overRange);
+    const auto bounded = store->ApplyEdit(overRange, revision);
     REQUIRE(bounded.status == ConfigurationUpdateStatus::Invalid);
     REQUIRE(file->Bytes() == previousBytes);
 }
@@ -177,7 +191,7 @@ TEST_CASE("configuration store commits edits through write-then-reread", "[confi
         slsf::StableRegionKey{"Riften.esp", 1024},
     };
 
-    const auto update = store->ApplyEdit(edit);
+    const auto update = store->ApplyEdit(edit, store->Current().revision);
     INFO(update.message);
     REQUIRE(update.status == ConfigurationUpdateStatus::Applied);
     REQUIRE(update.revision.value == 2);
@@ -225,7 +239,7 @@ TEST_CASE("configuration store resorts connections and selected regions canonica
         slsf::StableRegionKey{"Zeb.esp", 10},
         slsf::StableRegionKey{"A.esp", 2},
     };
-    const auto update = store->ApplyEdit(edit);
+    const auto update = store->ApplyEdit(edit, store->Current().revision);
     INFO(update.message);
     REQUIRE(update.Succeeded());
     const auto& connections = store->Current().data->connections;
@@ -250,20 +264,50 @@ TEST_CASE("configuration store increments revisions per distinct committed conte
 
     ConfigurationData first = *store->Current().data;
     first.timing.decayPeriodDays = 2.0;
-    REQUIRE(store->ApplyEdit(first).revision.value == 2);
+    REQUIRE(store->ApplyEdit(first, slsf::ConfigurationRevision{1}).revision.value == 2);
     REQUIRE(store->Reload().revision.value == 2);
     REQUIRE(store->NotifyCount() == 2);
 
     ConfigurationData second = first;
     second.timing.decayPeriodDays = 3.0;
-    REQUIRE(store->ApplyEdit(second).revision.value == 3);
+    REQUIRE(store->ApplyEdit(second, slsf::ConfigurationRevision{2}).revision.value == 3);
     ConfigurationData identical = second;
     identical.timing.decayPeriodDays = 3.0;
-    const auto repeated = store->ApplyEdit(identical);
+    const auto repeated = store->ApplyEdit(identical, slsf::ConfigurationRevision{3});
     INFO(repeated.message);
     REQUIRE(repeated.status == ConfigurationUpdateStatus::Unchanged);
     REQUIRE(repeated.revision.value == 3);
     REQUIRE(store->NotifyCount() == 3);
+}
+
+TEST_CASE("configuration store refuses to replace an external change with an older draft", "[configuration]") {
+    MemoryConfigurationFile* file = nullptr;
+    const auto store = MakeStore(&file);
+    slsf::ConfigurationRevision notified;
+    store->BindNotify([&](const ConfigurationSnapshot& snapshot) { notified = snapshot.revision; });
+    REQUIRE(store->Reload().Succeeded());
+    const auto before = store->Current();
+    auto draft = *before.data;
+    draft.timing.decayPeriodDays = 2.0;
+
+    const std::string external = "{\"timing\":{\"spreadPeriodDays\":3}}";
+    file->OverwriteExternally(external);
+    SECTION("disk change has not been reloaded") {
+        REQUIRE(store->Current().revision == before.revision);
+    }
+    SECTION("disk change was reloaded after the caller captured its snapshot") {
+        REQUIRE(store->Reload().Succeeded());
+    }
+
+    const auto result = store->ApplyEdit(draft, before.revision);
+    CHECK_FALSE(result.Succeeded());
+    CHECK(result.message == "configuration changed since the draft was opened");
+    CHECK(result.revision.value == before.revision.value + 1);
+    CHECK(file->Bytes() == external);
+    CHECK(store->Current().data->timing.spreadPeriodDays == 3.0);
+    CHECK(store->Current().data->timing.decayPeriodDays == before.data->timing.decayPeriodDays);
+    CHECK(notified == result.revision);
+    CHECK(store->NotifyCount() == 2);
 }
 
 TEST_CASE("configuration store applies legacy defaults", "[configuration]") {
@@ -388,7 +432,7 @@ TEST_CASE("configuration store applies edit edits that only validate passes admi
     edit.timing.nightStart = 23.9995;
     edit.timing.nightEnd = 23.999;
 
-    const auto update = store->ApplyEdit(edit);
+    const auto update = store->ApplyEdit(edit, store->Current().revision);
     REQUIRE(update.Succeeded());
     REQUIRE(update.status == ConfigurationUpdateStatus::Applied);
     REQUIRE(store->Current().data->timing.nightStart == 23.9995);

@@ -220,6 +220,11 @@ TEST_CASE("manual spread mirrors the legacy formula", "[gain][spread]") {
     result = slsf::RuleManualSpreadFame(150.0, 150.0, 100);
     REQUIRE(result->newValue == 150.0);
 
+    result = slsf::RuleManualSpreadFame(50.0, 0.0, 58);
+    REQUIRE(result->newValue == 29.0);
+    result = slsf::RuleManualSpreadFame(15.0, -31.0, 10);
+    REQUIRE(result->newValue == -29.0);
+
     auto rejected = slsf::RuleManualSpreadFame(9.5, 20.0, 30);
     REQUIRE_FALSE(rejected);
 }

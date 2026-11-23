@@ -5,9 +5,22 @@
 #include <utility>
 
 namespace slsf::gameplay {
-namespace {
-
+bool PiercingSlutEligible(const PiercingFacts& facts, int fame) {
+    if (!facts.advancedNudityDetection) {
+        return facts.deviousDevices && facts.naked && (facts.nipple || facts.genital || facts.vaginalPlug);
+    }
+    const bool exposedNipple = facts.nipple && facts.chestExposed && fame < 50;
+    if (facts.deviousDevices && facts.nipple) {
+        return exposedNipple;
+    }
+    return exposedNipple || (facts.genital && facts.genitalsExposed && fame < 75);
 }
+
+Fact InflationCumDumpEligible(Fact installed, std::optional<double> inflation, double threshold) {
+    if (!installed.IsKnownTrue()) return installed;
+    return inflation ? Fact::Known(*inflation >= threshold) : Fact{FactState::Unknown};
+}
+
 const NpcScanEntry* NpcScanResult::SuccessEntry() const {
     for (const NpcScanEntry& entry : entries) {
         if (entry.scored) {

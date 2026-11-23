@@ -23,6 +23,12 @@ inline void TransitionRecognition(gameplay::AnonymityRules& rules, std::optional
     if (current == next) return;
     if (rules.ObserveRegion(current, next, now) == Status::Ready) current = next;
 }
+inline bool ForgetRecognition(gameplay::AnonymityRules& rules, std::optional<RegionId>& current, RegionId removed) {
+    rules.Forget(removed);
+    if (current != removed) return false;
+    current.reset();
+    return true;
+}
 inline std::vector<RegionRecognitionState> CaptureRecognition(const gameplay::AnonymityRules& rules,
                                                              std::optional<RegionId> current, const RegionSnapshot& regions) {
     std::vector<RegionRecognitionState> rows;

@@ -110,6 +110,11 @@ TEST_CASE("every truncation and checksum corruption is rejected") {
     auto checksumBad = *encoded;
     checksumBad[16] ^= std::byte{0x01};
     CHECK_FALSE(slsf::persistence::DecodeSaveRecord(checksumBad).has_value());
+    CHECK_FALSE(slsf::persistence::InspectSaveRecord(checksumBad).has_value());
+
+    auto payloadBad = *encoded;
+    payloadBad.back() ^= std::byte{0x01};
+    CHECK_FALSE(slsf::persistence::InspectSaveRecord(payloadBad).has_value());
 
     auto magicBad = *encoded;
     magicBad[0] ^= std::byte{0xFF};
@@ -134,6 +139,16 @@ TEST_CASE("every truncation and checksum corruption is rejected") {
     auto trailing = *encoded;
     trailing.push_back(std::byte{0});
     CHECK_FALSE(slsf::persistence::DecodeSaveRecord(trailing).has_value());
+}
+TEST_CASE("save inspection accepts the previous v2 state payload") {
+    auto state = SampleState();
+    state.codecVersion = slsf::kPreviousPersistentStateCodecVersion;
+    const auto encoded = slsf::persistence::EncodeSaveRecord(state);
+    REQUIRE(encoded.has_value());
+    const auto info = slsf::persistence::InspectSaveRecord(*encoded);
+    REQUIRE(info.has_value());
+    CHECK(info->codecVersion == slsf::kPreviousPersistentStateCodecVersion);
+    REQUIRE(slsf::persistence::DecodeSaveRecord(*encoded).has_value());
 }
 TEST_CASE("deterministic malformed envelopes never escape as partial state") {
     std::mt19937_64 random(1170);

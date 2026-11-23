@@ -86,14 +86,22 @@ bool ParseActor(std::vector<std::string>& fields, PPlusActorState& out,
         error = "actor line has the wrong field count";
         return false;
     }
-    out.actor.plugin = std::move(fields[1]);
-    if (out.actor.plugin.empty()) {
-        error = "actor plugin is empty";
-        return false;
-    }
-    if (!ParseLocalFormId(fields[2], out.actor.localFormId)) {
-        error = "actor form id is invalid";
-        return false;
+    if (fields[0] == "actorTransient") {
+        if (!ParseHex32(fields[1], out.transientHandle) || !out.transientHandle ||
+            !ParseHex32(fields[2], out.transientFormId) || out.transientFormId < 0xFF000000u) {
+            error = "transient actor identity is invalid";
+            return false;
+        }
+    } else {
+        out.actor.plugin = std::move(fields[1]);
+        if (out.actor.plugin.empty()) {
+            error = "actor plugin is empty";
+            return false;
+        }
+        if (!ParseLocalFormId(fields[2], out.actor.localFormId)) {
+            error = "actor form id is invalid";
+            return false;
+        }
     }
     out.name = std::move(fields[3]);
     out.race = ParseRace(fields[4]);
@@ -103,6 +111,10 @@ bool ParseActor(std::vector<std::string>& fields, PPlusActorState& out,
         return false;
     }
     out.isPlayer = (flags & 0x80u) != 0;
+    if (out.isPlayer && out.transientHandle) {
+        error = "player actor identity must be stable";
+        return false;
+    }
     out.masochist = (flags & 0x40u) != 0;
     out.submissive = (flags & 0x20u) != 0;
     out.dominant = (flags & 0x10u) != 0;
@@ -318,6 +330,13 @@ bool ParsePPlusSceneWire(std::string_view wire, const Epoch& expected,
                 return false;
             }
             activeSeen = true;
+        } else if (key == "observedStart") {
+            std::uint32_t stamp = 0;
+            if (parsed.observedStart || fields.size() != 2 || !ParseUint32(fields[1], stamp)) {
+                error = "observed start is invalid";
+                return false;
+            }
+            parsed.observedStart = stamp;
         } else if (key == "stage") {
             if (stageSeen || fields.size() != 3 ||
                 !ParseUint32(fields[1], parsed.stage) ||
@@ -363,7 +382,7 @@ bool ParsePPlusSceneWire(std::string_view wire, const Epoch& expected,
                 return false;
             }
             parsed.tags.push_back(std::move(tag));
-        } else if (key == "actor") {
+        } else if (key == "actor" || key == "actorTransient") {
             PPlusActorState actor;
             if (!ParseActor(fields, actor, error)) {
                 return false;
@@ -373,7 +392,9 @@ bool ParsePPlusSceneWire(std::string_view wire, const Epoch& expected,
                 return false;
             }
             for (const PPlusActorState& existing : parsed.actors) {
-                if (existing.actor == actor.actor) {
+                if (actor.transientHandle ?
+                    existing.transientHandle == actor.transientHandle || existing.transientFormId == actor.transientFormId :
+                    existing.MatchesActor(actor.actor)) {
                     error = "duplicate actor line";
                     return false;
                 }
@@ -394,6 +415,12 @@ bool ParsePPlusSceneWire(std::string_view wire, const Epoch& expected,
     }
     if (parsed.availability == ExternalAvailability::Available && !providerSeen) {
         error = "available wire is missing provider state";
+        return false;
+    }
+    if (!parsed.observedStart && std::ranges::any_of(parsed.actors, [](const auto& actor) {
+            return actor.transientHandle != 0;
+        })) {
+        error = "transient actor requires an observed start";
         return false;
     }
     if (parsed.availability == ExternalAvailability::Available && parsed.active &&
@@ -532,21 +559,10 @@ public:
 
     Impl(PapyrusCalls& calls, PPlusOptions options = {});
     void Shutdown();
-    bool SelectNotificationThread(std::string_view event, std::int32_t id, const Epoch& epoch) {
-        if (!calls_.IsEpochCurrent(epoch)) return false;
-        const bool start = EndsWith(event, "AnimationStart") || EndsWith(event, "SceneStart");
-        const bool transition = EndsWith(event, "LeadInEnd") || EndsWith(event, "StageStart") ||
-            EndsWith(event, "StageChange") || EndsWith(event, "AnimationEnd") || EndsWith(event, "SceneEnd");
-        if (!start && !transition) return false;
-        std::lock_guard guard(mutex_);
-        if (shuttingDown_ || (!start && id != threadId_)) return false;
-        threadId_ = id;
-        return true;
-    }
-
-
     RequestId OnSceneEvent(std::string_view event, const Epoch& epoch, std::int64_t nowMs,
-                           Completion completion = {});
+                           Completion completion, std::optional<std::int32_t> thread = {},
+                           std::optional<std::uint32_t> observedStart = {}, bool* accepted = nullptr,
+                           EndedCaptureConsumer consumeEnded = {});
     RequestId RequestScene(const Epoch& epoch, std::int64_t nowMs,
                            Completion completion = {});
     void Advance(std::int64_t nowMs);
@@ -556,6 +572,8 @@ public:
     [[nodiscard]] ExternalGate Gate() const;
     [[nodiscard]] PPlusSceneState Snapshot() const;
     [[nodiscard]] bool Active() const;
+    [[nodiscard]] bool Draining() const;
+    [[nodiscard]] std::optional<PPlusSceneState> TakeEndedSnapshot();
     [[nodiscard]] std::uint32_t Attempts() const;
 
     void Cancel();
@@ -567,12 +585,12 @@ private:
         std::uint64_t token{};
         Epoch epoch{};
         std::int64_t startedAtMs{};
+        std::optional<std::uint32_t> observedStart;
     };
 
-    void BeginRequest(const Epoch& epoch, std::int64_t nowMs, Completion completion);
+    RequestId BeginRequest(const Epoch& epoch, std::int64_t nowMs, std::uint64_t revision);
     void HandleResult(std::uint64_t token, PapyrusCallResult result);
     void HandleFailure(std::uint64_t token, PapyrusCallKind kind);
-    void CancelPending();
     [[nodiscard]] bool SameEpoch(const Epoch& lhs, const Epoch& rhs) const noexcept;
 
     PapyrusCalls& calls_;
@@ -591,11 +609,13 @@ private:
     std::int64_t retryAtMs_{-1};
     std::int64_t lastNowMs_{};
     Completion completion_;
+    bool leadInEnded_{};
     bool awaitingMainStage_{};
     PPlusSceneState transitionFrom_;
     std::int32_t threadId_{-1};
+    std::optional<std::uint32_t> observedStart_;
+    std::optional<PPlusSceneState> endedSnapshot_;
 public:
-    void SetThreadId(std::int32_t id) { std::lock_guard guard(mutex_); threadId_ = id; }
     std::int32_t ThreadId() const { std::lock_guard guard(mutex_); return threadId_; }
 };
 
@@ -623,43 +643,76 @@ bool SexLabPPlus::Impl::SameEpoch(const Epoch& lhs, const Epoch& rhs) const noex
 }
 
 RequestId SexLabPPlus::Impl::OnSceneEvent(std::string_view event, const Epoch& epoch,
-                                    std::int64_t nowMs, Completion completion) {
-    const bool startEvent =
-        EndsWith(event, "AnimationStart") || EndsWith(event, "SceneStart") ||
-        EndsWith(event, "StageStart") || EndsWith(event, "StageChange") ||
-        EndsWith(event, "LeadInEnd");
+                                    std::int64_t nowMs, Completion completion,
+                                    std::optional<std::int32_t> thread,
+                                    std::optional<std::uint32_t> observedStart, bool* accepted,
+                                    EndedCaptureConsumer consumeEnded) {
+    const bool start = EndsWith(event, "AnimationStart") || EndsWith(event, "SceneStart");
+    const bool end = EndsWith(event, "AnimationEnd") || EndsWith(event, "SceneEnd");
+    const bool leadIn = EndsWith(event, "LeadInEnd");
+    const bool stage = EndsWith(event, "StageStart") || EndsWith(event, "StageChange");
+    if (!start && !end && !leadIn && !stage) return {};
     if (!calls_.IsEpochCurrent(epoch)) return {};
-    bool current = false;
+    RequestId superseded;
+    Completion previous;
+    PPlusSceneState previousSnapshot;
+    std::optional<PPlusSceneState> finished;
+    std::uint64_t revision = 0;
     {
-        std::lock_guard<std::mutex> guard(mutex_);
-        if (active_) {
-            current = SameEpoch(sceneEpoch_, epoch) ||
-                      startEvent;
+        std::lock_guard guard(mutex_);
+        if (shuttingDown_) return {};
+        if (!start && (!active_ || sceneEpoch_ != epoch ||
+                       (thread && (*thread != threadId_ || observedStart != observedStart_)))) return {};
+        if (start && observedStart && sceneEpoch_ == epoch && thread &&
+            *thread == threadId_ && observedStart == observedStart_) return {};
+        if (leadIn && leadInEnded_) return {};
+        if (accepted) *accepted = true;
+        lastNowMs_ = std::max(lastNowMs_, nowMs);
+        if (end) {
+            active_ = false;
+            dirty_ = false;
+            retryAtMs_ = -1;
+            if (observedStart_ && snapshot_.active && gate_ == ExternalGate::Ready) endedSnapshot_ = snapshot_;
+            gate_ = ExternalGate::Closed;
+            snapshot_.active = false;
+            return {};
+        }
+        superseded = pending_.id;
+        previous = std::move(completion_);
+        if (previous) previousSnapshot = snapshot_;
+        pendingToken_ = 0;
+        pending_ = {};
+        revision = ++generation_;
+        if (start) {
+            threadId_ = thread.value_or(-1);
+            observedStart_ = observedStart;
+            leadInEnded_ = false;
+            awaitingMainStage_ = false;
+            transitionFrom_ = {};
+        } else if (leadIn) {
+            leadInEnded_ = true;
+            transitionFrom_ = snapshot_;
+            awaitingMainStage_ = true;
+        }
+        if (start && consumeEnded && sceneEpoch_ == epoch) {
+            finished = std::exchange(endedSnapshot_, std::nullopt);
         } else {
-            current = true;
+            endedSnapshot_.reset();
         }
+        sceneEpoch_ = epoch;
+        active_ = true;
+        dirty_ = true;
+        attempts_ = 0;
+        retryAtMs_ = -1;
+        gate_ = ExternalGate::Waiting;
+        snapshot_ = {};
+        snapshot_.epoch = epoch;
+        completion_ = std::move(completion);
     }
-    if (!current) {
-        return {};
-    }
-    if (EndsWith(event, "AnimationEnd") || EndsWith(event, "SceneEnd")) {
-        OnSceneEnded(epoch);
-        return {};
-    }
-    if (startEvent) {
-        {
-            std::lock_guard<std::mutex> guard(mutex_);
-            if (EndsWith(event, "LeadInEnd")) {
-                transitionFrom_ = snapshot_;
-                awaitingMainStage_ = true;
-            } else if (EndsWith(event, "AnimationStart") || EndsWith(event, "SceneStart")) {
-                awaitingMainStage_ = false;
-            }
-        }
-        MarkDirty();
-        return RequestScene(epoch, nowMs, std::move(completion));
-    }
-    return {};
+    if (superseded) calls_.Cancel(superseded);
+    if (previous) previous(previousSnapshot, start ? ExternalGate::Stale : ExternalGate::Changed);
+    if (finished) consumeEnded(*finished);
+    return BeginRequest(epoch, nowMs, revision);
 }
 
 RequestId SexLabPPlus::Impl::RequestScene(const Epoch& epoch, std::int64_t nowMs,
@@ -711,6 +764,7 @@ RequestId SexLabPPlus::Impl::RequestScene(const Epoch& epoch, std::int64_t nowMs
     PPlusSceneState supersededSnapshot;
     Completion replacedCompletion;
     PPlusSceneState replacedSnapshot;
+    std::uint64_t revision = 0;
     {
         std::lock_guard<std::mutex> guard(mutex_);
         if (shuttingDown_) {
@@ -751,6 +805,12 @@ RequestId SexLabPPlus::Impl::RequestScene(const Epoch& epoch, std::int64_t nowMs
                 replacedSnapshot = snapshot_;
             }
             if (!sameScene) {
+                ++generation_;
+                observedStart_.reset();
+                endedSnapshot_.reset();
+                leadInEnded_ = false;
+                awaitingMainStage_ = false;
+                transitionFrom_ = {};
                 attempts_ = 0;
                 if (pendingToken_ != 0) {
                     supersededId = pending_.id;
@@ -773,6 +833,7 @@ RequestId SexLabPPlus::Impl::RequestScene(const Epoch& epoch, std::int64_t nowMs
             if (completion) {
                 completion_ = std::move(completion);
             }
+            revision = generation_;
         }
     }
     if (supersededId) {
@@ -794,19 +855,18 @@ RequestId SexLabPPlus::Impl::RequestScene(const Epoch& epoch, std::int64_t nowMs
         }
         return {};
     }
-    BeginRequest(epoch, nowMs, std::move(completion));
-    std::lock_guard<std::mutex> guard(mutex_);
-    return pending_.id;
+    return BeginRequest(epoch, nowMs, revision);
 }
 
-void SexLabPPlus::Impl::BeginRequest(const Epoch& epoch, std::int64_t nowMs,
-                               Completion completion) {
+RequestId SexLabPPlus::Impl::BeginRequest(const Epoch& epoch, std::int64_t nowMs,
+                                        std::uint64_t revision) {
     std::uint64_t token = 0;
+    std::int32_t threadId;
+    std::optional<std::uint32_t> observedStart;
     {
         std::lock_guard<std::mutex> guard(mutex_);
-        if (shuttingDown_ || !active_ || pendingToken_ != 0) {
-            return;
-        }
+        if (shuttingDown_ || !active_ || pendingToken_ != 0 ||
+            epoch != sceneEpoch_ || revision != generation_) return {};
         lastNowMs_ = std::max(lastNowMs_, nowMs);
         token = ++generation_;
         pendingToken_ = token;
@@ -814,17 +874,16 @@ void SexLabPPlus::Impl::BeginRequest(const Epoch& epoch, std::int64_t nowMs,
         pending_.token = token;
         pending_.epoch = epoch;
         pending_.startedAtMs = nowMs;
-        if (completion) {
-            completion_ = std::move(completion);
-        }
+        pending_.observedStart = observedStart = observedStart_;
+        threadId = threadId_;
         gate_ = ExternalGate::Waiting;
     }
 
     std::vector<VmValue> arguments;
-    arguments.reserve(4);
+    arguments.reserve(5);
     VmValue thread;
     thread.type = VmValueType::Int;
-    { std::lock_guard guard(mutex_); thread.intValue = threadId_; }
+    thread.intValue = threadId;
     arguments.push_back(std::move(thread));
     VmValue session;
     session.type = VmValueType::String;
@@ -838,6 +897,10 @@ void SexLabPPlus::Impl::BeginRequest(const Epoch& epoch, std::int64_t nowMs,
     arguments.push_back(std::move(session));
     arguments.push_back(std::move(index));
     arguments.push_back(std::move(scene));
+    VmValue stamp;
+    stamp.type = VmValueType::String;
+    if (observedStart) stamp.stringValue = std::to_string(*observedStart);
+    arguments.push_back(std::move(stamp));
 
     const RequestId id = calls_.SubmitGlobal(
         options_.script, options_.function, std::move(arguments),
@@ -848,12 +911,16 @@ void SexLabPPlus::Impl::BeginRequest(const Epoch& epoch, std::int64_t nowMs,
         std::lock_guard<std::mutex> guard(mutex_);
         if (pendingToken_ == token) {
             pending_.id = id;
+            return id;
         }
     }
+    if (id) calls_.Cancel(id);
+    return {};
 }
 
 void SexLabPPlus::Impl::HandleResult(std::uint64_t token, PapyrusCallResult result) {
     Epoch expected;
+    std::optional<std::uint32_t> observedStart;
     bool failed = false;
     PapyrusCallKind failureKind = result.kind;
     {
@@ -862,6 +929,7 @@ void SexLabPPlus::Impl::HandleResult(std::uint64_t token, PapyrusCallResult resu
             return;
         }
         expected = pending_.epoch;
+        observedStart = pending_.observedStart;
         if (result.kind != PapyrusCallKind::Ready || result.status != Status::Ready) {
             failed = true;
         }
@@ -879,29 +947,16 @@ void SexLabPPlus::Impl::HandleResult(std::uint64_t token, PapyrusCallResult resu
     std::string parseError;
     if (!ParsePPlusSceneWire(result.values.front().stringValue, expected, parsed,
                              parseError)) {
-        Completion failedCompletion;
-        PPlusSceneState failedSnapshot;
-        {
-            std::lock_guard<std::mutex> guard(mutex_);
-            if (token != pendingToken_) {
-                return;
-            }
-            pendingToken_ = 0;
-            pending_ = {};
-            ++attempts_;
-            if (attempts_ >= options_.timing.maxAttempts) {
-                gate_ = ExternalGate::Failed;
-                retryAtMs_ = -1;
-                failedSnapshot = snapshot_;
-                failedCompletion = std::move(completion_);
-            } else {
-                gate_ = ExternalGate::Waiting;
-                retryAtMs_ = lastNowMs_ + options_.timing.retryIntervalMs;
-            }
-        }
-        if (failedCompletion) {
-            failedCompletion(failedSnapshot, ExternalGate::Failed);
-        }
+        HandleFailure(token, PapyrusCallKind::Failed);
+        return;
+    }
+    const bool hasTransient = std::ranges::any_of(parsed.actors, [](const auto& actor) {
+        return actor.transientHandle != 0;
+    });
+    const bool activeCapture = parsed.availability == ExternalAvailability::Available && parsed.active;
+    if ((hasTransient && (!activeCapture || !observedStart)) ||
+        (activeCapture && observedStart && parsed.observedStart != observedStart)) {
+        HandleFailure(token, PapyrusCallKind::Failed);
         return;
     }
     if (parsed.availability == ExternalAvailability::Available &&
@@ -945,6 +1000,17 @@ void SexLabPPlus::Impl::HandleResult(std::uint64_t token, PapyrusCallResult resu
                     awaitingMainStage_ = false;
                 }
             }
+            if (!active_ && gate_ == ExternalGate::Closed) {
+                if (observedStart && parsed.availability == ExternalAvailability::Available && parsed.active) {
+                    endedSnapshot_ = std::move(parsed);
+                    snapshot = *endedSnapshot_;
+                    gate = ExternalGate::Ready;
+                } else {
+                    snapshot = snapshot_;
+                    gate = ExternalGate::Closed;
+                }
+                completion = std::move(completion_);
+            } else {
             snapshot_ = std::move(parsed);
             snapshot_.epoch = expected;
             dirty_ = false;
@@ -980,6 +1046,7 @@ void SexLabPPlus::Impl::HandleResult(std::uint64_t token, PapyrusCallResult resu
             }
             gate = gate_;
             snapshot = snapshot_;
+            }
         }
     }
     if (staleAtCommit) {
@@ -1004,7 +1071,9 @@ void SexLabPPlus::Impl::HandleFailure(std::uint64_t token, PapyrusCallKind kind)
         }
         pendingToken_ = 0;
         pending_ = {};
-        if (kind == PapyrusCallKind::Stale) {
+        if (!active_ && gate_ == ExternalGate::Closed) {
+            completion = std::move(completion_);
+        } else if (kind == PapyrusCallKind::Stale) {
             gate_ = ExternalGate::Stale;
             retryAtMs_ = -1;
             dirty_ = true;
@@ -1031,9 +1100,11 @@ void SexLabPPlus::Impl::HandleFailure(std::uint64_t token, PapyrusCallKind kind)
 
 void SexLabPPlus::Impl::Advance(std::int64_t nowMs) {
     RequestId cancelId;
-    bool start = false;
+    std::optional<Epoch> retryEpoch;
+    std::uint64_t revision = 0;
     Completion failedCompletion;
     PPlusSceneState failedSnapshot;
+    ExternalGate failedGate = ExternalGate::Failed;
     {
         std::lock_guard<std::mutex> guard(mutex_);
         lastNowMs_ = std::max(lastNowMs_, nowMs);
@@ -1042,8 +1113,11 @@ void SexLabPPlus::Impl::Advance(std::int64_t nowMs) {
             cancelId = pending_.id;
             pendingToken_ = 0;
             pending_ = {};
-            ++attempts_;
-            if (attempts_ >= options_.timing.maxAttempts) {
+            if (!active_ && gate_ == ExternalGate::Closed) {
+                failedSnapshot = snapshot_;
+                failedCompletion = std::move(completion_);
+                failedGate = ExternalGate::Closed;
+            } else if (++attempts_ >= options_.timing.maxAttempts) {
                 gate_ = ExternalGate::Failed;
                 retryAtMs_ = -1;
                 failedSnapshot = snapshot_;
@@ -1055,23 +1129,17 @@ void SexLabPPlus::Impl::Advance(std::int64_t nowMs) {
         }
         if (pendingToken_ == 0 && active_ && retryAtMs_ >= 0 && nowMs >= retryAtMs_) {
             retryAtMs_ = -1;
-            start = true;
+            retryEpoch = sceneEpoch_;
+            revision = generation_;
         }
     }
     if (cancelId) {
         calls_.Cancel(cancelId);
     }
     if (failedCompletion) {
-        failedCompletion(failedSnapshot, ExternalGate::Failed);
+        failedCompletion(failedSnapshot, failedGate);
     }
-    if (start) {
-        Epoch epoch;
-        {
-            std::lock_guard<std::mutex> guard(mutex_);
-            epoch = sceneEpoch_;
-        }
-        BeginRequest(epoch, nowMs, {});
-    }
+    if (retryEpoch) BeginRequest(*retryEpoch, nowMs, revision);
 }
 
 void SexLabPPlus::Impl::OnSceneEnded(const Epoch& epoch) {
@@ -1089,6 +1157,8 @@ void SexLabPPlus::Impl::OnSceneEnded(const Epoch& epoch) {
         pendingToken_ = 0;
         id = pending_.id;
         pending_ = {};
+        ++generation_;
+        endedSnapshot_.reset();
         gate_ = ExternalGate::Closed;
         snapshot_.active = false;
         snapshot = snapshot_;
@@ -1113,6 +1183,7 @@ void SexLabPPlus::Impl::MarkDirty() {
         }
         dirty_ = true;
         gate_ = ExternalGate::Changed;
+        ++generation_;
         pendingToken_ = 0;
         id = pending_.id;
         pending_ = {};
@@ -1145,6 +1216,16 @@ bool SexLabPPlus::Impl::Active() const {
     return active_;
 }
 
+bool SexLabPPlus::Impl::Draining() const {
+    std::lock_guard guard(mutex_);
+    return !active_ && gate_ == ExternalGate::Closed && pendingToken_ != 0;
+}
+
+std::optional<PPlusSceneState> SexLabPPlus::Impl::TakeEndedSnapshot() {
+    std::lock_guard guard(mutex_);
+    return std::exchange(endedSnapshot_, std::nullopt);
+}
+
 std::uint32_t SexLabPPlus::Impl::Attempts() const {
     std::lock_guard<std::mutex> guard(mutex_);
     return attempts_;
@@ -1172,9 +1253,13 @@ void SexLabPPlus::Impl::Reset() {
         id = pending_.id;
         pending_ = {};
         snapshot_ = {};
+        leadInEnded_ = false;
         awaitingMainStage_ = false;
         transitionFrom_ = {};
         threadId_ = -1;
+        observedStart_.reset();
+        endedSnapshot_.reset();
+        ++generation_;
         snapshot = snapshot_;
         attempts_ = 0;
         retryAtMs_ = -1;
@@ -1193,17 +1278,19 @@ SexLabPPlus::SexLabPPlus(PapyrusCalls& calls, PPlusOptions options)
 
 SexLabPPlus::~SexLabPPlus() { impl_->Shutdown(); }
 
-void SexLabPPlus::SetThreadId(std::int32_t id) { const auto state = impl_; state->SetThreadId(id); }
 std::int32_t SexLabPPlus::ThreadId() const { const auto state = impl_; return state->ThreadId(); }
 
 RequestId SexLabPPlus::OnSceneNotification(std::string_view event, std::string_view threadId,
                                          const Epoch& epoch, std::int64_t nowMs,
-                                         Completion completion) {
+                                         Completion completion, std::optional<std::uint32_t> observedStart,
+                                         bool* accepted, EndedCaptureConsumer consumeEnded) {
+    if (accepted) *accepted = false;
     std::int64_t id = -1;
     if (!ParseInt64(threadId, id) || id < 0 || id > 2147483647) return {};
     const auto state = impl_;
-    if (!state->SelectNotificationThread(event, static_cast<std::int32_t>(id), epoch)) return {};
-    return state->OnSceneEvent(event, epoch, nowMs, std::move(completion));
+    return state->OnSceneEvent(event, epoch, nowMs, std::move(completion),
+                               static_cast<std::int32_t>(id), observedStart, accepted,
+                               std::move(consumeEnded));
 }
 
 RequestId SexLabPPlus::OnSceneEvent(std::string_view event, const Epoch& epoch, std::int64_t nowMs, Completion completion) {
@@ -1245,6 +1332,10 @@ bool SexLabPPlus::Active() const {
     const auto state = impl_;
     return state->Active();
 }
+
+bool SexLabPPlus::Draining() const { return impl_->Draining(); }
+
+std::optional<PPlusSceneState> SexLabPPlus::TakeEndedSnapshot() { return impl_->TakeEndedSnapshot(); }
 
 std::uint32_t SexLabPPlus::Attempts() const {
     const auto state = impl_;

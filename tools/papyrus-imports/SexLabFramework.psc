@@ -1,5 +1,6 @@
 Scriptname SexLabFramework extends Quest
 SexLabThread Function GetThread(Int id) Native
+SexLabThread Function GetThreadByActor(Actor participant) Native
 Bool Function IsAggressor(Int id, Actor participant) Native
 Int Function CountCumAnal(Actor participant) Native
 Int Function CountCumVaginal(Actor participant) Native

@@ -7,6 +7,8 @@
 #include <RE/I/IObjectHandlePolicy.h>
 #include <RE/N/NativeFunction.h>
 #include <atomic>
+#include <bit>
+#include <cmath>
 #include <map>
 #include <mutex>
 
@@ -66,6 +68,9 @@ std::string Identity(RE::StaticFunctionTag*, RE::TESForm* form) {
 }
 std::string Escape(RE::StaticFunctionTag*, std::string value) { return WireEscape(value); }
 std::string Hex(RE::StaticFunctionTag*, std::uint32_t value) { return WireHex(value); }
+std::string SceneStamp(RE::StaticFunctionTag*, float startedAt) {
+    return std::isfinite(startedAt) ? std::to_string(std::bit_cast<std::uint32_t>(startedAt)) : "";
+}
 std::string RequestEpoch(RE::StaticFunctionTag*, std::string payload) {
     CollectorRequest request;
     return ParseCollectorRequest(payload, "SLSFEXQ1", request) ? EpochLine(request.epoch) : "";
@@ -100,10 +105,10 @@ std::string CollectDdng(std::string_view payload) {
     for (const auto& key : request.actors) {
         auto* actor = engine::LookupLoadedRecord<RE::Actor>(RE::TESDataHandler::GetSingleton(), key);
         if (!actor) return prefix + "availability\tUnknown\n";
-        const auto worn = ddng->GetWornDevices(actor);
+        const auto worn = QueryDdngWornDevices(actor, request.epoch);
+        if (!worn) return prefix + "availability\tUnknown\n";
         std::uint32_t devices = 0;
-        for (auto* armor : worn) {
-            if (!armor) return prefix + "availability\tUnknown\n";
+        for (auto* armor : *worn) {
             for (std::size_t i = 0; i < kDdngDeviceKeywords.size(); ++i)
                 if (armor->HasKeywordString(kDdngDeviceKeywords[i])) devices |= 1u << i;
         }
@@ -161,6 +166,22 @@ bool IdentityAsync(RE::BSScript::Internal::VirtualMachine* vm,
     RE::VMStackID stack, RE::StaticFunctionTag*, RE::TESForm* form) {
     auto pinned = std::make_shared<PinnedForm>(vm, form);
     return OnGameThread<std::string>(vm, stack, [pinned = std::move(pinned)] { return Identity(nullptr, pinned->Get()); });
+}
+bool PPlusActorIdentityAsync(RE::BSScript::Internal::VirtualMachine* vm,
+    RE::VMStackID stack, RE::StaticFunctionTag*, RE::Actor* actor) {
+    auto pinned = std::make_shared<PinnedForm>(vm, actor);
+    return OnGameThread<std::string>(vm, stack, [pinned = std::move(pinned)] {
+        auto* form = pinned->Get();
+        auto* resolved = form ? form->As<RE::Actor>() : nullptr;
+        if (!resolved) return std::string{};
+        if (resolved->IsDynamicForm()) {
+            const RE::ActorHandle handle{resolved};
+            if (!handle || handle.get().get() != resolved) return std::string{};
+            return "actorTransient\t" + WireHex(handle.native_handle()) + "\t" + WireHex(resolved->GetFormID());
+        }
+        const auto stable = Identity(nullptr, resolved);
+        return stable.empty() ? std::string{} : "actor\t" + stable;
+    });
 }
 bool ActorRaceAsync(RE::BSScript::Internal::VirtualMachine* vm,
     RE::VMStackID stack, RE::StaticFunctionTag*, RE::Actor* actor) {
@@ -281,11 +302,20 @@ void InitializeProviderCollectors(std::function<Epoch()> epoch, std::function<bo
     ddng = api;
     ddngAvailability = "Available";
 }
+std::optional<std::vector<RE::TESObjectARMO*>> QueryDdngWornDevices(RE::Actor* actor, Epoch epoch) {
+    if (!ddng || !actor || !IsCurrent(epoch) || !actor->GetInventoryChanges(true)) return std::nullopt;
+    auto worn = ddng->GetWornDevices(actor);
+    if (!IsCurrent(epoch) || std::ranges::find(worn, nullptr) != worn.end()) return std::nullopt;
+    return worn;
+}
+
 bool RegisterProviderCollectors(RE::BSScript::IVirtualMachine* vm) {
     if (!vm) return false;
     vm->BindNativeMethod(new CollectorFunction<std::string, decltype(IdentityAsync)>("Identity", "SLSF_Reloaded_ProbeNative", IdentityAsync));
+    vm->BindNativeMethod(new CollectorFunction<std::string, decltype(PPlusActorIdentityAsync)>("PPlusActorIdentity", "SLSF_Reloaded_ProbeNative", PPlusActorIdentityAsync));
     vm->RegisterFunction("Escape", "SLSF_Reloaded_ProbeNative", Escape);
     vm->RegisterFunction("Hex", "SLSF_Reloaded_ProbeNative", Hex);
+    vm->RegisterFunction("SceneStamp", "SLSF_Reloaded_ProbeNative", SceneStamp);
     vm->RegisterFunction("RequestEpoch", "SLSF_Reloaded_ProbeNative", RequestEpoch);
     vm->BindNativeMethod(new CollectorFunction<std::vector<RE::Actor*>, decltype(RequestActorsAsync)>("RequestActors", "SLSF_Reloaded_ProbeNative", RequestActorsAsync));
     vm->BindNativeMethod(new CollectorFunction<std::string, decltype(ActorRaceAsync)>("ActorRace", "SLSF_Reloaded_ProbeNative", ActorRaceAsync));

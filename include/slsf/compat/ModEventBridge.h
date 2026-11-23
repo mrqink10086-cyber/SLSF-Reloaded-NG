@@ -36,6 +36,8 @@ struct ModEventValue {
     std::vector<StableFormKey> formArray;
     std::uint64_t scriptHandle{};
     std::string scriptName;
+    // Only for epoch-checked, immediate gameplay calls; never a stable form identity.
+    std::uint32_t transientActorHandle{};
 };
 
 struct ModEvent {

@@ -40,33 +40,16 @@ CommentDecision CommentRules::Evaluate(const CommentFacts& facts, IRandom& rng) 
     }
 
     result.naked = EvaluateNaked(facts);
-    if (result.naked.status != Status::Ready) {
-        // The naked-chance side effect is part of every tick and cannot be
-        // applied from a partially known snapshot.
-        result.status = result.naked.status;
-        return result;
-    }
-
     const Tri anonymous = TriOf(facts.anonymous);
-    if (anonymous == Tri::Unknown) {
-        result.status = Status::NotReady;
-        return result;
-    }
     if (anonymous == Tri::True) {
-        result.allowed = false;
-        result.rolled = false;
         result.nextDelaySeconds = kCommentAnonymousDelaySeconds;
         return result;
     }
-
-    if (!facts.combatState.IsKnown()) {
-        result.status = Status::NotReady;
+    if (facts.combatState.IsKnown() && facts.combatState.value != 0) {
         return result;
     }
-    if (facts.combatState.value != 0) {
-        result.allowed = false;
-        result.rolled = false;
-        result.nextDelaySeconds = kCommentNormalDelaySeconds;
+    if (anonymous == Tri::Unknown || !facts.combatState.IsKnown()) {
+        result.status = Status::NotReady;
         return result;
     }
 

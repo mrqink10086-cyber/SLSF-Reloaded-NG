@@ -84,6 +84,7 @@ public:
     // status but never applies partially parsed data.
     ConfigurationUpdateResult ReloadConfiguration();
     ConfigurationUpdateResult ApplyCurrentConfiguration();
+    [[nodiscard]] bool ConfigurationRetryPending() const noexcept { return configurationRetryPending_; }
 
     bool PrepareNewGame(const SessionContext& context);
     bool PrepareLoad(const PersistentState& candidate, const SessionContext& context);
@@ -94,8 +95,7 @@ public:
     bool ActivatePrepared(bool hostSucceeded = true,
                           std::optional<std::uint64_t> hostGeneration = {});
 
-    // Drops the pending candidate (failed/cancelled load) without touching
-    // the detached dispatcher's last publication.
+    // Drops the pending candidate (failed/cancelled load).
     void DiscardPrepared();
 
     // Records a decode/bind failure that happened before PrepareLoad could
@@ -136,6 +136,7 @@ private:
     Dispatcher dispatcher_;
     std::unique_ptr<Assets> active_;
     std::unique_ptr<Pending> pending_;
+    bool configurationRetryPending_{};
     // Engine callbacks may poll BusinessOpen from non-main threads.  Keep the
     // published gate atomic; the owned assets remain main-thread state.
     std::atomic<LifecyclePhase> phase_{LifecyclePhase::Detached};
